@@ -7,9 +7,10 @@ import styled from "styled-components";
 import { IButton } from "./Button";
 // #endregion Local Imports
 
-const Container = styled.div<IButton.IProps>`
+const Container = styled.button<IButton.IProps>`
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-    color: ${({ theme }) => theme.colors.primary};
+    border: 0px solid transparent;
+    &:focus { outline: none; }
 `;
 
 export const Button: React.FunctionComponent<IButton.IProps> = props => {

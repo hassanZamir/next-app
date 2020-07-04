@@ -23,7 +23,7 @@ export const Http = {
     ): Promise<A> => {
         return new Promise((resolve, reject) => {
             const query = params
-                ? `?${stringify({ ...params, api_key: API_KEY })}`
+                ? `?${stringify({ ...params })}`
                 : "";
 
             fetch(`${BaseUrl}${url}${query}`, {

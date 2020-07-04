@@ -8,7 +8,6 @@ import withRedux from "next-redux-wrapper";
 
 // #region Local Imports
 import { theme } from "@Definitions/Styled";
-import { appWithTranslation } from "@Server/i18n";
 import { AppWithStore } from "@Interfaces";
 import { makeStore } from "@Redux";
 
@@ -40,4 +39,4 @@ class WebApp extends App<AppWithStore> {
     }
 }
 
-export default withRedux(makeStore)(appWithTranslation(WebApp));
+export default withRedux(makeStore)(WebApp);

@@ -2,10 +2,12 @@
 import * as React from "react";
 import { NextPage } from "next";
 import { useSelector, useDispatch } from "react-redux";
+import Link from 'next/link'
+
 // #endregion Global Imports
 
 // #region Local Imports
-import { withTranslation } from "@Server/i18n";
+// import { withTranslation } from "@Server/i18n";
 import {
     Container,
     Top,
@@ -17,6 +19,7 @@ import {
     Apod,
     ApodButton,
 } from "@Styled/Home";
+import { Layout } from "@Components/Layout";
 import { IStore } from "@Redux/IStore";
 import { HomeActions } from "@Actions";
 import { Heading, LocaleButton } from "@Components";
@@ -26,73 +29,48 @@ import { Heading, LocaleButton } from "@Components";
 import { IHomePage, ReduxNextPageContext } from "@Interfaces";
 // #endregion Interface Imports
 
-const Home: NextPage<IHomePage.IProps, IHomePage.InitialProps> = ({
-    t,
-    i18n,
-}) => {
+const Home: NextPage<IHomePage.IProps, IHomePage.InitialProps> = () => {
     const home = useSelector((state: IStore) => state.home);
+    const login = useSelector((state: IStore) => state.login);
     const dispatch = useDispatch();
 
-    const renderLocaleButtons = (activeLanguage: string) =>
-        ["en", "es", "tr"].map(lang => (
-            <LocaleButton
-                key={lang}
-                lang={lang}
-                isActive={activeLanguage === lang}
-                onClick={() => i18n.changeLanguage(lang)}
-            />
-        ));
+    console.log("hey");
+    console.log("home", home);
+    console.log("login", login);
+    // const renderLocaleButtons = (activeLanguage: string) =>
+    //     ["en", "es", "tr"].map(lang => (
+    //         <LocaleButton
+    //             key={lang}
+    //             lang={lang}
+    //             isActive={activeLanguage === lang}
+    //             onClick={() => i18n.changeLanguage(lang)}
+    //         />
+    //     ));
 
     return (
-        <Container>
-            <Top>
-                <img src="/images/pankod-logo.png" alt="Pankod Logo" />
-            </Top>
-            <Middle>
-                <MiddleLeft>
-                    <MiddleLeftButtons>
-                        {renderLocaleButtons(i18n.language)}
-                    </MiddleLeftButtons>
-                </MiddleLeft>
-                <MiddleRight>
-                    <TopText>{t("common:Hello")}</TopText>
-                    <Heading text={t("common:World")} />
-                    <Apod>
-                        <ApodButton
-                            onClick={() => {
-                                dispatch(
-                                    HomeActions.GetApod({
-                                        params: { hd: false },
-                                    })
-                                );
-                            }}
-                        >
-                            Discover Space
-                        </ApodButton>
-                        <img
-                            src={home.image.url}
-                            height="300"
-                            width="150"
-                            alt="Discover Space"
-                        />
-                    </Apod>
-                </MiddleRight>
-            </Middle>
-        </Container>
+        <Layout>
+           <Link href="login">Login</Link>
+        </Layout>
     );
 };
 
-Home.getInitialProps = async (
-    ctx: ReduxNextPageContext
-): Promise<IHomePage.InitialProps> => {
-    await ctx.store.dispatch(
-        HomeActions.GetApod({
-            params: { hd: true },
-        })
-    );
-    return { namespacesRequired: ["common"] };
-};
+export const getStaticProps = () => ({
+    props: {
+        namespacesRequired: ["common"]
+    }
+    // return { namespacesRequired: ["common"] };
+});
+// Home.getStaticProps = async (
+//     ctx: ReduxNextPageContext
+// ): Promise<IHomePage.InitialProps> => {
+//     await ctx.store.dispatch(
+//         HomeActions.GetApod({
+//             params: { hd: true },
+//         })
+//     );
+//     return { namespacesRequired: ["common"] };
+// };
 
-const Extended = withTranslation("common")(Home);
+// const Extended = withTranslation("common")(Home);
 
-export default Extended;
+export default Home;

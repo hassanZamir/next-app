@@ -1,1 +1,52 @@
+@import "./fonts/Segoe/style.scss";
 @import "./bootstrap/index";
+
+.top-0 {
+    top: 0;
+}
+.left-0 {
+    left: 0;
+}
+.right-0 {
+    right: 0;
+}
+.bottom-0 {
+    bottom: 0;
+}
+
+.font-10px {
+    font-size: 0.625rem;
+}
+.font-11px {
+    font-size: 0.6875rem;
+}
+.font-12px {
+    font-size: 0.75rem;
+}
+.font-13px {
+    font-size: 0.8125rem;
+}
+.font-14px {
+    font-size: 0.875rem;
+}
+.font-15px {
+    font-size: 0.9375rem;
+}
+.font-17px {
+    font-size: 1.0625rem;
+}
+.font-20px {
+    font-size: 1.25rem;
+}
+
+.captcha-container {
+    transform: scale(0.57);
+}
+
+.seoge-ui-bold {
+    font-family: 'Segoe UI Bold';
+}
+
+.bg-primary-gradient {
+    background: $primaryBackgroundGradient;
+}

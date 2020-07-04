@@ -1,2 +1,13 @@
 // Override bootstrap variables.
 // https://github.com/twbs/bootstrap/blob/master/scss/_variables.scss
+
+$font-size-base: 1rem; // 16px
+$line-height-base: 1.4;
+$font-family-base: 'Segoe UI', Roboto;
+$enable-shadows: true;
+$enable-gradients: true;
+$theme-colors: (
+    "primary": #F57B52
+);
+
+$primaryBackgroundGradient: transparent linear-gradient(180deg, #FC6565 0%, #F47E51 100%, #808080 100%) 0% 0% no-repeat padding-box;
