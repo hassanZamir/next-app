@@ -10,5 +10,5 @@ import { IRegInput } from "./RegInput";
 const Input = styled.input<IRegInput.IProps>``;
 
 export const RegInput: React.FunctionComponent<IRegInput.IProps> = React.forwardRef((props, ref) => {
-    return <Input ref={ref} name={props.name} {...props} />;
+    return <Input ref={ref} {...props} />;
 });

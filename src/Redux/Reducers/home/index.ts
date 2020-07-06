@@ -6,14 +6,7 @@ import { ActionConsts } from "@Definitions";
 import { IAction, IHomePage } from "@Interfaces";
 // #endregion Interface Imports
 
-const INITIAL_STATE: IHomePage.IStateProps = {
-    home: {
-        version: 1,
-    },
-    image: {
-        url: "",
-    },
-};
+const INITIAL_STATE: IHomePage.IStateProps = {};
 
 type IMapPayload = IHomePage.Actions.IMapPayload;
 

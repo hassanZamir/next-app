@@ -8,48 +8,37 @@ import Link from 'next/link'
 
 // #region Local Imports
 // import { withTranslation } from "@Server/i18n";
-import {
-    Container,
-    Top,
-    TopText,
-    Middle,
-    MiddleLeft,
-    MiddleLeftButtons,
-    MiddleRight,
-    Apod,
-    ApodButton,
-} from "@Styled/Home";
 import { Layout } from "@Components/Layout";
 import { IStore } from "@Redux/IStore";
 import { HomeActions } from "@Actions";
-import { Heading, LocaleButton } from "@Components";
 // #endregion Local Imports
 
 // #region Interface Imports
 import { IHomePage, ReduxNextPageContext } from "@Interfaces";
+import dynamic from 'next/dynamic';
 // #endregion Interface Imports
 
-const Home: NextPage<IHomePage.IProps, IHomePage.InitialProps> = () => {
-    const home = useSelector((state: IStore) => state.home);
-    const login = useSelector((state: IStore) => state.login);
-    const signUp = useSelector((state: IStore) => state.signUp);
-    const dispatch = useDispatch();
+const DynamicLogin: any = dynamic(
+    () => import('@Components/LoginComponent').then((mod) => mod.LoginComponent) as any,
+    { ssr: false }
+);
 
-    console.log("home state", home);
-    console.log("login state", login);
-    console.log("signup state", login);
+const Home: NextPage<IHomePage.IProps, IHomePage.InitialProps> = (props) => {
+    const login = useSelector((state: IStore) => state.login);
 
     return (
         <Layout>
-           <Link href="login">Login</Link>
+           {'id' in login.session ? <div>Hello</div> : <DynamicLogin />}
         </Layout>
     );
 };
 
-export const getStaticProps = () => ({
-    props: {
-        namespacesRequired: ["common"]
-    }
-});
+export const getStaticProps = (...params: any) => {
+    return { 
+        props: {
+            namespacesRequired: ["common"]
+        }
+    };
+};
 
 export default Home;

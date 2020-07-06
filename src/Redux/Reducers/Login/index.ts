@@ -1,5 +1,6 @@
 // #region Local Imports
 import { ActionConsts } from "@Definitions";
+import Router from "next/router";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -18,7 +19,7 @@ export const LoginReducer = (
     switch (action.type) {
         case ActionConsts.Login.SetUserPayload: {
             let { session } = action.payload!;
-            localStorage.setItem("user", JSON.stringify(session));
+            Router.push("/");
 
             return Object.assign({}, state, {
                 errors: "",

@@ -9,7 +9,6 @@ import { LoginService } from "@Services";
 
 // #region Interface Imports
 import { ISignUpPage, ILoginPage } from "@Interfaces";
-import Router from "next/router";
 // #endregion Interface Imports
 
 export const LoginActions = {
@@ -24,8 +23,6 @@ export const LoginActions = {
             payload: result,
             type: result.authenticated ? ActionConsts.Login.SetUserPayload : ActionConsts.Login.SetLoginError
         });
-
-        if (result.authenticated) Router.push("/");
     },
     UserSignUp: (payload: ISignUpPage.Actions.IGetSignUpPayload) => async (
         dispatch?: Dispatch

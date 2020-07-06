@@ -5,7 +5,7 @@ import { IThemeInput } from "./ThemedInput";
 
 import { Input } from "../Basic";
 
-const Container = styled(Input)<IThemeInput.IProps>`
+const Container = styled(Input)`
     width: 271px;
     border: none;
     border-bottom: 1px solid ${({ theme }) => theme.colors.primary};
@@ -14,6 +14,6 @@ const Container = styled(Input)<IThemeInput.IProps>`
 
 export const ThemedInput: React.FunctionComponent<IThemeInput.IProps> = (props) => {
     return (
-        <Container {...props} />
+        <Container name='' {...props} />
     );
 };

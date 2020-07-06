@@ -15,7 +15,7 @@ const _Select = styled.select`
 `;
 
 export const Select: React.FunctionComponent<ISelect.IProps> = React.forwardRef((props, ref) => {
-    return <_Select ref={ref} name={props.name} {...props}>
+    return <_Select {...props}>
         {props.options.map((value: string, index: number) => (
             <option value={value} key={index}>{value}</option>
         ))}

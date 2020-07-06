@@ -9,14 +9,7 @@ declare namespace IHomePage {
         namespacesRequired: string[];
     }
 
-    export interface IStateProps {
-        home: {
-            version: number;
-        };
-        image: {
-            url: string;
-        };
-    }
+    export interface IStateProps {}
 
     namespace Actions {
         export interface IMapPayload {}

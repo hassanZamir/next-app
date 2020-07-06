@@ -9,3 +9,4 @@ export { LabelInput, DobInput } from "@Components/LabelInput";
 export { PrimaryButton } from "@Components/PrimaryButton";
 export { ParagraphText } from "@Components/ParagraphText";
 export { FormComponent } from "@Components/FormComponent";
+export { LoginComponent } from "@Components/LoginComponent";

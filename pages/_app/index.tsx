@@ -11,30 +11,25 @@ import { theme } from "@Definitions/Styled";
 import { AppWithStore } from "@Interfaces";
 import { makeStore } from "@Redux";
 
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+
 import "@Static/css/main.scss";
 // #endregion Local Imports
 
 class WebApp extends App<AppWithStore> {
-    static async getInitialProps({
-        Component,
-        ctx,
-    }: AppContext): Promise<AppInitialProps> {
-        const pageProps = Component.getInitialProps
-            ? await Component.getInitialProps(ctx)
-            : {};
-
-        return { pageProps };
-    }
-
     render() {
         const { Component, pageProps, store } = this.props;
-
+        const persistor = persistStore(store);
+        
         return (
-            <Provider store={store}>
-                <ThemeProvider theme={theme}>
-                    <Component {...pageProps} />
-                </ThemeProvider>
-            </Provider>
+            <ThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <PersistGate loading={<Component {...pageProps} />} persistor={persistor}>
+                        <Component {...pageProps} />
+                    </PersistGate>
+                </Provider>
+            </ThemeProvider>
         );
     }
 }
