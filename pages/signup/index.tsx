@@ -7,12 +7,13 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 // #region Local Imports
 import { Layout } from "@Components/Layout";
-import { PrimaryButton, LabelInput, StaticImage, ParagraphText, FormComponent } from "@Components";
+import { PrimaryButton, LabelInput, StaticImage, ParagraphText, FormComponent, DobInput } from "@Components";
 import { LinkText } from "@Components/Basic";
 import { IStore } from "@Redux/IStore";
 import { LoginActions } from "@Actions";
 import Link from 'next/link';
 import { ActionConsts } from "@Definitions";
+import { DobConst } from "./DobConstants";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -23,6 +24,8 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     const [enableSignUp, setEnableSignUp] = useState(true);
     const [recaptchaToken, setToken] = useState("");
 
+    const signUpState = useSelector((state: IStore) => state.signUp);
+    const { errors } = signUpState;
     const dispatch = useDispatch();
 
     const handleCaptchaChange = (token: string | null) => {
@@ -38,7 +41,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     }
 
     async function handleSubmit(data: any) {
-        console.log("data", data);
+        console.log("SignUp Form Data: ", data);
         if (enableSignUp && recaptchaToken) {
             const params = {
                 name: data.name,
@@ -46,7 +49,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                 email: data.email,
                 password: data.password,
                 country: data.country,
-                dateBirth : "2-4-2011",
+                dateBirth : data.dob.date + "-" + data.dob.month + "-" + data.dob.year,
                 account_created: true
             }
             setEnableSignUp(false);
@@ -55,6 +58,15 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
         }
     }
     
+    async function validateUserName(inputValue: {[key: string]: string }) {
+        const key = Object.keys(inputValue)[0];
+        const params = { 
+            [key]: inputValue[key],
+            account_created: false
+        }
+        return LoginActions.checkUserNameAvailability({ params: params });
+    }
+
     return (
         <Layout>
             <article className="w-100 flex-column">
@@ -63,13 +75,22 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                 </div>
                 <div className="row no-gutters justify-content-center mt-3">
                     <FormComponent onSubmit={handleSubmit} defaultValues={{}} 
-                        submitActive={recaptchaToken && enableSignUp ? true : false}>
+                        submitActive={enableSignUp && recaptchaToken ? true : false}>
 
                         <LabelInput type="text"
                             labelText="Full Name" 
                             name="name"
                             validationRules={{ required: {value: true, message: "Full Name is required" } }} 
                             />
+                        
+                        <DobInput type={["number", "number", "number"]}
+                            labelText="Date of Birth" 
+                            name={["dob.date", "dob.month", "dob.year"]}
+                            options={[DobConst.date, DobConst.months, DobConst.year]} 
+                            wrapperClass="mt-3"
+                            validationRules={[{ required: "Date is required" }, { required: "Month is required" }, { required: "Year is required" }]}
+                        />
+
                         <LabelInput type="text"
                             labelText="Country" 
                             name="country" 
@@ -80,13 +101,35 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             labelText="Email" 
                             name="email" 
                             wrapperClass="mt-3"
-                            validationRules={{ required: {value: true, message: "Email is required" } }}
+                            validationRules={{ 
+                                required: "Email is required",
+                                validate: async (value: string) => {
+                                    const helper = await validateUserName({ email: value });
+                                    const response = await helper();
+                                    if (response && response.errors.filter((error) => { return error && error.field === 'email' }).length > 0)
+                                        return "Email is already taken.";
+                                    
+                                    return true;
+                                }
+                            }}
                         />
                         <LabelInput type="text"
                             labelText="Username" 
                             name="username" 
                             wrapperClass="mt-3"
-                            validationRules={{ required: {value: true, message: "Username is required" } }}
+                            validationRules={{ 
+                                required: "Username is required",
+                                validate: async (value: string) => {
+                                    const helper = await validateUserName({ username: value });
+                                    const response = await helper();
+                                    if (response && response.errors
+                                        .filter((error) => { return error && error.field === 'username' })
+                                        .length > 0)
+                                    return "Username is already taken.";
+                                    
+                                    return true;
+                                }
+                            }}
                         />
                         <LabelInput 
                             type="password"
@@ -100,7 +143,9 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             labelText="Re-Type Password" 
                             name="reTypePassword"
                             wrapperClass="mt-3" 
-                            validationRules={{ required: {value: true, message: "Re Type is required" } }}
+                            validationRules={{ 
+                                required: "Re Type password is required"
+                            }}
                         />
                         <div className="captcha-container mt-3" 
                             style={{ height: "78px" }}>
@@ -116,6 +161,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             name="signUp">
                                 Sign Up
                         </PrimaryButton>
+                        <ParagraphText className="mt-3 text-danger text-center">{ errors.message }</ParagraphText>
                     </FormComponent>
                     <Link href="/login">
                         <LinkText style={{ height: "40px" }} className="bg-primary-gradient position-absolute left-0 right-0 bottom-0 seoge-ui-bold d-flex align-items-center justify-content-center text-white">

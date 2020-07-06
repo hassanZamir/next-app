@@ -28,16 +28,49 @@ export const LoginActions = {
         if (result.authenticated) Router.push("/");
     },
     UserSignUp: (payload: ISignUpPage.Actions.IGetSignUpPayload) => async (
-        dispatch: Dispatch
+        dispatch?: Dispatch
     ) => {
         const result = await LoginService.SignUp({
             params: payload.params,
         });
         
-        debugger;
-        dispatch({
-            payload: result,
-            type: result.account_created ? ActionConsts.SignUp.SignUpSuccess : ActionConsts.SignUp.SignUpError
+        const errors = Object.keys(result.errors).map((key) => {
+            if (result.errors[key].length > 0)
+                return {
+                    field: key,
+                    message: result.errors[key][0].message || result.errors[key][0].meassage
+                };
+        })
+        .filter((elem) => { return elem; });
+        
+        if (dispatch) {
+            dispatch({
+                payload: result.account_created && errors.length <= 0 ? result : {errors: errors},
+                type: result.account_created && errors.length <= 0 ? ActionConsts.SignUp.SignUpSuccess : ActionConsts.SignUp.SignUpError
+            });
+        } else {
+            return {
+                payload: result.account_created && errors.length <= 0 ? result : {errors: errors},
+                type: result.account_created && errors.length <= 0 ? ActionConsts.SignUp.SignUpSuccess : ActionConsts.SignUp.SignUpError
+            }
+        }
+    },
+    checkUserNameAvailability: (payload: ISignUpPage.Actions.IGetSignUpPayload) => async () => {
+        const result = await LoginService.SignUp({
+            params: payload.params,
         });
+        
+        const errors = Object.keys(result.errors).map((key) => {
+            if (result.errors[key].length > 0)
+                return {
+                    field: key,
+                    message: result.errors[key][0].message || result.errors[key][0].meassage
+                };
+        })
+        .filter((elem) => { return elem; });
+        
+        return {
+            errors: errors.length <= 0 ? [] : errors,
+        }
     }
 };

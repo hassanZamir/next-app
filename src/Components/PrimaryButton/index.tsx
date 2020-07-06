@@ -20,7 +20,6 @@ export const PrimaryButton: React.FunctionComponent<IPrimaryButton.IProps> = ({
     className,
     type
 }) => {
-    console.log("isActive", isActive);
     return (
         <Container isActive={isActive} onClick={onClick} className={className} type={type}>
             {children}

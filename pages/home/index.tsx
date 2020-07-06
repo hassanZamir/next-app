@@ -32,20 +32,12 @@ import { IHomePage, ReduxNextPageContext } from "@Interfaces";
 const Home: NextPage<IHomePage.IProps, IHomePage.InitialProps> = () => {
     const home = useSelector((state: IStore) => state.home);
     const login = useSelector((state: IStore) => state.login);
+    const signUp = useSelector((state: IStore) => state.signUp);
     const dispatch = useDispatch();
 
-    console.log("hey");
-    console.log("home", home);
-    console.log("login", login);
-    // const renderLocaleButtons = (activeLanguage: string) =>
-    //     ["en", "es", "tr"].map(lang => (
-    //         <LocaleButton
-    //             key={lang}
-    //             lang={lang}
-    //             isActive={activeLanguage === lang}
-    //             onClick={() => i18n.changeLanguage(lang)}
-    //         />
-    //     ));
+    console.log("home state", home);
+    console.log("login state", login);
+    console.log("signup state", login);
 
     return (
         <Layout>
@@ -58,19 +50,6 @@ export const getStaticProps = () => ({
     props: {
         namespacesRequired: ["common"]
     }
-    // return { namespacesRequired: ["common"] };
 });
-// Home.getStaticProps = async (
-//     ctx: ReduxNextPageContext
-// ): Promise<IHomePage.InitialProps> => {
-//     await ctx.store.dispatch(
-//         HomeActions.GetApod({
-//             params: { hd: true },
-//         })
-//     );
-//     return { namespacesRequired: ["common"] };
-// };
-
-// const Extended = withTranslation("common")(Home);
 
 export default Home;

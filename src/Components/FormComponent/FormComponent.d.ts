@@ -4,7 +4,6 @@ declare namespace IFormComponent {
         submitActive: boolean;
         defaultValues?: {};
         children?: ReactNode;
-        fieldChange?: { [x: string]: any; }
     }
 }
 

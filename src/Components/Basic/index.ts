@@ -4,3 +4,4 @@ export { Input } from "./Input";
 export { RegInput } from "./RegInput";
 export { p } from "./Paragraph";
 export { LinkText } from "./LinkText";
+export { Select } from "./Select";

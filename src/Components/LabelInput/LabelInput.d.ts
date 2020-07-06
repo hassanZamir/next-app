@@ -6,14 +6,21 @@ declare namespace ILabelInput {
         register?: ()=>void;
         validationRules?: {};
         formErrors?: { [key: string]: {message: string;}; };
-        // ref: <HTMLDivElement>()=>{};
-        // onChange?: (param: any) => void;
-        // onBlur?: (param: any) => void;
         wrapperClass?: string;
-        // placeholder?: string;
-        // value?: string;
-        // autoComplete?: string;
     }
 }
 
-export { ILabelInput };
+declare namespace ISelectInput {
+    export interface IProps {
+        type: string[];
+        name: string[];
+        options: string[][];
+        register?: (rule: {})=>void;
+        labelText: string;
+        validationRules: {}[];
+        formErrors?: { [key: string]: {message: string;}; };
+        wrapperClass?: string;
+    }
+}
+
+export { ILabelInput, ISelectInput };

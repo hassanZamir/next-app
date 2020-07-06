@@ -8,7 +8,10 @@ declare namespace ISignUpPage {
     }
 
     export interface IStateProps {
-        errors: string;
+        errors: {
+            field: string;
+            message: string;
+        };
     }
 
     namespace Actions {

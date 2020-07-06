@@ -5,7 +5,7 @@ export { Heading } from "@Components/Heading";
 export { LocaleButton } from "@Components/LocaleButton";
 export { StaticImage } from "@Components/StaticImage";
 export { ThemedInput } from "@Components/ThemedInput";
-export { LabelInput } from "@Components/LabelInput";
+export { LabelInput, DobInput } from "@Components/LabelInput";
 export { PrimaryButton } from "@Components/PrimaryButton";
 export { ParagraphText } from "@Components/ParagraphText";
 export { FormComponent } from "@Components/FormComponent";

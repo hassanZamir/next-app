@@ -5,9 +5,11 @@ import { combineReducers } from "redux";
 // #region Local Imports
 import { HomeReducer } from "./home";
 import { LoginReducer } from "./Login";
+import { SignUpReducer } from "./SignUp";
 // #endregion Local Imports
 
 export default combineReducers({
     home: HomeReducer,
-    login: LoginReducer
+    login: LoginReducer,
+    signUp: SignUpReducer
 });
