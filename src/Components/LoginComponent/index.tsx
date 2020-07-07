@@ -6,7 +6,6 @@ import ReCAPTCHA from "react-google-recaptcha";
 // #endregion Global Imports
 
 // #region Local Imports
-import { Layout } from "@Components/Layout";
 import { PrimaryButton, ThemedInput, StaticImage, ParagraphText } from "@Components";
 import { LinkText } from "@Components/Basic";
 import { IStore } from "@Redux/IStore";
@@ -54,8 +53,6 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
         if (enableLogin) {
             setEnableLogin(false);
             await dispatch(LoginActions.UserLogin({
-                // email: 'test@venotv.com',
-                // password: "123456789"
                 params: {
                     email: email,
                     password: password,
@@ -78,64 +75,59 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
         }
     }
 
-    // console.log("login state", loginState);
     return (
-        <Layout>
-            <article className="w-100 flex-column">
-                <div className="mt-5 row justify-content-center no-gutters">
-                    <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
+        <div className="w-100 d-flex flex-column justify-content-between align-items-center">
+            <div className="mt-5 row justify-content-center no-gutters">
+                <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
+            </div>
+            <form name="login-form" className="flex-column d-flex align-items-center"
+                style={{ width: "271px" }} 
+                onSubmit={handleSubmit}
+                autoComplete="off">
+                    
+                <input id="username" style={{display: "none"}} type="text" name="fakeusernameremembered" />
+                <input id="password" style={{display:"none"}} type="password" name="fakepasswordremembered"></input>
+                <ThemedInput type="email" 
+                    placeholder="Email"
+                    name="email" 
+                    onChange={handleChange} 
+                    onBlur={isFormValid} 
+                    autoComplete="nope" />
+                <ThemedInput type="password" 
+                    placeholder="Password" 
+                    onChange={handleChange}
+                    onBlur={isFormValid}
+                    name="password"
+                    autoComplete="new-password"
+                    className="mt-3" />
+                <Link href="#" passHref>
+                    <LinkText style={{ textDecoration: "underline" }} 
+                        className="text-primary text-left font-10px w-100 mt-1">
+                            Forgot Password?
+                    </LinkText>
+                </Link>
+                
+                <div className="captcha-container mt-3" 
+                    style={{ height: "78px" }}>
+                    <ReCAPTCHA
+                        size="normal"
+                        sitekey="6LcPdqsZAAAAADygw6uZ0kPMd-OW8F55aPEtq5FK"
+                        onChange={handleCaptchaChange}
+                    />
                 </div>
-                <div className="row no-gutters justify-content-center mt-5">
-                    <form name="login-form" className="flex-column d-flex align-items-center"
-                        style={{ width: "271px" }} 
-                        onSubmit={handleSubmit}
-                        autoComplete="off">
-                            
-                        <input id="username" style={{display: "none"}} type="text" name="fakeusernameremembered" />
-                        <input id="password" style={{display:"none"}} type="password" name="fakepasswordremembered"></input>
-                        <ThemedInput type="email" 
-                            placeholder="Email"
-                            name="email" 
-                            onChange={handleChange} 
-                            onBlur={isFormValid} 
-                            autoComplete="nope" />
-                        <ThemedInput type="password" 
-                            placeholder="Password" 
-                            onChange={handleChange}
-                            onBlur={isFormValid}
-                            name="password"
-                            autoComplete="new-password"
-                            className="mt-3" />
-                        <Link href="#" passHref>
-                            <LinkText style={{ textDecoration: "underline" }} 
-                                className="text-primary text-left font-10px w-100 mt-1">
-                                    Forgot Password?
-                            </LinkText>
-                        </Link>
-                        
-                        <div className="captcha-container mt-3" 
-                            style={{ height: "78px" }}>
-                            <ReCAPTCHA
-                                size="normal"
-                                sitekey="6LcPdqsZAAAAADygw6uZ0kPMd-OW8F55aPEtq5FK"
-                                onChange={handleCaptchaChange}
-                            />
-                        </div>
-                        <PrimaryButton  
-                            type="submit"
-                            className="mt-2 font-20px" 
-                            isActive={enableLogin}>
-                                LOGIN
-                        </PrimaryButton>
-                        {errors && <ParagraphText className="mt-3 text-danger text-center">{ errors }</ParagraphText>}
-                    </form>
-                    <Link href="/signup" passHref>
-                        <LinkText style={{ height: "40px" }} className="bg-primary-gradient position-absolute left-0 right-0 bottom-0 seoge-ui-bold d-flex align-items-center justify-content-center text-white">
-                            Don't have an account? Sign up Now!
-                        </LinkText>
-                    </Link>
-                </div> 
-            </article>
-        </Layout>
+                <PrimaryButton  
+                    type="submit"
+                    className="mt-2 font-20px" 
+                    isActive={enableLogin}>
+                        LOGIN
+                </PrimaryButton>
+                {errors && <ParagraphText className="text-danger text-center">{ errors }</ParagraphText>}
+            </form>
+            <Link href="/signup" passHref>
+                <LinkText style={{ height: "40px" }} className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white">
+                    Don't have an account? Sign up Now!
+                </LinkText>
+            </Link>
+        </div>
     );
 }

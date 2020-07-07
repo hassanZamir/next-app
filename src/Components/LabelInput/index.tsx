@@ -10,6 +10,7 @@ const Container = styled(RegInput)`
     width: 100%;
     border: none;
     border: 1px solid ${({ theme }) => theme.colors.borderGrey};
+    color: ${({ theme }) => theme.colors.inputTextClor};
     border-radius: 6px;
 `;
 

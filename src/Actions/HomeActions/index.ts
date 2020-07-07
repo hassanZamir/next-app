@@ -4,11 +4,11 @@ import { Dispatch } from "redux";
 
 // #region Local Imports
 import { ActionConsts } from "@Definitions";
-import { PlanetaryService } from "@Services";
+// import { PlanetaryService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IHomePage } from "@Interfaces";
+// import { IHomePage } from "@Interfaces";
 // #endregion Interface Imports
 
 export const HomeActions = {
@@ -21,18 +21,18 @@ export const HomeActions = {
         type: ActionConsts.Home.ResetReducer,
     }),
 
-    GetApod: (payload: IHomePage.Actions.IGetApodPayload) => async (
-        dispatch: Dispatch
-    ) => {
-        const result = await PlanetaryService.GetPlanetImage({
-            params: payload.params,
-        });
+    // GetApod: (payload: IHomePage.Actions.IGetApodPayload) => async (
+    //     dispatch: Dispatch
+    // ) => {
+    //     const result = await PlanetaryService.GetPlanetImage({
+    //         params: payload.params,
+    //     });
 
-        dispatch({
-            payload: {
-                image: result,
-            },
-            type: ActionConsts.Home.SetReducer,
-        });
-    },
+    //     dispatch({
+    //         payload: {
+    //             image: result,
+    //         },
+    //         type: ActionConsts.Home.SetReducer,
+    //     });
+    // },
 };

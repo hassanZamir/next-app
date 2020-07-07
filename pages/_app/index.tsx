@@ -15,6 +15,7 @@ import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import "@Static/css/main.scss";
+import { Layout } from "@Components";
 // #endregion Local Imports
 
 class WebApp extends App<AppWithStore> {
@@ -26,7 +27,9 @@ class WebApp extends App<AppWithStore> {
             <ThemeProvider theme={theme}>
                 <Provider store={store}>
                     <PersistGate loading={<Component {...pageProps} />} persistor={persistor}>
-                        <Component {...pageProps} />
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
                     </PersistGate>
                 </Provider>
             </ThemeProvider>

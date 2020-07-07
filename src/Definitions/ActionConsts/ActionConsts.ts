@@ -12,5 +12,9 @@ export const ActionConsts = {
         SignUpError: "SignUpError",
         SignUpFieldAvailaible: "SignUpFieldAvailaible",
         SignUpFieldNotAvailaible: "SignUpFieldNotAvailaible"
+    },
+    Feeds: {
+        GetAllFeedsSuccess: "GetAllFeedsSuccess",
+        GetAllFeedsError: "GetAllFeedsError"
     }
 };

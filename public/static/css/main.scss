@@ -50,3 +50,23 @@
 .bg-primary-gradient {
     background: $primaryBackgroundGradient;
 }
+
+.bg-fotter-grey {
+    background: $footerGrey;
+}
+
+.highlight-footer-option {
+    border-top: 2px solid $footerHighlight;
+}
+.footer-navigation {
+    width: 100%;
+    z-index: 999;
+}
+@media (min-width: 576px) {
+    .footer-navigation {
+        width: 50%;
+        max-width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }   
+}

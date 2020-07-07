@@ -7,7 +7,12 @@ $font-family-base: 'Segoe UI', Roboto;
 $enable-shadows: true;
 $enable-gradients: true;
 $theme-colors: (
-    "primary": #F57B52
+    "primary": #F57B52,
+    "inputText": #78849E,
+    "lightGrey": #A0A0A0,
+    "darkGrey": #707070
 );
 
 $primaryBackgroundGradient: transparent linear-gradient(180deg, #FC6565 0%, #F47E51 100%, #808080 100%) 0% 0% no-repeat padding-box;
+$footerGrey: #EEEEEE;
+$footerHighlight: #F27E51;

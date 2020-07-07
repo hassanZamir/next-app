@@ -5,3 +5,4 @@ export { RegInput } from "./RegInput";
 export { p } from "./Paragraph";
 export { LinkText } from "./LinkText";
 export { Select } from "./Select";
+export { BackgroundImage } from "./BackgroundImage";

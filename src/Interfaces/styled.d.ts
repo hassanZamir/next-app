@@ -9,6 +9,9 @@ declare module "styled-components" {
             primaryBackground: string;
             borderGrey: string;
             disabledGrey: string;
+            inputTextClor: string;
+            lightGrey: string;
+            darkGrey: string;
         };
     }
 }

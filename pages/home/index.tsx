@@ -14,23 +14,24 @@ import { HomeActions } from "@Actions";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IHomePage, ReduxNextPageContext } from "@Interfaces";
+import { IFeedsPage, ILoginPage } from "@Interfaces";
 import dynamic from 'next/dynamic';
 // #endregion Interface Imports
 
 const DynamicLogin: any = dynamic(
-    () => import('@Components/LoginComponent').then((mod) => mod.LoginComponent) as any,
+    () => import('@Components/LoginComponent').then((mod) => mod.LoginComponent) as Promise<React.FunctionComponent<ILoginPage.IProps>>,
     { ssr: false }
 );
 
-const Home: NextPage<IHomePage.IProps, IHomePage.InitialProps> = (props) => {
+const DynamicFeeds: any = dynamic(
+    () => import('@Components/FeedsComponent').then((mod) => mod.FeedsComponent) as Promise<React.FunctionComponent<IFeedsPage.IProps>>,
+    { ssr: false }
+);
+
+const Home: NextPage<ILoginPage.InitialProps> = (props) => {
     const login = useSelector((state: IStore) => state.login);
 
-    return (
-        <Layout>
-           {'id' in login.session ? <div>Hello</div> : <DynamicLogin />}
-        </Layout>
-    );
+    return 'id' in login.session ? <DynamicFeeds user={login.session} /> : <DynamicLogin />;
 };
 
 export const getStaticProps = (...params: any) => {

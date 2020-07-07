@@ -80,8 +80,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     }
 
     return (
-        <Layout>
-            <article className="w-100 flex-column">
+            <div className="w-100 d-flex flex-column justify-content-between align-items-center">
                 <div className="mt-5 row justify-content-center no-gutters">
                     <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
                 </div>
@@ -173,23 +172,24 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             name="signUp">
                                 Sign Up
                         </PrimaryButton>
-                        <ParagraphText className="mt-3 text-danger text-center">{ errors.message }</ParagraphText>
+                        <ParagraphText className="text-danger text-center">{ errors.message }</ParagraphText>
                     </FormComponent>
-                    <Link href="/login">
-                        <LinkText style={{ height: "40px" }} className="bg-primary-gradient position-absolute left-0 right-0 bottom-0 seoge-ui-bold d-flex align-items-center justify-content-center text-white">
+                    <Link href="/login" passHref>
+                        <LinkText style={{ height: "40px" }} className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white">
                             Have an account? Log in here!
                         </LinkText>
                     </Link>
                 </div> 
-            </article>
-        </Layout>
+            </div>
     );
 };
 
-SignUp.getInitialProps = async (
-    ctx: ReduxNextPageContext
-): Promise<ISignUpPage.InitialProps> => {
-    return { namespacesRequired: ["common"] };
+export const getStaticProps = (...params: any) => {
+    return { 
+        props: {
+            namespacesRequired: ["common"]
+        }
+    };
 };
 
 

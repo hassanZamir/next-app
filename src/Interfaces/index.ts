@@ -17,10 +17,14 @@ export * from "@Services/API/Login/Login";
 export * from "@Services/API/Login/SignUpPayload";
 export * from "@Services/API/Login/SignUpResponse";
 export * from "@Services/API/Login/SignUp";
+
+export * from "@Services/API/Feeds/AllFeedsPayload";
+export * from "@Services/API/Feeds/AllFeedsResponse";
+export * from "@Services/API/Feeds/Feeds";
 // #endregion Service Interfaces
 
 // #region Page Interfaces
-export * from "@Interfaces/Pages/Home";
+export * from "@Interfaces/Pages/Feeds";
 export * from "@Interfaces/Pages/App";
 export * from "@Interfaces/Pages/Login";
 export * from "@Interfaces/Pages/SignUp";
