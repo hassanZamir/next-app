@@ -16,5 +16,11 @@ export const ActionConsts = {
     Feeds: {
         GetAllFeedsSuccess: "GetAllFeedsSuccess",
         GetAllFeedsError: "GetAllFeedsError"
+    },
+    CreatorProfile: {
+        GetCreatorProfileSuccess: "GetCreatorProfileSuccess",
+        GetCreatorProfileError: "GetCreatorProfileError",
+        GetCreatorFeedsSuccess: "GetCreatorFeedsSuccess",
+        GetCreatorFeedsError: "GetCreatorFeedsError"
     }
 };

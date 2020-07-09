@@ -70,7 +70,6 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                 payload: { errors: 'Captcha expired', session: {} }
             });
         } else {
-            console.log("Setting Token", token);
             setToken(token);
         }
     }

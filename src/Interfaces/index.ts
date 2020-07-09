@@ -21,9 +21,14 @@ export * from "@Services/API/Login/SignUp";
 export * from "@Services/API/Feeds/AllFeedsPayload";
 export * from "@Services/API/Feeds/AllFeedsResponse";
 export * from "@Services/API/Feeds/Feeds";
+
+export * from "@Services/API/CreatorProfile/CreatorProfilePayload";
+export * from "@Services/API/CreatorProfile/CreatorProfileResponse";
+export * from "@Services/API/CreatorProfile/CreatorProfile";
 // #endregion Service Interfaces
 
 // #region Page Interfaces
+export * from "@Interfaces/Pages/Profile";
 export * from "@Interfaces/Pages/Feeds";
 export * from "@Interfaces/Pages/App";
 export * from "@Interfaces/Pages/Login";

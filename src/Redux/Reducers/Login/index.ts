@@ -4,12 +4,12 @@ import Router from "next/router";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, ILoginPage } from "@Interfaces";
+import { IAction, ILoginPage, USER_SESSION } from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: ILoginPage.IStateProps = {
     errors: '',
-    session: {}
+    session: <USER_SESSION>{}
 };
 
 export const LoginReducer = (

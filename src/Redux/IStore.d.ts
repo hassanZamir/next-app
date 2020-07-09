@@ -1,5 +1,5 @@
 // #region Interface Imports
-import { IHomePage, ILoginPage, ISignUpPage, IFeedsPage } from "@Interfaces";
+import { IHomePage, ILoginPage, ISignUpPage, IFeedsPage, IProfilePage } from "@Interfaces";
 // #endregion Interface Imports
 
 export interface IStore {
@@ -7,4 +7,5 @@ export interface IStore {
     login: ILoginPage.IStateProps;
     signUp: ISignUpPage.IStateProps;
     feeds: IFeedsPage.IStateProps;
+    creatorProfile: IProfilePage.IStateProps;
 }

@@ -9,7 +9,7 @@ import { StaticImage } from "@Components";
 
 const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected }): JSX.Element => {
     return <div style={{ height: "40px" }} 
-        className="footer-navigation position-fixed bottom-0 bg-fotter-grey d-flex align-items-center justify-content-between text-white">
+        className={"footer-navigation position-fixed bottom-0 d-flex align-items-center justify-content-between text-white " + (selected === "Profile" ? "bg-white" : "bg-fotter-grey")}>
         {FooterConfig.map((config, index) => {
             return <div key={index} 
                 className={"d-flex align-items-center justify-content-center h-100 " + (selected === config.name ? "highlight-footer-option" : "")} 

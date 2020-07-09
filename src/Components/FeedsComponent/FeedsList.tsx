@@ -34,7 +34,7 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({ likes, comm
 const Feed: React.FunctionComponent<IFeed.IProps> = ({ feed }) => {
     return (
         <div className="w-100 h-100 my-2" style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}>
-            <BackgroundImage src={feed.imageUrl} />
+            <BackgroundImage src={feed.mediaUrl} />
             <div className="d-flex flex-column w-100 px-2">
                 <ParagraphText className="text-primary lato-semibold font-12px">
                     {feed.title}
@@ -49,7 +49,7 @@ const Feed: React.FunctionComponent<IFeed.IProps> = ({ feed }) => {
 }
 
 export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds }) => {
-    return (<div className="d-flex flex-column w-100 px-4" style={{ marginBottom: "40px" }}>
+    return (<div className="d-flex flex-column w-100 px-4">
         {feeds.map((feed, i) => {
             return (<Feed feed={feed} key={i} />);
         })}

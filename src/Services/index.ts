@@ -3,4 +3,5 @@ export { Http } from "@Services/API/Http";
 // export { PlanetaryService } from "@Services/API/Planetary";
 export { LoginService } from "@Services/API/Login";
 export { FeedsService } from "@Services/API/Feeds";
+export { CreatorProfileService } from "@Services/API/CreatorProfile";
 // #endregion Local Imports

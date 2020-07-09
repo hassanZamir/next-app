@@ -1,4 +1,5 @@
 @import "./fonts/Segoe/style.scss";
+@import "./fonts/Gibson/style.scss";
 @import "./bootstrap/index";
 
 .top-0 {
@@ -13,7 +14,15 @@
 .bottom-0 {
     bottom: 0;
 }
+.captcha-container {
+    transform: scale(0.57);
+}
 
+// FONT SIZE
+.font-9px {
+    font-size: 0.625rem;
+    line-height: 12px;
+}
 .font-10px {
     font-size: 0.625rem;
 }
@@ -38,14 +47,25 @@
 .font-20px {
     font-size: 1.25rem;
 }
+//
 
-.captcha-container {
-    transform: scale(0.57);
-}
-
+// FONT FAMILIES
 .seoge-ui-bold {
     font-family: 'Segoe UI Bold';
 }
+.gibson-bold {
+    font-family: 'Gibson Bold';
+}
+.gibson-regular {
+    font-family: 'Gibson Regular';
+}
+.gibson-semibold {
+    font-family: 'Gibson SemiBold';
+}
+.gibson-light {
+    font-family: 'Gibson Light';
+}
+//
 
 .bg-primary-gradient {
     background: $primaryBackgroundGradient;
@@ -69,4 +89,18 @@
         left: 50%;
         transform: translateX(-50%);
     }   
+}
+
+//
+.bg-gradient {
+    background: transparent linear-gradient(180deg, #FFFFFF 0%, #F7F7FA 100%) 0% 0% no-repeat padding-box;
+}
+.back-icon {
+    position: absolute;
+    z-index: 9;
+    top: 50px;
+    left: 30px;
+}
+.cursor-pointer {
+    cursor: pointer;
 }

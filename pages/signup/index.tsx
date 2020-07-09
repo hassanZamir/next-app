@@ -185,12 +185,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
 };
 
 export const getStaticProps = (...params: any) => {
-    return { 
-        props: {
-            namespacesRequired: ["common"]
-        }
-    };
+    return { props: {} };
 };
-
 
 export default SignUp;

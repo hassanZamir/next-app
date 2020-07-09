@@ -23,33 +23,45 @@ export const FeedsService = {
             response = {
                 status: "false",
                 feeds: [{
-                    title: "Taking the Ride in Brant Beach",
-                    username: "Keavas11110",
-                    likes: 30,
-                    time: "2h ago",
-                    comments: 50,
-                    imageUrl: "/images/photo@2x.png"
+                    id: 1,
+                    creatorId: 1,
+                    type: 1,
+                    title: "Hey Response, I am content",
+                    username: "Juggenrut",
+                    likes: 200,
+                    comments: 20,
+                    time: "12:30",
+                    mediaUrl: "/images/photo@2x.png"
                 }, {
-                    title: "Taking the Ride in Brant Beach",
-                    username: "Keavas11110",
-                    likes: 30,
-                    time: "2h ago",
-                    comments: 50,
-                    imageUrl: "/images/photo@2x.png"
+                    id: 1,
+                    creatorId: 1,
+                    type: 1,
+                    title: "Hey Response, I am content",
+                    username: "Juggenrut",
+                    likes: 200,
+                    comments: 20,
+                    time: "12:30",
+                    mediaUrl: "/images/photo@2x.png"
                 }, {
-                    title: "Taking the Ride in Brant Beach",
-                    username: "Keavas11110",
-                    likes: 30,
-                    time: "2h ago",
-                    comments: 50,
-                    imageUrl: "/images/photo@2x.png"
+                    id: 1,
+                    creatorId: 1,
+                    type: 1,
+                    title: "Hey Response, I am content",
+                    username: "Juggenrut",
+                    likes: 200,
+                    comments: 20,
+                    time: "12:30",
+                    mediaUrl: "/images/photo@2x.png"
                 }, {
-                    title: "Taking the Ride in Brant Beach",
-                    username: "Keavas11110",
-                    likes: 30,
-                    time: "2h ago",
-                    comments: 50,
-                    imageUrl: "/images/photo@2x.png"
+                    id: 1,
+                    creatorId: 1,
+                    type: 1,
+                    title: "Hey Response, I am content",
+                    username: "Juggenrut",
+                    likes: 200,
+                    comments: 20,
+                    time: "12:30",
+                    mediaUrl: "/images/photo@2x.png"
                 }],
                 errors: "Something went wrong"
             };

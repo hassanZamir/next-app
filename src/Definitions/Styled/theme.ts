@@ -10,7 +10,8 @@ const theme: DefaultTheme = {
         disabledGrey: "#555555",
         inputTextClor: "#78849E",
         lightGrey: "#A0A0A0",
-        darkGrey: "#707070"
+        darkGrey: "#707070",
+        headingBlue: "#454F63"
     },
 };
 

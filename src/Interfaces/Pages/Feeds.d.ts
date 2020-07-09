@@ -1,17 +1,9 @@
 import { FeedsModel } from "@Services/API/Feeds/Feeds";
-
-type FEED = {
-    title: string;
-    username: string;
-    likes: number;
-    time: string;
-    imageUrl: string;
-    comments: number;
-}
+import { USER_SESSION, FEED } from "@Interfaces";
 
 declare namespace IFeedsPage {
     export interface IProps {
-        user: { id: number }
+        user: USER_SESSION;
     }
 
     export interface IStateProps {
@@ -21,7 +13,7 @@ declare namespace IFeedsPage {
 
     namespace Actions {
         export interface IGetAllFeedsPayload extends LoginModel.GetLoginPayload {
-            user: number;
+            user: string;
         }
 
         export interface IGetAllFeedsResponse extends FeedsModel.GetAllFeedsResponse {}

@@ -12,6 +12,7 @@ declare module "styled-components" {
             inputTextClor: string;
             lightGrey: string;
             darkGrey: string;
+            headingBlue: string;
         };
     }
 }

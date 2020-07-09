@@ -1,15 +1,12 @@
 import { LoginModel } from "@Services/API/Login/Login";
+import { USER_SESSION } from "@Interfaces";
 
 declare namespace ILoginPage {
     export interface IProps {}
 
-    export interface InitialProps {
-        namespacesRequired: string[];
-    }
-
     export interface IStateProps {
         errors: string;
-        session: {};
+        session: USER_SESSION;
     }
 
     namespace Actions {
