@@ -9,7 +9,7 @@ import { FeedsList, ParagraphText, StaticImage } from "@Components";
 import { ICreatorContent } from "./CreatorContent";
 import { CONTENT_TYPE } from "src/Constants";
 
-export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps> = ({ totalContent, totalImage, totalVideos, params, name, isFollower }) => {
+export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps> = ({ user, totalContent, totalImage, totalVideos, params, name, isFollower }) => {
     const creatorProfileState = useSelector((state: IStore) => state.creatorProfile);
     const { creatorFeeds } = creatorProfileState;
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps> = (
         </Tabs>
         {isFollower === false ? <CreatorContentPrivacy name={name}/> : <React.Fragment>
             <ParagraphText className="gibson-semibold font-16px text-headingBlue px-4 mt-2">Posts</ParagraphText>
-            <FeedsList feeds={filterFeeds(creatorFeeds)} />
+            <FeedsList user={user} feeds={filterFeeds(creatorFeeds)} />
         </React.Fragment>}
     </div>
 }

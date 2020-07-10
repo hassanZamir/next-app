@@ -11,7 +11,7 @@ import { Authenticated } from "@Components";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IFeedsPage, ILoginPage } from "@Interfaces";
+import { IFeedsPage } from "@Interfaces";
 import dynamic from 'next/dynamic';
 // #endregion Interface Imports
 

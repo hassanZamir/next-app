@@ -23,7 +23,15 @@ export const LoginService = {
         } catch (error) {
             response = {
                 status: "false",
-                session: {},
+                session: {
+                    id: 0,
+                    name: '',
+                    username: '',
+                    email: '',
+                    country: '',
+                    birthDate: '',
+                    isCreator: false
+                },
                 authenticated: false,
                 errors: "Something went wrong"
             };

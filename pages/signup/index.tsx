@@ -37,7 +37,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     const [recaptchaToken, setToken] = useState("");
 
     const signUpState = useSelector((state: IStore) => state.signUp);
-    const { errors } = signUpState;
+    const { errors, successMessage } = signUpState;
     const dispatch = useDispatch();
 
     const handleCaptchaChange = (token: string | null) => {
@@ -54,6 +54,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
 
     async function handleSubmit(data: any) {
         console.log("SignUp Form Data: ", data);
+        debugger;
         if (enableSignUp && recaptchaToken) {
             const params = {
                 name: data.name,
@@ -172,7 +173,8 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             name="signUp">
                                 Sign Up
                         </PrimaryButton>
-                        <ParagraphText className="text-danger text-center">{ errors.message }</ParagraphText>
+                        {!successMessage && <ParagraphText className="text-danger text-center">{ errors.message }</ParagraphText>}
+                        {!errors.message && <ParagraphText className="text-success text-center">{ successMessage }</ParagraphText>}
                     </FormComponent>
                     <Link href="/login" passHref>
                         <LinkText style={{ height: "40px" }} className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white">

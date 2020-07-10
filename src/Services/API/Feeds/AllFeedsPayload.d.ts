@@ -1,3 +1,3 @@
 export interface AllFeedsPayload {
-    [key: string]: string;
+    [key: string]: string | number;
 }

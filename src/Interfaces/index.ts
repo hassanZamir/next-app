@@ -20,6 +20,10 @@ export * from "@Services/API/Login/SignUp";
 
 export * from "@Services/API/Feeds/AllFeedsPayload";
 export * from "@Services/API/Feeds/AllFeedsResponse";
+export * from "@Services/API/Feeds/TipFeedPayload";
+export * from "@Services/API/Feeds/TipFeedResponse";
+export * from "@Services/API/Feeds/LikeFeedPayload";
+export * from "@Services/API/Feeds/LikeFeedResponse";
 export * from "@Services/API/Feeds/Feeds";
 
 export * from "@Services/API/CreatorProfile/CreatorProfilePayload";

@@ -26,6 +26,6 @@ export const FeedsComponent: React.FunctionComponent<{user: USER_SESSION}> = ({ 
         <div className="my-2 row justify-content-center no-gutters">
             <StaticImage src="/images/veno_tv_logo_main@2x.png" height="100%" width="164px" />
         </div>
-        {feeds && feeds.length > 0 ? <FeedsList feeds={feeds} /> : <FeedsLoaderDiv />}
+        {feeds && feeds.length > 0 ? <FeedsList feeds={feeds} user={user} /> : <FeedsLoaderDiv />}
     </React.Fragment>);
 }

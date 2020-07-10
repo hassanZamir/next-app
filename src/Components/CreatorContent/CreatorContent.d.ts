@@ -4,10 +4,11 @@ declare namespace ICreatorContent {
         totalImage: number, 
         totalVideos: number,
         params: {
-            userId: string,
+            userId: number,
             profileId: string
         },
         isFollower: boolean;
+        user: any;
         name: string;
     }
 }

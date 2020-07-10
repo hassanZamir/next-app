@@ -29,6 +29,8 @@ export type FEED  = {
     comments: number;
     time: string;
     mediaUrl: string;
+    profileImageUrl: string;
+    contentLiked: boolean;
 }
 export interface CreatorFeedsResponse {
     status: boolean;

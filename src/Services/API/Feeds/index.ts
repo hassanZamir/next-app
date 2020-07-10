@@ -31,9 +31,11 @@ export const FeedsService = {
                     likes: 200,
                     comments: 20,
                     time: "12:30",
-                    mediaUrl: "/images/photo@2x.png"
+                    mediaUrl: "/images/photo@2x.png",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    contentLiked: false
                 }, {
-                    id: 1,
+                    id: 2,
                     creatorId: 1,
                     type: 1,
                     title: "Hey Response, I am content",
@@ -41,9 +43,11 @@ export const FeedsService = {
                     likes: 200,
                     comments: 20,
                     time: "12:30",
-                    mediaUrl: "/images/photo@2x.png"
+                    mediaUrl: "/images/photo@2x.png",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    contentLiked: false
                 }, {
-                    id: 1,
+                    id: 3,
                     creatorId: 1,
                     type: 1,
                     title: "Hey Response, I am content",
@@ -51,9 +55,11 @@ export const FeedsService = {
                     likes: 200,
                     comments: 20,
                     time: "12:30",
-                    mediaUrl: "/images/photo@2x.png"
+                    mediaUrl: "/images/photo@2x.png",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    contentLiked: true
                 }, {
-                    id: 1,
+                    id: 4,
                     creatorId: 1,
                     type: 1,
                     title: "Hey Response, I am content",
@@ -61,8 +67,52 @@ export const FeedsService = {
                     likes: 200,
                     comments: 20,
                     time: "12:30",
-                    mediaUrl: "/images/photo@2x.png"
+                    mediaUrl: "/images/photo@2x.png",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    contentLiked: true
                 }],
+                errors: "Something went wrong"
+            };
+        }
+        return response;
+    },
+    TipFeed: async (
+        payload: FeedsModel.GetTipFeedPayload
+    ): Promise<FeedsModel.GetTipFeedResponse> => {
+        let response: FeedsModel.GetTipFeedResponse
+
+        try {
+            response = await Http.Request<FeedsModel.GetTipFeedResponse>(
+                "POST",
+                "/content/tip",
+                undefined,
+                {...payload}
+            );
+            // localStorage.setItem("user", response.status);
+        } catch (error) {
+            response = {
+                status: false,
+                errors: "Something went wrong"
+            };
+        }
+        return response;
+    },
+    LikeFeed: async (
+        payload: FeedsModel.GetLikeFeedPayload
+    ): Promise<FeedsModel.GetLikeFeedResponse> => {
+        let response: FeedsModel.GetLikeFeedResponse
+
+        try {
+            response = await Http.Request<FeedsModel.GetLikeFeedResponse>(
+                "POST",
+                "/content/likes",
+                undefined,
+                {...payload}
+            );
+            // localStorage.setItem("user", response.status);
+        } catch (error) {
+            response = {
+                status: true,
                 errors: "Something went wrong"
             };
         }

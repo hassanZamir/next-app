@@ -4,16 +4,16 @@ import styled from "styled-components";
 // #endregion Global Imports
 
 // #region Local Imports
-import { IInput } from "./Input";
+import { ITextarea } from "./Textarea";
 // #endregion Local Imports
 
-const _Input = styled.input<IInput.IProps>`
+const _Textarea = styled.textarea`
     background-color: transparent;
     padding: 5px;
     color: inherit;
     outline-width: 0;
 `;
 
-export const Input: React.FunctionComponent<IInput.IProps> = props => {
-    return <_Input {...props} />;
+export const Textarea: React.FunctionComponent<ITextarea.IProps> = ({ rows, columns, ...rest}) => {
+    return <_Textarea rows={rows} cols={columns} {...rest} />;
 };

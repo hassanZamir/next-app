@@ -8,6 +8,7 @@ import { IAction, ISignUpPage } from "@Interfaces";
 
 import Router from "next/router";
 const INITIAL_STATE: ISignUpPage.IStateProps = {
+    successMessage: '',
     errors: {
         field: '',
         message: ''
@@ -20,8 +21,9 @@ export const SignUpReducer = (
 ) => {
     switch (action.type) {
         case ActionConsts.SignUp.SignUpSuccess: {
-            Router.push('/login');
-            return state;
+            return Object.assign({}, state, {
+                successMessage: "A verification email has been sent to use. Please verify."
+            });
         }
         case ActionConsts.SignUp.SignUpError: {
             let { errors } = action.payload!;

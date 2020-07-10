@@ -19,6 +19,9 @@
 }
 
 // FONT SIZE
+.font-8px {
+    font-size: 0.5rem;
+}
 .font-9px {
     font-size: 0.625rem;
     line-height: 12px;
@@ -46,6 +49,9 @@
 }
 .font-20px {
     font-size: 1.25rem;
+}
+.font-40px {
+    font-size: 40px;
 }
 //
 
@@ -103,4 +109,87 @@
 }
 .cursor-pointer {
     cursor: pointer;
+}
+
+//
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: .5;
+  }
+  
+  .modal-wrapper {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+  }
+  
+  .modal {
+    z-index: 100;
+    background: white;
+    position: relative;
+    margin: auto;
+    border-radius: 6px;
+    padding: 2rem;
+    width: 300px;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .modal-close-button {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    opacity: .3;
+    cursor: pointer;
+    border: none;
+  }
+  
+  button {
+    font-size: .9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 3px;
+    padding: .3rem 1rem;
+    margin-left: .5rem;
+  }
+  
+  .button-default {
+    background: #247BA0;
+    color: #fff;
+  }
+
+  //TipModal
+.background-circle-blue {
+    z-index: -1;
+    background: rgba(188, 224, 253, 0.1);
+    border-radius: 50%;
+    position: absolute;
+    left: auto;
+    right: auto;
+    width: 100%;
+    height: 100%;
+}
+.background-circle-primary {
+    z-index: 0;
+    background: rgba(245, 123, 82, 0.1);
+    border-radius: 50%;
+    width: 50%;
+    height: 50%;
 }

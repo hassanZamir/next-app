@@ -31,7 +31,9 @@ export const CreatorProfileService = {
                     likes: 200,
                     comments: 20,
                     time: "12:30",
-                    mediaUrl: "/images/photo@2x.png"
+                    mediaUrl: "/images/photo@2x.png",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    contentLiked: false
                 }, {
                     id: 2,
                     creatorId: 1,
@@ -41,7 +43,9 @@ export const CreatorProfileService = {
                     likes: 200,
                     comments: 20,
                     time: "12:30",
-                    mediaUrl: "/images/photo@2x.png"
+                    mediaUrl: "/images/photo@2x.png",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    contentLiked: false
                 }, {
                     id: 3,
                     creatorId: 1,
@@ -51,7 +55,9 @@ export const CreatorProfileService = {
                     likes: 200,
                     comments: 20,
                     time: "12:30",
-                    mediaUrl: "/images/photo@2x.png"
+                    mediaUrl: "/images/photo@2x.png",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    contentLiked: false
                 }, {
                     id: 1,
                     creatorId: 1,
@@ -61,7 +67,9 @@ export const CreatorProfileService = {
                     likes: 200,
                     comments: 20,
                     time: "12:30",
-                    mediaUrl: "/images/photo@2x.png"
+                    mediaUrl: "/images/photo@2x.png",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    contentLiked: true
                 }],
                 errors: "Something went wrong"
             };
@@ -95,7 +103,7 @@ export const CreatorProfileService = {
                     coverImageUrl: "/images/5.jpg",
                     profileImageUrl: "/images/Capture@2x.png",
                     address: "San Fransisco, CA",
-                    isFollower: false
+                    isFollower: true
                 },
                 errors: "Something went wrong"
             };

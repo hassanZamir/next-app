@@ -34,6 +34,7 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
             totalContent={totalContent}
             totalImage={totalImages}
             totalVideos={totalVideos} 
+            user={user}
             params={params} 
             isFollower={isFollower} 
             name={name} />

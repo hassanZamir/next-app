@@ -11,6 +11,7 @@ const Container = styled.button<IButton.IProps>`
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
     border: 0px solid transparent;
     &:focus { outline: none; }
+    margin: 0;
 `;
 
 export const Button: React.FunctionComponent<IButton.IProps> = props => {

@@ -1,11 +1,11 @@
 export interface CreatorProfilePayload {
-    [key: string]: string;
+    [key: string]: string | number;
     profileId: string;
-    userId: string;
+    userId: number;
 }
 
 export interface CreatorFeedsPayload {
-    [key: string]: string;
+    [key: string]: string | number;
     profileId: string;
-    userId: string;
+    userId: number;
 }

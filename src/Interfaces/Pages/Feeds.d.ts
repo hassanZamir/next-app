@@ -12,8 +12,8 @@ declare namespace IFeedsPage {
     }
 
     namespace Actions {
-        export interface IGetAllFeedsPayload extends LoginModel.GetLoginPayload {
-            user: string;
+        export interface IGetAllFeedsPayload extends FeedsModel.AllFeedsPayload {
+            user: number;
         }
 
         export interface IGetAllFeedsResponse extends FeedsModel.GetAllFeedsResponse {}
@@ -23,20 +23,36 @@ declare namespace IFeedsPage {
 declare namespace IFeedsList {
     export interface IProps {
         feeds: FEED[];
+        user: USER_SESSION;
     }
 }
 
 declare namespace IFeed {
     export interface IProps {
+        index: number;
         feed: FEED;
+        toggleTipModal: (any)=>void;
+        likeContent: (index: number)=>void;
+    }
+
+    namespace Actions {
+        export interface ITipFeedPayload extends FeedsModel.GetTipFeedPayload {}
+        export interface ITipFeedResponse extends FeedsModel.GetTipFeedResponse {}
+
+        export interface ILikeFeedPayload extends FeedsModel.GetLikeFeedPayload {}
+        export interface ILikeFeedResponse extends FeedsModel.GetLikeFeedResponse {}
     }
 }
 
 declare namespace IFeedOptions {
     export interface IProps {
+        index: number;
         likes: number;
         comments: number;
+        contentLiked: boolean;
         time: string;
+        toggleTipModal: (any)=>void;
+        likeContent: (index: number)=>void;
     }
 }
 export { IFeedsPage, IFeedsList, IFeed, IFeedOptions };
