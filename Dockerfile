@@ -14,4 +14,4 @@ COPY .env.test /opt/app/.env
 
 RUN npm install --dev && npm run build
 
-CMD [ "npm", "run start" ]
+##CMD [ "npm", "start" ]
