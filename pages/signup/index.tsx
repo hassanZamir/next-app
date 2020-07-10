@@ -172,8 +172,8 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             name="signUp">
                                 Sign Up
                         </PrimaryButton>
-                        {!successMessage && <ParagraphText className="text-danger text-center">{ errors.message }</ParagraphText>}
-                        {!errors.message && <ParagraphText className="text-success text-center">{ successMessage }</ParagraphText>}
+                        {!successMessage && <ParagraphText className="py-4 text-danger text-center">{ errors.message }</ParagraphText>}
+                        {!errors.message && <ParagraphText className="py-4 text-success text-center">{ successMessage }</ParagraphText>}
                     </FormComponent>
                     <Link href="/login" passHref>
                         <LinkText style={{ height: "40px" }} className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white">

@@ -21,8 +21,8 @@ export const CreatorProfile: React.FunctionComponent<{creatorProfile: CREATOR_PR
                 <ParagraphText className="text-inputText font-15px gibson-regular">{creatorProfile.totalFollowers + " Followers"}</ParagraphText>
                 <div className="text-inputText seoge-ui-bold font-10px">Show Bio</div>
             </div>}
-            <div onClick={() => onFollow(true)}>
-                {!creatorProfile.isFollower && <PrimaryButton isActive={true} className="gibson-semibold font-9px">Follow for $9.99 a month</PrimaryButton>}
+            <div>
+                {!creatorProfile.isFollower && <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-9px">Follow for $9.99 a month</PrimaryButton>}
                 {creatorProfile.isFollower && <div className="d-flex flex-column">
                     <PrimaryButton borderRadius="10px" isActive={true} onClick={() => onFollow(false)}
                         className="gibson-regular font-15px">

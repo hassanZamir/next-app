@@ -26,6 +26,7 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
     }, []);
 
     const onFollow = (followOrUnFollow: boolean) => {
+        debugger;
         const followParams = { profileId: profileId, userId: user.id, shouldFollow: followOrUnFollow};
         if (followOrUnFollow) {
             dispatch(CreatorProfileActions.FollowProfile(followParams));

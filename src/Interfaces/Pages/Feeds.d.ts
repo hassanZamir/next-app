@@ -31,8 +31,8 @@ declare namespace IFeed {
     export interface IProps {
         index: number;
         feed: FEED;
-        toggleTipModal: (any)=>void;
-        likeContent: (index: number)=>void;
+        toggleTipModal: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
+        likeContent: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
     }
 
     namespace Actions {
@@ -47,12 +47,9 @@ declare namespace IFeed {
 declare namespace IFeedOptions {
     export interface IProps {
         index: number;
-        likes: number;
-        comments: number;
-        contentLiked: boolean;
-        time: string;
-        toggleTipModal: (any)=>void;
-        likeContent: (index: number)=>void;
+        feed: FEED;
+        toggleTipModal: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
+        likeContent: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
     }
 }
 export { IFeedsPage, IFeedsList, IFeed, IFeedOptions };

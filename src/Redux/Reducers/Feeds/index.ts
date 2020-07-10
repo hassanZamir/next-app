@@ -35,6 +35,7 @@ export const FeedsReducer = (
             let { contentId } = action.payload!;
             const { feeds } = state;
 
+            debugger;
             const _updatedFeeds = feeds.map((feed) => {
                 feed.id === contentId && (feed.contentLiked = true)
                 return feed;

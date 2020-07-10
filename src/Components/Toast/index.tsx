@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { DefaultToast, ToastProps } from 'react-toast-notifications';
-import { IToast } from "./Toast";
+import { ToastProps } from 'react-toast-notifications';
 
 const slideIn = keyframes`
     0% { transform: translate3d(-200px, 0px, 0px) }

@@ -7,4 +7,5 @@ export { LinkText } from "./LinkText";
 export { Select } from "./Select";
 export { Textarea } from "./Textarea";
 export { BackgroundImage } from "./BackgroundImage";
+export { Modal } from "./Modal";
 export { Tabs, Tab, Content } from "./Tabs";
