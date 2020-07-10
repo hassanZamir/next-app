@@ -8,7 +8,7 @@ import { LoginService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { ISignUpPage, ILoginPage } from "@Interfaces";
+import { ISignUpPage, ILoginPage, IAccountVerifyPage } from "@Interfaces";
 // #endregion Interface Imports
 
 export const LoginActions = {
@@ -62,5 +62,20 @@ export const LoginActions = {
         return {
             errors: errors.length <= 0 ? [] : errors,
         }
+    },
+    AccountVerify: (payload: IAccountVerifyPage.Actions.IGetAccountVerifyPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        dispatch({
+            type: ActionConsts.AccountVerify.SetLoading,
+            payload: null
+        });
+        
+        const result = await LoginService.AccountVefify(payload);
+    
+        dispatch({
+            payload: result,
+            type: result.status ? ActionConsts.AccountVerify.AccountVerifySuccess : ActionConsts.AccountVerify.AccountVerifyError
+        });
     }
 };

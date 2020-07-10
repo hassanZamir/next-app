@@ -22,7 +22,7 @@ export const SignUpReducer = (
     switch (action.type) {
         case ActionConsts.SignUp.SignUpSuccess: {
             return Object.assign({}, state, {
-                successMessage: "A verification email has been sent to use. Please verify."
+                successMessage: "A verification email has been sent to your email. Please verify."
             });
         }
         case ActionConsts.SignUp.SignUpError: {

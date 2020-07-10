@@ -3,7 +3,8 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { LoginModel, SignUpModel } from "@Interfaces";
+import { LoginModel, SignUpModel, AccountVerifyModel } from "@Interfaces";
+import { async } from "q";
 // #endregion Interface Imports
 
 export const LoginService = {
@@ -67,4 +68,25 @@ export const LoginService = {
         }
         return response;
     },
+    AccountVefify: async (
+        payload: AccountVerifyModel.GetAccountVerifyPayload
+    ): Promise<AccountVerifyModel.GetAccountVerifyResponse> => {
+        let response: AccountVerifyModel.GetAccountVerifyResponse;
+
+        try {
+            response = await Http.Request<AccountVerifyModel.GetAccountVerifyResponse>(
+                "POST",
+                "/user/email/verify",
+                undefined,
+                {...payload}
+            );
+            // localStorage.setItem("user", response.status);
+        } catch (error) {
+            response = {
+                status: false,
+                error: "Something went wrong"
+            };
+        }
+        return response;
+    }
 };

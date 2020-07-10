@@ -28,6 +28,7 @@ export const DobInput: React.FunctionComponent<ISelectInput.IProps> = ({ options
             <label className="text-primary font-13px">{labelText}</label>
             <div className="d-flex justify-content-between w-100">
                 {name.map((inputName, index) => {
+                    debugger;
                     return <div key={index} className="">
                         <SelectContainer options={options[index]} name={inputName} ref={register ? register(validationRules[index]): null} />
                     </div>

@@ -18,10 +18,10 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps> = ({ 
       style={{ width: "300px" }}>
       {Array.isArray(children)
         ? children.map(child => {
-            if (child.props.name) {
+            if (child && child.props && child.props.name) {
               if (child.props.name === "reTypePassword")
                 child.props.validationRules.validate = (value: string) => { return password.current ? value === password.current || "Password must match" : true }
-
+              
               return React.createElement(child.type, {
                 ...{
                   ...child.props,

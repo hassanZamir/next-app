@@ -13,6 +13,11 @@ export const ActionConsts = {
         SignUpFieldAvailaible: "SignUpFieldAvailaible",
         SignUpFieldNotAvailaible: "SignUpFieldNotAvailaible"
     },
+    AccountVerify: {
+        AccountVerifySuccess: "AccountVerifySuccess",
+        AccountVerifyError: "AccountVerifyError",
+        SetLoading: "SetLoading"
+    },
     Feeds: {
         GetAllFeedsSuccess: "GetAllFeedsSuccess",
         GetAllFeedsError: "GetAllFeedsError",

@@ -8,6 +8,7 @@ import { LoginReducer } from "./Login";
 import { SignUpReducer } from "./SignUp";
 import { FeedsReducer } from "./Feeds";
 import { CreatorProfileReducer } from "./CreatorProfile";
+import { AccountVerifyReducer } from "./AccountVerify";
 // #endregion Local Imports
 
 export default combineReducers({
@@ -15,5 +16,6 @@ export default combineReducers({
     login: LoginReducer,
     signUp: SignUpReducer,
     feeds: FeedsReducer,
-    creatorProfile: CreatorProfileReducer
+    creatorProfile: CreatorProfileReducer,
+    accountVerify: AccountVerifyReducer
 });

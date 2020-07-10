@@ -14,6 +14,9 @@ export * from "@Services/API/Login/LoginPayload";
 export * from "@Services/API/Login/LoginResponse";
 export * from "@Services/API/Login/Login";
 
+export * from "@Services/API/Login/AccountVerifyPayload";
+export * from "@Services/API/Login/AccountVerifyResponse";
+export * from "@Services/API/Login/AccountVerify";
 export * from "@Services/API/Login/SignUpPayload";
 export * from "@Services/API/Login/SignUpResponse";
 export * from "@Services/API/Login/SignUp";
@@ -32,6 +35,7 @@ export * from "@Services/API/CreatorProfile/CreatorProfile";
 // #endregion Service Interfaces
 
 // #region Page Interfaces
+export * from "@Interfaces/Pages/AccountVerify";
 export * from "@Interfaces/Pages/Profile";
 export * from "@Interfaces/Pages/Feeds";
 export * from "@Interfaces/Pages/App";

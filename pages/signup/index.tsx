@@ -53,8 +53,6 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     }
 
     async function handleSubmit(data: any) {
-        console.log("SignUp Form Data: ", data);
-        debugger;
         if (enableSignUp && recaptchaToken) {
             const params = {
                 name: data.name,
@@ -62,7 +60,8 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                 email: data.email,
                 password: data.password,
                 country: data.country,
-                dateBirth : data.dob.date + "-" + data.dob.month + "-" + data.dob.year,
+                dateBirth: "9-7-1990",
+                // dateBirth : data.dob.date + "-" + data.dob.month + "-" + data.dob.year,
                 account_created: true
             }
             setEnableSignUp(false);
