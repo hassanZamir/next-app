@@ -10,8 +10,8 @@ RUN npm ci
 
 COPY . /opt/app
 
-RUN npm install --dev 
+COPY .env.test /opt/app/.env
 
-#&& npm run build
+RUN npm install --dev && npm run build
 
-CMD [ "npm", "start:dev" ]
+##CMD [ "npm", "start" ]

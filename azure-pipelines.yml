@@ -14,7 +14,7 @@ variables:
   imageRepository: 'venopwadev'
   containerRegistry: 'venodev.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: 'dev-latest'
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
