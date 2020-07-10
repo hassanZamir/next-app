@@ -24,7 +24,7 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
     const [recaptchaToken, setToken] = useState("");
     const { email, password } = inputs;
 
-    const loginState = useSelector((state: IStore) => state.login);
+    const loginState = useSelector((state: IStore) => state.loginError);
     const { errors } = loginState;
     const dispatch = useDispatch();
 

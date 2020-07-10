@@ -4,7 +4,7 @@ import { combineReducers } from "redux";
 
 // #region Local Imports
 // import { HomeReducer } from "./home";
-import { LoginReducer } from "./Login";
+import { LoginSuccessReducer, LoginErrorReducer } from "./Login";
 import { SignUpReducer } from "./SignUp";
 import { FeedsReducer } from "./Feeds";
 import { CreatorProfileReducer } from "./CreatorProfile";
@@ -13,7 +13,8 @@ import { AccountVerifyReducer } from "./AccountVerify";
 
 export default combineReducers({
     // home: HomeReducer,
-    login: LoginReducer,
+    loginSuccess: LoginSuccessReducer,
+    loginError: LoginErrorReducer,
     signUp: SignUpReducer,
     feeds: FeedsReducer,
     creatorProfile: CreatorProfileReducer,

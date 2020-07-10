@@ -16,7 +16,7 @@ import { ProfileComponent, Authenticated } from "@Components";
 // #endregion Interface Imports
 
 const UserProfile: NextPage<IProfilePage.IProps> = () => {
-    const login = useSelector((state: IStore) => state.login);
+    const login = useSelector((state: IStore) => state.loginSuccess);
     const router = useRouter();
     const profileId = router.query["id"] as string;
 

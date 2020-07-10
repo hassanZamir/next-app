@@ -21,7 +21,7 @@ const DynamicFeeds: any = dynamic(
 );
 
 const Home: NextPage = () => {
-    const login = useSelector((state: IStore) => state.login);
+    const login = useSelector((state: IStore) => state.loginSuccess);
     
     return <Authenticated session={login.session} name="Home">
         <DynamicFeeds user={login.session} />

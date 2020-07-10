@@ -60,7 +60,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                 email: data.email,
                 password: data.password,
                 country: data.country,
-                dateBirth: "9-7-1990",
+                birthDate: "9-7-1990",
                 // dateBirth : data.dob.date + "-" + data.dob.month + "-" + data.dob.year,
                 account_created: true
             }

@@ -31,6 +31,8 @@ export * from "@Services/API/Feeds/Feeds";
 
 export * from "@Services/API/CreatorProfile/CreatorProfilePayload";
 export * from "@Services/API/CreatorProfile/CreatorProfileResponse";
+export * from "@Services/API/CreatorProfile/FollowProfilePayload";
+export * from "@Services/API/CreatorProfile/FollowProfileResponse";
 export * from "@Services/API/CreatorProfile/CreatorProfile";
 // #endregion Service Interfaces
 

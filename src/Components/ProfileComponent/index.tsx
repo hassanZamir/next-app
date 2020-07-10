@@ -6,7 +6,7 @@ import Router from 'next/router';
 
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
-import { USER_SESSION } from "@Interfaces";
+import { USER_SESSION, CREATOR_PROFILE } from "@Interfaces";
 
 import { CreatorProfileActions } from "@Actions";
 import { CreatorProfile, CreatorContent } from "@Components";
@@ -25,11 +25,20 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
         dispatch(CreatorProfileActions.GetCreatorProfile(params));
     }, []);
 
+    const onFollow = (followOrUnFollow: boolean) => {
+        const followParams = { profileId: profileId, userId: user.id, shouldFollow: followOrUnFollow};
+        if (followOrUnFollow) {
+            dispatch(CreatorProfileActions.FollowProfile(followParams));
+        } else {
+            dispatch(CreatorProfileActions.FollowProfile(followParams));
+        }
+    }
+
     return (<div className="bg-gradient d-flex flex-column h-100">
         <div className="back-icon cursor-pointer" onClick={() => Router.back()}>
             <FontAwesomeIcon icon={faArrowLeft} color="white" size="lg" />
         </div>
-        <CreatorProfile creatorProfile={creatorProfile} />
+        <CreatorProfile creatorProfile={creatorProfile} onFollow={onFollow} />
         <CreatorContent 
             totalContent={totalContent}
             totalImage={totalImages}

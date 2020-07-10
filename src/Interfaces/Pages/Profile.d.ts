@@ -17,9 +17,10 @@ declare namespace IProfilePage {
         export interface IGetCreatorFeedsPayload extends CreatorProfileModel.GetCreatorFeedsPayload {}
         export interface IGetCreatorFeedsResponse extends CreatorProfileModel.GetCreatorFeedsResponse {}
 
-        export interface IFilterFeedsPayload {
-            key: number;
-        }
+        export interface IGetFollowProfilePayload extends CreatorProfileModel.GetFollowProfilePayload {}
+        export interface IGetFollowProfileResponse extends CreatorProfileModel.GetFollowProfileResponse {}
+
+        export interface IFilterFeedsPayload { key: number;}
         export interface IGetCreatorFeedsResponse extends CreatorProfileModel.GetCreatorFeedsResponse {}
     }
 }

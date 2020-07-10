@@ -31,5 +31,15 @@ export const CreatorProfileActions = {
             payload: result,
             type: !result.status ? ActionConsts.CreatorProfile.GetCreatorFeedsSuccess : ActionConsts.CreatorProfile.GetCreatorFeedsError
         });
+    },
+    FollowProfile: (payload: IProfilePage.Actions.IGetFollowProfilePayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await CreatorProfileService.FollowProfile(payload);
+        
+        dispatch({
+            payload: result,
+            type: !result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
+        });
     }
 };

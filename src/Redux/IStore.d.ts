@@ -4,7 +4,8 @@ import { IHomePage, ILoginPage, ISignUpPage, IFeedsPage, IProfilePage, IAccountV
 
 export interface IStore {
     home: IHomePage.IStateProps;
-    login: ILoginPage.IStateProps;
+    loginSuccess: ILoginPage.IStateProps;
+    loginError: ILoginPage.IStateProps;
     signUp: ISignUpPage.IStateProps;
     feeds: IFeedsPage.IStateProps;
     creatorProfile: IProfilePage.IStateProps;

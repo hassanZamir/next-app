@@ -103,7 +103,43 @@ export const CreatorProfileService = {
                     coverImageUrl: "/images/5.jpg",
                     profileImageUrl: "/images/Capture@2x.png",
                     address: "San Fransisco, CA",
-                    isFollower: true
+                    isFollower: false
+                },
+                errors: "Something went wrong"
+            };
+        }
+        return response;
+    },
+    FollowProfile: async (
+        payload: CreatorProfileModel.GetFollowProfilePayload
+    ): Promise<CreatorProfileModel.GetFollowProfileResponse> => {
+        let response: CreatorProfileModel.GetFollowProfileResponse;
+
+        try {
+            response = await Http.Request<CreatorProfileModel.GetFollowProfileResponse>(
+                "POST",
+                "/profile/follow",
+                undefined,
+                {...payload}
+            );
+        } catch (error) {
+            debugger;
+            response = {
+                status: false,
+                profile: {
+                    id: 1,
+                    name: "Joseph Denly",
+                    totalContent: 250,
+                    totalImages: 200,
+                    totalVideos: 50,
+                    totalFollowers: 156000,
+                    totalFollowing: 2000,
+                    showFollowers: true,
+                    bio: "Hello YES!!!",
+                    coverImageUrl: "/images/5.jpg",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    address: "San Fransisco, CA",
+                    isFollower: payload.shouldFollow
                 },
                 errors: "Something went wrong"
             };

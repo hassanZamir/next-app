@@ -12,7 +12,7 @@ const INITIAL_STATE: ILoginPage.IStateProps = {
     session: <USER_SESSION>{}
 };
 
-export const LoginReducer = (
+export const LoginSuccessReducer = (
     state = INITIAL_STATE,
     action: IAction<ILoginPage.Actions.IGetLoginResponse>
 ) => {
@@ -26,6 +26,16 @@ export const LoginReducer = (
                 session: session
             });
         }
+        default:
+            return state;
+    }
+};
+
+export const LoginErrorReducer = (
+    state = INITIAL_STATE,
+    action: IAction<ILoginPage.Actions.IGetLoginResponse>
+) => {
+    switch (action.type) {
         case ActionConsts.Login.SetLoginError: {
             let { errors } = action.payload!;
 

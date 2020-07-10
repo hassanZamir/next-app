@@ -20,6 +20,7 @@ const Tabs = styled.div`
 
 const Tab = styled.button<ITab.IProps>`
     border: 0;
+    border-radius: 0px;
     border-right: ${({ border}) => (border ? '1px solid black' : '0px')};
     outline: none;
     cursor: pointer;
