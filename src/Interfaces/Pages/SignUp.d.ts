@@ -20,9 +20,7 @@ declare namespace ISignUpPage {
 
         export interface IMapResponse {}
 
-        export interface IGetSignUpPayload extends SignUpModel.GetSignUpPayload {
-            params: {};
-        }
+        export interface IGetSignUpPayload extends SignUpModel.GetSignUpPayload {}
 
         export interface IGetSignUpResponse extends SignUpModel.GetSignUpResponse {}
     }

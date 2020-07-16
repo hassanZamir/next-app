@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { ILabelInput, ISelectInput } from "./LabelInput";
-
 import { RegInput, Select } from "../Basic";
 
 const Container = styled(RegInput)`
@@ -22,15 +21,17 @@ const SelectContainer = styled(Select)`
     border-radius: 6px;
 `;
 
-export const DobInput: React.FunctionComponent<ISelectInput.IProps> = ({ options, labelText, name, register, formErrors, validationRules, ...props }) => {
+export const SelectInput: React.FunctionComponent<ISelectInput.IProps> = ({ options, labelText, name, register, formErrors, validationRules, ...props }) => {
     return (
         <div className={"d-flex flex-column align-items-start w-100 " + (props.wrapperClass ? props.wrapperClass : "")}>
             <label className="text-primary font-13px">{labelText}</label>
             <div className="d-flex justify-content-between w-100">
                 {name.map((inputName, index) => {
-                    debugger;
-                    return <div key={index} className="">
-                        <SelectContainer options={options[index]} name={inputName} ref={register ? register(validationRules[index]): null} />
+                    return <div key={index} className={name.length <= 1 ? "w-100" : ""}>
+                        <SelectContainer 
+                            options={options[index]} 
+                            name={inputName} 
+                            selectRef={register ? register(validationRules[index]) : null} />
                     </div>
                 })}
             </div>

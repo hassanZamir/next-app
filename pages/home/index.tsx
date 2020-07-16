@@ -7,16 +7,20 @@ import { useSelector, useDispatch } from "react-redux";
 
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
-import { Authenticated } from "@Components";
+// import { Authenticated } from "@Components";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IFeedsPage } from "@Interfaces";
+import { IFeedsPage, USER_SESSION } from "@Interfaces";
 import dynamic from 'next/dynamic';
 // #endregion Interface Imports
 
 const DynamicFeeds: any = dynamic(
     () => import('@Components/FeedsComponent').then((mod) => mod.FeedsComponent) as Promise<React.FunctionComponent<IFeedsPage.IProps>>,
+    { ssr: false }
+);
+const Authenticated: any = dynamic(
+    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{session: USER_SESSION, name: string}>>,
     { ssr: false }
 );
 

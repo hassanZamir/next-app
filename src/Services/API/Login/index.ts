@@ -31,7 +31,8 @@ export const LoginService = {
                     email: '',
                     country: '',
                     birthDate: '',
-                    isCreator: false
+                    isCreator: false,
+                    verifyEmail: 0
                 },
                 authenticated: false,
                 errors: "Something went wrong"
@@ -49,7 +50,7 @@ export const LoginService = {
                 "POST",
                 "/accounts/register",
                 undefined,
-                payload.params
+                {...payload}
             );
             // localStorage.setItem("user", response.status);
         } catch (error) {
@@ -76,7 +77,7 @@ export const LoginService = {
         try {
             response = await Http.Request<AccountVerifyModel.GetAccountVerifyResponse>(
                 "POST",
-                "/user/email/verify",
+                "/accounts/verify",
                 undefined,
                 {...payload}
             );

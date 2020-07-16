@@ -50,6 +50,9 @@
 .font-20px {
     font-size: 1.25rem;
 }
+.font-25px {
+    font-size: 1.5625rem;
+}
 .font-40px {
     font-size: 40px;
 }
@@ -159,6 +162,13 @@
     opacity: .3;
     cursor: pointer;
     border: none;
+    background: transparent;
+    margin-right: -25px;
+    outline: none;
+
+    &:focus {
+        outline: none !important;
+    }
   }
   
   button {
@@ -184,7 +194,7 @@
     left: auto;
     right: auto;
     width: 100%;
-    height: 100%;
+    height: 200%;
 }
 .background-circle-primary {
     z-index: 0;

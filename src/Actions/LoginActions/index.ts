@@ -27,9 +27,7 @@ export const LoginActions = {
     UserSignUp: (payload: ISignUpPage.Actions.IGetSignUpPayload) => async (
         dispatch: Dispatch
     ) => {
-        const result = await LoginService.SignUp({
-            params: payload.params,
-        });
+        const result = await LoginService.SignUp(payload);
         
         const errors = Object.keys(result.errors).map((key) => {
             if (result.errors[key].length > 0)
@@ -41,14 +39,12 @@ export const LoginActions = {
         .filter((elem) => { return elem; });
         
         dispatch({
-            payload: result.account_created && errors.length <= 0 ? result : {errors: errors},
+            payload: result.account_created && errors.length <= 0 ? payload : { errors: errors },
             type: result.account_created && errors.length <= 0 ? ActionConsts.SignUp.SignUpSuccess : ActionConsts.SignUp.SignUpError
         });
     },
     checkUserNameAvailability: (payload: ISignUpPage.Actions.IGetSignUpPayload) => async () => {
-        const result = await LoginService.SignUp({
-            params: payload.params,
-        });
+        const result = await LoginService.SignUp(payload);
         
         const errors = Object.keys(result.errors).map((key) => {
             if (result.errors[key].length > 0)

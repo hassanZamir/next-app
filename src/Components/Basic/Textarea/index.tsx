@@ -12,6 +12,7 @@ const _Textarea = styled.textarea`
     padding: 5px;
     color: inherit;
     outline-width: 0;
+    background: white;
 `;
 
 export const Textarea: React.FunctionComponent<ITextarea.IProps> = ({ rows, columns, ...rest}) => {

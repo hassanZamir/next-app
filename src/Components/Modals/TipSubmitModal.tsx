@@ -15,7 +15,7 @@ declare namespace ITipSubmitModal {
     }
 }
 
-export const TipSubmitModal: React.RefForwardingComponent<HTMLDivElement, ITipSubmitModal.IProps> = ((props, ref) => {
+export const TipSubmitModal: React.RefForwardingComponent<HTMLDivElement, ITipSubmitModal.IProps> = ((props) => {
     const { clickedFeed, isShowing, onSubmit, modalRef } = props;
     if (!clickedFeed) return null;
     
@@ -33,23 +33,20 @@ export const TipSubmitModal: React.RefForwardingComponent<HTMLDivElement, ITipSu
     const { amount, message } = inputs;
 
     return isShowing ? ReactDOM.createPortal(
-    <React.Fragment>
-        <div className="modal-overlay"/>
-        <div className="modal-wrapper">
             <Modal>
                 <div className="w-100 h-100" ref={modalRef}>
                     <div className="modal-content d-flex flex-column justify-content-center align-items-center">
-                        <div className="d-flex flex-column position-relative">
-                            <div className="background-circle-blue d-flex align-items-center justify-content-center">
-                                <div className="background-circle-primary"></div>
-                            </div>
+                        <div className="d-flex flex-column">
                             <div className="d-flex align-items-center justify-content-center">
                                 <div style={{ width: "72px", height: "72px", marginRight: "10px" }}>
                                     <CircularImage src={profileImageUrl} height="100%" width="auto" />
                                 </div>
                                 <ParagraphText className="text-primary font-20px seoge-ui-bold">{username}</ParagraphText>
                             </div>
-                            <div className="d-flex align-items-center justify-content-center p-5 text-primary font-40px">
+                            <div className="position-relative d-flex align-items-center justify-content-center py-4 px-5 text-primary font-40px">
+                                <div className="background-circle-blue d-flex align-items-center justify-content-center">
+                                    <div className="background-circle-primary"></div>
+                                </div>
                                 <ThemedInputWithLabel 
                                     labelProps={{labelText: "$", labelClass: "position-absolute bottom-0" }} 
                                     onChange={handleChange} 
@@ -70,8 +67,6 @@ export const TipSubmitModal: React.RefForwardingComponent<HTMLDivElement, ITipSu
                         </div>
                     </div>
                 </div>
-            </Modal>
-        </div>
-    </React.Fragment>, document.body
+            </Modal>, document.body
     ) : null;
 });

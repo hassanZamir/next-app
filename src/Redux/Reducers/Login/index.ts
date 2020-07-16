@@ -12,8 +12,21 @@ const INITIAL_STATE: ILoginPage.IStateProps = {
     session: <USER_SESSION>{}
 };
 
+const getInitialState = () => {
+    try {
+        const loggedIn = (typeof window !== "undefined" ? window.localStorage.getItem('persist:root') : false);
+        if (loggedIn) {
+            return JSON.parse(JSON.parse(loggedIn).loginSuccess)
+        }        
+    } catch(e) {
+        return INITIAL_STATE;
+    } finally {
+        return INITIAL_STATE;
+    }
+}
+
 export const LoginSuccessReducer = (
-    state = INITIAL_STATE,
+    state = getInitialState(),
     action: IAction<ILoginPage.Actions.IGetLoginResponse>
 ) => {
     switch (action.type) {

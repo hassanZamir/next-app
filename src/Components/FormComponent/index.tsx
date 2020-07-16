@@ -1,17 +1,21 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { IFormComponent } from "./FormComponent";
 
-export const FormComponent: React.FunctionComponent<IFormComponent.IProps> = ({ submitActive, defaultValues, children, onSubmit }) => {
+export const FormComponent: React.FunctionComponent<IFormComponent.IProps> = ({ submitSuccess, submitActive, defaultValues, children, onSubmit }) => {
   const methods = useForm({ 
     defaultValues, 
     mode: 'onBlur'
   });
-  const { handleSubmit, errors, formState, watch } = methods;
+  const { handleSubmit, errors, formState, watch, reset } = methods;
 
   const password = useRef({});
   password.current = watch("password", "");
+
+  useEffect(() => {
+    if (submitSuccess) reset({});
+  }, [submitSuccess]);
 
   return (
     <form className="flex-column d-flex align-items-center" onSubmit={handleSubmit(onSubmit)}

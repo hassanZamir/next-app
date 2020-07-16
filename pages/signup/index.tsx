@@ -1,36 +1,31 @@
 // #region Global Imports
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 import { useSelector, useDispatch } from "react-redux";
 import ReCAPTCHA from "react-google-recaptcha";
 // #endregion Global Imports
 
 // #region Local Imports
-import { Layout } from "@Components/Layout";
-import { PrimaryButton, LabelInput, StaticImage, ParagraphText, FormComponent, DobInput } from "@Components";
+import { 
+    PrimaryButton, 
+    LabelInput, 
+    StaticImage, 
+    ParagraphText, 
+    FormComponent, 
+    SelectInput
+} from "@Components";
 import { LinkText } from "@Components/Basic";
 import { IStore } from "@Redux/IStore";
 import { LoginActions } from "@Actions";
 import Link from 'next/link';
 import { ActionConsts } from "@Definitions";
+import LocationsList from "./locations-list.json";
+import DobConst from "./dob-constants.json";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { ISignUpPage, ReduxNextPageContext } from "@Interfaces";
+import { ISignUpPage } from "@Interfaces";
 // #endregion Interface Imports
-
-export const DobConst = {
-    date: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
-    "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"],
-    
-    months: ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September",
-    "October", "November", "December"],
-    
-    year: ["1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", 
-    "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001","2002",
-    "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014",
-    "2015", "2016", "2017", "2018", "2019", "2020"]
-};
 
 const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     const [enableSignUp, setEnableSignUp] = useState(true);
@@ -60,12 +55,12 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                 email: data.email,
                 password: data.password,
                 country: data.country,
-                birthDate: "9-7-1990",
-                // dateBirth : data.dob.date + "-" + data.dob.month + "-" + data.dob.year,
+                birthDate : data.dob.date + "-" + (DobConst.months.indexOf(data.dob.month) + 1)  + "-" + data.dob.year,
                 account_created: true
             }
+            console.log(params);
             setEnableSignUp(false);
-            await dispatch(LoginActions.UserSignUp({ params: params }));
+            await dispatch(LoginActions.UserSignUp(params));
             setEnableSignUp(true);
         }
     }
@@ -76,7 +71,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
             [key]: inputValue[key],
             account_created: false
         }
-        return LoginActions.checkUserNameAvailability({ params: params });
+        return LoginActions.checkUserNameAvailability(params);
     }
 
     return (
@@ -85,16 +80,21 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                     <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
                 </div>
                 <div className="row no-gutters justify-content-center mt-3">
-                    <FormComponent onSubmit={handleSubmit} defaultValues={{}} 
-                        submitActive={enableSignUp && recaptchaToken ? true : false}>
+                    <FormComponent 
+                        onSubmit={handleSubmit} 
+                        defaultValues={{}} 
+                        submitActive={enableSignUp && recaptchaToken ? true : false}
+                        submitSuccess={errors.message === "" && successMessage !== ""}>
 
-                        <LabelInput type="text"
+                        <LabelInput 
+                            type="text"
                             labelText="Full Name" 
                             name="name"
                             validationRules={{ required: {value: true, message: "Full Name is required" } }} 
                             />
                         
-                        <DobInput type={["number", "number", "number"]}
+                        <SelectInput
+                            type={["number", "number", "number"]}
                             labelText="Date of Birth" 
                             name={["dob.date", "dob.month", "dob.year"]}
                             options={[DobConst.date, DobConst.months, DobConst.year]} 
@@ -102,13 +102,16 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             validationRules={[{ required: "Date is required" }, { required: "Month is required" }, { required: "Year is required" }]}
                         />
 
-                        <LabelInput type="text"
+                        <SelectInput 
+                            type={["text"]}
                             labelText="Country" 
-                            name="country" 
+                            name={["country"]}
+                            options={[LocationsList.countries]} 
                             wrapperClass="mt-3"
-                            validationRules={{ required: {value: true, message: "Country is required" } }}
+                            validationRules={[{ required: "Country selection is required."}]}
                         />
-                        <LabelInput type="email"
+                        <LabelInput 
+                            type="email"
                             labelText="Email" 
                             name="email" 
                             wrapperClass="mt-3"
@@ -124,7 +127,8 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                                 }
                             }}
                         />
-                        <LabelInput type="text"
+                        <LabelInput 
+                            type="text"
                             labelText="Username" 
                             name="username" 
                             wrapperClass="mt-3"
@@ -169,11 +173,11 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                         <PrimaryButton  
                             type="submit"
                             className="mt-2 font-20px"
-                            name="signUp">
+                            name="signUp"
+                            showLoader={!enableSignUp}>
                                 Sign Up
                         </PrimaryButton>
                         {!successMessage && <ParagraphText className="py-4 text-danger text-center">{ errors.message }</ParagraphText>}
-                        {!errors.message && <ParagraphText className="py-4 text-success text-center">{ successMessage }</ParagraphText>}
                     </FormComponent>
                     <Link href="/login" passHref>
                         <LinkText style={{ height: "40px" }} className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white">

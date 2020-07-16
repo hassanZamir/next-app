@@ -5,7 +5,8 @@ export type USER_SESSION  = {
     email: string;
     country: string;
     birthDate: string;
-    isCreator: false
+    isCreator: false;
+    verifyEmail: number;
 }
 
 export interface LoginResponse {

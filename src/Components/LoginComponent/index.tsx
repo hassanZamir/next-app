@@ -1,17 +1,19 @@
 // #region Global Imports
 import React, { useState, useEffect, useRef } from "react";
-import { NextPage } from "next";
 import { useSelector, useDispatch } from "react-redux";
 import ReCAPTCHA from "react-google-recaptcha";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 // #endregion Global Imports
 
 // #region Local Imports
 import { PrimaryButton, ThemedInput, StaticImage, ParagraphText } from "@Components";
+import { CheckYourEmailModal } from "../Modals/CheckYourEmailModal";
+import { EmailVerifiedModal }from "../Modals/EmailVerifiedModal";
 import { LinkText } from "@Components/Basic";
+import { useModal } from '../Hooks';
 import { IStore } from "@Redux/IStore";
 import { LoginActions } from "@Actions";
-import Link from 'next/link';
-import Router from 'next/router';
 import { ActionConsts } from "@Definitions";
 // #endregion Local Imports
 
@@ -23,7 +25,12 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
     const [enableLogin, setEnableLogin] = useState(false);
     const [recaptchaToken, setToken] = useState("");
     const { email, password } = inputs;
+    const modalRef = useRef<HTMLDivElement>(null);
+    const { isShowing, toggle } = useModal(modalRef);
+    const [userVerificationEmail, setUserVerificationEmail] = useState('');
+    const [userVerificationToken, setUserVerificationToken] = useState('');
 
+    const router = useRouter();
     const loginState = useSelector((state: IStore) => state.loginError);
     const { errors } = loginState;
     const dispatch = useDispatch();
@@ -43,9 +50,18 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
     }, [email, password, recaptchaToken])
 
     useEffect(() => {
+        const { modal, email, token } = router.query;
+        if (modal === 'check-your-email') {
+            setUserVerificationEmail(email as string);
+            toggle();
+        } else if (modal === 'account-verify') {
+            setUserVerificationToken(token as string);
+            toggle();
+        }
+        
         // Prefetch the dashboard page as the user will go there after the login
-        Router.prefetch('/');
-    }, [])
+        router.prefetch('/');
+    }, []);
     
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -76,6 +92,18 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
 
     return (
         <div className="w-100 d-flex flex-column justify-content-between align-items-center">
+            {userVerificationEmail && <CheckYourEmailModal
+                toggle={toggle}
+                isShowing={isShowing}  
+                modalRef={modalRef} 
+                email={userVerificationEmail} />}
+            
+            {userVerificationToken && <EmailVerifiedModal
+                toggle={toggle}
+                isShowing={isShowing}  
+                modalRef={modalRef} 
+                token={userVerificationToken} />}
+
             <div className="mt-5 row justify-content-center no-gutters">
                 <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
             </div>

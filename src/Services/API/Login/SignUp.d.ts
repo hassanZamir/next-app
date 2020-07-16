@@ -3,7 +3,7 @@ import { SignupPayload, SignUpResponse } from "@Interfaces";
 // #endregion Interface Imports
 
 declare namespace SignUpModel {
-    export interface GetSignUpPayload { params: SignupPayload; }
+    export interface GetSignUpPayload extends SignupPayload {}
 
     export interface GetSignUpResponse extends SignUpResponse {}
 }

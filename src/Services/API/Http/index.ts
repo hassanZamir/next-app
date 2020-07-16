@@ -1,6 +1,6 @@
 // #region Global Imports
 import "isomorphic-unfetch";
-import getConfig from "next/config";
+// import getConfig from "next/config";
 import { stringify } from "query-string";
 // #endregion Global Imports
 
@@ -8,11 +8,11 @@ import { stringify } from "query-string";
 import { HttpModel } from "@Interfaces";
 // #endregion Interface Imports
 
-const {
-    publicRuntimeConfig: { API_KEY, API_URL },
-} = getConfig();
-
-const BaseUrl = `${API_URL}/api`;
+// const {
+//     publicRuntimeConfig: { API_KEY, API_URL },
+// } = getConfig();
+console.log("process.env.API_URL", process.env.API_URL);
+const BaseUrl = `${process.env.API_URL}/api`;
 
 export const Http = {
     Request: async <A>(

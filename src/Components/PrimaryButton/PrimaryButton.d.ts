@@ -7,6 +7,7 @@ declare namespace IPrimaryButton {
         isActive?: boolean;
         type?: string;
         name?: string;
+        showLoader?: boolean;
     }
 }
 

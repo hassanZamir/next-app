@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import { IPrimaryButton } from "./PrimaryButton";
 
@@ -19,11 +21,12 @@ export const PrimaryButton: React.FunctionComponent<IPrimaryButton.IProps> = ({
     onClick,
     className,
     type,
-    borderRadius
+    borderRadius,
+    showLoader
 }) => {
     return (
         <Container isActive={isActive} onClick={onClick} className={className} type={type} borderRadius={borderRadius}>
-            {children}
+            {children} <span>{showLoader && <FontAwesomeIcon icon={faSpinner} color="white" className="fa-spin"/>}</span>
         </Container>
     );
 };

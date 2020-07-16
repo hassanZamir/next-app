@@ -22,10 +22,12 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({ likeContent
             <FontAwesomeIcon icon={faHeart} color={contentLiked ? "#F57B52" : "#A0A0A0"} size="lg" />
             <div className="text-darkGrey font-10px ml-1">{ likes }</div>
         </div>
-        <div className="d-flex align-items-center cursor-pointer">
-            <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" />
-            <div className="text-darkGrey font-10px ml-1">{ comments || 0 }</div>
-        </div>
+        <Link href={"/profile/" + feed.creatorId + "/status/" + feed.id}>
+            <div className="d-flex align-items-center cursor-pointer">
+                <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" />
+                <div className="text-darkGrey font-10px ml-1">{ comments || 0 }</div>
+            </div>
+        </Link>
         <div className="d-flex align-items-center cursor-pointer" onClick={(e) => {toggleTipModal(e, index)}}>
             <FontAwesomeIcon icon={faDollarSign} color="#707070" size="lg" />
             <div className="text-darkGrey font-10px ml-1">Tip</div>
@@ -67,7 +69,7 @@ const Feed: React.FunctionComponent<IFeed.IProps> = ({ likeContent, feed, index,
 export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, user }) => {
     const modalRef = useRef<HTMLDivElement>(null);    
     const [ clickedTipFeed, setClickedTipFeed ] = useState({});
-    const {isShowing, toggle} = useModal(modalRef);
+    const { isShowing, toggle } = useModal(modalRef);
     const { addToast } = useToasts();
     const dispatch = useDispatch();
 

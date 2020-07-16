@@ -1,4 +1,10 @@
 export interface SignupPayload {
-    [key: string]: string;
-    dateOfBorth?: { date: string; month: string; year: string; };
+    name?: string;
+    username?: string;
+    email?: string;
+    password?: string;
+    country?: string;
+    birthDate?: string;
+    account_created?: boolean;
+    [key: string]: string | boolean;
 }

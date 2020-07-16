@@ -25,6 +25,9 @@ const nextConfig = {
         API_KEY: process.env.API_KEY,
         STATIC_PATH: process.env.STATIC_PATH,
     },
+    env: {
+        API_URL: process.env.API_URL
+    }
 };
 
 module.exports = withConfig(
