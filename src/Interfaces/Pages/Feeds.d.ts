@@ -31,6 +31,8 @@ declare namespace IFeed {
     export interface IProps {
         index: number;
         feed: FEED;
+        onReportClick: (a: FEED)=>void;
+        onCopyClick: (a: FEED)=>void;
         toggleTipModal: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
         likeContent: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
     }
@@ -41,6 +43,9 @@ declare namespace IFeed {
 
         export interface ILikeFeedPayload extends FeedsModel.GetLikeFeedPayload {}
         export interface ILikeFeedResponse extends FeedsModel.GetLikeFeedResponse {}
+
+        export interface IGetReportFeedPayload extends FeedsModel.GetReportFeedPayload {}
+        export interface IGetReportFeedResponse extends FeedsModel.GetReportFeedResponse {}
     }
 }
 
@@ -48,6 +53,8 @@ declare namespace IFeedOptions {
     export interface IProps {
         index: number;
         feed: FEED;
+        onReportClick: (a: FEED)=>void;
+        onCopyClick: (a: FEED)=>void;
         toggleTipModal: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
         likeContent: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
     }

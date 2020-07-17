@@ -30,6 +30,8 @@ export * from "@Services/API/Login/SignUpPayload";
 export * from "@Services/API/Login/SignUpResponse";
 export * from "@Services/API/Login/SignUp";
 
+export * from "@Services/API/Feeds/ReportFeedPayload";
+export * from "@Services/API/Feeds/ReportFeedResponse";
 export * from "@Services/API/Feeds/AllFeedsPayload";
 export * from "@Services/API/Feeds/AllFeedsResponse";
 export * from "@Services/API/Feeds/TipFeedPayload";

@@ -3,6 +3,7 @@ declare namespace IRegInput {
         name: string;
         type: string;
         ref?: RefObject<HTMLInputElement> & (() => void);
+        value?: string;
     }
 }
 

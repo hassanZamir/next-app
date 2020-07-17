@@ -35,5 +35,10 @@ export const FeedsActions = {
             payload: {contentId: payload.contentId},
             type: result.status ? ActionConsts.Feeds.LikeFeedSuccess : ActionConsts.Feeds.LikeFeedError
         });
+    },
+    ReportFeed: (payload: IFeed.Actions.IGetReportFeedPayload) => async () => {
+        const result = await FeedsService.ReportFeed(payload);
+        
+        return result;
     }
 };

@@ -15,7 +15,7 @@ export const FeedsService = {
         try {
             response = await Http.Request<FeedsModel.GetAllFeedsResponse>(
                 "GET",
-                "as/users/" + payload.userId + "/feed",
+                "/users/" + payload.userId + "/feed",
                 undefined
             );
         } catch (error) {
@@ -117,7 +117,26 @@ export const FeedsService = {
             );
         } catch (error) {
             response = {
-                status: true
+                status: false
+            };
+        }
+        return response;
+    },
+    ReportFeed: async (
+        payload: FeedsModel.GetReportFeedPayload
+    ): Promise<FeedsModel.GetReportFeedResponse> => {
+        let response: FeedsModel.GetReportFeedResponse
+
+        try {
+            response = await Http.Request<FeedsModel.GetReportFeedResponse>(
+                "POST",
+                "/content/" + payload.contentId + "/report",
+                undefined,
+                { userId: payload.userId, reasonId: payload.reason, contentId: payload.contentId}
+            );
+        } catch (error) {
+            response = {
+                status: false
             };
         }
         return response;

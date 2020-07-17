@@ -21,7 +21,7 @@ export const CreatorProfileService = {
             );
         } catch (error) {
             response = {
-                status: true,
+                status: false,
                 response: [{
                     name: "sohaib",
                     username: "venotv1234",
@@ -92,7 +92,7 @@ export const CreatorProfileService = {
             );
         } catch (error) {
             response = {
-                status: true,
+                status: false,
                 response: {
                     name: "sohaib",
                     coverImageUrl: "/images/5.jpg",
@@ -122,7 +122,7 @@ export const CreatorProfileService = {
             );
         } catch (error) {
             response = {
-                status: true,
+                status: false,
                 response: [{
                     userId: 10
                 }]
@@ -143,9 +143,8 @@ export const CreatorProfileService = {
                 {userId: payload.userId}
             );
         } catch (error) {
-            debugger;
             response = {
-                status: true,
+                status: false,
                 response: []
             };
         }

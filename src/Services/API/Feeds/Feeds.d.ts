@@ -1,5 +1,5 @@
 // #region Interface Imports
-import { AllFeedsPayload, AllFeedsResponse, TipFeedPayload, TipFeedResponse, LikeFeedPayload, LikeFeedResponse } from "@Interfaces";
+import { ReportFeedPayload, ReportFeedResponse, AllFeedsPayload, AllFeedsResponse, TipFeedPayload, TipFeedResponse, LikeFeedPayload, LikeFeedResponse } from "@Interfaces";
 // #endregion Interface Imports
 
 declare namespace FeedsModel {
@@ -11,6 +11,9 @@ declare namespace FeedsModel {
 
     export interface GetLikeFeedPayload extends LikeFeedPayload {}
     export interface GetLikeFeedResponse extends LikeFeedResponse {}
+
+    export interface GetReportFeedPayload extends ReportFeedPayload {}
+    export interface GetReportFeedResponse extends ReportFeedResponse {}
 }
 
 export { FeedsModel };

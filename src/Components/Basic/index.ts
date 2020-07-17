@@ -8,4 +8,5 @@ export { Select } from "./Select";
 export { Textarea } from "./Textarea";
 export { BackgroundImage } from "./BackgroundImage";
 export { Modal } from "./Modal";
+export { PositionedModal } from "./PositionedModal";
 export { Tabs, Tab, Content } from "./Tabs";

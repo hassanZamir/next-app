@@ -8,6 +8,7 @@ const useModal = (ref: any) => {
   }
 
   const handleClick = (e: any) => {
+    console.log(ref.current);
     if (ref.current && !ref.current.contains(e.target)) {
       toggle();
     }
