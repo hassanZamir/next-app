@@ -3,7 +3,7 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { CreatorProfileModel } from "@Interfaces";
+import { CreatorProfileModel, ProfileFollowersModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const CreatorProfileService = {
@@ -21,7 +21,7 @@ export const CreatorProfileService = {
             );
         } catch (error) {
             response = {
-                status: false,
+                status: true,
                 response: [{
                     name: "sohaib",
                     username: "venotv1234",
@@ -87,12 +87,12 @@ export const CreatorProfileService = {
         try {
             response = await Http.Request<CreatorProfileModel.GetCreatorProfileResponse>(
                 "GET",
-                "s/profiles/" + payload.username,
+                "/profiles/" + payload.username,
                 undefined
             );
         } catch (error) {
             response = {
-                status: false,
+                status: true,
                 response: {
                     name: "sohaib",
                     coverImageUrl: "/images/5.jpg",
@@ -109,40 +109,46 @@ export const CreatorProfileService = {
         }
         return response;
     },
-    // FollowProfile: async (
-    //     payload: CreatorProfileModel.GetFollowProfilePayload
-    // ): Promise<CreatorProfileModel.GetFollowProfileResponse> => {
-    //     let response: CreatorProfileModel.GetFollowProfileResponse;
+    GetProfileFollowers: async (
+        payload: ProfileFollowersModel.GetProfileFollowersPayload
+    ): Promise<ProfileFollowersModel.GetProfileFollowersResponse> => {
+        let response: ProfileFollowersModel.GetProfileFollowersResponse;
 
-    //     try {
-    //         response = await Http.Request<CreatorProfileModel.GetFollowProfileResponse>(
-    //             "POST",
-    //             "/profile/follow",
-    //             undefined,
-    //             {...payload}
-    //         );
-    //     } catch (error) {
-    //         debugger;
-    //         response = {
-    //             status: false,
-    //             profile: {
-    //                 id: 1,
-    //                 name: "Joseph Denly",
-    //                 totalContent: 250,
-    //                 totalImages: 200,
-    //                 totalVideos: 50,
-    //                 totalFollowers: 156000,
-    //                 totalFollowing: 2000,
-    //                 showFollowers: true,
-    //                 bio: "Hello YES!!!",
-    //                 coverImageUrl: "/images/5.jpg",
-    //                 profileImageUrl: "/images/Capture@2x.png",
-    //                 address: "San Fransisco, CA",
-    //                 isFollower: payload.shouldFollow
-    //             },
-    //             errors: "Something went wrong"
-    //         };
-    //     }
-    //     return response;
-    // }
+        try {
+            response = await Http.Request<ProfileFollowersModel.GetProfileFollowersResponse>(
+                "GET",
+                "/profiles/" + payload.username + "/followers?userId=" + payload.userId,
+                undefined
+            );
+        } catch (error) {
+            response = {
+                status: true,
+                response: [{
+                    userId: 10
+                }]
+            };
+        }
+        return response;
+    },
+    FollowProfile: async (
+        payload: CreatorProfileModel.GetFollowProfilePayload
+    ): Promise<CreatorProfileModel.GetFollowProfileResponse> => {
+        let response: CreatorProfileModel.GetFollowProfileResponse;
+
+        try {
+            response = await Http.Request<CreatorProfileModel.GetFollowProfileResponse>(
+                "POST",
+                "/profiles/" + payload.username + '/' + (payload.shouldFollow ? 'follow' : 'unfollow'),
+                undefined,
+                {userId: payload.userId}
+            );
+        } catch (error) {
+            debugger;
+            response = {
+                status: true,
+                response: []
+            };
+        }
+        return response;
+    }
 };

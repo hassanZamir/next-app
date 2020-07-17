@@ -38,6 +38,10 @@ export * from "@Services/API/Feeds/LikeFeedPayload";
 export * from "@Services/API/Feeds/LikeFeedResponse";
 export * from "@Services/API/Feeds/Feeds";
 
+export * from "@Services/API/CreatorProfile/ProfileFollowersPayload";
+export * from "@Services/API/CreatorProfile/ProfileFollowersResponse";
+export * from "@Services/API/CreatorProfile/ProfileFollowers";
+
 export * from "@Services/API/CreatorProfile/CreatorProfilePayload";
 export * from "@Services/API/CreatorProfile/CreatorProfileResponse";
 export * from "@Services/API/CreatorProfile/FollowProfilePayload";

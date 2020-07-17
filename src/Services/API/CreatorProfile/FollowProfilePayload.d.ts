@@ -1,5 +1,5 @@
 export interface FollowProfilePayload {
-    profileId: string;
+    username: string;
     userId: number;
     shouldFollow: boolean;
 }

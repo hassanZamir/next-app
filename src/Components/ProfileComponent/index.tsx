@@ -16,29 +16,36 @@ import { faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, profileUserName: string }> = ({ user, profileUserName }) => {
     const creatorProfileState = useSelector((state: IStore) => state.creatorProfile);
-    const { creatorProfile } = creatorProfileState;
+    const { creatorProfile, followers } = creatorProfileState;
     const { contentCount, imagesCount, videosCount, name } = creatorProfile;
     const dispatch = useDispatch();
 
     useEffect(() => {
         const params = { username: profileUserName };
         dispatch(CreatorProfileActions.GetCreatorProfile(params));
+
+        const followersParams = { userId: user.id, username: profileUserName }
+        dispatch(CreatorProfileActions.GetProfileFollowers(followersParams));
     }, []);
 
     const onFollow = (followOrUnFollow: boolean) => {
-        // const followParams = { profileId: profileId, userId: user.id, shouldFollow: followOrUnFollow};
-        // if (followOrUnFollow) {
-        //     dispatch(CreatorProfileActions.FollowProfile(followParams));
-        // } else {
-        //     dispatch(CreatorProfileActions.FollowProfile(followParams));
-        // }
+        const followParams = { 
+            username: profileUserName, 
+            userId: user.id, 
+            shouldFollow: followOrUnFollow
+        };
+        dispatch(CreatorProfileActions.FollowProfile(followParams));
     }
 
     return (<div className="bg-gradient d-flex flex-column h-100">
         <div className="back-icon cursor-pointer" onClick={() => Router.back()}>
             <FontAwesomeIcon icon={faArrowLeft} color="white" size="lg" />
         </div>
-        <CreatorProfile creatorProfile={creatorProfile} onFollow={onFollow} />
+        <CreatorProfile 
+            creatorProfile={creatorProfile} 
+            onFollow={onFollow} 
+            isFollower={followers[0] && followers[0].userId === user.id} />
+
         <CreatorContent 
             contentCount={contentCount}
             imagesCount={imagesCount}
@@ -46,6 +53,6 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
             user={user}
             profileUserName={profileUserName}
             name={name} 
-            isFollower={true} />
+            isFollower={followers[0] && followers[0].userId === user.id} />
     </div>);
 }

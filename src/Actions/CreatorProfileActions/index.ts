@@ -17,10 +17,9 @@ export const CreatorProfileActions = {
     ) => {
         const result = await CreatorProfileService.GetCreatorProfile(payload);
         
-        debugger;
         dispatch({
             payload: { profile: result.response },
-            type: !result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
+            type: result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
         });
     },
     GetCreatorFeeds: (payload: IProfilePage.Actions.IGetCreatorFeedsPayload) => async (
@@ -28,20 +27,28 @@ export const CreatorProfileActions = {
     ) => {
         const result = await CreatorProfileService.GetCreatorFeeds(payload);
         
-        debugger;
         dispatch({
             payload: { feeds: result.response },
-            type: !result.status ? ActionConsts.CreatorProfile.GetCreatorFeedsSuccess : ActionConsts.CreatorProfile.GetCreatorFeedsError
+            type: result.status ? ActionConsts.CreatorProfile.GetCreatorFeedsSuccess : ActionConsts.CreatorProfile.GetCreatorFeedsError
         });
     },
     FollowProfile: (payload: IProfilePage.Actions.IGetFollowProfilePayload) => async (
         dispatch: Dispatch
     ) => {
-        // const result = await CreatorProfileService.FollowProfile(payload);
+        const result = await CreatorProfileService.FollowProfile(payload);
         
-        // dispatch({
-        //     payload: result,
-        //     type: !result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
-        // });
+        dispatch({
+            payload: { followers: result.response ? result.response : result },
+            type: result.status ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
+        });
+    },
+    GetProfileFollowers: (payload: IProfilePage.Actions.IGetProfileFollowersPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await CreatorProfileService.GetProfileFollowers(payload);
+        dispatch({
+            payload: { followers: result.response ? result.response : result },
+            type: result.status ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
+        });
     }
 };

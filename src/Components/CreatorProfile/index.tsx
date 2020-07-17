@@ -6,7 +6,8 @@ import { CREATOR_PROFILE } from "@Interfaces";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-export const CreatorProfile: React.FunctionComponent<{creatorProfile: CREATOR_PROFILE, onFollow: (followOrUnfolow: boolean)=>void}> = ({ creatorProfile, onFollow }) => {
+export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creatorProfile: CREATOR_PROFILE, onFollow: (followOrUnfolow: boolean)=>void}> 
+    = ({ creatorProfile, onFollow, isFollower }) => {
     return <React.Fragment>
         <BackgroundImage src={creatorProfile.coverImageUrl} paddingBottom="56.25%" />
         <div className="position-relative">
@@ -22,8 +23,8 @@ export const CreatorProfile: React.FunctionComponent<{creatorProfile: CREATOR_PR
                 <div className="text-inputText seoge-ui-bold font-10px">Show Bio</div>
             </div>}
             <div>
-                {/* {!creatorProfile.isFollower && <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-9px">Follow for $9.99 a month</PrimaryButton>}
-                {creatorProfile.isFollower && <div className="d-flex flex-column">
+                {!isFollower && <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-9px">Follow for $9.99 a month</PrimaryButton>}
+                {isFollower && <div className="d-flex flex-column">
                     <PrimaryButton borderRadius="10px" isActive={true} onClick={() => onFollow(false)}
                         className="gibson-regular font-15px">
                         <span className="mr-2">Following</span>
@@ -33,7 +34,7 @@ export const CreatorProfile: React.FunctionComponent<{creatorProfile: CREATOR_PR
                         <span className="mr-2">Message</span>
                         <FontAwesomeIcon icon={faEnvelope} color="white" />
                     </PrimaryButton>
-                </div>} */}
+                </div>}
             </div>
         </div>
     </React.Fragment>

@@ -1,5 +1,4 @@
-import { CreatorProfileModel } from "@Services/API/CreatorProfile/CreatorProfile";
-import { FEED, CREATOR_PROFILE } from "@Interfaces";
+import { FEED, CREATOR_PROFILE, CreatorProfileModel, ProfileFollowersModel } from "@Interfaces";
 
 declare namespace IProfilePage {
     export interface IProps {}
@@ -7,7 +6,8 @@ declare namespace IProfilePage {
     export interface IStateProps {
         errors: '',
         creatorProfile: CREATOR_PROFILE,
-        creatorFeeds: FEED[]
+        creatorFeeds: FEED[],
+        followers: {userId: number}[]
     }
 
     namespace Actions {
@@ -19,6 +19,10 @@ declare namespace IProfilePage {
             feeds: CreatorProfileModel.GetCreatorFeedsResponse
         }
 
+        export interface IMapProfileFollowersResponse {
+            followers: ProfileFollowersModel.GetProfileFollowersResponse
+        }
+
         export interface IGetCreatorProfilePayload extends CreatorProfileModel.GetCreatorProfilePayload {}
         export interface IGetCreatorProfileResponse extends CreatorProfileModel.GetCreatorProfileResponse {}
 
@@ -27,6 +31,9 @@ declare namespace IProfilePage {
 
         export interface IGetFollowProfilePayload extends CreatorProfileModel.GetFollowProfilePayload {}
         export interface IGetFollowProfileResponse extends CreatorProfileModel.GetFollowProfileResponse {}
+
+        export interface IGetProfileFollowersPayload extends ProfileFollowersModel.GetProfileFollowersPayload {}
+        export interface IGetProfileFollowersResponse extends ProfileFollowersModel.GetProfileFollowersResponse {}
 
         export interface IFilterFeedsPayload { key: number;}
         export interface IGetCreatorFeedsResponse extends CreatorProfileModel.GetCreatorFeedsResponse {}

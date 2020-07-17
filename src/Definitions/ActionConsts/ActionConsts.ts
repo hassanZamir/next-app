@@ -34,6 +34,8 @@ export const ActionConsts = {
         GetCreatorProfileSuccess: "GetCreatorProfileSuccess",
         GetCreatorProfileError: "GetCreatorProfileError",
         GetCreatorFeedsSuccess: "GetCreatorFeedsSuccess",
-        GetCreatorFeedsError: "GetCreatorFeedsError"
+        GetCreatorFeedsError: "GetCreatorFeedsError",
+        GetProfileFollowersSuccess: "GetProfileFollowersSuccess",
+        GetProfileFollowersError: "GetProfileFollowersError"
     }
 };

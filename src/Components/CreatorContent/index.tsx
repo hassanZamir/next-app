@@ -17,7 +17,6 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
     const dispatch = useDispatch();
     const [selectedTab, setSetectedTab] = useState(0);
     
-    console.log("creator feeds : ", creatorFeeds);
     const params = {
         username: profileUserName,
         type: 0,
@@ -26,7 +25,8 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
         viewer: user.id
     };
     useEffect(() => {
-        dispatch(CreatorProfileActions.GetCreatorFeeds(params));
+        if (isFollower)
+            dispatch(CreatorProfileActions.GetCreatorFeeds(params));
     }, []);
 
     const changeTab = (param: CONTENT_TYPE) => { setSetectedTab(param) }
@@ -34,7 +34,6 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
     const filterFeeds = (feeds: FEED[]): FEED[] => {
         if (!selectedTab) return feeds;
 
-        debugger;
         return feeds.filter((feed, i) => {
             return feed.type === selectedTab;
         });
@@ -46,7 +45,7 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
             <Tab active={selectedTab === 1} onClick={() => changeTab(CONTENT_TYPE.IMAGE)} border={true}>{ (imagesCount ? imagesCount : "") + ' Images'}</Tab>
             <Tab active={selectedTab === 2} onClick={() => changeTab(CONTENT_TYPE.VIDEO)} border={false}>{ (videosCount ? videosCount : "") + ' Videos'}</Tab>
         </Tabs>
-        {isFollower === false ? <CreatorContentPrivacy name={name}/> : <React.Fragment>
+        {!isFollower ? <CreatorContentPrivacy name={name}/> : <React.Fragment>
             <ParagraphText className="gibson-semibold font-16px text-headingBlue px-4 mt-2">Posts</ParagraphText>
             {
                 creatorFeeds && creatorFeeds.length > 0 ? <FeedsList user={user} feeds={filterFeeds(creatorFeeds)} /> :
