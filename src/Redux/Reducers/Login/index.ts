@@ -11,7 +11,8 @@ const INITIAL_STATE: ILoginPage.IStateProps = {
     errors: '',
     session: <USER_SESSION>{},
     creatorProfile: <CREATOR_PROFILE>{},
-    sendResetPasswordEmailStatus: ''
+    sendResetPasswordEmailStatus: '',
+    resetPasswordStatus: ''
 };
 
 const getInitialState = () => {
@@ -50,9 +51,20 @@ export const LoginErrorReducer = (
     state = INITIAL_STATE,
     action: IAction<ILoginPage.Actions.IGetLoginResponse & 
         IProfilePage.Actions.IGetCreatorProfileResponse & 
-        ILoginPage.Actions.IGetSendResetPasswordResponse>
+        ILoginPage.Actions.IGetSendResetPasswordEmailResponse &
+        ILoginPage.Actions.IGetChangePasswordResponse>
     ) => {
     switch (action.type) {
+        case ActionConsts.Login.ChangePasswordSuccess: {
+            return Object.assign({}, state, {
+                resetPasswordStatus: 'success'
+            });
+        }
+        case ActionConsts.Login.ChangePasswordError: {
+            return Object.assign({}, state, {
+                resetPasswordStatus: 'error'
+            });
+        }
         case ActionConsts.Login.SendResetPasswordEmailSuccess: {
             return Object.assign({}, state, {
                 sendResetPasswordEmailStatus: 'success'

@@ -33,7 +33,6 @@ export const ResetPasswordModal: React.RefForwardingComponent<HTMLDivElement, IR
         setLoading(false);
     }
 
-    console.log("sendResetPasswordEmailStatus", sendResetPasswordEmailStatus);
     return isShowing ? ReactDOM.createPortal(
             <Modal border={theme.colors.primary} borderRadius="18px">
                 <div className="w-100 h-100 pb-5" ref={modalRef}>

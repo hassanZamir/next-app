@@ -1,3 +1,3 @@
-export interface SendResetPasswordPayload {
+export interface SendResetPasswordEmailPayload {
     email: string;
 }

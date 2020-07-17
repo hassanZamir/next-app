@@ -3,7 +3,7 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { LoginModel, SignUpModel, AccountVerifyModel, SendResetPasswordEmailModel } from "@Interfaces";
+import { LoginModel, SignUpModel, AccountVerifyModel, SendResetPasswordEmailModel, ChangePasswordModel } from "@Interfaces";
 import { async } from "q";
 // #endregion Interface Imports
 
@@ -91,11 +91,11 @@ export const LoginService = {
         return response;
     },
     SendResetPasswordEmail: async (
-        payload: SendResetPasswordEmailModel.GetSendResetPasswordPayload
-    ): Promise<SendResetPasswordEmailModel.GetSendResetPasswordResponse> => {
-        let response: SendResetPasswordEmailModel.GetSendResetPasswordResponse;
+        payload: SendResetPasswordEmailModel.GetSendResetPasswordEmailPayload
+    ): Promise<SendResetPasswordEmailModel.GetSendResetPasswordEmailResponse> => {
+        let response: SendResetPasswordEmailModel.GetSendResetPasswordEmailResponse;
         try {
-            response = await Http.Request<SendResetPasswordEmailModel.GetSendResetPasswordResponse>(
+            response = await Http.Request<SendResetPasswordEmailModel.GetSendResetPasswordEmailResponse>(
                 "POST",
                 "/accounts/password/reset",
                 undefined,
@@ -109,4 +109,23 @@ export const LoginService = {
         }
         return response;
     },
+    ChangePassword: async (
+        payload: ChangePasswordModel.GetChangePasswordPayload
+    ): Promise<ChangePasswordModel.GetChangePasswordResponse> => {
+        let response: ChangePasswordModel.GetChangePasswordResponse;
+        try {
+            response = await Http.Request<ChangePasswordModel.GetChangePasswordResponse>(
+                "POST",
+                "/accounts/password/update",
+                undefined,
+                {...payload}
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                error: "Something went wrong"
+            };
+        }
+        return response;
+    }
 };

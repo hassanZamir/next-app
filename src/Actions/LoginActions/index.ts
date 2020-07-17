@@ -84,14 +84,24 @@ export const LoginActions = {
             type: !result.status ? ActionConsts.Login.GetCreatorProfileSuccess : ActionConsts.Login.GetCreatorProfileError
         });
     },
-    SendResetPasswordEmail: (payload: ILoginPage.Actions.IGetSendResetPasswordPayload) => async (
+    SendResetPasswordEmail: (payload: ILoginPage.Actions.IGetSendResetPasswordEmailPayload) => async (
         dispatch: Dispatch
     ) => {
         const result = await LoginService.SendResetPasswordEmail(payload);
         
         dispatch({
             payload: result,
-            type: !result.status ? ActionConsts.Login.SendResetPasswordEmailSuccess : ActionConsts.Login.SendResetPasswordEmailError
+            type: result.status ? ActionConsts.Login.SendResetPasswordEmailSuccess : ActionConsts.Login.SendResetPasswordEmailError
+        });
+    },
+    ChangePassword: (payload: ILoginPage.Actions.IGetChangePasswordPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await LoginService.ChangePassword(payload);
+        
+        dispatch({
+            payload: result,
+            type: !result.status ? ActionConsts.Login.ChangePasswordSuccess : ActionConsts.Login.ChangePasswordError
         });
     }
 };

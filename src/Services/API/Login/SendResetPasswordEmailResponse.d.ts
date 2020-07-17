@@ -1,4 +1,4 @@
-export interface SendResetPasswordResponse {
+export interface SendResetPasswordEmailResponse {
     status: boolean;
     error: string;
 }

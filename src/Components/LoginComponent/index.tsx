@@ -7,10 +7,18 @@ import { useRouter } from 'next/router';
 // #endregion Global Imports
 
 // #region Local Imports
-import { PrimaryButton, ThemedInput, StaticImage, ParagraphText, CreatorProfileRules, LoadingSpinner } from "@Components";
+import { 
+    PrimaryButton, 
+    ThemedInput, 
+    StaticImage, 
+    ParagraphText, 
+    CreatorProfileRules, 
+    LoadingSpinner,
+} from "@Components";
 import { CheckYourEmailModal } from "../Modals/CheckYourEmailModal";
 import { EmailVerifiedModal }from "../Modals/EmailVerifiedModal";
 import { ResetPasswordModal }from "../Modals/ResetPasswordModal";
+import { ChangePasswordModal }from "../Modals/ChangePasswordModal";
 import { LinkText } from "@Components/Basic";
 import { useModal } from '../Hooks';
 import { IStore } from "@Redux/IStore";
@@ -31,6 +39,7 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
     const [userVerificationEmail, setUserVerificationEmail] = useState('');
     const [userVerificationToken, setUserVerificationToken] = useState('');
     const [resetPasswordModal, setResetPasswordModal] = useState(false);
+    const [changePasswordToken, setChangePasswordToken] = useState('');
 
     const router = useRouter();
     const { modal, token, profile } = router.query;
@@ -61,6 +70,10 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
             return;
         } else if (modal === 'account-verify') {
             setUserVerificationToken(token as string);
+            toggle();
+            return;
+        } else if (modal === 'change-your-password') {
+            setChangePasswordToken(token as string);
             toggle();
             return;
         } else if (profile) {
@@ -122,6 +135,11 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
             {resetPasswordModal && <ResetPasswordModal
                 isShowing={isShowing}  
                 modalRef={modalRef} />}
+            
+            {changePasswordToken && <ChangePasswordModal
+                isShowing={isShowing}  
+                modalRef={modalRef} 
+                token={changePasswordToken} />}
 
             {!profile && <div className="mt-5 row justify-content-center no-gutters">
                 <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />

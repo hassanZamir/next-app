@@ -18,9 +18,14 @@ export * from "@Services/API/Login/SendResetPasswordEmailPayload";
 export * from "@Services/API/Login/SendResetPasswordEmailResponse";
 export * from "@Services/API/Login/SendResetPasswordEmail";
 
+export * from "@Services/API/Login/ChangePasswordPayload";
+export * from "@Services/API/Login/ChangePasswordResponse";
+export * from "@Services/API/Login/ChangePassword";
+
 export * from "@Services/API/Login/AccountVerifyPayload";
 export * from "@Services/API/Login/AccountVerifyResponse";
 export * from "@Services/API/Login/AccountVerify";
+
 export * from "@Services/API/Login/SignUpPayload";
 export * from "@Services/API/Login/SignUpResponse";
 export * from "@Services/API/Login/SignUp";

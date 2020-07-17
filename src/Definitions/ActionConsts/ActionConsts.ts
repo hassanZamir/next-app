@@ -9,7 +9,9 @@ export const ActionConsts = {
         GetCreatorProfileSuccess: "GetCreatorProfileSuccess",
         GetCreatorProfileError: "GetCreatorProfileError",
         SendResetPasswordEmailSuccess: "SendResetPasswordEmailSuccess",
-        SendResetPasswordEmailError: "SendResetPasswordEmailError"
+        SendResetPasswordEmailError: "SendResetPasswordEmailError",
+        ChangePasswordSuccess: "ChangePasswordSuccess",
+        ChangePasswordError: "ChangePasswordError"
     },
     SignUp: {
         SignUpSuccess: "SignUpSuccess",

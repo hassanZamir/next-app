@@ -5,16 +5,17 @@ import { ILabelInput, ISelectInput } from "./LabelInput";
 import { RegInput, Select } from "../Basic";
 
 const Container = styled(RegInput)`
-    height: 26px;
+    height: 32px;
     width: 100%;
     border: none;
     border: 1px solid ${({ theme }) => theme.colors.borderGrey};
     color: ${({ theme }) => theme.colors.inputTextClor};
     border-radius: 6px;
+    padding-left: 5px;
 `;
 
 const SelectContainer = styled(Select)`
-    height: 26px;
+    height: 32px;
     width: 100%;
     border: none;
     border: 1px solid ${({ theme }) => theme.colors.borderGrey};

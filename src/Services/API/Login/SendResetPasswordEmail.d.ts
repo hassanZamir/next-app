@@ -1,11 +1,11 @@
 // #region Interface Imports
-import { SendResetPasswordPayload, SendResetPasswordResponse } from "@Interfaces";
+import { SendResetPasswordEmailPayload, SendResetPasswordEmailResponse } from "@Interfaces";
 // #endregion Interface Imports
 
 declare namespace SendResetPasswordEmailModel {
-    export interface GetSendResetPasswordPayload extends SendResetPasswordPayload {}
+    export interface GetSendResetPasswordEmailPayload extends SendResetPasswordEmailPayload {}
 
-    export interface GetSendResetPasswordResponse extends SendResetPasswordResponse {}
+    export interface GetSendResetPasswordEmailResponse extends SendResetPasswordEmailResponse {}
 }
 
 export { SendResetPasswordEmailModel };
