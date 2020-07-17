@@ -4,11 +4,11 @@ import { Dispatch } from "redux";
 
 // #region Local Imports
 import { ActionConsts } from "@Definitions";
-import { LoginService } from "@Services";
+import { LoginService, CreatorProfileService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { ISignUpPage, ILoginPage, IAccountVerifyPage } from "@Interfaces";
+import { ISignUpPage, ILoginPage, IAccountVerifyPage, IProfilePage } from "@Interfaces";
 // #endregion Interface Imports
 
 export const LoginActions = {
@@ -72,6 +72,26 @@ export const LoginActions = {
         dispatch({
             payload: result,
             type: result.status ? ActionConsts.AccountVerify.AccountVerifySuccess : ActionConsts.AccountVerify.AccountVerifyError
+        });
+    },
+    GetCreatorProfile: (payload: IProfilePage.Actions.IGetCreatorProfilePayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await CreatorProfileService.GetCreatorProfile(payload);
+        
+        dispatch({
+            payload: result,
+            type: !result.status ? ActionConsts.Login.GetCreatorProfileSuccess : ActionConsts.Login.GetCreatorProfileError
+        });
+    },
+    SendResetPasswordEmail: (payload: ILoginPage.Actions.IGetSendResetPasswordPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await LoginService.SendResetPasswordEmail(payload);
+        
+        dispatch({
+            payload: result,
+            type: !result.status ? ActionConsts.Login.SendResetPasswordEmailSuccess : ActionConsts.Login.SendResetPasswordEmailError
         });
     }
 };

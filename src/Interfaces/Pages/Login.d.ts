@@ -1,5 +1,4 @@
-import { LoginModel } from "@Services/API/Login/Login";
-import { USER_SESSION } from "@Interfaces";
+import { USER_SESSION, CREATOR_PROFILE, LoginModel, SendResetPasswordEmailModel } from "@Interfaces";
 
 declare namespace ILoginPage {
     export interface IProps {}
@@ -7,6 +6,8 @@ declare namespace ILoginPage {
     export interface IStateProps {
         errors: string;
         session: USER_SESSION;
+        creatorProfile: CREATOR_PROFILE;
+        sendResetPasswordEmailStatus: string;
     }
 
     namespace Actions {
@@ -14,12 +15,11 @@ declare namespace ILoginPage {
 
         export interface IMapResponse {}
 
-        export interface IGetLoginPayload extends LoginModel.GetLoginPayload {
-            params: {};
-        }
+        export interface IGetLoginPayload extends LoginModel.GetLoginPayload { params: {}; }
+        export interface IGetLoginResponse extends LoginModel.GetLoginResponse {}
 
-        export interface IGetLoginResponse extends LoginModel.GetLoginResponse {
-        }
+        export interface IGetSendResetPasswordPayload extends SendResetPasswordEmailModel.GetSendResetPasswordPayload {}
+        export interface IGetSendResetPasswordResponse extends SendResetPasswordEmailModel.GetSendResetPasswordResponse {}
     }
 }
 

@@ -1,17 +1,15 @@
 export type CREATOR_PROFILE = {
-    id: number;
+    // id: number;
     name: string;
-    totalContent: number;
-    totalImages: number;
-    totalVideos: number;
-    totalFollowers: number;
-    totalFollowing: number;
-    showFollowers: boolean;
+    contentCount: number;
+    imagesCount: number;
+    videosCount: number;
+    followersCount: number;
     bio: string;
     coverImageUrl: string;
     profileImageUrl: string;
-    address: string;
-    isFollower: boolean;
+    location: string;
+    followingFee: number;
 }
 export interface CreatorProfileResponse {
     status: boolean;

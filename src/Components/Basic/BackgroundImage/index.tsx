@@ -10,7 +10,7 @@ const Container = styled.div<IBackgroundImage.IProps>`
     background-repeat: no-repeat;
     width: 100%;
     padding-bottom: ${({ paddingBottom }) => {return paddingBottom ? paddingBottom : "35.25%" }};
-    border-radius: 2px;
+    border-radius: ${({ borderRadius }) => {return borderRadius ? borderRadius : "2px" }};
 `;
 
 export const BackgroundImage: React.FunctionComponent<IBackgroundImage.IProps> = (props) => {

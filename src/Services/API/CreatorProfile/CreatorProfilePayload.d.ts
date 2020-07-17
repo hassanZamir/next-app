@@ -1,7 +1,6 @@
 export interface CreatorProfilePayload {
-    [key: string]: string | number;
-    profileId: string;
-    userId: number;
+    [key: string]: string;
+    username: string;
 }
 
 export interface CreatorFeedsPayload {

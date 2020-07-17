@@ -3,6 +3,7 @@ declare namespace ICircularImage {
         src: string;
         height: string;
         width: string;
+        border?: string;
     }
 }
 

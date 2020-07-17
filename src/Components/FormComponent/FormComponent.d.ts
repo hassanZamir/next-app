@@ -4,7 +4,7 @@ declare namespace IFormComponent {
         submitActive: boolean;
         defaultValues?: {};
         children?: ReactNode;
-        submitSuccess: boolean;
+        submitSuccess?: boolean;
     }
 }
 

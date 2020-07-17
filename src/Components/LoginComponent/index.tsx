@@ -7,9 +7,10 @@ import { useRouter } from 'next/router';
 // #endregion Global Imports
 
 // #region Local Imports
-import { PrimaryButton, ThemedInput, StaticImage, ParagraphText } from "@Components";
+import { PrimaryButton, ThemedInput, StaticImage, ParagraphText, CreatorProfileRules, LoadingSpinner } from "@Components";
 import { CheckYourEmailModal } from "../Modals/CheckYourEmailModal";
 import { EmailVerifiedModal }from "../Modals/EmailVerifiedModal";
+import { ResetPasswordModal }from "../Modals/ResetPasswordModal";
 import { LinkText } from "@Components/Basic";
 import { useModal } from '../Hooks';
 import { IStore } from "@Redux/IStore";
@@ -29,10 +30,13 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
     const { isShowing, toggle } = useModal(modalRef);
     const [userVerificationEmail, setUserVerificationEmail] = useState('');
     const [userVerificationToken, setUserVerificationToken] = useState('');
+    const [resetPasswordModal, setResetPasswordModal] = useState(false);
 
     const router = useRouter();
+    const { modal, token, profile } = router.query;
+
     const loginState = useSelector((state: IStore) => state.loginError);
-    const { errors } = loginState;
+    const { errors, creatorProfile } = loginState;
     const dispatch = useDispatch();
 
     function handleChange(e: React.FormEvent<HTMLInputElement>) {
@@ -50,13 +54,17 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
     }, [email, password, recaptchaToken])
 
     useEffect(() => {
-        const { modal, email, token } = router.query;
         if (modal === 'check-your-email') {
+            const { email } = router.query;
             setUserVerificationEmail(email as string);
             toggle();
+            return;
         } else if (modal === 'account-verify') {
             setUserVerificationToken(token as string);
             toggle();
+            return;
+        } else if (profile) {
+            dispatch(LoginActions.GetCreatorProfile({ username: profile as string }));
         }
         
         // Prefetch the dashboard page as the user will go there after the login
@@ -90,6 +98,13 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
         }
     }
 
+    const forgetPasswordClick = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+
+        setResetPasswordModal(true);
+        toggle();
+    }
+
     return (
         <div className="w-100 d-flex flex-column justify-content-between align-items-center">
             {userVerificationEmail && <CheckYourEmailModal
@@ -103,15 +118,24 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                 isShowing={isShowing}  
                 modalRef={modalRef} 
                 token={userVerificationToken} />}
+            
+            {resetPasswordModal && <ResetPasswordModal
+                isShowing={isShowing}  
+                modalRef={modalRef} />}
 
-            <div className="mt-5 row justify-content-center no-gutters">
+            {!profile && <div className="mt-5 row justify-content-center no-gutters">
                 <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
-            </div>
+            </div>}
+            {profile && <div className="mt-3 border-primary d-flex align-items-center justify-content-center" 
+                style={{ minHeight: "300px", width: "300px", border: "2px solid", borderRadius: "18px" }}>
+                { 'name' in creatorProfile && <CreatorProfileRules creatorProfile={creatorProfile} /> }
+                { !('name' in creatorProfile) && <LoadingSpinner size="xl" /> }
+            </div>}
             <form name="login-form" className="flex-column d-flex align-items-center"
                 style={{ width: "271px" }} 
                 onSubmit={handleSubmit}
                 autoComplete="off">
-                    
+                
                 <input id="username" style={{display: "none"}} type="text" name="fakeusernameremembered" />
                 <input id="password" style={{display:"none"}} type="password" name="fakepasswordremembered"></input>
                 <ThemedInput type="email" 
@@ -127,12 +151,15 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                     name="password"
                     autoComplete="new-password"
                     className="mt-3" />
-                <Link href="#" passHref>
-                    <LinkText style={{ textDecoration: "underline" }} 
-                        className="text-primary text-left font-10px w-100 mt-1">
+                
+                <div className="w-100 mt-1 text-left cursor-pointer" 
+                    onClick={forgetPasswordClick}> 
+                    <LinkText 
+                        style={{ textDecoration: "underline" }} 
+                        className="text-primary font-10px ">
                             Forgot Password?
                     </LinkText>
-                </Link>
+                </div>
                 
                 <div className="captcha-container mt-3" 
                     style={{ height: "78px" }}>

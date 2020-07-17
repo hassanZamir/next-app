@@ -3,7 +3,7 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { LoginModel, SignUpModel, AccountVerifyModel } from "@Interfaces";
+import { LoginModel, SignUpModel, AccountVerifyModel, SendResetPasswordEmailModel } from "@Interfaces";
 import { async } from "q";
 // #endregion Interface Imports
 
@@ -89,5 +89,24 @@ export const LoginService = {
             };
         }
         return response;
-    }
+    },
+    SendResetPasswordEmail: async (
+        payload: SendResetPasswordEmailModel.GetSendResetPasswordPayload
+    ): Promise<SendResetPasswordEmailModel.GetSendResetPasswordResponse> => {
+        let response: SendResetPasswordEmailModel.GetSendResetPasswordResponse;
+        try {
+            response = await Http.Request<SendResetPasswordEmailModel.GetSendResetPasswordResponse>(
+                "POST",
+                "/accounts/password/reset",
+                undefined,
+                {...payload}
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                error: "Something went wrong"
+            };
+        }
+        return response;
+    },
 };

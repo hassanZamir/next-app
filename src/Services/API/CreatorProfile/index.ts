@@ -77,33 +77,30 @@ export const CreatorProfileService = {
         return response;
     },
     GetCreatorProfile: async (
-        payload: CreatorProfileModel.GetCreatorFeedsPayload
+        payload: CreatorProfileModel.GetCreatorProfilePayload
     ): Promise<CreatorProfileModel.GetCreatorProfileResponse> => {
         let response: CreatorProfileModel.GetCreatorProfileResponse;
 
         try {
             response = await Http.Request<CreatorProfileModel.GetCreatorProfileResponse>(
                 "GET",
-                "/profile/creator/" + payload.profileId + "/user/" + payload.userId,
+                "/profiles/" + payload.username,
                 undefined
             );
         } catch (error) {
             response = {
                 status: false,
                 profile: {
-                    id: 1,
-                    name: "Joseph Denly",
-                    totalContent: 250,
-                    totalImages: 200,
-                    totalVideos: 50,
-                    totalFollowers: 156000,
-                    totalFollowing: 2000,
-                    showFollowers: true,
-                    bio: "Hello YES!!!",
+                    name: "sohaib",
                     coverImageUrl: "/images/5.jpg",
                     profileImageUrl: "/images/Capture@2x.png",
-                    address: "San Fransisco, CA",
-                    isFollower: false
+                    location: "Pakistan",
+                    bio: "technology Geek",
+                    followersCount: 0,
+                    contentCount: 0,
+                    imagesCount: 0,
+                    videosCount: 0,
+                    followingFee: 0.0
                 },
                 errors: "Something went wrong"
             };

@@ -5,7 +5,11 @@ export const ActionConsts = {
     },
     Login: {
         SetUserPayload: "SetUserPayload",
-        SetLoginError: "SetLoginError"
+        SetLoginError: "SetLoginError",
+        GetCreatorProfileSuccess: "GetCreatorProfileSuccess",
+        GetCreatorProfileError: "GetCreatorProfileError",
+        SendResetPasswordEmailSuccess: "SendResetPasswordEmailSuccess",
+        SendResetPasswordEmailError: "SendResetPasswordEmailError"
     },
     SignUp: {
         SignUpSuccess: "SignUpSuccess",

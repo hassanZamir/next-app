@@ -20,13 +20,12 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
     const { totalContent, totalImages, totalVideos, isFollower, name } = creatorProfile;
     const dispatch = useDispatch();
 
-    const params = { profileId: profileId, userId: user.id };
+    const params = { username: user.username };
     useEffect(() => {
         dispatch(CreatorProfileActions.GetCreatorProfile(params));
     }, []);
 
     const onFollow = (followOrUnFollow: boolean) => {
-        debugger;
         const followParams = { profileId: profileId, userId: user.id, shouldFollow: followOrUnFollow};
         if (followOrUnFollow) {
             dispatch(CreatorProfileActions.FollowProfile(followParams));

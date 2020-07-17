@@ -18,14 +18,14 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps> = ({ 
   }, [submitSuccess]);
 
   return (
-    <form className="flex-column d-flex align-items-center" onSubmit={handleSubmit(onSubmit)}
-      style={{ width: "300px" }}>
+    <form className="flex-column d-flex align-items-center" onSubmit={handleSubmit(onSubmit)}>
       {Array.isArray(children)
         ? children.map(child => {
             if (child && child.props && child.props.name) {
               if (child.props.name === "reTypePassword")
                 child.props.validationRules.validate = (value: string) => { return password.current ? value === password.current || "Password must match" : true }
               
+              console.log("formState.isValid", formState.isValid);
               return React.createElement(child.type, {
                 ...{
                   ...child.props,
