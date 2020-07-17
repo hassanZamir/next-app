@@ -15,7 +15,7 @@ export const FeedsService = {
         try {
             response = await Http.Request<FeedsModel.GetAllFeedsResponse>(
                 "GET",
-                "/users/" + payload.userId + "/feed",
+                "as/users/" + payload.userId + "/feed",
                 undefined
             );
         } catch (error) {

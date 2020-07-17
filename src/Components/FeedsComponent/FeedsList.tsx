@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComments, faDollarSign, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { TipSubmitModal }from "../Modals/TipSubmitModal";
+import { CurrentTimeDifference }from "@Services/Time";
 
 import { useModal } from '../Hooks';
 import { useDispatch } from "react-redux";
@@ -34,7 +35,7 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({ likeContent
         </div>
         <div className="d-flex align-items-center cursor-pointer">
             <FontAwesomeIcon icon={faClock} color="#F57B52" size="lg" />
-            <div className="text-darkGrey font-10px ml-1">{ timeStamps }</div>
+            <div className="text-darkGrey font-10px ml-1">{ CurrentTimeDifference(timeStamps) }</div>
         </div>
         <div className="d-flex align-items-center cursor-pointer">
             <FontAwesomeIcon icon={faEllipsisV} color="#F57B52" />
