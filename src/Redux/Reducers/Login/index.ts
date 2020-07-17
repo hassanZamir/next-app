@@ -52,7 +52,8 @@ export const LoginErrorReducer = (
     action: IAction<ILoginPage.Actions.IGetLoginResponse & 
         IProfilePage.Actions.IGetCreatorProfileResponse & 
         ILoginPage.Actions.IGetSendResetPasswordEmailResponse &
-        ILoginPage.Actions.IGetChangePasswordResponse>
+        ILoginPage.Actions.IGetChangePasswordResponse &
+        IProfilePage.Actions.IMapCreatorProfileResponse>
     ) => {
     switch (action.type) {
         case ActionConsts.Login.ChangePasswordSuccess: {
@@ -83,10 +84,8 @@ export const LoginErrorReducer = (
             });
         }
         case ActionConsts.Login.GetCreatorProfileError: {
-            let { errors } = action.payload!;
-
             return Object.assign({}, state, {
-                errors: errors ? errors : "Couldn't load creator profile.",
+                errors: "Couldn't load creator profile.",
             });
         }
         case ActionConsts.Login.SetLoginError: {

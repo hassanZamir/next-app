@@ -80,8 +80,8 @@ export const LoginActions = {
         const result = await CreatorProfileService.GetCreatorProfile(payload);
         
         dispatch({
-            payload: result,
-            type: !result.status ? ActionConsts.Login.GetCreatorProfileSuccess : ActionConsts.Login.GetCreatorProfileError
+            payload: { profile: result.response },
+            type: result.status ? ActionConsts.Login.GetCreatorProfileSuccess : ActionConsts.Login.GetCreatorProfileError
         });
     },
     SendResetPasswordEmail: (payload: ILoginPage.Actions.IGetSendResetPasswordEmailPayload) => async (

@@ -147,7 +147,8 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
             {profile && <div className="mt-3 border-primary d-flex align-items-center justify-content-center" 
                 style={{ minHeight: "300px", width: "300px", border: "2px solid", borderRadius: "18px" }}>
                 { 'name' in creatorProfile && <CreatorProfileRules creatorProfile={creatorProfile} /> }
-                { !('name' in creatorProfile) && <LoadingSpinner size="xl" /> }
+                { !('name' in creatorProfile) && !errors && <LoadingSpinner size="xl" /> }
+                { !('name' in creatorProfile) && errors && <div>{ errors }</div> }
             </div>}
             <form name="login-form" className="flex-column d-flex align-items-center"
                 style={{ width: "271px" }} 
