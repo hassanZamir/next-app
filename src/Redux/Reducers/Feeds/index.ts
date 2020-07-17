@@ -35,7 +35,7 @@ export const FeedsReducer = (
             const { feeds } = state;
 
             const _updatedFeeds = feeds.map((feed) => {
-                feed.id === contentId && (feed.content_viewer_like = true)
+                feed.id === contentId && (feed.content_viewer_like = !feed.content_viewer_like)
                 return feed;
             });
             return Object.assign({}, state, {

@@ -13,6 +13,7 @@ const _Textarea = styled.textarea`
     color: inherit;
     outline-width: 0;
     background: white;
+    min-height: 35px;
 `;
 
 export const Textarea: React.FunctionComponent<ITextarea.IProps> = ({ rows, columns, ...rest}) => {

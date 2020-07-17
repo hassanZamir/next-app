@@ -59,27 +59,25 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> =
 
 const Feed: React.FunctionComponent<IFeed.IProps> = ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick }) => {
     return (
-        <Link href="/profile/[id]" as={"/profile/" + feed.username}>
-            <div className="w-100 h-100 my-2 cursor-pointer" style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}>
-                <BackgroundImage src={feed.mediaUrl} />
-                <div className="d-flex flex-column w-100 px-2">
-                    <ParagraphText className="text-primary lato-semibold font-12px">
-                        {feed.title}
-                    </ParagraphText>
-                    <ParagraphText className="text-lightGrey lato-semibold font-10px my-0">
-                        {feed.username}
-                    </ParagraphText>
-                    <FeedOptions 
-                        feed={feed}
-                        index={index}
-                        toggleTipModal={toggleTipModal}
-                        likeContent={likeContent}
-                        onReportClick={onReportClick} 
-                        onCopyClick={onCopyClick}>
-                    </FeedOptions>
-                </div>
+        <div className="w-100 h-100 my-2" style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}>
+            <BackgroundImage src={feed.mediaUrl} />
+            <div className="d-flex flex-column w-100 px-2">
+                <ParagraphText className="text-primary lato-semibold font-12px">
+                    {feed.title}
+                </ParagraphText>
+                <Link href="/profile/[username]" as={"/profile/" + feed.username} passHref>
+                    <span style={{ textDecoration: "underline" }} className="text-lightGrey lato-semibold font-10px my-0 cursor-pointer">{feed.username}</span>
+                </Link>
+                <FeedOptions 
+                    feed={feed}
+                    index={index}
+                    toggleTipModal={toggleTipModal}
+                    likeContent={likeContent}
+                    onReportClick={onReportClick} 
+                    onCopyClick={onCopyClick}>
+                </FeedOptions>
             </div>
-        </Link>
+        </div>
     );
 }
 
@@ -120,7 +118,11 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
             contentId: feeds[index].id, 
             userId: user.id
         }
-        dispatch(FeedsActions.LikeFeed(param));
+        if (!feeds[index].content_viewer_like) {
+            dispatch(FeedsActions.LikeFeed(param));
+        } else {
+            dispatch(FeedsActions.UnLikeFeed(param));
+        }
     }
 
     const onReportClick = (feed: FEED) => {

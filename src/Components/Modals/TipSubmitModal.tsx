@@ -39,7 +39,7 @@ export const TipSubmitModal: React.RefForwardingComponent<HTMLDivElement, ITipSu
                         <div className="d-flex flex-column">
                             <div className="d-flex align-items-center justify-content-center">
                                 <div style={{ width: "72px", height: "72px", marginRight: "10px" }}>
-                                    <CircularImage src={profileImageUrl} height="100%" width="auto" />
+                                    <CircularImage src={profileImageUrl} height="100%" width="75px" />
                                 </div>
                                 <ParagraphText className="text-primary font-20px seoge-ui-bold">{username}</ParagraphText>
                             </div>

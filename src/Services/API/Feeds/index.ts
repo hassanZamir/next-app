@@ -122,6 +122,25 @@ export const FeedsService = {
         }
         return response;
     },
+    UnLikeFeed: async (
+        payload: FeedsModel.GetLikeFeedPayload
+    ): Promise<FeedsModel.GetLikeFeedResponse> => {
+        let response: FeedsModel.GetLikeFeedResponse
+
+        try {
+            response = await Http.Request<FeedsModel.GetLikeFeedResponse>(
+                "DELETE",
+                "/content/" + payload.contentId + "/like",
+                undefined,
+                {userId: payload.userId}
+            );
+        } catch (error) {
+            response = {
+                status: false
+            };
+        }
+        return response;
+    },
     ReportFeed: async (
         payload: FeedsModel.GetReportFeedPayload
     ): Promise<FeedsModel.GetReportFeedResponse> => {

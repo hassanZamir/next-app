@@ -138,7 +138,27 @@ export const CreatorProfileService = {
         try {
             response = await Http.Request<CreatorProfileModel.GetFollowProfileResponse>(
                 "POST",
-                "/profiles/" + payload.username + '/' + (payload.shouldFollow ? 'follow' : 'unfollow'),
+                "/profiles/" + payload.username + '/follow',
+                undefined,
+                {userId: payload.userId}
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: []
+            };
+        }
+        return response;
+    },
+    UnFollowProfile: async (
+        payload: CreatorProfileModel.GetFollowProfilePayload
+    ): Promise<CreatorProfileModel.GetFollowProfileResponse> => {
+        let response: CreatorProfileModel.GetFollowProfileResponse;
+
+        try {
+            response = await Http.Request<CreatorProfileModel.GetFollowProfileResponse>(
+                "DELETE",
+                "/profiles/" + payload.username + '/follow',
                 undefined,
                 {userId: payload.userId}
             );

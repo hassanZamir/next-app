@@ -5,6 +5,7 @@ import * as React from "react";
 // #region Local Imports
 import { IFooter } from "./Footer";
 import { StaticImage } from "@Components";
+import Router from "next/router";
 // #endregion Local Imports
 
 const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected }): JSX.Element => {
@@ -12,7 +13,8 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected }): JSX.Elem
         className={"footer-navigation position-fixed bottom-0 d-flex align-items-center justify-content-between text-white " + (selected === "Profile" ? "bg-white" : "bg-fotter-grey")}>
         {FooterConfig.map((config, index) => {
             return <div key={index} 
-                className={"d-flex align-items-center justify-content-center h-100 " + (selected === config.name ? "highlight-footer-option" : "")} 
+                onClick={config.onClick}
+                className={"cursor-pointer d-flex align-items-center justify-content-center h-100 " + (selected === config.name ? "highlight-footer-option" : "")} 
                 style={{ width: "20%" }}>
                 
                 <StaticImage src={config.image.src} height={config.image.height} width={config.image.width} />
@@ -56,6 +58,12 @@ const FooterConfig = [{
         src: '/images/account@2x.png',
         height: '20px',
         width: '20px'
+    },
+    onClick: function() {
+        localStorage.removeItem('persist:root');
+        Router.push({
+            pathname: "/login"
+        });
     }
 }];
 

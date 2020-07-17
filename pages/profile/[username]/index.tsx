@@ -25,9 +25,10 @@ const UserProfile: NextPage<IProfilePage.IProps> = () => {
     const router = useRouter();
     const profileUserName = router.query["username"] as string;
 
-    return <Authenticated session={login.session} name="Profile">
-        <ProfileComponent user={login.session} profileUserName={profileUserName} />
-    </Authenticated>;
+    return <ProfileComponent user={login.session} profileUserName={profileUserName} />
+    // return <Authenticated session={login.session} name="Profile">
+    //     <ProfileComponent user={login.session} profileUserName={profileUserName} />
+    // </Authenticated>;
 };
 
 export default UserProfile;

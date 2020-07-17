@@ -35,6 +35,14 @@ export const FeedsActions = {
             type: result.status ? ActionConsts.Feeds.LikeFeedSuccess : ActionConsts.Feeds.LikeFeedError
         });
     },
+    UnLikeFeed: (payload: IFeed.Actions.ILikeFeedPayload) => async (dispatch: Dispatch) => {
+        const result = await FeedsService.UnLikeFeed(payload);
+        
+        dispatch({
+            payload: {contentId: payload.contentId},
+            type: result.status ? ActionConsts.Feeds.LikeFeedSuccess : ActionConsts.Feeds.LikeFeedError
+        });
+    },
     ReportFeed: (payload: IFeed.Actions.IGetReportFeedPayload) => async () => {
         const result = await FeedsService.ReportFeed(payload);
         

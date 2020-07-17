@@ -42,6 +42,16 @@ export const CreatorProfileActions = {
             type: result.status ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
         });
     },
+    UnFollowProfile: (payload: IProfilePage.Actions.IGetFollowProfilePayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await CreatorProfileService.UnFollowProfile(payload);
+        
+        dispatch({
+            payload: { followers: result.response ? result.response : result },
+            type: result.status ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
+        });
+    },
     GetProfileFollowers: (payload: IProfilePage.Actions.IGetProfileFollowersPayload) => async (
         dispatch: Dispatch
     ) => {

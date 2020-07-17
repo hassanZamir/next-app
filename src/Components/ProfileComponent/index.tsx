@@ -6,8 +6,9 @@ import Router from 'next/router';
 
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
-import { USER_SESSION, CREATOR_PROFILE } from "@Interfaces";
+import { USER_SESSION } from "@Interfaces";
 
+import { Footer } from '@Components';
 import { CreatorProfileActions } from "@Actions";
 import { CreatorProfile, CreatorContent } from "@Components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,35 +25,53 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
         const params = { username: profileUserName };
         dispatch(CreatorProfileActions.GetCreatorProfile(params));
 
-        const followersParams = { userId: user.id, username: profileUserName }
-        dispatch(CreatorProfileActions.GetProfileFollowers(followersParams));
+        if (user && user.id) {
+            const followersParams = { userId: user.id, username: profileUserName }
+            dispatch(CreatorProfileActions.GetProfileFollowers(followersParams));
+        }
     }, []);
 
     const onFollow = (followOrUnFollow: boolean) => {
-        const followParams = { 
-            username: profileUserName, 
-            userId: user.id, 
-            shouldFollow: followOrUnFollow
-        };
-        dispatch(CreatorProfileActions.FollowProfile(followParams));
+        if (user && user.id) {
+            const followParams = { 
+                username: profileUserName, 
+                userId: user.id, 
+                shouldFollow: followOrUnFollow
+            };
+            if (followOrUnFollow) {
+                dispatch(CreatorProfileActions.FollowProfile(followParams));
+            } else {
+                dispatch(CreatorProfileActions.UnFollowProfile(followParams));
+            }
+        } else {
+            Router.push({
+                pathname: "/login",
+                query: { profile: profileUserName }
+            });
+        }
     }
 
-    return (<div className="bg-gradient d-flex flex-column h-100">
-        <div className="back-icon cursor-pointer" onClick={() => Router.back()}>
-            <FontAwesomeIcon icon={faArrowLeft} color="white" size="lg" />
-        </div>
-        <CreatorProfile 
-            creatorProfile={creatorProfile} 
-            onFollow={onFollow} 
-            isFollower={followers[0] && followers[0].userId === user.id} />
+    return (<div className="w-100 row flex-column justify-content-between flex-nowrap">
+        <div style={{ marginBottom: "40px" }}>
+            <div className="bg-gradient d-flex flex-column h-100">
+                <div className="back-icon cursor-pointer" onClick={() => Router.back()}>
+                    <FontAwesomeIcon icon={faArrowLeft} color="white" size="lg" />
+                </div>
+                <CreatorProfile 
+                    creatorProfile={creatorProfile} 
+                    onFollow={onFollow} 
+                    isFollower={followers[0] && followers[0].userId === user.id} />
 
-        <CreatorContent 
-            contentCount={contentCount}
-            imagesCount={imagesCount}
-            videosCount={videosCount} 
-            user={user}
-            profileUserName={profileUserName}
-            name={name} 
-            isFollower={followers[0] && followers[0].userId === user.id} />
+                <CreatorContent 
+                    contentCount={contentCount}
+                    imagesCount={imagesCount}
+                    videosCount={videosCount} 
+                    user={user}
+                    profileUserName={profileUserName}
+                    name={name} 
+                    isFollower={followers[0] && followers[0].userId === user.id} />
+            </div>
+        </div>
+        <Footer selected="Profile" />
     </div>);
 }
