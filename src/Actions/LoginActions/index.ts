@@ -24,6 +24,14 @@ export const LoginActions = {
             type: result.authenticated ? ActionConsts.Login.SetUserPayload : ActionConsts.Login.SetLoginError
         });
     },
+    UserLogout: () => async (
+        dispatch: Dispatch
+    ) => {
+        dispatch({
+            payload: null,
+            type: ActionConsts.Login.DoLogout
+        });
+    },
     UserSignUp: (payload: ISignUpPage.Actions.IGetSignUpPayload) => async (
         dispatch: Dispatch
     ) => {

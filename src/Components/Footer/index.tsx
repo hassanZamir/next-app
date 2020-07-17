@@ -17,7 +17,10 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected }): JSX.Elem
                 className={"cursor-pointer d-flex align-items-center justify-content-center h-100 " + (selected === config.name ? "highlight-footer-option" : "")} 
                 style={{ width: "20%" }}>
                 
-                <StaticImage src={config.image.src} height={config.image.height} width={config.image.width} />
+                <StaticImage 
+                    src={config.image.src} 
+                    height={config.image.height} 
+                    width={config.image.width} />
             </div>
         })}
     </div>;
@@ -60,10 +63,9 @@ const FooterConfig = [{
         width: '20px'
     },
     onClick: function() {
-        localStorage.removeItem('persist:root');
-        Router.push({
-            pathname: "/login"
-        });
+        window.localStorage.clear();
+
+        Router.push("/login");
     }
 }];
 

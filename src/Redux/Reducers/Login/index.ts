@@ -42,6 +42,10 @@ export const LoginSuccessReducer = (
                 session: session
             });
         }
+        case ActionConsts.Login.DoLogout: {
+            Router.push("/login");
+            return INITIAL_STATE;
+        }
         default:
             return state;
     }
