@@ -19,13 +19,12 @@ export const FeedsActions = {
         
         dispatch({
             payload: {feeds: result.response},
-            type: !result.status ? ActionConsts.Feeds.GetAllFeedsSuccess : ActionConsts.Feeds.GetAllFeedsError
+            type: result.status ? ActionConsts.Feeds.GetAllFeedsSuccess : ActionConsts.Feeds.GetAllFeedsError
         });
     },
     TipFeed: (payload: IFeed.Actions.ITipFeedPayload) => async () => {
         const result = await FeedsService.TipFeed(payload);
         
-        debugger;
         return result;
     },
     LikeFeed: (payload: IFeed.Actions.ILikeFeedPayload) => async (dispatch: Dispatch) => {

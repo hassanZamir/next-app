@@ -28,7 +28,7 @@ export const CheckYourEmailModal: React.RefForwardingComponent<HTMLDivElement, I
                     <div className="modal-content d-flex flex-column justify-content-center align-items-center">
                         <ParagraphText className="text-primary font-25px text-center">Check Your Email</ParagraphText>
                         <ParagraphText className="text-grey100 font-12px text-center mt-3">
-                            {'We have sent an email at' + email + '. Click the link to verify your account.'} 
+                            {'We have sent an email at ' + email + '. Click the link to verify your account.'} 
                         </ParagraphText>
                         <ParagraphText className="text-grey100 font-12px text-center mt-3">
                             If you don't see the email, check your junk or spam folder.
