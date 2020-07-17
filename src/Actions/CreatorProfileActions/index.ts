@@ -17,8 +17,9 @@ export const CreatorProfileActions = {
     ) => {
         const result = await CreatorProfileService.GetCreatorProfile(payload);
         
+        debugger;
         dispatch({
-            payload: result,
+            payload: { profile: result.response },
             type: !result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
         });
     },
@@ -27,19 +28,20 @@ export const CreatorProfileActions = {
     ) => {
         const result = await CreatorProfileService.GetCreatorFeeds(payload);
         
+        debugger;
         dispatch({
-            payload: result,
+            payload: { feeds: result.response },
             type: !result.status ? ActionConsts.CreatorProfile.GetCreatorFeedsSuccess : ActionConsts.CreatorProfile.GetCreatorFeedsError
         });
     },
     FollowProfile: (payload: IProfilePage.Actions.IGetFollowProfilePayload) => async (
         dispatch: Dispatch
     ) => {
-        const result = await CreatorProfileService.FollowProfile(payload);
+        // const result = await CreatorProfileService.FollowProfile(payload);
         
-        dispatch({
-            payload: result,
-            type: !result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
-        });
+        // dispatch({
+        //     payload: result,
+        //     type: !result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
+        // });
     }
 };

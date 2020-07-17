@@ -5,6 +5,9 @@ export interface CreatorProfilePayload {
 
 export interface CreatorFeedsPayload {
     [key: string]: string | number;
-    profileId: string;
-    userId: number;
+    username: string;
+    type: number;
+    page: number;
+    offset: number;
+    viewer: number;
 }

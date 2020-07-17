@@ -1,6 +1,7 @@
 export interface TipFeedPayload {
-    contentId: number;
-    userId: number;
+    creatorUserName: string;
+    contentId?: number;
+    viewerId: number;
     message: string;
     amount: number;
 }

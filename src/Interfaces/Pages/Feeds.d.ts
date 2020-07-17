@@ -1,5 +1,4 @@
-import { FeedsModel } from "@Services/API/Feeds/Feeds";
-import { USER_SESSION, FEED } from "@Interfaces";
+import { USER_SESSION, FEED, FeedsModel } from "@Interfaces";
 
 declare namespace IFeedsPage {
     export interface IProps {
@@ -12,10 +11,11 @@ declare namespace IFeedsPage {
     }
 
     namespace Actions {
-        export interface IGetAllFeedsPayload extends FeedsModel.AllFeedsPayload {
-            user: number;
+        export interface IMapAllFeedsResponse {
+            feeds: FeedsModel.GetAllFeedsResponse
         }
 
+        export interface IGetAllFeedsPayload extends FeedsModel.GetAllFeedsPayload {}
         export interface IGetAllFeedsResponse extends FeedsModel.GetAllFeedsResponse {}
     }
 }

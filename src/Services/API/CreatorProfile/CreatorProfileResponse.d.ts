@@ -13,25 +13,24 @@ export type CREATOR_PROFILE = {
 }
 export interface CreatorProfileResponse {
     status: boolean;
-    profile: CREATOR_PROFILE,
-    errors: string;
+    response: CREATOR_PROFILE
 }
 
-export type FEED  = {
-    id: int;
-    creatorId: int;
-    type: CONTENT_TYPE;
-    title: string;
-    username: string;
-    likes: number;
-    comments: number;
-    time: string;
-    mediaUrl: string;
-    profileImageUrl: string;
-    contentLiked: boolean;
+export type FEED = {
+    name: string,
+    username: string,
+    profileImageUrl: string,
+    content_viewer_like: boolean,
+    id: number,
+    title: string,
+    type: number,
+    mediaUrl: string,
+    likesCount: number,
+    commentsCount: number,
+    tipsCount: number,
+    timeStamps: string
 }
 export interface CreatorFeedsResponse {
     status: boolean;
-    feeds: FEED[];
-    errors: string;
+    response: FEED[];
 }

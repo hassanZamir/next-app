@@ -9,12 +9,22 @@ import { FeedsList, ParagraphText, StaticImage } from "@Components";
 import { ICreatorContent } from "./CreatorContent";
 import { CONTENT_TYPE } from "src/Constants";
 
-export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps> = ({ user, totalContent, totalImage, totalVideos, params, name, isFollower }) => {
+export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps> 
+    = ({ user, contentCount, imagesCount, videosCount, name, profileUserName, isFollower }) => {
+
     const creatorProfileState = useSelector((state: IStore) => state.creatorProfile);
     const { creatorFeeds } = creatorProfileState;
     const dispatch = useDispatch();
     const [selectedTab, setSetectedTab] = useState(0);
-
+    
+    console.log("creator feeds : ", creatorFeeds);
+    const params = {
+        username: profileUserName,
+        type: 0,
+        page: 1,
+        offset: 5,
+        viewer: user.id
+    };
     useEffect(() => {
         dispatch(CreatorProfileActions.GetCreatorFeeds(params));
     }, []);
@@ -24,6 +34,7 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps> = (
     const filterFeeds = (feeds: FEED[]): FEED[] => {
         if (!selectedTab) return feeds;
 
+        debugger;
         return feeds.filter((feed, i) => {
             return feed.type === selectedTab;
         });
@@ -31,13 +42,18 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps> = (
 
     return <div className="h-100">
         <Tabs>
-            <Tab active={selectedTab === 0} onClick={() => changeTab(0)} border={true}>{ (totalContent ? totalContent : "") + ' Posts' }</Tab>
-            <Tab active={selectedTab === 1} onClick={() => changeTab(CONTENT_TYPE.IMAGE)} border={true}>{ (totalImage ? totalImage : "") + ' Images'}</Tab>
-            <Tab active={selectedTab === 2} onClick={() => changeTab(CONTENT_TYPE.VIDEO)} border={false}>{ (totalVideos ? totalVideos : "") + ' Videos'}</Tab>
+            <Tab active={selectedTab === 0} onClick={() => changeTab(0)} border={true}>{ (contentCount ? contentCount : "") + ' Posts' }</Tab>
+            <Tab active={selectedTab === 1} onClick={() => changeTab(CONTENT_TYPE.IMAGE)} border={true}>{ (imagesCount ? imagesCount : "") + ' Images'}</Tab>
+            <Tab active={selectedTab === 2} onClick={() => changeTab(CONTENT_TYPE.VIDEO)} border={false}>{ (videosCount ? videosCount : "") + ' Videos'}</Tab>
         </Tabs>
         {isFollower === false ? <CreatorContentPrivacy name={name}/> : <React.Fragment>
             <ParagraphText className="gibson-semibold font-16px text-headingBlue px-4 mt-2">Posts</ParagraphText>
-            <FeedsList user={user} feeds={filterFeeds(creatorFeeds)} />
+            {
+                creatorFeeds && creatorFeeds.length > 0 ? <FeedsList user={user} feeds={filterFeeds(creatorFeeds)} /> :
+                <div style={{ minHeight: "400px" }} className="px-5 h-100 w-100 d-flex flex-column align-items-center justify-content-center">
+                    <h4 className="text-primary text-center mt-3 gibson-semibold">No content to show</h4>
+                </div>
+            }
         </React.Fragment>}
     </div>
 }

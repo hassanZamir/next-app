@@ -11,6 +11,14 @@ declare namespace IProfilePage {
     }
 
     namespace Actions {
+        export interface IMapCreatorProfileResponse {
+            profile: CreatorProfileModel.GetCreatorProfileResponse
+        }
+
+        export interface IMapCreatorFeedsResponse {
+            feeds: CreatorProfileModel.GetCreatorFeedsResponse
+        }
+
         export interface IGetCreatorProfilePayload extends CreatorProfileModel.GetCreatorProfilePayload {}
         export interface IGetCreatorProfileResponse extends CreatorProfileModel.GetCreatorProfileResponse {}
 

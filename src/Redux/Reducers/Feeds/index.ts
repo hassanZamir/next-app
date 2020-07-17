@@ -13,21 +13,20 @@ const INITIAL_STATE: IFeedsPage.IStateProps = {
 
 export const FeedsReducer = (
     state = INITIAL_STATE,
-    action: IAction<IFeedsPage.Actions.IGetAllFeedsResponse & IFeed.Actions.ILikeFeedPayload>
+    action: IAction<IFeedsPage.Actions.IMapAllFeedsResponse & IFeed.Actions.ILikeFeedPayload>
 ) => {
     switch (action.type) {
         case ActionConsts.Feeds.GetAllFeedsSuccess: {
             let { feeds } = action.payload!;
 
             return Object.assign({}, state, {
-                feeds: feeds
+                feeds: feeds,
+                errors: ''
             });
         }
         case ActionConsts.Feeds.GetAllFeedsError: {
-            let { errors } = action.payload!;
-
             return Object.assign({}, state, {
-                errors: errors ? errors : "Authentication failed for these credentials",
+                errors: "Something went wrong.",
                 feeds: []
             });
         }
@@ -35,9 +34,8 @@ export const FeedsReducer = (
             let { contentId } = action.payload!;
             const { feeds } = state;
 
-            debugger;
             const _updatedFeeds = feeds.map((feed) => {
-                feed.id === contentId && (feed.contentLiked = true)
+                feed.id === contentId && (feed.content_viewer_like = true)
                 return feed;
             });
             return Object.assign({}, state, {

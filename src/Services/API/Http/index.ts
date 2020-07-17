@@ -34,15 +34,15 @@ export const Http = {
                 },
                 method: `${methodType}`,
             })
-                .then(async response => {
-                    if (response.status === 200) {
-                        return response.json().then(resolve);
-                    }
-                    return reject(response);
-                })
-                .catch(e => {
-                    reject(e);
-                });
+            .then(async response => {
+                if (response.status === 200) {
+                    return response.json().then(resolve);
+                }
+                return reject(response);
+            })
+            .catch(e => {
+                reject(e);
+            });
         });
     },
 };

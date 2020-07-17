@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic';
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
 import { IProfilePage, USER_SESSION } from "@Interfaces";
-import { ProfileComponent } from "@Components";
+import { ContentComponent } from "@Components";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -23,11 +23,25 @@ const Authenticated: any = dynamic(
 const UserProfile: NextPage<IProfilePage.IProps> = () => {
     const login = useSelector((state: IStore) => state.loginSuccess);
     const router = useRouter();
-    const profileId = router.query["id"] as string;
+    const profileId = router.query["id"] as string,
+    contentId = router.query["contentId"] as string;;
 
-    return <Authenticated session={login.session} name="Profile">
-        <ProfileComponent user={login.session} profileId={profileId} />
+    return <Authenticated session={login.session} name="ContentPage">
+        <ContentComponent profileId={profileId} contentId={contentId} />
     </Authenticated>;
 };
+
+// export async function getStaticPaths() {
+//     return {
+//       paths: [{
+//         params: { id: "0", contentId: "0" } // See the "paths" section below
+//       }],
+//       fallback: true
+//     };
+// }
+
+// export const getStaticProps = (...params: any) => {
+//     return { props: {} };
+// };
 
 export default UserProfile;

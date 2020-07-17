@@ -1,15 +1,14 @@
+import { USER_SESSION } from "@Interfaces";
+
 declare namespace ICreatorContent {
     export interface IProps {
-        totalContent: number, 
-        totalImage: number, 
-        totalVideos: number,
-        params: {
-            userId: number,
-            profileId: string
-        },
-        isFollower: boolean;
-        user: any;
+        contentCount: number, 
+        imagesCount: number, 
+        videosCount: number,
+        user: USER_SESSION;
         name: string;
+        profileUserName: string;
+        isFollower: boolean;
     }
 }
 

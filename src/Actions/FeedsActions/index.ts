@@ -15,24 +15,22 @@ export const FeedsActions = {
     GetAllFeeds: (payload: IFeedsPage.Actions.IGetAllFeedsPayload) => async (
         dispatch: Dispatch
     ) => {
-        const result = await FeedsService.GetAllFeeds({
-            params: payload.user,
-        });
+        const result = await FeedsService.GetAllFeeds(payload);
         
         dispatch({
-            payload: result,
-            type: result.status === "false" ? ActionConsts.Feeds.GetAllFeedsSuccess : ActionConsts.Feeds.GetAllFeedsError
+            payload: {feeds: result.response},
+            type: !result.status ? ActionConsts.Feeds.GetAllFeedsSuccess : ActionConsts.Feeds.GetAllFeedsError
         });
     },
     TipFeed: (payload: IFeed.Actions.ITipFeedPayload) => async () => {
         const result = await FeedsService.TipFeed(payload);
         
+        debugger;
         return result;
     },
     LikeFeed: (payload: IFeed.Actions.ILikeFeedPayload) => async (dispatch: Dispatch) => {
         const result = await FeedsService.LikeFeed(payload);
         
-        debugger;
         dispatch({
             payload: {contentId: payload.contentId},
             type: result.status ? ActionConsts.Feeds.LikeFeedSuccess : ActionConsts.Feeds.LikeFeedError

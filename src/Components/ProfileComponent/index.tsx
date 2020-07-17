@@ -14,24 +14,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 // #endregion Local Imports
 
-export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, profileId: string }> = ({ user, profileId }) => {
+export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, profileUserName: string }> = ({ user, profileUserName }) => {
     const creatorProfileState = useSelector((state: IStore) => state.creatorProfile);
     const { creatorProfile } = creatorProfileState;
-    const { totalContent, totalImages, totalVideos, isFollower, name } = creatorProfile;
+    const { contentCount, imagesCount, videosCount, name } = creatorProfile;
     const dispatch = useDispatch();
 
-    const params = { username: user.username };
     useEffect(() => {
+        const params = { username: profileUserName };
         dispatch(CreatorProfileActions.GetCreatorProfile(params));
     }, []);
 
     const onFollow = (followOrUnFollow: boolean) => {
-        const followParams = { profileId: profileId, userId: user.id, shouldFollow: followOrUnFollow};
-        if (followOrUnFollow) {
-            dispatch(CreatorProfileActions.FollowProfile(followParams));
-        } else {
-            dispatch(CreatorProfileActions.FollowProfile(followParams));
-        }
+        // const followParams = { profileId: profileId, userId: user.id, shouldFollow: followOrUnFollow};
+        // if (followOrUnFollow) {
+        //     dispatch(CreatorProfileActions.FollowProfile(followParams));
+        // } else {
+        //     dispatch(CreatorProfileActions.FollowProfile(followParams));
+        // }
     }
 
     return (<div className="bg-gradient d-flex flex-column h-100">
@@ -40,12 +40,12 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
         </div>
         <CreatorProfile creatorProfile={creatorProfile} onFollow={onFollow} />
         <CreatorContent 
-            totalContent={totalContent}
-            totalImage={totalImages}
-            totalVideos={totalVideos} 
+            contentCount={contentCount}
+            imagesCount={imagesCount}
+            videosCount={videosCount} 
             user={user}
-            params={params} 
-            isFollower={isFollower} 
-            name={name} />
+            profileUserName={profileUserName}
+            name={name} 
+            isFollower={true} />
     </div>);
 }

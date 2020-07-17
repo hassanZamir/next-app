@@ -14,8 +14,8 @@ const INITIAL_STATE: IProfilePage.IStateProps = {
 
 export const CreatorProfileReducer = (
     state = INITIAL_STATE,
-    action: IAction<IProfilePage.Actions.IGetCreatorFeedsResponse & IProfilePage.Actions.IGetCreatorProfileResponse
-                    & IProfilePage.Actions.IFilterFeedsPayload>
+    action: IAction<IProfilePage.Actions.IMapCreatorFeedsResponse & 
+        IProfilePage.Actions.IMapCreatorProfileResponse>
 ) => {
     switch (action.type) {
         case ActionConsts.CreatorProfile.GetCreatorProfileSuccess: {
@@ -26,10 +26,8 @@ export const CreatorProfileReducer = (
             });
         }
         case ActionConsts.CreatorProfile.GetCreatorProfileError: {
-            let { errors } = action.payload!;
-
             return Object.assign({}, state, {
-                errors: errors ? errors : "Something went wrong.",
+                errors: "Something went wrong.",
                 creatorProfile: {}
             });
         }
@@ -41,10 +39,8 @@ export const CreatorProfileReducer = (
             });
         }
         case ActionConsts.CreatorProfile.GetCreatorFeedsError: {
-            let { errors } = action.payload!;
-
             return Object.assign({}, state, {
-                errors: errors ? errors : "Something went wrong.",
+                errors: "Something went wrong.",
                 creatorFeeds: []
             });
         }

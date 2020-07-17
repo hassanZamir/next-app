@@ -15,63 +15,65 @@ export const FeedsService = {
         try {
             response = await Http.Request<FeedsModel.GetAllFeedsResponse>(
                 "GET",
-                "/user/feeds",
+                "/users/" + payload.userId + "/feed",
                 undefined
             );
-            // localStorage.setItem("user", response.status);
         } catch (error) {
             response = {
-                status: "false",
-                feeds: [{
-                    id: 1,
-                    creatorId: 1,
-                    type: 1,
-                    title: "Hey Response, I am content",
-                    username: "Juggenrut",
-                    likes: 200,
-                    comments: 20,
-                    time: "12:30",
-                    mediaUrl: "/images/photo@2x.png",
+                status: false,
+                response: [{
+                    name: "sohaib",
+                    username: "venotv1234",
                     profileImageUrl: "/images/Capture@2x.png",
-                    contentLiked: false
+                    content_viewer_like: false,
+                    id: 7,
+                    title: "My First Post",
+                    type: 1,
+                    mediaUrl: "https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                    likesCount: 0,
+                    commentsCount: 0,
+                    tipsCount: 0,
+                    timeStamps: "2020-07-09T09:03:28.8766667"
                 }, {
-                    id: 2,
-                    creatorId: 1,
-                    type: 1,
-                    title: "Hey Response, I am content",
-                    username: "Juggenrut",
-                    likes: 200,
-                    comments: 20,
-                    time: "12:30",
-                    mediaUrl: "/images/photo@2x.png",
+                    name: "sohaib",
+                    username: "venotv1234",
                     profileImageUrl: "/images/Capture@2x.png",
-                    contentLiked: false
+                    content_viewer_like: false,
+                    id: 7,
+                    title: "My First Post",
+                    type: 1,
+                    mediaUrl: " https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                    likesCount: 0,
+                    commentsCount: 0,
+                    tipsCount: 0,
+                    timeStamps: "2020-07-09T09:03:28.8766667"
                 }, {
-                    id: 3,
-                    creatorId: 1,
-                    type: 1,
-                    title: "Hey Response, I am content",
-                    username: "Juggenrut",
-                    likes: 200,
-                    comments: 20,
-                    time: "12:30",
-                    mediaUrl: "/images/photo@2x.png",
+                    name: "sohaib",
+                    username: "venotv1234",
                     profileImageUrl: "/images/Capture@2x.png",
-                    contentLiked: true
+                    content_viewer_like: false,
+                    id: 7,
+                    title: "My First Post",
+                    type: 1,
+                    mediaUrl: " https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                    likesCount: 0,
+                    commentsCount: 0,
+                    tipsCount: 0,
+                    timeStamps: "2020-07-09T09:03:28.8766667"
                 }, {
-                    id: 4,
-                    creatorId: 1,
-                    type: 1,
-                    title: "Hey Response, I am content",
-                    username: "Juggenrut",
-                    likes: 200,
-                    comments: 20,
-                    time: "12:30",
-                    mediaUrl: "/images/photo@2x.png",
+                    name: "sohaib",
+                    username: "venotv1234",
                     profileImageUrl: "/images/Capture@2x.png",
-                    contentLiked: true
-                }],
-                errors: "Something went wrong"
+                    content_viewer_like: false,
+                    id: 7,
+                    title: "My First Post",
+                    type: 1,
+                    mediaUrl: " https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                    likesCount: 0,
+                    commentsCount: 0,
+                    tipsCount: 0,
+                    timeStamps: "2020-07-09T09:03:28.8766667"
+                }]
             };
         }
         return response;
@@ -84,11 +86,15 @@ export const FeedsService = {
         try {
             response = await Http.Request<FeedsModel.GetTipFeedResponse>(
                 "POST",
-                "/content/tip",
+                "/profiles/" + payload.creatorUserName + "/tip",
                 undefined,
-                {...payload}
+                {
+                    viewerId: payload.viewerId, 
+                    amount: payload.amount, 
+                    message: payload.message, 
+                    contentId: payload.contentId ? payload.contentId : 0 
+                }
             );
-            // localStorage.setItem("user", response.status);
         } catch (error) {
             response = {
                 status: false,
@@ -105,15 +111,13 @@ export const FeedsService = {
         try {
             response = await Http.Request<FeedsModel.GetLikeFeedResponse>(
                 "POST",
-                "/content/likes",
+                "/content/" + payload.contentId + "/like",
                 undefined,
-                {...payload}
+                {userId: payload.userId}
             );
-            // localStorage.setItem("user", response.status);
         } catch (error) {
             response = {
-                status: true,
-                errors: "Something went wrong"
+                status: true
             };
         }
         return response;

@@ -16,25 +16,25 @@ import { useDispatch } from "react-redux";
 import { FeedsActions } from "@Actions";
 
 const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({ likeContent, feed, index, toggleTipModal }) => {
-    const { contentLiked, likes, comments, time } = feed;
+    const { content_viewer_like, likesCount, commentsCount, timeStamps } = feed;
     return (<div className="d-flex justify-content-between my-2 pl-2">
         <div className="d-flex align-items-center cursor-pointer" onClick={(e) => {likeContent(e, index)}}>
-            <FontAwesomeIcon icon={faHeart} color={contentLiked ? "#F57B52" : "#A0A0A0"} size="lg" />
-            <div className="text-darkGrey font-10px ml-1">{ likes }</div>
+            <FontAwesomeIcon icon={faHeart} color={content_viewer_like ? "#F57B52" : "#A0A0A0"} size="lg" />
+            <div className="text-darkGrey font-10px ml-1">{ likesCount }</div>
         </div>
-        <Link href={"/profile/" + feed.creatorId + "/status/" + feed.id}>
+        {/* <Link href={"/profile/" + feed.username + "/status/" + feed.id}> */}
             <div className="d-flex align-items-center cursor-pointer">
                 <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" />
-                <div className="text-darkGrey font-10px ml-1">{ comments || 0 }</div>
+                <div className="text-darkGrey font-10px ml-1">{ commentsCount || 0 }</div>
             </div>
-        </Link>
+        {/* </Link> */}
         <div className="d-flex align-items-center cursor-pointer" onClick={(e) => {toggleTipModal(e, index)}}>
             <FontAwesomeIcon icon={faDollarSign} color="#707070" size="lg" />
             <div className="text-darkGrey font-10px ml-1">Tip</div>
         </div>
         <div className="d-flex align-items-center cursor-pointer">
             <FontAwesomeIcon icon={faClock} color="#F57B52" size="lg" />
-            <div className="text-darkGrey font-10px ml-1">{ time }</div>
+            <div className="text-darkGrey font-10px ml-1">{ timeStamps }</div>
         </div>
         <div className="d-flex align-items-center cursor-pointer">
             <FontAwesomeIcon icon={faEllipsisV} color="#F57B52" />
@@ -44,7 +44,7 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({ likeContent
 
 const Feed: React.FunctionComponent<IFeed.IProps> = ({ likeContent, feed, index, toggleTipModal }) => {
     return (
-        <Link href="/profile/[id]" as={"/profile/" + feed.creatorId}>
+        <Link href="/profile/[id]" as={"/profile/" + feed.username}>
             <div className="w-100 h-100 my-2 cursor-pointer" style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}>
                 <BackgroundImage src={feed.mediaUrl} />
                 <div className="d-flex flex-column w-100 px-2">
@@ -82,9 +82,10 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
     const tipSumit = async (feed: FEED, amount: string, message: string) => {
         const param: IFeed.Actions.ITipFeedPayload = { 
             contentId: feed.id, 
-            userId: user.id, 
+            viewerId: user.id, 
             message: message, 
-            amount: parseInt(amount) 
+            amount: parseInt(amount),
+            creatorUserName: feed.username
         };
         toggle();
         FeedsActions.TipFeed(param)().then((resp) => {
@@ -102,6 +103,11 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
         }
         dispatch(FeedsActions.LikeFeed(param));
     }
+
+    if (feeds && feeds.length <= 0)
+        return <div className="d-flex flex-column w-100 px-4">
+            <ParagraphText className="font-20px text-primary">No Content To Show</ParagraphText>
+        </div>
 
     return (<div className="d-flex flex-column w-100 px-4">
         <TipSubmitModal 
