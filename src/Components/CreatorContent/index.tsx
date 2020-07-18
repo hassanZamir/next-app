@@ -5,12 +5,12 @@ import { FEED } from "@Interfaces";
 import { CreatorProfileActions } from "@Actions";
 
 import { Tabs, Tab } from "@Components/Basic";
-import { FeedsList, ParagraphText, StaticImage } from "@Components";
+import { FeedsList, ParagraphText, StaticImage, PrimaryButton } from "@Components";
 import { ICreatorContent } from "./CreatorContent";
 import { CONTENT_TYPE } from "src/Constants";
 
 export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps> 
-    = ({ user, contentCount, imagesCount, videosCount, name, profileUserName, isFollower }) => {
+    = ({ user, contentCount, imagesCount, videosCount, name, profileUserName, isFollower, onFollow }) => {
 
     const creatorProfileState = useSelector((state: IStore) => state.creatorProfile);
     const { creatorFeeds } = creatorProfileState;
@@ -45,11 +45,11 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
             <Tab active={selectedTab === 1} onClick={() => changeTab(CONTENT_TYPE.IMAGE)} border={true}>{ (imagesCount ? imagesCount : "") + ' Images'}</Tab>
             <Tab active={selectedTab === 2} onClick={() => changeTab(CONTENT_TYPE.VIDEO)} border={false}>{ (videosCount ? videosCount : "") + ' Videos'}</Tab>
         </Tabs>
-        {!isFollower ? <CreatorContentPrivacy name={name}/> : <React.Fragment>
+        {!isFollower ? <CreatorContentPrivacy name={name} onFollow={onFollow} /> : <React.Fragment>
             <ParagraphText className="gibson-semibold font-16px text-headingBlue px-4 mt-2">Posts</ParagraphText>
             {
                 creatorFeeds && creatorFeeds.length > 0 ? <FeedsList user={user} feeds={filterFeeds(creatorFeeds)} /> :
-                <div style={{ minHeight: "400px" }} className="px-5 h-100 w-100 d-flex flex-column align-items-center justify-content-center">
+                <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
                     <h4 className="text-primary text-center mt-3 gibson-semibold">No content to show</h4>
                 </div>
             }
@@ -57,9 +57,10 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
     </div>
 }
 
-const CreatorContentPrivacy: React.FunctionComponent<{ name: string }> = ({ name }) => {
-    return <div style={{ minHeight: "400px" }} className="px-5 h-100 w-100 d-flex flex-column align-items-center justify-content-center">
+const CreatorContentPrivacy: React.FunctionComponent<{ name: string, onFollow: (followOrUnfolow: boolean)=>void }> = ({ name, onFollow }) => {
+    return <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
         <StaticImage src="/images/lock@2x.png" height="50px" width="50px" />
         <h4 className="text-primary text-center mt-3 gibson-semibold">Follow { name } to unlock content</h4>
+        <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-12px">Follow for $9.99 a month</PrimaryButton>
     </div>
 }

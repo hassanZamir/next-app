@@ -9,6 +9,7 @@ declare namespace ICreatorContent {
         name: string;
         profileUserName: string;
         isFollower: boolean;
+        onFollow: (followOrUnfolow: boolean)=>void;
     }
 }
 

@@ -69,6 +69,7 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
                     user={user}
                     profileUserName={profileUserName}
                     name={name} 
+                    onFollow={onFollow} 
                     isFollower={followers[0] && followers[0].userId === user.id} />
             </div>
         </div>

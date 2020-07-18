@@ -109,7 +109,7 @@ export const LoginActions = {
         
         dispatch({
             payload: result,
-            type: !result.status ? ActionConsts.Login.ChangePasswordSuccess : ActionConsts.Login.ChangePasswordError
+            type: result.status ? ActionConsts.Login.ChangePasswordSuccess : ActionConsts.Login.ChangePasswordError
         });
     }
 };
