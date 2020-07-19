@@ -1,24 +1,25 @@
 import React ,{ useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import Link from "next/link";
+import Router from "next/router";
 import { useToasts } from 'react-toast-notifications'
-import { IFeedsList, IFeed, IFeedOptions, FEED } from "@Interfaces";
-import { BackgroundImage, Modal  } from "@Components/Basic";
-import { ParagraphText } from "@Components";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComments, faDollarSign, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
+
+import { IFeedsList, IFeed, IFeedOptions, FEED } from "@Interfaces";
+import { BackgroundImage } from "@Components/Basic";
+import { ParagraphText } from "@Components";
 import { TipSubmitModal } from "../Modals/TipSubmitModal";
 import { FeedOptionsModal } from "../Modals/FeedOptionsModal";
 import { ReportFeedModal } from "../Modals/ReportFeedModal";
 import { CurrentTimeDifference }from "@Services/Time";
 import { useModal } from '../Hooks';
-import { useDispatch } from "react-redux";
-
 import { FeedsActions } from "@Actions";
+import { ActionConsts } from "@Definitions";
 
 const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = 
-    ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick }) => {
+    ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick, onCommentClick }) => {
 
     const { content_viewer_like, likesCount, commentsCount, timeStamps } = feed;
     const modalRef = useRef<HTMLDivElement>(null);
@@ -30,10 +31,10 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> =
             <div className="text-darkGrey font-10px ml-1">{ likesCount }</div>
         </div>
         {/* <Link href={"/profile/" + feed.username + "/status/" + feed.id}> */}
-            <div className="d-flex align-items-center cursor-pointer">
-                <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" />
-                <div className="text-darkGrey font-10px ml-1">{ commentsCount || 0 }</div>
-            </div>
+        <div className="d-flex align-items-center cursor-pointer" onClick={(e) => {onCommentClick(e, index)}}>
+            <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" />
+            <div className="text-darkGrey font-10px ml-1">{ commentsCount || 0 }</div>
+        </div>
         {/* </Link> */}
         <div className="d-flex align-items-center cursor-pointer" onClick={(e) => {toggleTipModal(e, index)}}>
             <FontAwesomeIcon icon={faDollarSign} color="#707070" size="lg" />
@@ -57,7 +58,8 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> =
     </div>);
 };
 
-const Feed: React.FunctionComponent<IFeed.IProps> = ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick }) => {
+const Feed: React.FunctionComponent<IFeed.IProps> 
+    = ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick, onCommentClick }) => {
     return (
         <div className="w-100 h-100 my-2" style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}>
             <BackgroundImage src={feed.mediaUrl} />
@@ -74,6 +76,7 @@ const Feed: React.FunctionComponent<IFeed.IProps> = ({ likeContent, feed, index,
                     toggleTipModal={toggleTipModal}
                     likeContent={likeContent}
                     onReportClick={onReportClick} 
+                    onCommentClick={onCommentClick}
                     onCopyClick={onCopyClick}>
                 </FeedOptions>
             </div>
@@ -85,7 +88,6 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
     const modalRef = useRef<HTMLDivElement>(null);    
     const [ clickedTipFeed, setClickedTipFeed ] = useState({});
     const [ reportFeed, setReportFeed ] = useState({});
-    const [ copyFeed, setCopyFeed ] = useState({});
     const { isShowing, toggle } = useModal(modalRef);
     const { addToast } = useToasts();
     const dispatch = useDispatch();
@@ -131,7 +133,25 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
     }
 
     const onCopyClick = (feed: FEED) => {
+        // const input: Input = document.createElement("INPUT");
+        // input.setAttribute("value", "asssa");
+
+        // input.select();
+        // input.setSelectionRange(0, 99999);
+        // document.execCommand("copy");
         console.log("Copy link address");
+    }
+
+    const onCommentClick = (e: React.MouseEvent<HTMLElement>, index: number) => {
+        const selectedFeed = feeds[index];
+        dispatch({
+            payload: { feed: selectedFeed },
+            type: ActionConsts.Feeds.SetPersistFeed
+        });
+
+        Router.push({
+            pathname: "/profile/" + selectedFeed.username + "/status/" + selectedFeed.id
+        });
     }
 
     if (feeds && feeds.length <= 0)
@@ -160,6 +180,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
                 toggleTipModal={toggleTipModal} 
                 likeContent={likeContent} 
                 onReportClick={onReportClick} 
+                onCommentClick={onCommentClick}
                 onCopyClick={onCopyClick} />);
         })}
     </div>);

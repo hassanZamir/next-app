@@ -3,7 +3,7 @@ import { ActionConsts } from "@Definitions";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, IFeedsPage, IFeed } from "@Interfaces";
+import { IAction, IFeedsPage, IFeed, FEED } from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IFeedsPage.IStateProps = {
@@ -50,3 +50,4 @@ export const FeedsReducer = (
             return state;
     }
 };
+

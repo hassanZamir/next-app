@@ -35,6 +35,7 @@ declare namespace IFeed {
         onCopyClick: (a: FEED)=>void;
         toggleTipModal: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
         likeContent: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
+        onCommentClick: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
     }
 
     namespace Actions {
@@ -57,6 +58,7 @@ declare namespace IFeedOptions {
         onCopyClick: (a: FEED)=>void;
         toggleTipModal: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
         likeContent: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
+        onCommentClick: (e: React.MouseEvent<HTMLElement>, index: number)=>void;
     }
 }
 export { IFeedsPage, IFeedsList, IFeed, IFeedOptions };

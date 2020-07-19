@@ -15,7 +15,7 @@ import Reducers from "./Reducers";
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['loginSuccess'], 
+    whitelist: ['persistState'], 
     blacklist: ['signUp', 'loginError'] // place to select which state you want to persist
 }
   

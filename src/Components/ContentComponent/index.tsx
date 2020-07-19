@@ -1,22 +1,20 @@
 // #region Global Imports
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { IStore } from "@Redux/IStore";
 // #endregion Global Imports
 
 // #region Local Imports
-
-import { StaticImage } from "@Components";
+import { StaticImage, FeedsList, Comments } from "@Components";
+import { FEED, USER_SESSION } from "@Interfaces";
 // #endregion Local Imports
 
-export const ContentComponent: React.FunctionComponent<{ profileId: string, contentId: string }> = ({ profileId, contentId }) => {
-    const feedsState = useSelector((state: IStore) => state.feeds);
+export const ContentComponent: React.FunctionComponent<{ userName: string, contentId: number, user: USER_SESSION, feed: FEED }> = 
+    ({ userName, contentId, user, feed }) => {
 
-    console.log("feedsState : ", feedsState);
     return (<div className="d-flex flex-column h-100">
         <div className="my-2 row justify-content-center no-gutters">
             <StaticImage src="/images/veno_tv_logo_main@2x.png" height="100%" width="164px" />
         </div>
-        <h2>{'ProfileId : ' + profileId + ' ContentId : ' + contentId}</h2>
+        <FeedsList feeds={[feed]} user={user} />
+        <Comments contentId={contentId} user={user} />
     </div>);
 }

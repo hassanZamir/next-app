@@ -4,7 +4,6 @@ import { Http } from "@Services";
 
 // #region Interface Imports
 import { LoginModel, SignUpModel, AccountVerifyModel, SendResetPasswordEmailModel, ChangePasswordModel } from "@Interfaces";
-import { async } from "q";
 // #endregion Interface Imports
 
 export const LoginService = {

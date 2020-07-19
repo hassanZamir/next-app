@@ -20,28 +20,32 @@ const Authenticated: any = dynamic(
     { ssr: false }
 );
 
-const UserProfile: NextPage<IProfilePage.IProps> = () => {
-    const login = useSelector((state: IStore) => state.loginSuccess);
+const UserStatus: NextPage<IProfilePage.IProps> = () => {
+    const { session, feed } = useSelector((state: IStore) => state.persistState);
     const router = useRouter();
-    const profileId = router.query["id"] as string,
-    contentId = router.query["contentId"] as string;;
+    const userName = router.query["username"] as string,
+    contentId = router.query["contentId"] as string;
 
-    return <Authenticated session={login.session} name="ContentPage">
-        <ContentComponent profileId={profileId} contentId={contentId} />
+    return <Authenticated session={session} name="ContentPage">
+        <ContentComponent 
+            userName={userName} 
+            contentId={feed.id} 
+            user={session} 
+            feed={feed} />
     </Authenticated>;
 };
 
-// export async function getStaticPaths() {
-//     return {
-//       paths: [{
-//         params: { id: "0", contentId: "0" } // See the "paths" section below
-//       }],
-//       fallback: true
-//     };
-// }
+export async function getStaticPaths() {
+    return {
+      paths: [{
+        params: { username: "venotv1234", contentId: "0" } // See the "paths" section below
+      }],
+      fallback: true
+    };
+}
 
-// export const getStaticProps = (...params: any) => {
-//     return { props: {} };
-// };
+export const getStaticProps = (...params: any) => {
+    return { props: {} };
+};
 
-export default UserProfile;
+export default UserStatus;

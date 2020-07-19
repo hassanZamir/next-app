@@ -21,11 +21,11 @@ const Authenticated: any = dynamic(
 );
 
 const UserProfile: NextPage<IProfilePage.IProps> = () => {
-    const login = useSelector((state: IStore) => state.loginSuccess);
+    const { session } = useSelector((state: IStore) => state.persistState);
     const router = useRouter();
     const profileUserName = router.query["username"] as string;
 
-    return <ProfileComponent user={login.session} profileUserName={profileUserName} />
+    return <ProfileComponent user={session} profileUserName={profileUserName} />
     // return <Authenticated session={login.session} name="Profile">
     //     <ProfileComponent user={login.session} profileUserName={profileUserName} />
     // </Authenticated>;

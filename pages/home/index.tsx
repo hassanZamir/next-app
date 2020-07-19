@@ -25,10 +25,11 @@ const Authenticated: any = dynamic(
 );
 
 const Home: NextPage = () => {
-    const login = useSelector((state: IStore) => state.loginSuccess);
-    
-    return <Authenticated session={login.session} name="Home">
-        <DynamicFeeds user={login.session} />
+    const persistState = useSelector((state: IStore) => state.persistState);
+    const { session } = persistState;
+
+    return <Authenticated session={session} name="Home">
+        <DynamicFeeds user={session} />
     </Authenticated>
 };
 

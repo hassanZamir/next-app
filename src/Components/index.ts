@@ -23,4 +23,5 @@ export { CreatorProfileRules } from "@Components/CreatorProfileRules";
 export { LoadingSpinner } from "@Components/LoadingSpinner";
 export { RadioInput } from "@Components/RadioInput";
 export { TransparentButton } from "@Components/TransparentButton";
+export { Comments } from "@Components/Comments";
 

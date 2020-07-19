@@ -29,7 +29,8 @@ export const ActionConsts = {
         GetAllFeedsSuccess: "GetAllFeedsSuccess",
         GetAllFeedsError: "GetAllFeedsError",
         LikeFeedError: "LikeFeedError",
-        LikeFeedSuccess: "LikeFeedSuccess"
+        LikeFeedSuccess: "LikeFeedSuccess",
+        SetPersistFeed: "SetPersistFeed"
     },
     CreatorProfile: {
         GetCreatorProfileSuccess: "GetCreatorProfileSuccess",
@@ -38,5 +39,13 @@ export const ActionConsts = {
         GetCreatorFeedsError: "GetCreatorFeedsError",
         GetProfileFollowersSuccess: "GetProfileFollowersSuccess",
         GetProfileFollowersError: "GetProfileFollowersError"
+    },
+    Status: {
+        GetAllCommentsSuccess: "GetAllCommentsSuccess",
+        GetAllCommentsError: "GetAllCommentsError",
+        PostCommentSuccess: "PostCommentSuccess",
+        PostCommentError: "PostCommentError",
+        LikeCommentSuccess: "LikeCommentSuccess",
+        LikeCommentError: "LikeCommentError"
     }
 };
