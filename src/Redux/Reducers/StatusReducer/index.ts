@@ -42,12 +42,12 @@ export const StatusReducer = (
             });
         }
         case ActionConsts.Status.LikeCommentSuccess: {
-            const { commentId } = action.payload!;
+            const { commentId, like } = action.payload!;
             const commentsWithLike = state.comments.map((o, i) => {
                 if (o.id === commentId) {
                     if (o.likesCount) {
-                        o.likesCount++;
-                        o.content_viewer_like = true;
+                        like ? o.likesCount++ : o.likesCount--;
+                        like ? o.content_viewer_like = true : o.content_viewer_like = false;
                     } else {
                         o.likesCount = 1;
                         o.content_viewer_like = true;

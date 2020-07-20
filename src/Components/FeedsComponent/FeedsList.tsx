@@ -88,7 +88,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
     const modalRef = useRef<HTMLDivElement>(null);    
     const [ clickedTipFeed, setClickedTipFeed ] = useState({});
     const [ reportFeed, setReportFeed ] = useState({});
-    const [_FEEDS, set_FEEDS] = useState();
+    const [_FEEDS, set_FEEDS] = useState<FEED[]>([]);
     const { isShowing, toggle } = useModal(modalRef);
     const { addToast } = useToasts();
     const dispatch = useDispatch();
@@ -131,7 +131,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
             contentId: feeds[index].id, 
             userId: user.id
         }
-        if (!_FEEDS[index].content_viewer_like) {
+        if (_FEEDS && _FEEDS[index] && !_FEEDS[index].content_viewer_like) {
             FeedsActions.LikeFeed(param)().then((resp) => {
                 if (resp.status) {
                     set_FEEDS(updateLikeStatus(true, feeds[index].id));

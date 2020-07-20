@@ -66,7 +66,7 @@ const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: numb
 
     return <div className="px-4 d-flex flex-column pb-2 pt-4">
         <div className="d-flex align-items-center justify-content-between">
-            <CircularImage src={"https://storage.cricingif.com/cig-live-images/user-images/262319.png"} height="35px" width="35px" />
+            <CircularImage src={user.profileImageUrl} height="35px" width="35px" />
             <div className="d-flex justify-content-between align-items-center w-100 ml-2">
                 <Textarea 
                     placeholder="Type Comment"
@@ -97,7 +97,12 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
     
     useEffect(() => {
         (async () => {
-            const params = { contentId: contentId, pageNo: 0, offset: 7, viewerId: user ? user.id : 0 };
+            const params = { 
+                contentId: contentId, 
+                pageNo: 0, 
+                offset: 7, 
+                viewerId: user ? user.id : 0 
+            };
             await dispatch(StatusActions.GetAllComments(params));
             setLoading(false);
         })();
@@ -105,7 +110,11 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
 
     const likeComment = (comment: COMMENT) => {
         const params = { commentId: comment.id, userId: user.id };
-        dispatch(StatusActions.LikeComment(params));
+        if (!comment.content_viewer_like) {
+            dispatch(StatusActions.LikeComment(params));
+        } else {
+            dispatch(StatusActions.UnLikeComment(params));
+        }
     }
 
     return (<div className="full-flex-scroll d-flex flex-column w-100 h-100">

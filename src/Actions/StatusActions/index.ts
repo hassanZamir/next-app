@@ -34,7 +34,17 @@ export const StatusActions = {
         const result = await StatusService.LikeComment(payload);
 
         dispatch({
-            payload: result.status ? { commentId: payload.commentId } : { commentId: null },
+            payload: result.status ? { commentId: payload.commentId, like: true } : { commentId: null },
+            type: result.status ? ActionConsts.Status.LikeCommentSuccess : ActionConsts.Status.LikeCommentError
+        });
+    },
+    UnLikeComment: (payload: IStatusPage.Actions.IGetLikeCommentPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await StatusService.UnLikeComment(payload);
+
+        dispatch({
+            payload: result.status ? { commentId: payload.commentId, like: false } : { commentId: null },
             type: result.status ? ActionConsts.Status.LikeCommentSuccess : ActionConsts.Status.LikeCommentError
         });
     }

@@ -89,5 +89,25 @@ export const StatusService = {
             };
         }
         return response;
+    },
+    UnLikeComment: async (
+        payload: LikeCommentModel.GetLikeCommentPayload
+    ): Promise<LikeCommentModel.GetLikeCommentResponse> => {
+        let response: LikeCommentModel.GetLikeCommentResponse;
+
+        try {
+            response = await Http.Request<LikeCommentModel.GetLikeCommentResponse>(
+                "DELETE",
+                "/comment/" + payload.commentId + "/like",
+                undefined,
+                { userId: payload.userId }
+            );
+            // localStorage.setItem("user", response.status);
+        } catch (error) {
+            response = {
+                status: false
+            };
+        }
+        return response;
     }
 }

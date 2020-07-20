@@ -25,7 +25,7 @@ export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creat
                     <ParagraphText className="text-inputText font-15px gibson-regular">{creatorProfile.followersCount + " Followers"}</ParagraphText>
                     <div className="d-flex flex-column">
                         <div className="d-flex cursor-pointer align-items-center" onClick={() => {setBioToggle(!bioToggle)}}>
-                            <span className="text-inputText seoge-ui-bold font-10px mr-1">Show Bio</span>
+                            <span className="text-inputText seoge-ui-bold font-10px mr-1">{!bioToggle ? 'Show Bio' : 'Hide Bio'}</span>
                             {!bioToggle && <FontAwesomeIcon icon={faChevronDown} color="#78849E" size="xs"/>}
                             {bioToggle && <FontAwesomeIcon icon={faChevronUp} color="#78849E" size="xs"/>} 
                         </div>

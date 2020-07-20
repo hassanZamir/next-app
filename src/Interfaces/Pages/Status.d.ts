@@ -17,6 +17,7 @@ declare namespace IStatusPage {
         }
         export interface IMapLikeComment {
             commentId: number;
+            like: boolean;
         }
         
         export interface IGetAllCommentsPayload extends AllCommentsModel.GetAllCommentsPayload {}

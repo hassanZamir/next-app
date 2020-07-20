@@ -27,6 +27,7 @@ export const LoginService = {
                     id: 0,
                     name: '',
                     username: '',
+                    profileImageUrl: '',
                     email: '',
                     country: '',
                     birthDate: '',

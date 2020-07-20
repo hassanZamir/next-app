@@ -7,6 +7,7 @@ export type USER_SESSION  = {
     birthDate: string;
     isCreator: false;
     verifyEmail: number;
+    profileImageUrl: string;
 }
 
 export interface LoginResponse {
