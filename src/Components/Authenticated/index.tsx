@@ -26,7 +26,7 @@ export const Authenticated: React.FunctionComponent<{session: USER_SESSION, name
             placement="bottom-left"
             >
                 <div className="w-100 row flex-column justify-content-between flex-nowrap">
-                    <div style={{ marginBottom: "40px" }}>{ children }</div>
+                    <div style={{ flexGrow: 1 }}>{ children }</div>
                     <Footer selected={name} />
                 </div>
         </ToastProvider>

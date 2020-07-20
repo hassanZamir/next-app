@@ -35,7 +35,7 @@ const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment
 
 const CommentsList: React.FunctionComponent<{loading: boolean, error: string, comments: COMMENT[], likeComment: (comment: COMMENT)=>void }> = 
     ({ loading, error, comments, likeComment }) => {
-    return <div style={{ height: "260px", overflowY: "scroll" }} 
+    return <div style={{ flex: "1", overflowY: "scroll" }} 
         className={"scroll-y d-flex align-items-center flex-column px-4 border border-top-1 border-right-0 border-left-0 border-bottom-1 border-lightGrey " + (loading ? "justify-content-center" : "")}>
         {loading && <LoadingSpinner size="2x" />}
         
@@ -45,8 +45,8 @@ const CommentsList: React.FunctionComponent<{loading: boolean, error: string, co
     </div>
 }
 
-const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: number }> = 
-    ({ user, contentId }) => {
+const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: number, error: string }> = 
+    ({ user, contentId, error }) => {
 
     const [comment, setComment] = useState("");
     const [loading, setLoading] = useState(false);
@@ -63,23 +63,26 @@ const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: numb
         setLoading(false);
     }
 
-    return <div className="px-4 d-flex align-items-center justify-content-between pb-2 pt-4">
-        <CircularImage src={"https://storage.cricingif.com/cig-live-images/user-images/262319.png"} height="35px" width="35px" />
-        <div className="d-flex justify-content-between align-items-center w-100 ml-2">
-            <Textarea 
-                placeholder="Type Comment"
-                name="comment" 
-                rows={1} 
-                columns={20} 
-                className="border-primary rounded w-100 font-10px text-lightGrey" 
-                onChange={handleChange}/>
-            <div onClick={() => { postComment() }} 
-                className="cursor-pointer ml-2 rounded-circle bg-darkGrey d-flex align-items-center justify-content-center" 
-                style={{ height: "30px", width: "35px" }}>
-                {!loading && <FontAwesomeIcon color="white" icon={faPaperPlane} />}
-                {loading && <FontAwesomeIcon color="white" icon={faSpinner} size="sm" />}
+    return <div className="px-4 d-flex flex-column pb-2 pt-4">
+        <div className="d-flex align-items-center justify-content-between">
+            <CircularImage src={"https://storage.cricingif.com/cig-live-images/user-images/262319.png"} height="35px" width="35px" />
+            <div className="d-flex justify-content-between align-items-center w-100 ml-2">
+                <Textarea 
+                    placeholder="Type Comment"
+                    name="comment" 
+                    rows={1} 
+                    columns={20} 
+                    className="border-primary rounded w-100 font-10px text-lightGrey" 
+                    onChange={handleChange}/>
+                <div onClick={() => { postComment() }} 
+                    className="cursor-pointer ml-2 rounded-circle bg-darkGrey d-flex align-items-center justify-content-center" 
+                    style={{ height: "30px", width: "35px" }}>
+                    {!loading && <FontAwesomeIcon color="white" icon={faPaperPlane} />}
+                    {loading && <FontAwesomeIcon color="white" icon={faSpinner} size="sm" />}
+                </div>
             </div>
         </div>
+        <span className="text-danger font-12px">{ error }</span>
     </div>
 }
 
@@ -103,9 +106,9 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
         dispatch(StatusActions.LikeComment(params));
     }
 
-    return (<div className="d-flex flex-column w-100">
+    return (<div style={{ overflow: "auto", flexGrow: "1", minHeight: "0" }}
+    className="d-flex flex-column w-100 h-100">
         <CommentsList comments={comments} likeComment={likeComment} loading={loading} error={error} />
-        <PostComment user={user} contentId={contentId} />
-        <span className="px-4 text-danger font-12px">{error}</span>
+        <PostComment user={user} contentId={contentId} error={error} />
     </div>);
 }
