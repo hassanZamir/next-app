@@ -20,7 +20,6 @@ export const PersistReducer = (
         case ActionConsts.Feeds.SetPersistFeed: {
             let { feed } = action.payload!;
 
-            debugger;
             return Object.assign({}, state, {
                 feed: feed
             });
@@ -29,7 +28,6 @@ export const PersistReducer = (
             let { session } = action.payload!;
             Router.push("/");
 
-            debugger;
             return Object.assign({}, state, {
                 session: session
             });

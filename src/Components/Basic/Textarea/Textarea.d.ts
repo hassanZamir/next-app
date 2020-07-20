@@ -5,6 +5,7 @@ declare namespace ITextarea {
         name?: string;
         rows: number;
         columns: number;
+        value?: string;
         placeholder?: string;
     }
 }

@@ -61,6 +61,7 @@ const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: numb
         setLoading(true);
         await dispatch(StatusActions.PostComment(params))
         setLoading(false);
+        setComment('');
     }
 
     return <div className="px-4 d-flex flex-column pb-2 pt-4">
@@ -73,7 +74,8 @@ const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: numb
                     rows={1} 
                     columns={20} 
                     className="border-primary rounded w-100 font-10px text-lightGrey" 
-                    onChange={handleChange}/>
+                    onChange={handleChange}
+                    value={comment}/>
                 <div onClick={() => { postComment() }} 
                     className="cursor-pointer ml-2 rounded-circle bg-darkGrey d-flex align-items-center justify-content-center" 
                     style={{ height: "30px", width: "35px" }}>
@@ -98,7 +100,7 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
             const params = { contentId: contentId, pageNo: 0, offset: 7 };
             await dispatch(StatusActions.GetAllComments(params));
             setLoading(false);
-        })()
+        })();
     }, []);
 
     const likeComment = (comment: COMMENT) => {
@@ -106,8 +108,7 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
         dispatch(StatusActions.LikeComment(params));
     }
 
-    return (<div style={{ overflow: "auto", flexGrow: "1", minHeight: "0" }}
-    className="d-flex flex-column w-100 h-100">
+    return (<div className="full-flex-scroll d-flex flex-column w-100 h-100">
         <CommentsList comments={comments} likeComment={likeComment} loading={loading} error={error} />
         <PostComment user={user} contentId={contentId} error={error} />
     </div>);

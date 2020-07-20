@@ -27,8 +27,9 @@ export const LoginActions = {
     UserLogout: () => async (
         dispatch: Dispatch
     ) => {
+        debugger;
         dispatch({
-            payload: null,
+            payload: {},
             type: ActionConsts.Login.DoLogout
         });
     },

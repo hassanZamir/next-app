@@ -30,12 +30,12 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> =
             <FontAwesomeIcon icon={faHeart} color={content_viewer_like ? "#F57B52" : "#A0A0A0"} size="lg" />
             <div className="text-darkGrey font-10px ml-1">{ likesCount }</div>
         </div>
-        {/* <Link href={"/profile/" + feed.username + "/status/" + feed.id}> */}
+        <Link href={"/profile/" + feed.username + "/status/" + feed.id}>
         <div className="d-flex align-items-center cursor-pointer" onClick={(e) => {onCommentClick(e, index)}}>
             <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" />
             <div className="text-darkGrey font-10px ml-1">{ commentsCount || 0 }</div>
         </div>
-        {/* </Link> */}
+        </Link>
         <div className="d-flex align-items-center cursor-pointer" onClick={(e) => {toggleTipModal(e, index)}}>
             <FontAwesomeIcon icon={faDollarSign} color="#707070" size="lg" />
             <div className="text-darkGrey font-10px ml-1">Tip</div>

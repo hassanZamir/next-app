@@ -58,7 +58,6 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                 birthDate : data.dob.date + "-" + (DobConst.months.indexOf(data.dob.month) + 1)  + "-" + data.dob.year,
                 account_created: true
             }
-            console.log(params);
             setEnableSignUp(false);
             await dispatch(LoginActions.UserSignUp(params));
             setEnableSignUp(true);

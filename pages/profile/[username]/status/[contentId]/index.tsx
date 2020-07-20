@@ -35,17 +35,21 @@ const UserStatus: NextPage<IProfilePage.IProps> = () => {
     </Authenticated>;
 };
 
-export async function getStaticPaths() {
-    return {
-      paths: [{
-        params: { username: "venotv1234", contentId: "0" } // See the "paths" section below
-      }],
-      fallback: true
-    };
+export async function getServerSideProps(context: any) {
+    return { props: {} }
 }
 
-export const getStaticProps = (...params: any) => {
-    return { props: {} };
-};
+// export async function getStaticPaths() {
+//     return {
+//       paths: [{
+//         params: { username: "venotv1234", contentId: "0" } // See the "paths" section below
+//       }],
+//       fallback: true
+//     };
+// }
+
+// export const getStaticProps = (...params: any) => {
+//     return { props: {} };
+// };
 
 export default UserStatus;
