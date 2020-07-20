@@ -60,7 +60,7 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
                 <CreatorProfile 
                     creatorProfile={creatorProfile} 
                     onFollow={onFollow} 
-                    isFollower={followers[0] && followers[0].userId === user.id} />
+                    isFollower={followers && followers[0] && followers[0].userId === user.id} />
 
                 <CreatorContent 
                     contentCount={contentCount}

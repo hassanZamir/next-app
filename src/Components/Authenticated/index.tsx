@@ -21,14 +21,18 @@ export const Authenticated: React.FunctionComponent<{session: USER_SESSION, name
     if (!session || !('id' in session)) {
         return <DynamicLogin />
     } else {
-        return <ToastProvider components={{ Toast: Toast } as any}
-            autoDismiss={true}
-            placement="bottom-left"
-            >
-                <div className="w-100 row flex-column justify-content-between flex-nowrap">
-                    <div style={{ flexGrow: 1 }}>{ children }</div>
-                    <Footer selected={name} />
-                </div>
-        </ToastProvider>
+        // return <ToastProvider components={{ Toast: Toast } as any}
+        //     autoDismiss={true}
+        //     placement="bottom-left"
+        //     >
+        //         <div className="w-100 row flex-column justify-content-between flex-nowrap">
+        //             <div style={{ flexGrow: 1 }}>{ children }</div>
+        //             <Footer selected={name} />
+        //         </div>
+        // </ToastProvider>
+        return <div className="w-100 row flex-column justify-content-between flex-nowrap">
+            <div style={{ flexGrow: 1 }}>{ children }</div>
+            <Footer selected={name} />
+        </div>
     }
 }

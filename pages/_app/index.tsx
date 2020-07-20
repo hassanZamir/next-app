@@ -13,6 +13,8 @@ import { makeStore } from "@Redux";
 
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
+import { ToastProvider } from 'react-toast-notifications';
+import { Footer, Toast } from '@Components';
 
 import "@Static/css/main.scss";
 import { Layout } from "@Components";
@@ -28,7 +30,12 @@ class WebApp extends App<AppWithStore> {
                 <Provider store={store}>
                     <PersistGate loading={<Component {...pageProps} />} persistor={persistor}>
                         <Layout>
-                            <Component {...pageProps} />
+                            <ToastProvider components={{ Toast: Toast } as any}
+                                autoDismiss={true}
+                                placement="bottom-left"
+                                >
+                                <Component {...pageProps} />
+                            </ToastProvider>
                         </Layout>
                     </PersistGate>
                 </Provider>

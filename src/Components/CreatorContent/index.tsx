@@ -22,12 +22,12 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
         type: 0,
         page: 1,
         offset: 5,
-        viewer: user.id
+        viewer: user ? user.id : 0
     };
     useEffect(() => {
         if (isFollower)
             dispatch(CreatorProfileActions.GetCreatorFeeds(params));
-    }, []);
+    }, [isFollower]);
 
     const changeTab = (param: CONTENT_TYPE) => { setSetectedTab(param) }
 

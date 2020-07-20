@@ -47,8 +47,10 @@ export const StatusReducer = (
                 if (o.id === commentId) {
                     if (o.likesCount) {
                         o.likesCount++;
+                        o.content_viewer_like = true;
                     } else {
                         o.likesCount = 1;
+                        o.content_viewer_like = true;
                     }
                 }
                 return o;

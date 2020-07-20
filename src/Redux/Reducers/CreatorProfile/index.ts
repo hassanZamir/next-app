@@ -22,7 +22,6 @@ export const CreatorProfileReducer = (
     switch (action.type) {
         case ActionConsts.CreatorProfile.GetProfileFollowersSuccess: {
             let { followers } = action.payload!;
-
             return Object.assign({}, state, {
                 followers: followers
             });

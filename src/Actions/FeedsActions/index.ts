@@ -27,21 +27,21 @@ export const FeedsActions = {
         
         return result;
     },
-    LikeFeed: (payload: IFeed.Actions.ILikeFeedPayload) => async (dispatch: Dispatch) => {
+    LikeFeed: (payload: IFeed.Actions.ILikeFeedPayload) => async () => {
         const result = await FeedsService.LikeFeed(payload);
-        
-        dispatch({
-            payload: {contentId: payload.contentId},
-            type: result.status ? ActionConsts.Feeds.LikeFeedSuccess : ActionConsts.Feeds.LikeFeedError
-        });
+        return result;
+        // dispatch({
+        //     payload: {contentId: payload.contentId, like: true},
+        //     type: result.status ? ActionConsts.Feeds.LikeFeedSuccess : ActionConsts.Feeds.LikeFeedError
+        // });
     },
-    UnLikeFeed: (payload: IFeed.Actions.ILikeFeedPayload) => async (dispatch: Dispatch) => {
+    UnLikeFeed: (payload: IFeed.Actions.ILikeFeedPayload) => async () => {
         const result = await FeedsService.UnLikeFeed(payload);
-        
-        dispatch({
-            payload: {contentId: payload.contentId},
-            type: result.status ? ActionConsts.Feeds.LikeFeedSuccess : ActionConsts.Feeds.LikeFeedError
-        });
+        return result;
+        // dispatch({
+        //     payload: {contentId: payload.contentId, like: false},
+        //     type: result.status ? ActionConsts.Feeds.LikeFeedSuccess : ActionConsts.Feeds.LikeFeedError
+        // });
     },
     ReportFeed: (payload: IFeed.Actions.IGetReportFeedPayload) => async () => {
         const result = await FeedsService.ReportFeed(payload);

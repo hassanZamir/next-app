@@ -7,7 +7,8 @@ export type COMMENT = {
       contentId: number,
       text: string,
       likesCount: number,
-      timeStamp: string
+      timeStamp: string,
+      content_viewer_like: boolean
 }
 export interface AllCommentsResponse {
       status: boolean;

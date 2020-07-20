@@ -1,4 +1,4 @@
-import React ,{ useState, useRef } from "react";
+import React ,{ useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import Router from "next/router";
@@ -88,6 +88,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
     const modalRef = useRef<HTMLDivElement>(null);    
     const [ clickedTipFeed, setClickedTipFeed ] = useState({});
     const [ reportFeed, setReportFeed ] = useState({});
+    const [_FEEDS, set_FEEDS] = useState();
     const { isShowing, toggle } = useModal(modalRef);
     const { addToast } = useToasts();
     const dispatch = useDispatch();
@@ -113,6 +114,16 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
         });
     }
 
+    const updateLikeStatus = (like: boolean, contentId: number) => {
+        const updatedFeeds = feeds.map((feed) => {
+            if (feed.id === contentId) {
+                feed.content_viewer_like = (like ? true : false);
+                like ? feed.likesCount++ : feed.likesCount--
+            }
+            return feed;
+        });  
+        return updatedFeeds;
+    }
     const likeContent = (e: React.MouseEvent<HTMLElement>, index: number) => {
         e.preventDefault();
 
@@ -120,11 +131,25 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
             contentId: feeds[index].id, 
             userId: user.id
         }
-        if (!feeds[index].content_viewer_like) {
-            dispatch(FeedsActions.LikeFeed(param));
+        if (!_FEEDS[index].content_viewer_like) {
+            FeedsActions.LikeFeed(param)().then((resp) => {
+                if (resp.status) {
+                    set_FEEDS(updateLikeStatus(true, feeds[index].id));
+                }
+            });
         } else {
-            dispatch(FeedsActions.UnLikeFeed(param));
+            FeedsActions.UnLikeFeed(param)().then((resp) => {
+                if (resp.status) {
+                    set_FEEDS(updateLikeStatus(false, feeds[index].id));
+                }
+            });
         }
+        
+        // if (!feeds[index].content_viewer_like) {
+        //     dispatch(FeedsActions.LikeFeed(param));
+        // } else {
+        //     dispatch(FeedsActions.UnLikeFeed(param));
+        // }
     }
 
     const onReportClick = (feed: FEED) => {
@@ -154,6 +179,10 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
         });
     }
 
+    useEffect(() => {
+        if (feeds && feeds.length > 0) set_FEEDS(feeds);
+    }, [feeds]);
+
     if (feeds && feeds.length <= 0)
         return <div className="d-flex flex-column w-100 px-4">
             <ParagraphText className="font-20px text-primary">No Content To Show</ParagraphText>
@@ -173,7 +202,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
             feed={reportFeed} 
             user={user} />}
 
-        {feeds.map((feed, i) => {
+        {_FEEDS && _FEEDS.map((feed: FEED, i: number) => {
             return (<Feed feed={feed} 
                 index={i} 
                 key={i} 

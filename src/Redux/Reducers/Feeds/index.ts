@@ -13,7 +13,7 @@ const INITIAL_STATE: IFeedsPage.IStateProps = {
 
 export const FeedsReducer = (
     state = INITIAL_STATE,
-    action: IAction<IFeedsPage.Actions.IMapAllFeedsResponse & IFeed.Actions.ILikeFeedPayload>
+    action: IAction<IFeedsPage.Actions.IMapAllFeedsResponse & IFeed.Actions.IMapLikefeed>
 ) => {
     switch (action.type) {
         case ActionConsts.Feeds.GetAllFeedsSuccess: {
@@ -31,11 +31,14 @@ export const FeedsReducer = (
             });
         }
         case ActionConsts.Feeds.LikeFeedSuccess: {
-            let { contentId } = action.payload!;
+            let { contentId, like } = action.payload!;
             const { feeds } = state;
 
             const _updatedFeeds = feeds.map((feed) => {
-                feed.id === contentId && (feed.content_viewer_like = !feed.content_viewer_like)
+                if (feed.id === contentId) {
+                    feed.content_viewer_like = (like ? true : false);
+                    like ? feed.likesCount++ : feed.likesCount--
+                }
                 return feed;
             });
             return Object.assign({}, state, {

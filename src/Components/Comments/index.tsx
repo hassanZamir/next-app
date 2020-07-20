@@ -24,7 +24,7 @@ const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment
                 <span className="seoge-ui-bold font-13px text-primary">{ comment.userName }</span>
                 <div className="d-flex align-items-center cursor-pointer" onClick={() => { likeComment(comment) }}>
                     <span className="font-13px text-darkGrey mr-1">{ comment.likesCount || 0 }</span>
-                    <FontAwesomeIcon icon={faHeart} color={"#A0A0A0"} size="lg" />
+                    <FontAwesomeIcon icon={faHeart} color={comment.content_viewer_like ? "#F57B52" : "#A0A0A0"} size="lg" />
                 </div>
             </div>
             <span className="font-11px text-darkGrey">{ comment.text }</span>
@@ -97,7 +97,7 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
     
     useEffect(() => {
         (async () => {
-            const params = { contentId: contentId, pageNo: 0, offset: 7 };
+            const params = { contentId: contentId, pageNo: 0, offset: 7, viewerId: user ? user.id : 0 };
             await dispatch(StatusActions.GetAllComments(params));
             setLoading(false);
         })();

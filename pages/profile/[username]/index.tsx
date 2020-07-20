@@ -1,5 +1,5 @@
 // #region Global Imports
-import * as React from "react";
+import React from "react";
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';

@@ -39,6 +39,10 @@ declare namespace IFeed {
     }
 
     namespace Actions {
+        export interface IMapLikefeed {
+            like: boolean;
+            contentId: number;
+        }
         export interface ITipFeedPayload extends FeedsModel.GetTipFeedPayload {}
         export interface ITipFeedResponse extends FeedsModel.GetTipFeedResponse {}
 

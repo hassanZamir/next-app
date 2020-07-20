@@ -16,7 +16,7 @@ const persistConfig = {
     key: 'root',
     storage,
     whitelist: ['persistState'], 
-    blacklist: ['signUp', 'loginError'] // place to select which state you want to persist
+    blacklist: ['signUp', 'loginError', 'creatorProfile'] // place to select which state you want to persist
 }
   
 const persistedReducer = persistReducer(persistConfig, Reducers)
@@ -24,6 +24,7 @@ const persistedReducer = persistReducer(persistConfig, Reducers)
 export const makeStore = (initialState: {}) => {
     return createStore(
         persistedReducer,
+        // Reducers,
         initialState,
         composeWithDevTools(applyMiddleware(thunkMiddleware))
     );

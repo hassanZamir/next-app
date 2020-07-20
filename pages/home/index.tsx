@@ -1,5 +1,5 @@
 // #region Global Imports
-import * as React from "react";
+import React, { useEffect } from "react";
 import { NextPage } from "next";
 import { useSelector, useDispatch } from "react-redux";
 

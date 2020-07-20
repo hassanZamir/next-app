@@ -13,7 +13,9 @@ export const StatusService = {
         try {
             response = await Http.Request<AllCommentsModel.GetAllCommentsResponse>(
                 "GET",
-                "/content/" + payload.contentId + "/comments?page=" + payload.pageNo + "&offset=" + payload.offset,
+                "/content/" + payload.contentId + "/comments?page=" + payload.pageNo 
+                + "&offset=" + payload.offset 
+                + (payload.viewerId ? ("&viewerId=" + payload.viewerId) : ""),
                 undefined
             );
             // localStorage.setItem("user", response.status);
@@ -24,6 +26,7 @@ export const StatusService = {
                     "name": "sohaib Riaz",
                     "profileImageUrl": "",
                     "userName": "sohaibminhas",
+                    "content_viewer_like": true,
                     "id": 6,
                     "userId": 11,
                     "contentId": 6,
@@ -55,6 +58,7 @@ export const StatusService = {
                     "name": "sohaib Riaz",
                     "profileImageUrl": "",
                     "userName": "sohaibminhas",
+                    "content_viewer_like": true,
                     "id": 6,
                     "userId": 11,
                     "contentId": 6,
