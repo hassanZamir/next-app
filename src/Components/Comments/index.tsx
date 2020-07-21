@@ -128,7 +128,7 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
                 pageNo: paginationPageNo + 1, 
                 offset: 7, 
                 userId: user ? user.id : 0,
-                sort: 'desc'
+                sort: 'asc'
             };
             getComments(params);
             setPaginationPageNo(paginationPageNo+1)

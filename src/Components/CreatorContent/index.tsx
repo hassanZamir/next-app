@@ -20,7 +20,7 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
     const params = {
         username: profileUserName,
         type: 0,
-        page: 1,
+        page: 0,
         offset: 5,
         viewer: user ? user.id : 0
     };

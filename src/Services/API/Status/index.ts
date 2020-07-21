@@ -15,7 +15,7 @@ export const StatusService = {
                 "GET",
                 "/content/" + payload.contentId + "/comments?page=" + payload.pageNo 
                 + "&offset=" + payload.offset 
-                + (payload.sort ===  'desc' ? "&sort=desc" : "&sort=aesc")
+                + (payload.sort ===  'desc' ? "&sort=desc" : "&sort=" + payload.sort)
                 + (payload.userId ? ("&viewerId=" + payload.userId) : ""),
                 undefined
             );
