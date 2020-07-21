@@ -15,7 +15,8 @@ export const StatusService = {
                 "GET",
                 "/content/" + payload.contentId + "/comments?page=" + payload.pageNo 
                 + "&offset=" + payload.offset 
-                + (payload.viewerId ? ("&viewerId=" + payload.viewerId) : ""),
+                + (payload.sort ===  'desc' ? "&sort=desc" : "&sort=aesc")
+                + (payload.userId ? ("&viewerId=" + payload.userId) : ""),
                 undefined
             );
             // localStorage.setItem("user", response.status);

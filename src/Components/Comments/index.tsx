@@ -1,5 +1,5 @@
 // #region Global Imports
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, RefObject } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -10,14 +10,14 @@ import { CircularImage, LoadingSpinner } from "@Components";
 import { Textarea } from "@Components/Basic";
 import { StatusActions } from "@Actions";
 import { IStore } from "@Redux/IStore";
-import { COMMENT, USER_SESSION } from "@Interfaces";
+import { COMMENT, USER_SESSION, IStatusPage } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
 import { CurrentTimeDifference }from "@Services/Time";
 // #endregion Local Imports
 
-const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment: COMMENT)=>void }> = 
-    ({ comment, likeComment }) => {
-    return <div className="d-flex px-3 align-items-center my-4 w-100">
+const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment: COMMENT)=>void, commentsListRef: any}> = 
+    ({ comment, likeComment, commentsListRef }) => {
+    return <div className="d-flex px-3 align-items-center my-4 w-100" ref={commentsListRef}>
         <CircularImage src={comment.profileImageUrl} height="50px" width="50px" border={"1px solid " + theme.colors.primary} />
         <div className="d-flex flex-column pl-2 w-100 justify-content-between">
             <div className="d-flex justify-content-between align-items-center w-100">
@@ -33,20 +33,25 @@ const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment
     </div>
 }
 
-const CommentsList: React.FunctionComponent<{loading: boolean, error: string, comments: COMMENT[], likeComment: (comment: COMMENT)=>void }> = 
-    ({ loading, error, comments, likeComment }) => {
-    return <div style={{ flex: "1", overflowY: "scroll" }} 
+const CommentsList: React.FunctionComponent<{onScroll: any; viewAllComments: boolean; setViewAllComments: (a: boolean)=>void; onViewAllComments: ()=>void; commentsListRef: RefObject<HTMLDivElement>, loading: boolean, error: string, comments: COMMENT[], likeComment: (comment: COMMENT)=>void }> = 
+    ({ loading, error, comments, likeComment, commentsListRef, onViewAllComments, viewAllComments, setViewAllComments, onScroll }) => {
+    
+    return <div onScroll={onScroll}
+        style={{ flex: "1", overflowY: "scroll" }} 
         className={"scroll-y d-flex align-items-center flex-column px-4 border border-top-1 border-right-0 border-left-0 border-bottom-1 border-lightGrey " + (loading ? "justify-content-center" : "")}>
         {loading && <LoadingSpinner size="2x" />}
-        
+        {!viewAllComments && !loading && <div onClick={()=>{ setViewAllComments(true); onViewAllComments() }} 
+            className="font-12px mt-2 text-underline cursor-pointer">
+            See all comments
+        </div>}
         {!loading && comments.map((comment: COMMENT, i) => {
-            return <Comment key={i} comment={comment} likeComment={likeComment} />
+            return <Comment key={i} comment={comment} likeComment={likeComment} commentsListRef={i >= comments.length - 1 ? commentsListRef : null} />
         })}
     </div>
 }
 
-const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: number, error: string }> = 
-    ({ user, contentId, error }) => {
+const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: number, error: string, onSuccess: ()=>void }> = 
+    ({ user, contentId, error, onSuccess }) => {
 
     const [comment, setComment] = useState("");
     const [loading, setLoading] = useState(false);
@@ -62,6 +67,7 @@ const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: numb
         await dispatch(StatusActions.PostComment(params))
         setLoading(false);
         setComment('');
+        onSuccess();
     }
 
     return <div className="px-4 d-flex flex-column pb-2 pt-4">
@@ -94,20 +100,62 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
     const dispatch = useDispatch();
     const statusPage = useSelector((state: IStore) => state.statusPage);
     const { comments, error } = statusPage;
-    
+    const commentsListRef:RefObject<HTMLDivElement> = useRef(null);
+    const [viewAllComments, setViewAllComments] = useState(false);
+    const [paginationPageNo, setPaginationPageNo] = useState(0);
+
     useEffect(() => {
         (async () => {
-            const params = { 
+            const params = {
                 contentId: contentId, 
                 pageNo: 0, 
                 offset: 7, 
-                viewerId: user ? user.id : 0 
+                userId: user ? user.id : 0,
+                sort: 'desc'
             };
-            await dispatch(StatusActions.GetAllComments(params));
+            await getComments(params);
             setLoading(false);
+            scrollToLastComment();
         })();
+        // document.addEventListener('scroll', trackScrolling);
     }, []);
 
+    const trackScrolling = (e: any) => {
+        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+        if (bottom && viewAllComments) {
+            const params = {
+                contentId: contentId, 
+                pageNo: paginationPageNo + 1, 
+                offset: 7, 
+                userId: user ? user.id : 0,
+                sort: 'desc'
+            };
+            getComments(params);
+            setPaginationPageNo(paginationPageNo+1)
+        }
+    }
+
+    const getComments = async(params: IStatusPage.Actions.IGetAllCommentsPayload) => {
+        await dispatch(StatusActions.GetComments(params));
+    };
+
+    const scrollToLastComment = () => {
+        commentsListRef.current!.scrollIntoView({behavior: "smooth"});
+    }
+
+    const onViewAllComments = async () => {
+        setLoading(true);
+        const params = {
+            contentId: contentId, 
+            pageNo: 0, 
+            offset: 7, 
+            userId: user ? user.id : 0,
+            sort: 'desc'
+        };
+        await getComments(params);
+        setLoading(false);
+    }
+    
     const likeComment = (comment: COMMENT) => {
         const params = { commentId: comment.id, userId: user.id };
         if (!comment.content_viewer_like) {
@@ -118,7 +166,20 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
     }
 
     return (<div className="full-flex-scroll d-flex flex-column w-100 h-100">
-        <CommentsList comments={comments} likeComment={likeComment} loading={loading} error={error} />
-        <PostComment user={user} contentId={contentId} error={error} />
+        <CommentsList 
+            commentsListRef={commentsListRef}
+            comments={comments} 
+            likeComment={likeComment} 
+            loading={loading} 
+            error={error} 
+            onViewAllComments={onViewAllComments} 
+            viewAllComments={viewAllComments}
+            setViewAllComments={setViewAllComments} 
+            onScroll={trackScrolling}/>
+        <PostComment 
+            user={user} 
+            contentId={contentId} 
+            error={error} 
+            onSuccess={scrollToLastComment} />
     </div>);
 }

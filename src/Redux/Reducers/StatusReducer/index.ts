@@ -20,14 +20,17 @@ export const StatusReducer = (
     switch (action.type) {
         case ActionConsts.Status.GetAllCommentsSuccess: {
             const { comments } = action.payload!;
-            return Object.assign({}, state, {
-                comments: comments
-            });
+            if (comments)
+                return Object.assign({}, state, {
+                    comments: [...state.comments, ...comments]
+                });
+            else
+                return state;
         }
         case ActionConsts.Status.GetAllCommentsError: {
             return Object.assign({}, state, {
                 error: 'Error occured fetching comments',
-                comments: []
+                comments: state.comments
             });
         }
         case ActionConsts.Status.PostCommentSuccess: {

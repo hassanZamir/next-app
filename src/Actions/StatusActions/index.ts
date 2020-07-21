@@ -8,7 +8,7 @@ import { StatusService } from "@Services";
 import { IStatusPage } from "@Interfaces";
 
 export const StatusActions = {
-    GetAllComments: (payload: IStatusPage.Actions.IGetAllCommentsPayload) => async (
+    GetComments: (payload: IStatusPage.Actions.IGetAllCommentsPayload) => async (
         dispatch: Dispatch
     ) => {
         const result = await StatusService.GetAllComments(payload);

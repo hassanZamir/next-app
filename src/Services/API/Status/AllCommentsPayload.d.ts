@@ -2,5 +2,6 @@ export interface AllCommentsPayload {
     contentId: number;
     pageNo: number;
     offset: number;
-    viewerId?: number;
+    userId?: number;
+    sort?: string;
 }
