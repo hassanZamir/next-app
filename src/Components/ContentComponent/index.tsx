@@ -1,5 +1,6 @@
 // #region Global Imports
 import React from "react";
+import Link from "next/link";
 // #endregion Global Imports
 
 // #region Local Imports
@@ -11,8 +12,11 @@ export const ContentComponent: React.FunctionComponent<{ userName: string, conte
     ({ userName, contentId, user, feed }) => {
 
     return (<div className="d-flex flex-column" style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>
+
         <div className="my-2 row justify-content-center no-gutters">
-            <StaticImage src="/images/veno_tv_logo_main@2x.png" height="100%" width="164px" />
+            <Link href="/">
+                <StaticImage className="cursor-pointer" src="/images/veno_tv_logo_main@2x.png" height="100%" width="164px" />          
+            </Link>
         </div>
         <FeedsList feeds={[feed]} user={user} />
         <Comments contentId={contentId} user={user} />

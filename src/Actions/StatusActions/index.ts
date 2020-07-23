@@ -14,7 +14,7 @@ export const StatusActions = {
         const result = await StatusService.GetAllComments(payload);
         
         dispatch({
-            payload: result.status ? { comments: result.response } : { comments: [] },
+            payload: result.status ? { comments: result.response, pageNo: payload.pageNo } : { comments: [], pageNo: 0 },
             type: result.status ? ActionConsts.Status.GetAllCommentsSuccess : ActionConsts.Status.GetAllCommentsError
         });
     },

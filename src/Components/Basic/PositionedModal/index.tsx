@@ -43,16 +43,17 @@ const TriangleDown = styled.div`
     animation-name: ${slideInFromTop};
     transform: translate3d(0, 0, 0);
     animation-duration: .3s;
+    z-index: 1050;
 `
 
 export const PositionedModal: React.FunctionComponent<{ border?: string, borderRadius?: string }> = ({children, ...rest}) => {
     return <React.Fragment>
         <div className="modal-overlay"/>
-        <PositionedModalWrapper>
+        {/* <PositionedModalWrapper> */}
             <PositionedModalContainer {...rest}>
                 {children}
             </PositionedModalContainer>
             <TriangleDown />
-        </PositionedModalWrapper>
+        {/* </PositionedModalWrapper> */}
     </React.Fragment>
 }

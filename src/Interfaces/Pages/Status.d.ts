@@ -11,6 +11,7 @@ declare namespace IStatusPage {
     namespace Actions {
         export interface IMapAllComments {
             comments: COMMENT[]
+            pageNo: number;
         }
         export interface IMapPostComment {
             comment: COMMENT

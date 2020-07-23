@@ -17,7 +17,7 @@ import { CurrentTimeDifference }from "@Services/Time";
 
 const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment: COMMENT)=>void, commentsListRef: any}> = 
     ({ comment, likeComment, commentsListRef }) => {
-    return <div className="d-flex px-3 align-items-center my-4 w-100" ref={commentsListRef}>
+    return <div style={{ minHeight: "50px" }} className="d-flex px-3 align-items-center my-4 w-100" ref={commentsListRef}>
         <CircularImage src={comment.profileImageUrl} height="50px" width="50px" border={"1px solid " + theme.colors.primary} />
         <div className="d-flex flex-column pl-2 w-100 justify-content-between">
             <div className="d-flex justify-content-between align-items-center w-100">
@@ -27,8 +27,8 @@ const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment
                     <FontAwesomeIcon icon={faHeart} color={comment.content_viewer_like ? "#F57B52" : "#A0A0A0"} size="lg" />
                 </div>
             </div>
-            <span className="font-11px text-darkGrey">{ comment.text }</span>
-            <span className="font-11px text-darkGrey">{ CurrentTimeDifference(comment.timeStamp) }</span>
+            <div className="font-11px text-darkGrey">{ comment.text }</div>
+            <div className="font-11px text-darkGrey">{ CurrentTimeDifference(comment.timeStamp) }</div>
         </div>
     </div>
 }
@@ -117,7 +117,6 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
             setLoading(false);
             scrollToLastComment();
         })();
-        // document.addEventListener('scroll', trackScrolling);
     }, []);
 
     const trackScrolling = (e: any) => {
@@ -150,7 +149,7 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
             pageNo: 0, 
             offset: 7, 
             userId: user ? user.id : 0,
-            sort: 'desc'
+            sort: 'asc'
         };
         await getComments(params);
         setLoading(false);

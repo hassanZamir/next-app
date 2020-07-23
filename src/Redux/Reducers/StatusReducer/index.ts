@@ -19,13 +19,19 @@ export const StatusReducer = (
     ) => {
     switch (action.type) {
         case ActionConsts.Status.GetAllCommentsSuccess: {
-            const { comments } = action.payload!;
-            if (comments)
+            const { comments, pageNo } = action.payload!;
+
+            if (pageNo === 0) {
                 return Object.assign({}, state, {
-                    comments: [...state.comments, ...comments]
+                    comments: [...comments],
+                    error: ""
                 });
-            else
-                return state;
+            } else {
+                return Object.assign({}, state, {
+                    comments: [...state.comments, ...comments],
+                    error: ""
+                });
+            }
         }
         case ActionConsts.Status.GetAllCommentsError: {
             return Object.assign({}, state, {
@@ -36,7 +42,8 @@ export const StatusReducer = (
         case ActionConsts.Status.PostCommentSuccess: {
             const { comment } = action.payload!;
             return Object.assign({}, state, {
-                comments: comment ? [...state.comments, comment] : state.comments
+                comments: comment ? [...state.comments, comment] : state.comments,
+                error: ""
             });
         }
         case ActionConsts.Status.PostCommentError: {

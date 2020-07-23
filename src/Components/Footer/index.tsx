@@ -18,7 +18,15 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected }): JSX.Elem
         {FooterConfig.map((config, index) => {
             return <div key={index} 
                 onClick={() => { 
-                    config.name === 'Account' ? dispatch(LoginActions.UserLogout()) : null 
+                    if (config.name === 'Account') {
+                        dispatch(LoginActions.UserLogout());
+                        return;
+                    } else if (config.name === 'Home') {
+                        Router.push('/');
+                        return;
+                    } else {
+                        return null
+                    }
                 }}
                 className={"cursor-pointer d-flex align-items-center justify-content-center h-100 " + (selected === config.name ? "highlight-footer-option" : "")} 
                 style={{ width: "20%" }}>
