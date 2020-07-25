@@ -63,6 +63,9 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
     }, [email, password, recaptchaToken])
 
     useEffect(() => {
+        router.prefetch('/');
+        // router.push('/login', '/login', { shallow: true });
+
         if (modal === 'check-your-email') {
             const { email } = router.query;
             setUserVerificationEmail(email as string);
@@ -78,10 +81,9 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
             return;
         } else if (profile) {
             dispatch(LoginActions.GetCreatorProfile({ username: profile as string }));
-        }
-        
-        // Prefetch the dashboard page as the user will go there after the login
-        router.prefetch('/');
+        } else {
+            return;
+        }        
     }, []);
     
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {

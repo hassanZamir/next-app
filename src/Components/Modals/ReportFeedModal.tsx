@@ -125,7 +125,7 @@ export const ReportFeedModal: React.RefForwardingComponent<HTMLDivElement, IRepo
                                     borderRadius="10px" 
                                     className="mt-2 mr-2"
                                     onClick={toggle}>
-                                        Cancel
+                                        Close
                                 </TransparentButton>
                         </div>
                     </div>}

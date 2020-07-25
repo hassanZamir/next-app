@@ -8,7 +8,7 @@ declare namespace ILoginPage {
         session: USER_SESSION;
         creatorProfile: CREATOR_PROFILE;
         sendResetPasswordEmailStatus: string;
-        resetPasswordStatus: string;
+        changePasswordStatus: string;
     }
 
     namespace Actions {

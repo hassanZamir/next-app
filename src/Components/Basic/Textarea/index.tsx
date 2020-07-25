@@ -8,6 +8,7 @@ import { ITextarea } from "./Textarea";
 // #endregion Local Imports
 
 const _Textarea = styled.textarea`
+    resize: none;
     background-color: transparent;
     padding: 5px;
     color: inherit;

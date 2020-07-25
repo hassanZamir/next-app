@@ -1,4 +1,4 @@
-import React, { RefObject, useState } from 'react';
+import React, { RefObject, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from "react-redux";
 
@@ -32,6 +32,21 @@ export const ResetPasswordModal: React.RefForwardingComponent<HTMLDivElement, IR
         await dispatch(LoginActions.SendResetPasswordEmail(params));
         setLoading(false);
     }
+
+    function onModalClose(e: any) {
+        if (modalRef!.current && !modalRef!.current.contains(e.target)) {
+            debugger;
+            dispatch(LoginActions.onCloseResetPasswordModal());
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("click", onModalClose);
+    
+        return () => {
+          document.removeEventListener("click", onModalClose);
+        };
+    });
 
     return isShowing ? ReactDOM.createPortal(
             <Modal border={theme.colors.primary} borderRadius="18px">

@@ -19,7 +19,7 @@ declare namespace IChangePasswordModal {
 export const ChangePasswordModal: React.RefForwardingComponent<HTMLDivElement, IChangePasswordModal.IProps> = ((props) => {
     const { isShowing, modalRef, token } = props;
     const loginState = useSelector((state: IStore) => state.loginError);
-    const { resetPasswordStatus } = loginState;
+    const { changePasswordStatus } = loginState;
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ export const ChangePasswordModal: React.RefForwardingComponent<HTMLDivElement, I
     return isShowing ? ReactDOM.createPortal(
         <Modal border={theme.colors.primary} borderRadius="18px">
                 <div className="w-100 h-100 pb-5" ref={modalRef}>
-                    {(resetPasswordStatus === '' || resetPasswordStatus === 'error') && <div className="modal-content d-flex flex-column justify-content-center align-items-center">
+                    {(changePasswordStatus === '' || changePasswordStatus === 'error') && <div className="modal-content d-flex flex-column justify-content-center align-items-center">
                         <ParagraphText className="text-primary font-25px text-center">Change your password</ParagraphText>
                         
                         <div className="d-flex flex-column w-100 mt-3">
@@ -70,12 +70,12 @@ export const ChangePasswordModal: React.RefForwardingComponent<HTMLDivElement, I
                                     Submit
                                 </PrimaryButton>
                             </FormComponent>
-                            {resetPasswordStatus === 'error' && <ParagraphText className="text-danger font-12px text-center">
+                            {changePasswordStatus === 'error' && <ParagraphText className="text-danger font-12px text-center">
                                 Error occured reseting password. Please try again.
                             </ParagraphText>}
                         </div>
                     </div>}
-                    {resetPasswordStatus === 'success' && <div className="modal-content d-flex flex-column justify-content-center align-items-center">
+                    {changePasswordStatus === 'success' && <div className="modal-content d-flex flex-column justify-content-center align-items-center">
                         <ParagraphText className="text-primary font-25px text-center">Password Updated</ParagraphText>
                         <ParagraphText className="text-grey100 font-12px text-center mt-3">
                             Your password has been updated successfully!

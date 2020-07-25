@@ -15,7 +15,9 @@ export const ContentComponent: React.FunctionComponent<{ userName: string, conte
 
         <div className="my-2 row justify-content-center no-gutters">
             <Link href="/">
-                <StaticImage className="cursor-pointer" src="/images/veno_tv_logo_main@2x.png" height="100%" width="164px" />          
+                <a>
+                    <StaticImage className="cursor-pointer" src="/images/veno_tv_logo_main@2x.png" height="100%" width="164px" />
+                </a>
             </Link>
         </div>
         <FeedsList feeds={[feed]} user={user} />

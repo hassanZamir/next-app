@@ -12,7 +12,8 @@ export const ActionConsts = {
         SendResetPasswordEmailError: "SendResetPasswordEmailError",
         ChangePasswordSuccess: "ChangePasswordSuccess",
         ChangePasswordError: "ChangePasswordError",
-        DoLogout: "DoLogout"
+        DoLogout: "DoLogout",
+        onCloseResetPasswordModal: "onCloseResetPasswordModal"
     },
     SignUp: {
         SignUpSuccess: "SignUpSuccess",

@@ -12,44 +12,8 @@ const INITIAL_STATE: ILoginPage.IStateProps = {
     session: <USER_SESSION>{},
     creatorProfile: <CREATOR_PROFILE>{},
     sendResetPasswordEmailStatus: '',
-    resetPasswordStatus: ''
+    changePasswordStatus: ''
 };
-
-// const getInitialState = () => {
-//     try {
-//         const loggedIn = (typeof window !== "undefined" ? window.localStorage.getItem('persist:root') : false);
-//         if (loggedIn) {
-//             return JSON.parse(JSON.parse(loggedIn).loginSuccess)
-//         }        
-//     } catch(e) {
-//         return INITIAL_STATE;
-//     } finally {
-//         return INITIAL_STATE;
-//     }
-// }
-
-// export const LoginSuccessReducer = (
-//     state = getInitialState(),
-//     action: IAction<ILoginPage.Actions.IGetLoginResponse>
-// ) => {
-//     switch (action.type) {
-//         case ActionConsts.Login.SetUserPayload: {
-//             let { session } = action.payload!;
-//             Router.push("/");
-
-//             return Object.assign({}, state, {
-//                 errors: "",
-//                 session: session
-//             });
-//         }
-//         case ActionConsts.Login.DoLogout: {
-//             Router.push("/login");
-//             return INITIAL_STATE;
-//         }
-//         default:
-//             return state;
-//     }
-// };
 
 export const LoginErrorReducer = (
     state = INITIAL_STATE,
@@ -62,12 +26,12 @@ export const LoginErrorReducer = (
     switch (action.type) {
         case ActionConsts.Login.ChangePasswordSuccess: {
             return Object.assign({}, state, {
-                resetPasswordStatus: 'success'
+                changePasswordStatus: 'success'
             });
         }
         case ActionConsts.Login.ChangePasswordError: {
             return Object.assign({}, state, {
-                resetPasswordStatus: 'error'
+                changePasswordStatus: 'error'
             });
         }
         case ActionConsts.Login.SendResetPasswordEmailSuccess: {
@@ -78,6 +42,11 @@ export const LoginErrorReducer = (
         case ActionConsts.Login.SendResetPasswordEmailError: {
             return Object.assign({}, state, {
                 sendResetPasswordEmailStatus: 'error',
+            });
+        }
+        case ActionConsts.Login.onCloseResetPasswordModal: {
+            return Object.assign({}, state, {
+                sendResetPasswordEmailStatus: '',
             });
         }
         case ActionConsts.Login.GetCreatorProfileSuccess: {

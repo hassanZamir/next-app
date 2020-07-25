@@ -103,6 +103,14 @@ export const LoginActions = {
             type: result.status ? ActionConsts.Login.SendResetPasswordEmailSuccess : ActionConsts.Login.SendResetPasswordEmailError
         });
     },
+    onCloseResetPasswordModal: () => async (
+        dispatch: Dispatch
+    ) => {
+        dispatch({
+            payload: null,
+            type: ActionConsts.Login.onCloseResetPasswordModal
+        });
+    },
     ChangePassword: (payload: ILoginPage.Actions.IGetChangePasswordPayload) => async (
         dispatch: Dispatch
     ) => {
