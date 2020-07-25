@@ -103,7 +103,8 @@ export const CreatorProfileService = {
                     contentCount: 0,
                     imagesCount: 0,
                     videosCount: 0,
-                    followingFee: 0.0
+                    followingFee: 0.0,
+                    userName: "sohaibminhas789"
                 }
             };
         }
