@@ -9,6 +9,8 @@ export type USER_SESSION  = {
     verifyEmail: number;
     profileImageUrl: string;
     paymentMode: number;
+    cardNumber: string;
+    cardTitle: string;
 }
 
 export interface LoginResponse {

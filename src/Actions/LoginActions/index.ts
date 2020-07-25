@@ -18,7 +18,7 @@ export const LoginActions = {
         const result = await LoginService.Login({
             params: payload.params,
         });
-        
+
         dispatch({
             payload: result,
             type: result.authenticated ? ActionConsts.Login.SetUserPayload : ActionConsts.Login.SetLoginError
@@ -27,7 +27,6 @@ export const LoginActions = {
     UserLogout: () => async (
         dispatch: Dispatch
     ) => {
-        debugger;
         dispatch({
             payload: {},
             type: ActionConsts.Login.DoLogout

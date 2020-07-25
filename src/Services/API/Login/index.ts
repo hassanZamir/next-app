@@ -15,7 +15,7 @@ export const LoginService = {
         try {
             response = await Http.Request<LoginModel.GetLoginResponse>(
                 "POST",
-                "DD/accounts/login",
+                "/accounts/login",
                 undefined,
                 payload.params
             );
@@ -32,7 +32,9 @@ export const LoginService = {
                     birthDate: '',
                     isCreator: false,
                     verifyEmail: 0,
-                    paymentMode: 0
+                    paymentMode: 0,
+                    cardNumber: '',
+                    cardTitle: ''
                 },
                 authenticated: false,
                 errors: "Something went wrong"
