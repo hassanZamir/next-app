@@ -10,6 +10,7 @@ export type CREATOR_PROFILE = {
     profileImageUrl: string;
     location: string;
     followingFee: number;
+    userName: string;
 }
 export interface CreatorProfileResponse {
     status: boolean;

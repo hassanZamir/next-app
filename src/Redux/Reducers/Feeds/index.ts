@@ -8,14 +8,30 @@ import { IAction, IFeedsPage, IFeed, FEED } from "@Interfaces";
 
 const INITIAL_STATE: IFeedsPage.IStateProps = {
     errors: '',
-    feeds: []
+    feeds: [],
+    profilesSuggestion: []
 };
 
 export const FeedsReducer = (
     state = INITIAL_STATE,
-    action: IAction<IFeedsPage.Actions.IMapAllFeedsResponse & IFeed.Actions.IMapLikefeed>
+    action: IAction<IFeedsPage.Actions.IMapAllFeedsResponse 
+        & IFeed.Actions.IMapLikefeed
+        & IFeedsPage.Actions.IMapProfilesSuggestionResponse>
 ) => {
     switch (action.type) {
+        case ActionConsts.Feeds.ProfilesSuggestionSuccess: {
+            let { profiles } = action.payload!;
+
+            return Object.assign({}, state, {
+                profilesSuggestion: profiles,
+                errors: ''
+            });
+        }
+        case ActionConsts.Feeds.ProfilesSuggestionError: {
+            return Object.assign({}, state, {
+                errors: "Error getting profiles suggestion"
+            });
+        }
         case ActionConsts.Feeds.GetAllFeedsSuccess: {
             let { feeds } = action.payload!;
 

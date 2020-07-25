@@ -1,5 +1,7 @@
 declare namespace ITransparentButton {
     export interface IProps {
+        padding?: string;
+        border?: string;
         borderRadius?: string;
         formState?: {};
         className?: string;

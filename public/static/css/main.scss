@@ -1,5 +1,6 @@
 @import "./fonts/Segoe/style.scss";
 @import "./fonts/Gibson/style.scss";
+@import "./fonts/Lato/style.scss";
 @import "./bootstrap/index";
 
 .top-0 {
@@ -73,6 +74,16 @@
 }
 .gibson-light {
     font-family: 'Gibson Light';
+}
+
+.lato-regular {
+    font-family: 'Lato Regular';
+}
+.lato-semibold {
+    font-family: 'Lato Semibold';
+}
+.lato-bold {
+    font-family: 'Lato Bold';
 }
 //
 

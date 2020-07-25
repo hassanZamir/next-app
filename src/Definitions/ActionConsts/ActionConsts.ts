@@ -31,7 +31,9 @@ export const ActionConsts = {
         GetAllFeedsError: "GetAllFeedsError",
         LikeFeedError: "LikeFeedError",
         LikeFeedSuccess: "LikeFeedSuccess",
-        SetPersistFeed: "SetPersistFeed"
+        SetPersistFeed: "SetPersistFeed",
+        ProfilesSuggestionSuccess: "ProfilesSuggestionSuccess",
+        ProfilesSuggestionError: "ProfilesSuggestionError"
     },
     CreatorProfile: {
         GetCreatorProfileSuccess: "GetCreatorProfileSuccess",

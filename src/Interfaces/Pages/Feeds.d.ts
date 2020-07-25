@@ -1,4 +1,4 @@
-import { USER_SESSION, FEED, FeedsModel } from "@Interfaces";
+import { USER_SESSION, FEED, FeedsModel, ProfilesSuggestionModel, CREATOR_PROFILE } from "@Interfaces";
 
 declare namespace IFeedsPage {
     export interface IProps {
@@ -7,7 +7,8 @@ declare namespace IFeedsPage {
 
     export interface IStateProps {
         errors: '',
-        feeds: FEED[]
+        feeds: FEED[],
+        profilesSuggestion: CREATOR_PROFILE[]
     }
 
     namespace Actions {
@@ -15,8 +16,15 @@ declare namespace IFeedsPage {
             feeds: FeedsModel.GetAllFeedsResponse
         }
 
+        export interface IMapProfilesSuggestionResponse {
+            profiles: ProfilesSuggestionModel.GetProfilesSuggestionResponse
+        }
+
         export interface IGetAllFeedsPayload extends FeedsModel.GetAllFeedsPayload {}
         export interface IGetAllFeedsResponse extends FeedsModel.GetAllFeedsResponse {}
+
+        export interface IGetProfilesSuggestionPayload extends ProfilesSuggestionModel.GetProfilesSuggestionPayload {}
+        export interface IGetProfilesSuggestionResponse extends ProfilesSuggestionModel.GetProfilesSuggestionResponse {}
     }
 }
 

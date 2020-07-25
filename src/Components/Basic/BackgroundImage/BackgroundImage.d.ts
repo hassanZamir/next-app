@@ -3,6 +3,7 @@ declare namespace IBackgroundImage {
         src: string;
         paddingBottom?: string;
         borderRadius?: string;
+        backgroundPosition?: string;
     }
 }
 

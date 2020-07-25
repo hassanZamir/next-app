@@ -12,6 +12,15 @@ import { IFeedsPage, IFeed } from "@Interfaces";
 // #endregion Interface Imports
 
 export const FeedsActions = {
+    GetProfileSuggestion: (payload: IFeedsPage.Actions.IGetProfilesSuggestionPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await FeedsService.GetProfilesSuggestion(payload);
+        dispatch({
+            payload: {profiles: result.status ? result.response : []},
+            type: result.status ? ActionConsts.Feeds.ProfilesSuggestionSuccess : ActionConsts.Feeds.ProfilesSuggestionError
+        });
+    },
     GetAllFeeds: (payload: IFeedsPage.Actions.IGetAllFeedsPayload) => async (
         dispatch: Dispatch
     ) => {

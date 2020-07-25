@@ -15,11 +15,10 @@ export const LoginService = {
         try {
             response = await Http.Request<LoginModel.GetLoginResponse>(
                 "POST",
-                "/accounts/login",
+                "DD/accounts/login",
                 undefined,
                 payload.params
             );
-            // localStorage.setItem("user", response.status);
         } catch (error) {
             response = {
                 status: "false",
@@ -32,7 +31,8 @@ export const LoginService = {
                     country: '',
                     birthDate: '',
                     isCreator: false,
-                    verifyEmail: 0
+                    verifyEmail: 0,
+                    paymentMode: 0
                 },
                 authenticated: false,
                 errors: "Something went wrong"

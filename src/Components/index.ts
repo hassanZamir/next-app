@@ -24,4 +24,7 @@ export { LoadingSpinner } from "@Components/LoadingSpinner";
 export { RadioInput } from "@Components/RadioInput";
 export { TransparentButton } from "@Components/TransparentButton";
 export { Comments } from "@Components/Comments";
+export { CardStatus } from "@Components/CardStatus";
+export { SuggestedFollowersList } from "@Components/SuggestedFollowersList";
+export { ProfileSuggestion } from "@Components/SuggestedFollowersList/ProfileSuggestion";
 

@@ -3,10 +3,50 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { FeedsModel } from "@Interfaces";
+import { FeedsModel, ProfilesSuggestionModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const FeedsService = {
+    GetProfilesSuggestion: async (
+        payload: ProfilesSuggestionModel.GetProfilesSuggestionPayload
+    ): Promise<ProfilesSuggestionModel.GetProfilesSuggestionResponse> => {
+        let response: ProfilesSuggestionModel.GetProfilesSuggestionResponse
+
+        const getQueryParams = (params: any) => {
+            let query = '';
+            Object.keys(params).forEach((key, index) => {
+                if (!index) query += ('?' + key + '=' + params[key])
+                else query += ('&' + key + '=' + params[key])
+            });
+            return query;
+        };
+        try {
+            console.log("lalad ", getQueryParams(payload));
+            response = await Http.Request<ProfilesSuggestionModel.GetProfilesSuggestionResponse>(
+                "GET",
+                "/profiles/suggestion" + getQueryParams(payload),
+                undefined
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: [{
+                    "name": "Sohaib Riaz",
+                    "coverImageUrl": " https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                    "profileImageUrl": " https://storage.cricingif.com/cig-live-images/user-images/262319.png ",
+                    "location": "",
+                    "bio": "",
+                    "followersCount": 3,
+                    "contentCount": 0,
+                    "imagesCount": 0,
+                    "videosCount": 0,
+                    "followingFee": 0.0,
+                    "userName": "sohaibminhas789"
+                }]
+            };
+        }
+        return response;
+    },
     GetAllFeeds: async (
         payload: FeedsModel.GetAllFeedsPayload
     ): Promise<FeedsModel.GetAllFeedsResponse> => {

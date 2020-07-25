@@ -25,7 +25,6 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps> = ({ 
               if (child.props.name === "reTypePassword")
                 child.props.validationRules.validate = (value: string) => { return password.current ? value === password.current || "Password must match" : true }
               
-              console.log("formState.isValid", formState.isValid);
               return React.createElement(child.type, {
                 ...{
                   ...child.props,

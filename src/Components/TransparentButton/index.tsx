@@ -9,10 +9,10 @@ import { Button } from "../Basic";
 
 const Container = styled(Button)<ITransparentButton.IProps>`
     background: transparent;
-    padding: 7px 32px;
+    padding: ${({ padding }) => {return (padding ? padding : "7px 32px")}};
     border-radius: ${({ borderRadius }) => {return (borderRadius ? borderRadius : "22px")}};
     color: ${({ theme }) => theme.colors.primary};
-    border: 1px solid #A0A0A0;
+    border: ${({ border }) => {return (border ? border : "1px solid #A0A0A0")}};
 `;
 
 export const TransparentButton: React.FunctionComponent<ITransparentButton.IProps> = ({
@@ -21,10 +21,11 @@ export const TransparentButton: React.FunctionComponent<ITransparentButton.IProp
     onClick,
     className,
     type,
-    borderRadius
+    borderRadius, 
+    ...rest
 }) => {
     return (
-        <Container isActive={isActive} onClick={onClick} className={className} type={type} borderRadius={borderRadius}>
+        <Container {...rest} isActive={isActive} onClick={onClick} className={className} type={type} borderRadius={borderRadius}>
             {children}
         </Container>
     );

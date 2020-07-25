@@ -8,6 +8,7 @@ export type USER_SESSION  = {
     isCreator: false;
     verifyEmail: number;
     profileImageUrl: string;
+    paymentMode: number;
 }
 
 export interface LoginResponse {
