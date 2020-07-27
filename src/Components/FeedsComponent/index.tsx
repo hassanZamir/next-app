@@ -5,7 +5,7 @@ import Link from "next/link";
 // #endregion Global Imports
 
 // #region Local Imports
-import { StaticImage, CardStatus, SuggestedFollowersList } from "@Components";
+import { StaticImage, PaymentSettings, SuggestedFollowersList } from "@Components";
 import { USER_SESSION } from "@Interfaces";
 import { IStore } from "@Redux/IStore";
 import { FeedsActions } from "@Actions";
@@ -17,6 +17,7 @@ export const FeedsComponent: React.FunctionComponent<{user: USER_SESSION}> = ({ 
     const feedsState = useSelector((state: IStore) => state.feeds);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
+    const { feeds, errors } = feedsState;
 
     useEffect(() => {
         (async () => {
@@ -26,19 +27,21 @@ export const FeedsComponent: React.FunctionComponent<{user: USER_SESSION}> = ({ 
         })()
     }, []);
 
-    const { feeds, errors } = feedsState;
-    console.log("feeds", feeds);
     return (<React.Fragment>
         <div className="my-2 row justify-content-center no-gutters">
             <Link href="/">
                 <a>
-                    <StaticImage className="cursor-pointer" src="/images/veno_tv_logo_main@2x.png" height="100%" width="164px" />
+                    <StaticImage 
+                        className="cursor-pointer" 
+                        src="/images/veno_tv_logo_main@2x.png" 
+                        height="100%" 
+                        width="164px" />
                 </a>
             </Link>
         </div>
         {feeds && feeds.length > 0 && !loading && <FeedsList feeds={feeds} user={user} /> }
         {feeds && feeds.length <= 0 && !loading && <div className="py-3 border-bottom border-top d-flex flex-column align-items-center justify-content-center">
-            <CardStatus user={user} />
+            <PaymentSettings user={user} />
             <div className="mt-4 lato-regular font-17px text-grey200">Nothing New</div>
         </div>}
         {feeds && feeds.length <= 0 && !loading && <SuggestedFollowersList />}

@@ -23,4 +23,17 @@ declare namespace ISelectInput {
     }
 }
 
-export { ILabelInput, ISelectInput };
+declare namespace IMultiLabelInput {
+    export interface IProps {
+        type: string[];
+        name: string[];
+        register?: (rule: {})=>void;
+        labelText: string;
+        validationRules: {}[];
+        formErrors?: { [key: string]: {message: string;}; };
+        wrapperClass?: string;
+        placeholder?: string[];
+    }
+}
+
+export { ILabelInput, ISelectInput, IMultiLabelInput };

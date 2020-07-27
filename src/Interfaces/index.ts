@@ -62,9 +62,17 @@ export * from "@Services/API/Status/PostComment";
 export * from "@Services/API/Status/AllCommentsPayload";
 export * from "@Services/API/Status/AllCommentsResponse";
 export * from "@Services/API/Status/AllComments";
+
+export * from "@Services/API/Payment/AddCardPayload";
+export * from "@Services/API/Payment/AddCardResponse";
+export * from "@Services/API/Payment/AddCard";
+export * from "@Services/API/Payment/GetPaymentSettingsApiPayload";
+export * from "@Services/API/Payment/GetPaymentSettingsApiResponse";
+export * from "@Services/API/Payment/PaymentSettings";
 // #endregion Service Interfaces
 
 // #region Page Interfaces
+export * from "@Interfaces/Pages/Payment";
 export * from "@Interfaces/Pages/AccountVerify";
 export * from "@Interfaces/Pages/Status";
 export * from "@Interfaces/Pages/Profile";

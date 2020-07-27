@@ -11,6 +11,7 @@ import { CreatorProfileReducer } from "./CreatorProfile";
 import { AccountVerifyReducer } from "./AccountVerify";
 import { PersistReducer } from "./PersistReducer";
 import { StatusReducer } from "./StatusReducer";
+import { PaymentReducer } from "./Payment";
 // #endregion Local Imports
 
 export default combineReducers({
@@ -22,5 +23,6 @@ export default combineReducers({
     creatorProfile: CreatorProfileReducer,
     accountVerify: AccountVerifyReducer,
     persistState: PersistReducer,
-    statusPage: StatusReducer
+    statusPage: StatusReducer,
+    payment: PaymentReducer
 });

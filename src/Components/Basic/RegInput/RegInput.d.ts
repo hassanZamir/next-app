@@ -4,6 +4,7 @@ declare namespace IRegInput {
         type: string;
         ref?: RefObject<HTMLInputElement> & (() => void);
         value?: string;
+        placeholder?: string;
     }
 }
 

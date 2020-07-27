@@ -35,7 +35,6 @@ export const ResetPasswordModal: React.RefForwardingComponent<HTMLDivElement, IR
 
     function onModalClose(e: any) {
         if (modalRef!.current && !modalRef!.current.contains(e.target)) {
-            debugger;
             dispatch(LoginActions.onCloseResetPasswordModal());
         }
     }

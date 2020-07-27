@@ -7,7 +7,8 @@ import {
     IProfilePage, 
     IAccountVerifyPage, 
     IPersistState,
-    IStatusPage
+    IStatusPage,
+    IPayment
 } from "@Interfaces";
 // #endregion Interface Imports
 
@@ -21,4 +22,5 @@ export interface IStore {
     accountVerify: IAccountVerifyPage.IStateProps;
     statusPage: IStatusPage.IStateProps;
     persistState: IPersistState.IStateProps;
+    payment: IPayment.IStateProps
 }

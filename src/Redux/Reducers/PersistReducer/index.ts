@@ -14,7 +14,8 @@ const INITIAL_STATE: IPersistState.IStateProps = {
 
 export const PersistReducer = (
     state = INITIAL_STATE,
-    action: IAction<IPersistState.Actions.ISetStatusFeed & IPersistState.Actions.ISetSession>
+    action: IAction<IPersistState.Actions.ISetStatusFeed & IPersistState.Actions.ISetSession 
+    & IPersistState.Actions.IUpdatePaymentInfoInSession>
 ) => {
     switch (action.type) {
         case ActionConsts.Feeds.SetPersistFeed: {
@@ -30,6 +31,22 @@ export const PersistReducer = (
 
             return Object.assign({}, state, {
                 session: session
+            });
+        }
+        case ActionConsts.Payment.UpdatePaymentInfoInSession: {
+            let { paymentSettings } = action.payload!;
+            
+            const defaultCard = paymentSettings.userCard.find((card) => {
+                return  card.id === paymentSettings.userSettings.defaultCard
+            });
+            console.log(defaultCard)
+            debugger;
+            return Object.assign({}, state, {
+                session:  Object.assign({}, state.session, {
+                    paymentMode: paymentSettings.userSettings ? paymentSettings.userSettings.paymentMode : 0,
+                    cardNumber: defaultCard ? defaultCard.cardNumber : '',
+                    cardTitle: defaultCard ? defaultCard.cardTitle : ''
+                })
             });
         }
         case ActionConsts.Login.DoLogout: {

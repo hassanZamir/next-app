@@ -13,6 +13,7 @@ const Container = styled.div<ICardStatus.IProps>`
     justify-content: center;
     color: white;
     padding: 15px;
+    cursor: pointer;
 `;
 
 export const CardStatus: React.FunctionComponent<ICardStatus.IProps> = (props) => {

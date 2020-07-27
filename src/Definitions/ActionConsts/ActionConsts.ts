@@ -50,5 +50,12 @@ export const ActionConsts = {
         PostCommentError: "PostCommentError",
         LikeCommentSuccess: "LikeCommentSuccess",
         LikeCommentError: "LikeCommentError"
+    },
+    Payment: {
+        GetPaymentSettingsSuccess: "GetPaymentSettingsSuccess",
+        GetPaymentSettingsError: "GetPaymentSettingsError",
+        AddCardSuccess: "AddCardSuccess",
+        AddCardError: "AddCardError",
+        UpdatePaymentInfoInSession: "UpdatePaymentInfoInSession"
     }
 };

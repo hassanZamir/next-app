@@ -6,4 +6,5 @@ export { FeedsService } from "@Services/API/Feeds";
 export { CreatorProfileService } from "@Services/API/CreatorProfile";
 export { StatusService } from "@Services/API/Status";
 export { CurrentTimeDifference } from "@Services/Time";
+export { PaymentService } from "@Services/API/Payment";
 // #endregion Local Imports
