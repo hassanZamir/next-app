@@ -32,7 +32,7 @@ export const Authenticated: React.FunctionComponent<{session: USER_SESSION, name
         // </ToastProvider>
         return <div className="w-100 row flex-column justify-content-between flex-nowrap">
             <div style={{ flexGrow: 1 }}>{ children }</div>
-            <Footer selected={name} />
+            <Footer selected={name} user={session} />
         </div>
     }
 }

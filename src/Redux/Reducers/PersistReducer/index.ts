@@ -35,7 +35,6 @@ export const PersistReducer = (
         }
         case ActionConsts.Payment.UpdatePaymentInfoInSession: {
             let { paymentSettings } = action.payload!;
-            
             const defaultCard = paymentSettings.userCard.find((card) => {
                 return  paymentSettings.userSettings && card.id === paymentSettings.userSettings.defaultCard
             });
