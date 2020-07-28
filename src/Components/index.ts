@@ -28,4 +28,5 @@ export { CardStatus } from "@Components/CardStatus";
 export { SuggestedFollowersList } from "@Components/SuggestedFollowersList";
 export { ProfileSuggestion } from "@Components/SuggestedFollowersList/ProfileSuggestion";
 export { PaymentSettings } from "@Components/PaymentSettings";
+export { CreditCardStaticImages } from "@Components/CreditCardStaticImages";
 

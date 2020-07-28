@@ -56,6 +56,11 @@ export const ActionConsts = {
         GetPaymentSettingsError: "GetPaymentSettingsError",
         AddCardSuccess: "AddCardSuccess",
         AddCardError: "AddCardError",
-        UpdatePaymentInfoInSession: "UpdatePaymentInfoInSession"
+        UpdatePaymentInfoInSession: "UpdatePaymentInfoInSession",
+        OnModalClosePaymentSettings: "OnModalClosePaymentSettings",
+        UpdatePaymentSettingsSuccess: "UpdatePaymentSettingsSuccess",
+        UpdatePaymentSettingsError: "UpdatePaymentSettingsError",
+        AddFundsToWalletSuccess: "AddFundsToWalletSuccess",
+        AddFundsToWalletError: "AddFundsToWalletError"
     }
 };

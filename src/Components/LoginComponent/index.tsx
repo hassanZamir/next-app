@@ -64,20 +64,22 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
 
     useEffect(() => {
         router.prefetch('/');
-        // router.push('/login', '/login', { shallow: true });
 
         if (modal === 'check-your-email') {
             const { email } = router.query;
             setUserVerificationEmail(email as string);
             toggle();
+            router.push('/login', '/login', { shallow: true });
             return;
         } else if (modal === 'account-verify') {
             setUserVerificationToken(token as string);
             toggle();
+            router.push('/login', '/login', { shallow: true });
             return;
         } else if (modal === 'change-your-password') {
             setChangePasswordToken(token as string);
             toggle();
+            router.push('/login', '/login', { shallow: true });
             return;
         } else if (profile) {
             dispatch(LoginActions.GetCreatorProfile({ username: profile as string }));

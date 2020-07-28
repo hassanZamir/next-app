@@ -63,6 +63,12 @@ export * from "@Services/API/Status/AllCommentsPayload";
 export * from "@Services/API/Status/AllCommentsResponse";
 export * from "@Services/API/Status/AllComments";
 
+export * from "@Services/API/Payment/AddFundsToWalletPayload";
+export * from "@Services/API/Payment/AddFundsToWalletResponse";
+export * from "@Services/API/Payment/AddFundsToWallet";
+export * from "@Services/API/Payment/UpdatePaymentSettingsPayload";
+export * from "@Services/API/Payment/UpdatePaymentSettingsResponse";
+export * from "@Services/API/Payment/UpdatePaymentSettings";
 export * from "@Services/API/Payment/AddCardPayload";
 export * from "@Services/API/Payment/AddCardResponse";
 export * from "@Services/API/Payment/AddCard";

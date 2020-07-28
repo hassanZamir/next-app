@@ -37,10 +37,8 @@ export const PersistReducer = (
             let { paymentSettings } = action.payload!;
             
             const defaultCard = paymentSettings.userCard.find((card) => {
-                return  card.id === paymentSettings.userSettings.defaultCard
+                return  paymentSettings.userSettings && card.id === paymentSettings.userSettings.defaultCard
             });
-            console.log(defaultCard)
-            debugger;
             return Object.assign({}, state, {
                 session:  Object.assign({}, state.session, {
                     paymentMode: paymentSettings.userSettings ? paymentSettings.userSettings.paymentMode : 0,

@@ -6,7 +6,7 @@ import { Modal } from "@Components/Basic";
 import { theme } from "@Definitions/Styled/theme"
 import { ParagraphText, FormComponent, LabelInput, MultiLabelInput ,PrimaryButton } from "@Components";
 import { PaymentActions } from "@Actions";
-import { USER_SESSION, PAYMENT_USER_WALLET, PAYMENT_CARD } from "@Interfaces";
+import { USER_SESSION } from "@Interfaces";
 import { IStore } from "@Redux/IStore";
 
 declare namespace IAddCardModal {
@@ -21,13 +21,15 @@ declare namespace IAddCardModal {
 export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCardModal.IProps> = ((props) => {
     const { isShowing, modalRef, toggle, user } = props;
     const paymentState = useSelector((state: IStore) => state.payment);
-    const { paymentSettings, error } = paymentState;
-    // const { userSettings, userWallet, userCard } = paymentSettings;
+    const { addCardError } = paymentState;
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
 
+    function onPaymentSuccess() {
+        toggle();
+    }
+
     async function handleSubmit(data: any) {
-        console.log("data", data);
         const params = {
             cardTitle: data.name,
             cardNumber: data.cardNumber,
@@ -37,14 +39,23 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
             userId: user.id
         }
         setLoading(true);
-        await dispatch(PaymentActions.AddCard(params));
+        await dispatch(PaymentActions.AddCard(params, onPaymentSuccess));
         setLoading(false);
+    }
 
-        debugger;
-        if (!error) {
-            toggle();
+    function onModalClose(e: any) {
+        if (modalRef!.current && !modalRef!.current.contains(e.target)) {
+            dispatch(PaymentActions.OnModalClosePaymentSettings());
         }
     }
+
+    useEffect(() => {
+        document.addEventListener("click", onModalClose);
+    
+        return () => {
+          document.removeEventListener("click", onModalClose);
+        };
+    });
 
     return isShowing ? ReactDOM.createPortal(
                 <Modal border={theme.colors.primary} borderRadius="18px"
@@ -106,16 +117,16 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                             type="submit"
                                             name="add-card"
                                             borderRadius="6px" 
-                                            className="mt-5 w-100"
+                                            className="mt-5"
                                             showLoader={loading}>
                                             Add Card
                                         </PrimaryButton>
-                                        <span className="text-danger font-12px">{ error }</span>
-                                        <div className="d-flex mt-2 lato-medium font-8px">
+                                        <span className="mb-5 text-danger font-12px">{ addCardError }</span>
+                                        {/* <div className="d-flex mt-2 lato-medium font-8px">
                                             <div className="text-primary text-underline">Terms of Service</div>
                                             <div className="mx-1">and</div>
                                             <div className="text-primary text-underline">Privacy Policy</div>
-                                        </div>
+                                        </div> */}
                                     {/* </div>
                                 </div> */}
                             </FormComponent>

@@ -3,7 +3,7 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { PaymentSettingsModel, AddCardModel } from "@Interfaces";
+import { PaymentSettingsModel, AddCardModel, UpdatePaymentSettingsModel, AddFundsToWalletModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const PaymentService = {
@@ -52,34 +52,79 @@ export const PaymentService = {
         try {
             response = await Http.Request<AddCardModel.GetAddCardResponse>(
                 "POST",
-                "DD/user-payment/" + payload.userId + "/cards",
+                "/user-payment/" + payload.userId + "/cards",
                 undefined,
                 { cardTitle: payload.cardTitle, cardNumber: payload.cardNumber, expMonth: payload.expMonth, 
                 expYear: payload.expYear, cvc: payload.cvc}
             );
         } catch (error) {
             response = {
-                status: true,
-                error: '',
+                status: false,
+                error: 'Api Failed',
                 response: {
                     userSettings: {
-                        paymentMode: 1,
-                        defaultCard: 2
+                        paymentMode: 0,
+                        defaultCard: 0
                     },
                     userWallet: {
-                        balance: 220.0
+                        balance: 0
                     },
-                    userCard: [{
-                        id: 2,
-                        userId: 10,
-                        cardNumber: "12345678910112",
-                        cardTitle: "sohaib",
-                        cvc: 1234,
-                        expMonth: 12,
-                        expYear: 10,
-                        cardType: ""
-                    }]
+                    userCard: []
                 }
+            };
+        }
+        return response;
+    },
+    UpdatePaymentSettings: async (
+        payload: UpdatePaymentSettingsModel.GetUpdatePaymentSettingsPayload
+    ): Promise<UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse> => {
+        let response: UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse;
+        let params = <{paymentMode: number, defaultCard: number }>{};
+
+        payload.paymentMode && (params.paymentMode = payload.paymentMode);
+        payload.defaultCard && (params.defaultCard = payload.defaultCard);
+        debugger;
+        try {
+            response = await Http.Request<UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse>(
+                "POST",
+                "/user-payment/" + payload.userId,
+                undefined,
+                params
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                error: 'Api Failed',
+                response: {
+                    userSettings: {
+                        paymentMode: 0,
+                        defaultCard: 0
+                    },
+                    userWallet: {
+                        balance: 0
+                    },
+                    userCard: []
+                }
+            };
+        }
+        return response;
+    },
+    AddFundsToWallet: async (
+        payload: AddFundsToWalletModel.GetAddFundsToWalletPayload
+    ): Promise<AddFundsToWalletModel.GetAddFundsToWalletResponse> => {
+        let response: AddFundsToWalletModel.GetAddFundsToWalletResponse;
+        
+        try {
+            response = await Http.Request<AddFundsToWalletModel.GetAddFundsToWalletResponse>(
+                "POST",
+                "/user-payment/" + payload.userId + "/wallet",
+                undefined,
+                { amount: payload.amount }
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                balance: 0.00
             };
         }
         return response;

@@ -7,7 +7,8 @@ import { IAction, IPayment, PAYMENT_USER_SETTINGS, PAYMENT_CARD, PAYMENT_USER_WA
 // #endregion Interface Imports
 
 const INITIAL_STATE: IPayment.IStateProps = {
-    error: '',
+    paymentSettingsError: '',
+    addCardError: '',
     paymentSettings: {
         userSettings: <PAYMENT_USER_SETTINGS>{},
         userWallet: <PAYMENT_USER_WALLET>{},
@@ -17,31 +18,65 @@ const INITIAL_STATE: IPayment.IStateProps = {
 
 export const PaymentReducer = (
     state = INITIAL_STATE,
-    action: IAction<IPayment.Actions.IMapPaymentSettingsResponse>
+    action: IAction<IPayment.Actions.IMapPaymentSettingsResponse
+        & IPayment.Actions.IMapAddFundsToWalletResponse>
     ) => {
     switch (action.type) {
+        case ActionConsts.Payment.AddFundsToWalletSuccess: {
+            const { balance } = action.payload!;
+            return Object.assign({}, state, {
+                paymentSettings: {userWallet: balance},
+                paymentSettingsError: ''
+            });
+        }
+        case ActionConsts.Payment.AddFundsToWalletError: {
+            const { error } = action.payload!;
+            return Object.assign({}, state, {
+                paymentSettingsError: error || 'Error adding funds to wallet'
+            });
+        }
+        case ActionConsts.Payment.UpdatePaymentSettingsSuccess: {
+            const { paymentSettings } = action.payload!;
+            return Object.assign({}, state, {
+                paymentSettings: paymentSettings,
+                paymentSettingsError: ''
+            });
+        }
+        case ActionConsts.Payment.UpdatePaymentSettingsError: {
+            const { error } = action.payload!;
+            return Object.assign({}, state, {
+                paymentSettingsError: error || 'Error updating payment info'
+            });
+        }
         case ActionConsts.Payment.GetPaymentSettingsSuccess: {
             const { paymentSettings } = action.payload!;
             return Object.assign({}, state, {
-                paymentSettings: paymentSettings
+                paymentSettings: paymentSettings,
+                paymentSettingsError: ''
             });
         }
         case ActionConsts.Payment.GetPaymentSettingsError: {
             return Object.assign({}, state, {
-                error: 'Error getting payment settings'
+                paymentSettingsError: 'Error getting payment settings'
             });
         }
         case ActionConsts.Payment.AddCardSuccess: {
             const { paymentSettings } = action.payload!;
-            console.log("paymentSettings", paymentSettings);
             return Object.assign({}, state, {
-                paymentSettings: paymentSettings
+                paymentSettings: paymentSettings,
+                addCardError: ''
             });
         }
         case ActionConsts.Payment.AddCardError: {
             const { error } = action.payload!;
             return Object.assign({}, state, {
-                error: error || 'Error Adding Card'
+                addCardError: error || 'Error Adding Card'
+            });
+        }
+        case ActionConsts.Payment.OnModalClosePaymentSettings: {
+            return Object.assign({}, state, {
+                addCardError: '',
+                paymentSettingsError: ''
             });
         }
         default:

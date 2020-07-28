@@ -9,6 +9,9 @@
 .left-0 {
     left: 0;
 }
+.left-40px {
+    left: 40px;
+}
 .right-0 {
     right: 0;
 }
@@ -254,7 +257,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: $primaryBackgroundGradient;
+    background: map-get($theme-colors, "inputText");
     -webkit-transition: .4s;
     transition: .4s;
 }
