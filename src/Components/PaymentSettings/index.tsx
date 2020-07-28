@@ -24,13 +24,13 @@ export const PaymentSettings: React.FunctionComponent<{user: USER_SESSION}> = ({
     
     return (<React.Fragment>
         <CardStatus user={user} onClick={() => {!user.paymentMode && setShowAddCard(false); toggle(); }} />
-        {user.paymentMode && !showAddCard && <DynamicPaymentsModal
+        {!user.paymentMode && !showAddCard && <DynamicPaymentsModal
             toggle={toggle}
             isShowing={isShowing}  
             modalRef={modalRef} 
             user={user} 
             onAddCard={setShowAddCard} />}
-        {user.paymentMode && showAddCard && <AddCardModal
+        {!user.paymentMode && showAddCard && <AddCardModal
             toggle={toggle}
             isShowing={isShowing}  
             modalRef={modalRef} 

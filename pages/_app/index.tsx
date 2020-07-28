@@ -30,7 +30,8 @@ class WebApp extends App<AppWithStore> {
                 <Provider store={store}>
                     <PersistGate loading={<Component {...pageProps} />} persistor={persistor}>
                         <Layout>
-                            <ToastProvider components={{ Toast: Toast } as any}
+                            <ToastProvider 
+                                components={{ Toast: Toast } as any}
                                 autoDismiss={true}
                                 placement="bottom-left"
                                 >

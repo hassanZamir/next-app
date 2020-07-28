@@ -26,7 +26,6 @@ export const PaymentActions = {
         dispatch: Dispatch
     ) => {
         const result = await PaymentService.UpdatePaymentSettings(payload);
-        debugger;
         if (result.status) {
             dispatch({
                 payload: { paymentSettings: result.response },

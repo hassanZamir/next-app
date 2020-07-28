@@ -129,8 +129,8 @@ export const PaymentSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
     const { userSettings, userWallet, userCard } = paymentSettings;
     const dispatch = useDispatch();
     
-    const paymenModeIsWallet = userSettings.paymentMode === 2;
-    const [paymentModeInputChecked, setPaymentModeInputChecked] = React.useState(paymenModeIsWallet);
+    const paymenModeIsWallet = userSettings && userSettings.paymentMode === 2;
+    // const [paymentModeInputChecked, setPaymentModeInputChecked] = React.useState(paymenModeIsWallet);
     
     useEffect(() => {
         (async () => {

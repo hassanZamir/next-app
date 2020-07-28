@@ -83,7 +83,6 @@ export const PaymentService = {
 
         payload.paymentMode && (params.paymentMode = payload.paymentMode);
         payload.defaultCard && (params.defaultCard = payload.defaultCard);
-        debugger;
         try {
             response = await Http.Request<UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse>(
                 "POST",
