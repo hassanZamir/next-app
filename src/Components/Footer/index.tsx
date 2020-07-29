@@ -1,5 +1,5 @@
 // #region Global Imports
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import dynamic from 'next/dynamic';
 // #endregion Global Imports
@@ -7,10 +7,10 @@ import dynamic from 'next/dynamic';
 // #region Local Imports
 import { IFooter } from "./Footer";
 import { StaticImage } from "@Components";
+import { AccountOptionsModal } from "@Components/AccountOptionsModal";
 import Router from "next/router";
 import { LoginActions } from "@Actions";
 import { useModal } from '../Hooks';
-import { AddCardModal } from "../Modals/AddCardModal";
 import { USER_SESSION } from "@Interfaces";
 // #endregion Local Imports
 
@@ -19,27 +19,23 @@ const DynamicPaymentsModal: any = dynamic(
     { ssr: false }
 );
 
-const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user }): JSX.Element => {
+const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPaymentSettingsClick }): JSX.Element => {
     const dispatch = useDispatch();
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
-    const [ showAddCard, setShowAddCard ] = React.useState(false);
+
+    const onLogout = () => { dispatch(LoginActions.UserLogout()); };
 
     return <div style={{ height: "40px" }} 
-        className={"footer-navigation  d-flex align-items-center justify-content-between text-white " + (selected === "Profile" ? "bg-white" : "bg-fotter-grey")}>
+        className={"position-relative footer-navigation  d-flex align-items-center justify-content-between text-white " + (selected === "Profile" ? "bg-white" : "bg-fotter-grey")}>
         {FooterConfig.map((config, index) => {
             return <div key={index} 
                 onClick={() => { 
                     if (config.name === 'Account') {
-                        dispatch(LoginActions.UserLogout());
+                        toggle();
                         return;
                     } else if (config.name === 'Home') {
                         Router.push('/');
-                        return;
-                    } else if (config.name === 'Comments') {
-                        // debugger;
-                        // setShowAddCard(false); 
-                        // toggle();
                         return;
                     } else {
                         return null
@@ -47,19 +43,12 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user }): JS
                 }}
                 className={"cursor-pointer d-flex align-items-center justify-content-center h-100 " + (selected === config.name ? "highlight-footer-option" : "")} 
                 style={{ width: "20%" }}>
-
-                {/* {!showAddCard && <DynamicPaymentsModal
-                    toggle={toggle}
-                    isShowing={isShowing}  
-                    modalRef={modalRef} 
-                    user={user} 
-                    onAddCard={setShowAddCard} />}
-                {showAddCard && <AddCardModal
-                    toggle={toggle}
-                    isShowing={isShowing}  
-                    modalRef={modalRef} 
-                    user={user} />} */}
-
+                
+                {config.name === 'Account' && <AccountOptionsModal 
+                    isShowing={isShowing} 
+                    modalRef={modalRef}
+                    onLogout={onLogout} 
+                    onPaymentSettings={onPaymentSettingsClick} />}
                 <StaticImage 
                     src={config.image.src} 
                     height={config.image.height} 
@@ -104,12 +93,7 @@ const FooterConfig = [{
         src: '/images/account@2x.png',
         height: '20px',
         width: '20px'
-    },
-    // onClick: function(dispatch: any) {
-    //     // window.localStorage.clear();
-    //     dispatch(LoginActions.UserLogout());
-    //     // Router.push("/login");
-    // }
+    }
 }];
 
 export { Footer };

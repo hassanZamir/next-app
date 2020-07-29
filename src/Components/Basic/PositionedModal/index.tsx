@@ -22,23 +22,15 @@ const PositionedModalContainer = styled.div<{ border?: string, borderRadius?: st
     animation-duration: .3s;
     z-index: 1050;
 `;
-const PositionedModalWrapper = styled.div`
-    display: flex;
-    z-index: 1050;
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    outline: 0;
-`
-const TriangleDown = styled.div`
+
+const TriangleDown = styled.div<{ triangleProps?: {right?: string}}>`
     width: 0;
     height: 0;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     border-top: 25px solid white;
     position: absolute;
-    right: -12px;
+    right: ${({ triangleProps }) => { return (triangleProps && triangleProps.right ? triangleProps.right : '-12px') }};
     top: -30px;
     animation-name: ${slideInFromTop};
     transform: translate3d(0, 0, 0);
@@ -46,14 +38,13 @@ const TriangleDown = styled.div`
     z-index: 1050;
 `
 
-export const PositionedModal: React.FunctionComponent<{ border?: string, borderRadius?: string }> = ({children, ...rest}) => {
+export const PositionedModal: React.FunctionComponent<{ border?: string, borderRadius?: string, triangleProps?: {right?: string} }> 
+    = ({children, triangleProps, ...rest}) => {
     return <React.Fragment>
         <div className="modal-overlay"/>
-        {/* <PositionedModalWrapper> */}
             <PositionedModalContainer {...rest}>
                 {children}
             </PositionedModalContainer>
-            <TriangleDown />
-        {/* </PositionedModalWrapper> */}
+            <TriangleDown triangleProps={triangleProps} />
     </React.Fragment>
 }
