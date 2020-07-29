@@ -34,6 +34,10 @@ const VenoWallet: React.FunctionComponent<{ userWallet: PAYMENT_USER_WALLET, use
         setInputs(inputs => ({ ...inputs, [name]: value }));
     }
 
+    useEffect(() => {
+        if (showAddWallet) setShowAddWallet(false)
+    }, [userWallet]);
+
     async function onAddFundsToWallet(amount: number) {
         setLoadingAddFundsToWallet(true);
         await dispatch(PaymentActions.AddFundsToWallet({amount: amount, userId: user.id}));

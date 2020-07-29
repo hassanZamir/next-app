@@ -24,8 +24,13 @@ export const PaymentReducer = (
     switch (action.type) {
         case ActionConsts.Payment.AddFundsToWalletSuccess: {
             const { balance } = action.payload!;
+
             return Object.assign({}, state, {
-                paymentSettings: {userWallet: balance},
+                paymentSettings: {
+                    userSettings: state.paymentSettings.userSettings,
+                    userWallet: { balance: balance },
+                    userCard: state.paymentSettings.userCard
+                },
                 paymentSettingsError: ''
             });
         }
