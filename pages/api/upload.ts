@@ -3,8 +3,8 @@ const fs = require('fs');
 const uuidv1 = require('uuid/v1');
 const { BlobServiceClient, StorageSharedKeyCredential } = require("@azure/storage-blob");
 
-const account = process.env.ACCOUNT_NAME || "";
-const accountKey = process.env.ACCOUNT_KEY || "";
+const account = process.env.ACCOUNT_NAME || "venodev";
+const accountKey = process.env.ACCOUNT_KEY || "BvPGmzmGeRuJgEXcHvQn+HCI+iuYA5wY8eUhTt5B2vMlODMySKnezgcBRqNcM7x3e9rLIs0UaauMx1HZI8doow==";
 const imagesContainer = 'images';
 const videosContainer = 'videos';
 const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage, limits: {fileSize: 10000000000} }).array('mediaFiles', 12);
+
 
 async function _getContainerClient(containerName: string) {
   let i = 1, hasContainer = false;
