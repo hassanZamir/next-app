@@ -109,8 +109,8 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
                     style={{ flex: "0 0 100%", maxWidth: "100%" }}
                     className="d-flex align-items-center justify-content-center"
                     ref={setMediaRef}>
-                        {media.type === 2 && <VideoPlayer src={mediaBaseUrl + '/videos/' + media.url + media.token}  />}
-                        {media.type === 1 && <BackgroundImage src={ mediaBaseUrl + '/images/' + media.url + media.token} />}
+                        {media.type === 2 && <VideoPlayer src={mediaBaseUrl + '/' + media.url + media.token}  />}
+                        {media.type === 1 && <BackgroundImage src={ mediaBaseUrl + '/' + media.url + media.token} />}
                 </div>
             })}
         </div>

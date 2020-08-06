@@ -17,7 +17,7 @@ declare namespace IFeedsPage {
         }
 
         export interface IMapPostContentResponse {
-            feed: FEED
+            feed: FEED[]
         }
 
         export interface IMapProfilesSuggestionResponse {

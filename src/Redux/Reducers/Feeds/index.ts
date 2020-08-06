@@ -24,7 +24,7 @@ export const FeedsReducer = (
             let { feed } = action.payload!;
 
             return Object.assign({}, state, {
-                feeds: [...state.feeds, feed],
+                feeds: [feed[0], ...state.feeds],
                 errors: ''
             });
         }
