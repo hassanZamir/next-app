@@ -68,6 +68,9 @@ export * from "@Services/API/Status/AllCommentsPayload";
 export * from "@Services/API/Status/AllCommentsResponse";
 export * from "@Services/API/Status/AllComments";
 
+export * from "@Services/API/Payment/OnBecomeCreatorPayload";
+export * from "@Services/API/Payment/OnBecomeCreatorResponse";
+export * from "@Services/API/Payment/OnBecomeCreator";
 export * from "@Services/API/Payment/AddFundsToWalletPayload";
 export * from "@Services/API/Payment/AddFundsToWalletResponse";
 export * from "@Services/API/Payment/AddFundsToWallet";

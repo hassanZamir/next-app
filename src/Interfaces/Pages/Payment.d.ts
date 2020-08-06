@@ -1,4 +1,4 @@
-import { PaymentSettingsModel, AddCardModel, UpdatePaymentSettingsModel, AddFundsToWalletModel } from "@Interfaces";
+import { PaymentSettingsModel, AddCardModel, UpdatePaymentSettingsModel, AddFundsToWalletModel, OnBecomeCreatorModel } from "@Interfaces";
 
 declare namespace IPayment {
     export interface IProps {}
@@ -39,6 +39,9 @@ declare namespace IPayment {
 
         export interface IGetAddFundsToWalletPayload extends AddFundsToWalletModel.GetAddFundsToWalletPayload {}
         export interface IGetAddFundsToWalletResponse extends AddFundsToWalletModel.GetAddFundsToWalletResponse {}
+
+        export interface IGetOnBecomeCreatorPayload extends OnBecomeCreatorModel.GetOnBecomeCreatorPayload {}
+        export interface IGetOnBecomeCreatorResponse extends OnBecomeCreatorModel.GetOnBecomeCreatorResponse {}
     }
 }
 

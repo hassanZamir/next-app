@@ -71,13 +71,13 @@ export const PaymentActions = {
             type: ActionConsts.Payment.OnModalClosePaymentSettings
         });
     },
-    OnBecomeCreator: () => async (
+    OnBecomeCreator: (payload: IPayment.Actions.IGetOnBecomeCreatorPayload) => async (
         dispatch: Dispatch
     ) => {
-        debugger;
+        const result = await PaymentService.OnBecomeCreator(payload);
         dispatch({
             payload: null,
-            type: ActionConsts.Payment.OnBecomeCreatorSuccess
+            type: result.status ? ActionConsts.Payment.OnBecomeCreatorSuccess : ''
         });
     }
 };

@@ -3,7 +3,7 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { PaymentSettingsModel, AddCardModel, UpdatePaymentSettingsModel, AddFundsToWalletModel } from "@Interfaces";
+import { OnBecomeCreatorModel, PaymentSettingsModel, AddCardModel, UpdatePaymentSettingsModel, AddFundsToWalletModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const PaymentService = {
@@ -124,6 +124,24 @@ export const PaymentService = {
             response = {
                 status: false,
                 balance: 0.00
+            };
+        }
+        return response;
+    },
+    OnBecomeCreator: async (
+        payload: OnBecomeCreatorModel.GetOnBecomeCreatorPayload
+    ): Promise<OnBecomeCreatorModel.GetOnBecomeCreatorResponse> => {
+        let response: OnBecomeCreatorModel.GetOnBecomeCreatorResponse;
+        
+        try {
+            response = await Http.Request<OnBecomeCreatorModel.GetOnBecomeCreatorResponse>(
+                "POST",
+                "/profiles/" + payload.userName + "/upgrade",
+                undefined
+            );
+        } catch (error) {
+            response = {
+                status: false
             };
         }
         return response;

@@ -8,7 +8,7 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION; }>
     
         const dispatch = useDispatch();
         return <div className="d-flex align-items-center justify-content-center flex-fill h-100">
-            <PrimaryButton isActive={true} onClick={()=> { dispatch(PaymentActions.OnBecomeCreator()) }}>
+            <PrimaryButton isActive={true} onClick={()=> { dispatch(PaymentActions.OnBecomeCreator({ userName: user.username })) }}>
                 Become Creator
             </PrimaryButton>
         </div>
