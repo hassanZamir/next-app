@@ -33,7 +33,10 @@ export const ActionConsts = {
         LikeFeedSuccess: "LikeFeedSuccess",
         SetPersistFeed: "SetPersistFeed",
         ProfilesSuggestionSuccess: "ProfilesSuggestionSuccess",
-        ProfilesSuggestionError: "ProfilesSuggestionError"
+        ProfilesSuggestionError: "ProfilesSuggestionError",
+        PostContentSuccess: "PostContentSuccess",
+        PostContentError: "PostContentError",
+        UploadMediaError: "UploadMediaError"
     },
     CreatorProfile: {
         GetCreatorProfileSuccess: "GetCreatorProfileSuccess",
@@ -61,6 +64,8 @@ export const ActionConsts = {
         UpdatePaymentSettingsSuccess: "UpdatePaymentSettingsSuccess",
         UpdatePaymentSettingsError: "UpdatePaymentSettingsError",
         AddFundsToWalletSuccess: "AddFundsToWalletSuccess",
-        AddFundsToWalletError: "AddFundsToWalletError"
+        AddFundsToWalletError: "AddFundsToWalletError",
+        OnBecomeCreatorSuccess: "OnBecomeCreatorSuccess",
+        OnBecomeCreatorError: "OnBecomeCreatorError",
     }
 };

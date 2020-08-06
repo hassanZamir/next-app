@@ -16,9 +16,28 @@ export const FeedsReducer = (
     state = INITIAL_STATE,
     action: IAction<IFeedsPage.Actions.IMapAllFeedsResponse 
         & IFeed.Actions.IMapLikefeed
-        & IFeedsPage.Actions.IMapProfilesSuggestionResponse>
+        & IFeedsPage.Actions.IMapProfilesSuggestionResponse
+        & IFeedsPage.Actions.IMapPostContentResponse>
 ) => {
     switch (action.type) {
+        case ActionConsts.Feeds.PostContentSuccess: {
+            let { feed } = action.payload!;
+
+            return Object.assign({}, state, {
+                feeds: [...state.feeds, feed],
+                errors: ''
+            });
+        }
+        case ActionConsts.Feeds.PostContentError: {
+            return Object.assign({}, state, {
+                errors: 'Post content failed'
+            });
+        }
+        case ActionConsts.Feeds.UploadMediaError: {
+            return Object.assign({}, state, {
+                errors: action.payload || 'Upload media failed'
+            });
+        }
         case ActionConsts.Feeds.ProfilesSuggestionSuccess: {
             let { profiles } = action.payload!;
 

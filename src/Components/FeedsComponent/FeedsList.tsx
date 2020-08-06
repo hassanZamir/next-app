@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComments, faDollarSign, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 
-import { IFeedsList, IFeed, IFeedOptions, FEED } from "@Interfaces";
+import { IFeedsList, IFeed, IFeedOptions, FEED, mediaUrl } from "@Interfaces";
 import { BackgroundImage } from "@Components/Basic";
-import { ParagraphText } from "@Components";
+import { ParagraphText, VideoPlayer } from "@Components";
 import { TipSubmitModal } from "../Modals/TipSubmitModal";
 import { FeedOptionsModal } from "../Modals/FeedOptionsModal";
 import { ReportFeedModal } from "../Modals/ReportFeedModal";
@@ -17,6 +17,8 @@ import { CurrentTimeDifference }from "@Services/Time";
 import { useModal } from '../Hooks';
 import { FeedsActions } from "@Actions";
 import { ActionConsts } from "@Definitions";
+
+const mediaBaseUrl = process.env.MEDIA_BASE_URL;
 
 const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = 
     ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick, onCommentClick }) => {
@@ -58,11 +60,68 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> =
     </div>);
 };
 
+const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
+    = ({ mediaUrl }) => {
+    
+    const [selected, setSelected] = useState(0);
+    const mediaRefs: any = [];
+    const container: any = useRef(null);
+
+    const setMediaRef = (ref: any) => {
+        ref !== null && mediaRefs.push(ref);
+    }
+
+    const navigateTo = (index: number) => {
+        if (index < 0 || index > (mediaRefs.length - 1) ) return;
+        
+        if (container.current.scrollTo) {
+            container.current.scrollTo({
+                left: mediaRefs[index].offsetLeft - 12,
+                behavior: 'smooth',
+            });
+        } else {
+            container.current.scrollLeft = mediaRefs[index].offsetLeft - 12;        
+        }
+    }
+    
+    const renderNavigation = () => {
+        return (<div className="d-flex align-items-center justify-content-center position-absolute bottom-0"
+            style={{ left: "44%" }}>
+
+            {mediaUrl.map((validMQ, index) => (
+              <div
+                  key={index}
+                  onClick={() => { setSelected(index); navigateTo(index) }}
+                  className={selected === index ? "navigation-dot active" : "navigation-dot"}
+                />
+            ))}
+        </div>);
+    }
+      
+    return (<div className="d-flex flex-column position-relative">
+        <div className="position-absolute rounded text-white bg-darkGrey font-8px d-flex align-items-center justify-content-center" 
+            style={{ width: "22px", height: "12px", right: "20px", top: "10px" }}>
+            {(selected + 1) + '/' + mediaUrl.length}
+        </div>
+        <div className="scroll-flex" ref={container}>
+            {mediaUrl.map((media, i) => {
+                return <div key={i}
+                    style={{ flex: "0 0 100%", maxWidth: "100%" }}
+                    className="d-flex align-items-center justify-content-center"
+                    ref={setMediaRef}>
+                        {media.type === 2 && <VideoPlayer src={mediaBaseUrl + '/videos/' + media.url + media.token}  />}
+                        {media.type === 1 && <BackgroundImage src={ mediaBaseUrl + '/images/' + media.url + media.token} />}
+                </div>
+            })}
+        </div>
+        {renderNavigation()}
+    </div>)
+}
 const Feed: React.FunctionComponent<IFeed.IProps> 
     = ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick, onCommentClick }) => {
     return (
-        <div className="w-100 h-100 my-2" style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}>
-            <BackgroundImage src={feed.mediaUrl} />
+        <div className="w-100 h-100 my-2 move-enter move-enter-active" style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}>
+            <MediaContainer mediaUrl={feed.media_url} />
             <div className="d-flex flex-column w-100 px-2">
                 <ParagraphText className="text-primary lato-semibold font-12px">
                     {feed.title}

@@ -56,5 +56,24 @@ export const FeedsActions = {
         const result = await FeedsService.ReportFeed(payload);
         
         return result;
+    },
+    PostContent: (payload: IFeedsPage.Actions.IGetUploadMediaFilesPayload) => async (dispatch: Dispatch) => {
+        const result = await FeedsService.UploadMediaOnStorage(payload);
+        if (!result.status && payload.media_url) {
+            dispatch({
+                payload: result.error || "Media upload failed",
+                type: ActionConsts.Feeds.PostContentError
+            });
+            return;
+        }
+        const postContent = await FeedsService.PostContent({ 
+            title: payload.title, 
+            media_url: result.uploadSuccess,
+            userId: payload.userId
+        });
+        dispatch({
+            payload: postContent.status ? { feed: postContent.response }: null,
+            type: postContent.status ? ActionConsts.Feeds.PostContentSuccess : ActionConsts.Feeds.PostContentError
+        });
     }
 };

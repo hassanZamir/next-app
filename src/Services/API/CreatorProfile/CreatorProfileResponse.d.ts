@@ -17,6 +17,8 @@ export interface CreatorProfileResponse {
     response: CREATOR_PROFILE
 }
 
+export type mediaUrl = {type: number, url: string, token: string};
+
 export type FEED = {
     name: string,
     username: string,
@@ -24,8 +26,7 @@ export type FEED = {
     content_viewer_like: boolean,
     id: number,
     title: string,
-    type: number,
-    mediaUrl: string,
+    media_url: mediaUrl[],
     likesCount: number,
     commentsCount: number,
     tipsCount: number,

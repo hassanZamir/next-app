@@ -23,10 +23,11 @@ const nextConfig = {
         PROXY_MODE: process.env.PROXY_MODE,
         API_URL: process.env.API_URL,
         API_KEY: process.env.API_KEY,
-        STATIC_PATH: process.env.STATIC_PATH,
+        STATIC_PATH: process.env.STATIC_PATH
     },
     env: {
-        API_URL: process.env.API_URL
+        API_URL: process.env.API_URL,
+        MEDIA_BASE_URL: process.env.MEDIA_BASE_URL
     }
 };
 

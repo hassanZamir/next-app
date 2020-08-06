@@ -35,7 +35,9 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
         if (!selectedTab) return feeds;
 
         return feeds.filter((feed, i) => {
-            return feed.type === selectedTab;
+            return feed.media_url.find((media) => { 
+                media.type === selectedTab
+            });
         });
     }
 

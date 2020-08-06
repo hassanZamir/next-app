@@ -10,4 +10,5 @@ export { BackgroundImage } from "./BackgroundImage";
 export { Modal } from "./Modal";
 export { AnimatePopup } from "./AnimatePopup";
 export { PositionedModal } from "./PositionedModal";
+export { ToggleAnimate } from "./ToggleAnimate";
 export { Tabs, Tab, Content } from "./Tabs";

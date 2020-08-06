@@ -29,8 +29,11 @@ export const CreatorProfileService = {
                     content_viewer_like: false,
                     id: 7,
                     title: "My First Post",
-                    type: 1,
-                    mediaUrl: "https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                    media_url: [{
+                        url: "72227.jpg",
+                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                        type: 1
+                    }],
                     likesCount: 0,
                     commentsCount: 0,
                     tipsCount: 0,
@@ -42,8 +45,11 @@ export const CreatorProfileService = {
                     content_viewer_like: false,
                     id: 7,
                     title: "My First Post",
-                    type: 1,
-                    mediaUrl: " https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                    media_url: [{
+                        url: "72227.jpg",
+                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                        type: 1
+                    }],
                     likesCount: 0,
                     commentsCount: 0,
                     tipsCount: 0,
@@ -55,8 +61,11 @@ export const CreatorProfileService = {
                     content_viewer_like: false,
                     id: 7,
                     title: "My First Post",
-                    type: 1,
-                    mediaUrl: " https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                    media_url: [{
+                        url: "72227.jpg",
+                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                        type: 1
+                    }],
                     likesCount: 0,
                     commentsCount: 0,
                     tipsCount: 0,
@@ -68,8 +77,11 @@ export const CreatorProfileService = {
                     content_viewer_like: false,
                     id: 7,
                     title: "My First Post",
-                    type: 1,
-                    mediaUrl: " https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                    media_url: [{
+                        url: "72227.jpg",
+                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                        type: 1
+                    }],
                     likesCount: 0,
                     commentsCount: 0,
                     tipsCount: 0,

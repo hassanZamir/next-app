@@ -37,7 +37,8 @@ export const Authenticated: React.FunctionComponent<{session: USER_SESSION, name
         return <div className="w-100 row flex-column justify-content-between flex-nowrap">
             <div style={{ flexGrow: 1 }}>{ children }</div>
             
-            <Footer selected={name} user={session} onPaymentSettingsClick={onPaymentSettingsClick} />
+            <Footer selected={name} user={session} 
+                onPaymentSettingsClick={onPaymentSettingsClick} />
             {!showAddCard && <DynamicPaymentsModal
                 toggle={toggle}
                 isShowing={isShowing}  

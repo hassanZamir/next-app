@@ -1,12 +1,13 @@
 declare namespace ITextarea {
     export interface IProps {
+        rows: number;
+        columns?: number;
         className?: string;
         onChange?: (event: MouseEvent<HTMLDivElement, MouseEvent>) => void;
         name?: string;
-        rows: number;
-        columns: number;
         value?: string;
         placeholder?: string;
+        maxLength?: number;
     }
 }
 

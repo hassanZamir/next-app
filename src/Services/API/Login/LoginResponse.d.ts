@@ -5,7 +5,7 @@ export type USER_SESSION  = {
     email: string;
     country: string;
     birthDate: string;
-    isCreator: false;
+    isCreator: boolean;
     verifyEmail: number;
     profileImageUrl: string;
     paymentMode: number;

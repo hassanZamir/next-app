@@ -6,7 +6,7 @@ const slideInFromTop = keyframes`
     100% { transform: translate3d(0, 0, 0) }
 `
 
-const Container = styled.div<{ border?: string, borderRadius?: string, width?: string }>`
+const Container = styled.div`
     position: absolute;
     display: flex;
     width: 100%;
@@ -16,7 +16,6 @@ const Container = styled.div<{ border?: string, borderRadius?: string, width?: s
     animation-name: ${slideInFromTop};
     transform: translate3d(0, 0, 0);
     animation-duration: .3s;
-
 `;
 
 export const AnimatePopup: React.FunctionComponent<{ border?: string, borderRadius?: string, width?: string }> = ({children, ...rest}) => {

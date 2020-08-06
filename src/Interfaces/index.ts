@@ -30,6 +30,11 @@ export * from "@Services/API/Login/SignUpPayload";
 export * from "@Services/API/Login/SignUpResponse";
 export * from "@Services/API/Login/SignUp";
 
+export * from "@Services/API/Feeds/PostContent";
+export * from "@Services/API/Feeds/PostContentResponse";
+export * from "@Services/API/Feeds/UploadMediaFilesPayload";
+export * from "@Services/API/Feeds/UploadMediaFilesResponse";
+export * from "@Services/API/Feeds/UploadMediaFiles";
 export * from "@Services/API/Feeds/ProfilesSuggestionPayload";
 export * from "@Services/API/Feeds/ProfilesSuggestionResponse";
 export * from "@Services/API/Feeds/ProfilesSuggestion";

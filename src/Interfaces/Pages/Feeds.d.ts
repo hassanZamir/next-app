@@ -1,4 +1,4 @@
-import { USER_SESSION, FEED, FeedsModel, ProfilesSuggestionModel, CREATOR_PROFILE } from "@Interfaces";
+import { USER_SESSION, FEED, FeedsModel, ProfilesSuggestionModel, UploadMediaFilesModel, CREATOR_PROFILE } from "@Interfaces";
 
 declare namespace IFeedsPage {
     export interface IProps {
@@ -16,6 +16,10 @@ declare namespace IFeedsPage {
             feeds: FeedsModel.GetAllFeedsResponse
         }
 
+        export interface IMapPostContentResponse {
+            feed: FEED
+        }
+
         export interface IMapProfilesSuggestionResponse {
             profiles: ProfilesSuggestionModel.GetProfilesSuggestionResponse
         }
@@ -25,6 +29,9 @@ declare namespace IFeedsPage {
 
         export interface IGetProfilesSuggestionPayload extends ProfilesSuggestionModel.GetProfilesSuggestionPayload {}
         export interface IGetProfilesSuggestionResponse extends ProfilesSuggestionModel.GetProfilesSuggestionResponse {}
+
+        export interface IGetUploadMediaFilesPayload extends UploadMediaFilesModel.GetUploadMediaFilesPayload {}
+        export interface IGetUploadMediaFilesResponse extends UploadMediaFilesModel.GetUploadMediaFilesResponse {}
     }
 }
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 // #endregion Global Imports
 
 // #region Local Imports
-import { StaticImage, PaymentSettings, SuggestedFollowersList } from "@Components";
+import { StaticImage, PaymentSettings, SuggestedFollowersList, CreatePost } from "@Components";
 import { USER_SESSION } from "@Interfaces";
 import { IStore } from "@Redux/IStore";
 import { FeedsActions } from "@Actions";
@@ -39,13 +39,14 @@ export const FeedsComponent: React.FunctionComponent<{user: USER_SESSION}> = ({ 
                 </a>
             </Link>
         </div>
+        {user.isCreator && <CreatePost user={user} />}
+        {errors && <div className="text-danger font-12px">{ errors }</div>}
         {feeds && feeds.length > 0 && !loading && <FeedsList feeds={feeds} user={user} /> }
         {feeds && feeds.length <= 0 && !loading && <div className="py-3 border-bottom border-top d-flex flex-column align-items-center justify-content-center">
-            <PaymentSettings user={user} />
+            {!user.isCreator && <PaymentSettings user={user} />}
             <div className="mt-4 lato-regular font-17px text-grey200">Nothing New</div>
         </div>}
-        {feeds && feeds.length <= 0 && !loading && <SuggestedFollowersList />}
-        {errors && <div>{ errors }</div>}
+        {!loading && <SuggestedFollowersList />}
         {loading && <FeedsLoaderDiv />}
     </React.Fragment>);
 }

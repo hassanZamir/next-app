@@ -26,7 +26,6 @@ export const PaymentActions = {
         dispatch: Dispatch
     ) => {
         const result = await PaymentService.UpdatePaymentSettings(payload);
-        debugger;
         if (result.status) {
             dispatch({
                 payload: { paymentSettings: result.response },
@@ -42,7 +41,6 @@ export const PaymentActions = {
         dispatch: Dispatch
     ) => {
         const result = await PaymentService.AddCard(payload);
-        debugger;
         if (result.status) {
             dispatch({
                 payload: { paymentSettings: result.response },
@@ -71,6 +69,15 @@ export const PaymentActions = {
         dispatch({
             payload: null,
             type: ActionConsts.Payment.OnModalClosePaymentSettings
+        });
+    },
+    OnBecomeCreator: () => async (
+        dispatch: Dispatch
+    ) => {
+        debugger;
+        dispatch({
+            payload: null,
+            type: ActionConsts.Payment.OnBecomeCreatorSuccess
         });
     }
 };
