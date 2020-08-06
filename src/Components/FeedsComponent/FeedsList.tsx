@@ -18,7 +18,7 @@ import { useModal } from '../Hooks';
 import { FeedsActions } from "@Actions";
 import { ActionConsts } from "@Definitions";
 
-const mediaBaseUrl = process.env.MEDIA_BASE_URL;
+const mediaBaseUrl = process.env.MEDIA_BASE_URL || 'https://venodev.blob.core.windows.net/veno-media';
 
 const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = 
     ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick, onCommentClick }) => {

@@ -5,8 +5,8 @@ const { BlobServiceClient, StorageSharedKeyCredential } = require("@azure/storag
 
 const account = "venodev";
 const accountKey = "BvPGmzmGeRuJgEXcHvQn+HCI+iuYA5wY8eUhTt5B2vMlODMySKnezgcBRqNcM7x3e9rLIs0UaauMx1HZI8doow==";
-const imagesContainer = 'images';
-const videosContainer = 'videos';
+// const imagesContainer = 'images';
+// const videosContainer = 'videos';
 const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
 const blobServiceClient = new BlobServiceClient(
   `https://${account}.blob.core.windows.net`,
@@ -23,7 +23,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage, limits: {fileSize: 10000000000} }).array('mediaFiles', 12);
 
-
 async function _getContainerClient(containerName: string) {
   let i = 1, hasContainer = false;
   for await (const container of blobServiceClient.listContainers()) {
@@ -38,11 +37,13 @@ async function _getContainerClient(containerName: string) {
 function uploadToAzure(file: any) {
   return new Promise(async (resolve, reject) => {
     if (!file) reject({ ex: { message: 'File not uploaded' }});
+    // if (!containerClient) reject({ ex: { message: 'Container not found' }});
 
+    // console.log("containerClient", containerClient);
     const isVideo = file.originalname.split(".")[1] === ('mp4' || '3gpp' || 'quicktime');
-    const containerName = isVideo ? videosContainer : imagesContainer;
-    const containerClient = await _getContainerClient(containerName);
-    const blobName = uuidv1() + '.' + file.originalname.split('.')[1];
+    // const containerName = isVideo ? videosContainer : imagesContainer;
+    const containerClient = await _getContainerClient('veno-media');
+    const blobName = (isVideo ? 'videos/' : 'images/') + uuidv1() + '.' + file.originalname.split('.')[1];
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
     try {
