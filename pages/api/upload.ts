@@ -3,8 +3,8 @@ const fs = require('fs');
 const uuidv1 = require('uuid/v1');
 const { BlobServiceClient, StorageSharedKeyCredential } = require("@azure/storage-blob");
 
-const account = process.env.ACCOUNT_NAME || "venodev";
-const accountKey = process.env.ACCOUNT_KEY || "BvPGmzmGeRuJgEXcHvQn+HCI+iuYA5wY8eUhTt5B2vMlODMySKnezgcBRqNcM7x3e9rLIs0UaauMx1HZI8doow==";
+const account = "venodev";
+const accountKey = "BvPGmzmGeRuJgEXcHvQn+HCI+iuYA5wY8eUhTt5B2vMlODMySKnezgcBRqNcM7x3e9rLIs0UaauMx1HZI8doow==";
 const imagesContainer = 'images';
 const videosContainer = 'videos';
 const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
