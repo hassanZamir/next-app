@@ -5,6 +5,7 @@ export const CurrentTimeDifference = (time: string) => {
     const msPerMonth = msPerDay * 30;
     const msPerYear = msPerDay * 365;
 
+    debugger;
     const elapsed = new Date().getTime() - new Date(time).getTime();
 
     if (elapsed < msPerMinute) {

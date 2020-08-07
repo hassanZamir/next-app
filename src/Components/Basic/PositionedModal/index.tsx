@@ -31,7 +31,7 @@ const TriangleDown = styled.div<{ triangleProps?: {right?: string, top?: string}
     border-top: 25px solid white;
     position: absolute;
     right: ${({ triangleProps }) => { return (triangleProps && triangleProps.right ? triangleProps.right : '-12px') }};
-    top: ${({ triangleProps }) => { return (triangleProps && triangleProps.top ? triangleProps.top : '-90px')}};-30px;
+    top: ${({ triangleProps }) => { return (triangleProps && triangleProps.top ? triangleProps.top : '-90px')}};
     animation-name: ${slideInFromTop};
     transform: translate3d(0, 0, 0);
     animation-duration: .3s;

@@ -75,5 +75,6 @@ export const FeedsActions = {
             payload: postContent.status ? { feed: postContent.response }: null,
             type: postContent.status ? ActionConsts.Feeds.PostContentSuccess : ActionConsts.Feeds.PostContentError
         });
+        return postContent;
     }
 };

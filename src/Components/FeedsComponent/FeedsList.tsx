@@ -23,7 +23,7 @@ const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
 const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = 
     ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick, onCommentClick }) => {
 
-    const { content_viewer_like, likesCount, commentsCount, timeStamps } = feed;
+    const { content_viewer_like, likesCount, commentsCount, timeStamp } = feed;
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
 
@@ -44,7 +44,7 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> =
         </div>
         <div className="d-flex align-items-center cursor-pointer">
             <FontAwesomeIcon icon={faClock} color="#F57B52" size="lg" />
-            <div className="text-darkGrey font-10px ml-1">{ CurrentTimeDifference(timeStamps) }</div>
+            <div className="text-darkGrey font-10px ml-1">{ CurrentTimeDifference(timeStamp) }</div>
         </div>
         <div className="d-flex align-items-center cursor-pointer position-relative" 
             onClick={(e) => {e.preventDefault(); toggle();}}>
@@ -76,11 +76,11 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
         
         if (container.current.scrollTo) {
             container.current.scrollTo({
-                left: mediaRefs[index].offsetLeft - 12,
+                left: mediaRefs[index].offsetLeft,
                 behavior: 'smooth',
             });
         } else {
-            container.current.scrollLeft = mediaRefs[index].offsetLeft - 12;        
+            container.current.scrollLeft = mediaRefs[index].offsetLeft;        
         }
     }
     
@@ -99,23 +99,23 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
     }
       
     return (<div className="d-flex flex-column position-relative">
-        <div className="position-absolute rounded text-white bg-darkGrey font-8px d-flex align-items-center justify-content-center" 
+        {mediaUrl.length > 1 && <div className="position-absolute rounded text-white bg-darkGrey font-8px d-flex align-items-center justify-content-center" 
             style={{ width: "22px", height: "12px", right: "20px", top: "10px" }}>
             {(selected + 1) + '/' + mediaUrl.length}
-        </div>
+        </div>}
         <div className="scroll-flex" ref={container}>
             {mediaUrl.map((media, i) => {
                 return <div key={i}
-                    style={{ flex: "0 0 100%", maxWidth: "100%" }}
-                    className="d-flex align-items-center justify-content-center"
-                    ref={setMediaRef}>
-                        {media.type === 2 && <VideoPlayer src={mediaBaseUrl + '/' + media.url + media.token}  />}
-                        {media.type === 1 && <BackgroundImage src={ mediaBaseUrl + '/' + media.url + media.token} />}
+                        className="scroll-item align-items-center justify-content-center"
+                        ref={setMediaRef}>
+                            {media.type === 2 && <VideoPlayer src={mediaBaseUrl + '/' + media.url + media.token}  />}
+                            {media.type === 1 && <BackgroundImage paddingBottom="54.25%" src={ mediaBaseUrl + '/' + media.url + media.token} />}
+                            {/* {media.type === 1 && <BackgroundImage src={"https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/74327.jpg?v=2020-08-06T19:45:35.177Z"} />} */}
                 </div>
             })}
         </div>
-        {renderNavigation()}
-    </div>)
+        {mediaUrl.length > 1 && renderNavigation()}
+    </div>);
 }
 const Feed: React.FunctionComponent<IFeed.IProps> 
     = ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick, onCommentClick }) => {

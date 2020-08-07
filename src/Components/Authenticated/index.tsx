@@ -34,7 +34,9 @@ export const Authenticated: React.FunctionComponent<{session: USER_SESSION, name
     if (!session || !('id' in session)) {
         return <DynamicLogin />
     } else {
-        return <div className="w-100 row flex-column justify-content-between flex-nowrap">
+        return <div style={{ overflowY: "scroll" }} 
+            className="w-100 h-100 row flex-column justify-content-between flex-nowrap custom-scroller">
+
             <div style={{ flexGrow: 1 }}>{ children }</div>
             
             <Footer selected={name} user={session} 

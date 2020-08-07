@@ -6,6 +6,7 @@ declare namespace IFeedsPage {
     }
 
     export interface IStateProps {
+        postContentStatus: 'default' | 'error' | 'success' | 'loading';
         errors: '',
         feeds: FEED[],
         profilesSuggestion: CREATOR_PROFILE[]

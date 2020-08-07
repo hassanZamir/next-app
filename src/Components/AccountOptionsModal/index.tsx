@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export const AccountOptionsModal: React.FunctionComponent<IAccountOptionsModal.IProps> 
     = ({ isShowing, modalRef, onLogout, onPaymentSettings }) => {
-        return isShowing ? <PositionedModal borderRadius="11px" triangleProps={{ right: "40px", top: "-15px" }} 
+        return isShowing ? <PositionedModal borderRadius="11px" triangleProps={{ right: "42px", top: "-16px" }} 
             containerProps={{ right: "15px", top: "-100px" }}> 
 
         <div className="w-100 h-100" ref={modalRef}>

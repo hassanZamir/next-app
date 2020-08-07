@@ -40,7 +40,7 @@ const CommentsList: React.FunctionComponent<{onScroll: any; viewAllComments: boo
         style={{ flex: "1", overflowY: "scroll" }} 
         className={"scroll-y d-flex align-items-center flex-column px-4 border border-top-1 border-right-0 border-left-0 border-bottom-1 border-lightGrey " + (loading ? "justify-content-center" : "")}>
         {loading && <LoadingSpinner size="2x" />}
-        {!viewAllComments && !loading && <div onClick={()=>{ setViewAllComments(true); onViewAllComments() }} 
+        {!viewAllComments && !loading && comments.length >= 10 && <div onClick={()=>{ setViewAllComments(true); onViewAllComments() }} 
             className="font-12px mt-2 text-underline cursor-pointer">
             See all comments
         </div>}
@@ -139,7 +139,7 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
     };
 
     const scrollToLastComment = () => {
-        commentsListRef.current!.scrollIntoView({behavior: "smooth"});
+        commentsListRef.current && commentsListRef.current!.scrollIntoView({behavior: "smooth"});
     }
 
     const onViewAllComments = async () => {

@@ -30,7 +30,7 @@ export type FEED = {
     likesCount: number,
     commentsCount: number,
     tipsCount: number,
-    timeStamps: string
+    timeStamp: string
 }
 export interface CreatorFeedsResponse {
     status: boolean;

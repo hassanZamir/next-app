@@ -27,7 +27,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     const onLogout = () => { dispatch(LoginActions.UserLogout()); };
 
     return <div style={{ height: "40px" }} 
-        className={"position-relative footer-navigation  d-flex align-items-center justify-content-between text-white " + (selected === "Profile" ? "bg-white" : "bg-fotter-grey")}>
+        className={"footer-navigation d-flex align-items-center justify-content-between text-white " + (selected === "Profile" ? "bg-white" : "bg-fotter-grey")}>
         {FooterConfig.map((config, index) => {
             return <div key={index} 
                 onClick={() => { 
@@ -42,7 +42,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                     }
                 }}
                 className={"cursor-pointer d-flex align-items-center justify-content-center h-100 " + (selected === config.name ? "highlight-footer-option" : "")} 
-                style={{ width: "20%" }}>
+                style={{ width: "20%", position: 'relative' }}>
                 
                 {config.name === 'Account' && <AccountOptionsModal 
                     isShowing={isShowing} 

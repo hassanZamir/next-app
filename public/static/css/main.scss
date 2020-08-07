@@ -107,6 +107,8 @@
 .footer-navigation {
     width: 100%;
     z-index: 999;
+    position: absolute;
+    bottom: 0;
 }
 // @media (min-width: 576px) {
 //     .footer-navigation {
@@ -319,20 +321,24 @@ input:checked + .slider:before {
     border-radius: 2px;
 }
 
-// .move-enter {
-//     opacity: 0.01;
-//     transform: translate(-40px, 0)
-// }
 
-// .move-enter-active {
-//     opacity: 1;
-//     transform: translate(0, 0);
-//     transition: all 2000ms ease-in;
-// }
+.custom-scroller {
+    &::-webkit-scrollbar {
+        height: 0px;
+        width: 0px;
+    }
+}
 .scroll-flex {
-    overflow: scroll;
+    overflow-x: scroll;
     white-space: nowrap;
     display: flex;
+
+    .scroll-item { 
+        display: flex;
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 0;
+    }
 
     &::-webkit-scrollbar {
         height: 0px;

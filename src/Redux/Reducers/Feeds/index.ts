@@ -8,6 +8,7 @@ import { IAction, IFeedsPage, IFeed, FEED } from "@Interfaces";
 
 const INITIAL_STATE: IFeedsPage.IStateProps = {
     errors: '',
+    postContentStatus: 'default',
     feeds: [],
     profilesSuggestion: []
 };
@@ -25,12 +26,14 @@ export const FeedsReducer = (
 
             return Object.assign({}, state, {
                 feeds: [feed[0], ...state.feeds],
-                errors: ''
+                errors: '',
+                postContentStatus: 'success'
             });
         }
         case ActionConsts.Feeds.PostContentError: {
             return Object.assign({}, state, {
-                errors: 'Post content failed'
+                errors: 'Post content failed',
+                postContentStatus: 'error'
             });
         }
         case ActionConsts.Feeds.UploadMediaError: {

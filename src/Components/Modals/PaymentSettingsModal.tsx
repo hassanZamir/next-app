@@ -21,8 +21,8 @@ declare namespace IPaymentSettingsModal {
     }
 }
 
-const VenoWallet: React.FunctionComponent<{ userWallet: PAYMENT_USER_WALLET, user: USER_SESSION }> 
-    = ({ userWallet, user }) => {
+const VenoWallet: React.FunctionComponent<{ userCards: PAYMENT_CARD[], userWallet: PAYMENT_USER_WALLET, user: USER_SESSION }> 
+    = ({ userWallet, user, userCards }) => {
     const dispatch = useDispatch();
     const [showAddWallet, setShowAddWallet] = useState(false);
     const [loadingAddFundsToWallet, setLoadingAddFundsToWallet] = useState(false);
@@ -68,7 +68,8 @@ const VenoWallet: React.FunctionComponent<{ userWallet: PAYMENT_USER_WALLET, use
                     border="white" 
                     width="200px" />
             </div>
-            <div onClick={()=>{ onAddFundsToWallet( parseFloat(inputs.amount)) }} 
+            <div onClick={()=>{ userCards.length > 0 && onAddFundsToWallet( parseFloat(inputs.amount)) }} 
+                style={{ opacity: userCards.length > 0 ? '1' : '0.7' }}
                 className="cursor-pointer border border-white rounded font-12px lato-regular text-white py-2 px-4 text-center mt-2">
                 Add funds <span>{loadingAddFundsToWallet && <FontAwesomeIcon icon={faSpinner} color="white" className="fa-spin"/>}</span>
             </div>
@@ -93,7 +94,7 @@ const AllCards: React.FunctionComponent<{ user: USER_SESSION, userCards: PAYMENT
             <div style={{ height: "150px", overflowY: "scroll", padding: "5px 0px" }}>
                 {userCards && userCards.length > 0 && userCards.map((card, i) => {
                     return <div key={i} onClick={()=>{ onCardClick(card) }} className={"cursor-pointer d-flex align-items-center mx-2 my-1 p-2 rounded border " + (card.id === defaultCard ? 'border-primary' : 'border-darkGrey')}>
-                        <img height="20" width="30" src={card.cardType} />
+                        <img height="20" width="30" src="/images/credit_card.png" />
                         <div className="text-primary font-10px ml-2 w-100 text-center">{ card.cardTitle + ' Card ending in ' + card.cardNumber}</div>
                     </div>
                 })}
@@ -167,7 +168,7 @@ export const PaymentSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
                     <div className="w-100 h-100 d-flex flex-column" ref={modalRef}>
                         <div className="text-danger font-12px text-center">{ paymentSettingsError }</div>
                         <div className="border-bottom" style={{ margin: "0px -2rem", padding: "10px 2rem 20px" }}>
-                                <VenoWallet userWallet={userWallet} user={user} />
+                                <VenoWallet userWallet={userWallet} user={user} userCards={userCard} />
                                 <div className="lato-semibold font-13px text-darkGrey text-underline px-3 py-2">Payment through</div>
                                 <div className={"d-flex align-items-center my-2 " + (!userSettings || !userSettings.paymentMode ? "disable-click" : "")}>
                                     <span className={"font-15px lato-semibold " + (paymenModeIsWallet ? "text-inputText" : "text-primary")}>Card</span>

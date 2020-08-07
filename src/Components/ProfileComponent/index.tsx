@@ -63,7 +63,13 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
         }
     }
     
-    return (<div className="w-100 row flex-column justify-content-between flex-nowrap">
+    const onPaymentSettingsClick = () => {
+        toggle();
+    }
+
+    return (<div style={{ overflowY: "scroll" }} 
+        className="w-100 h-100 row flex-column justify-content-between flex-nowrap custom-scroller">
+            
         <PaymentConfirmationModal 
             toggle={toggle}
             isShowing={isShowing}  
@@ -98,6 +104,8 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
                     isFollower={followers[0] && followers[0].userId === user.id} />
             </div>
         </div>
+        <Footer selected={name} user={user} 
+                onPaymentSettingsClick={onPaymentSettingsClick} />
         {/* <Footer selected="Profile" user={user} /> */}
     </div>);
 }

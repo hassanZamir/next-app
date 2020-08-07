@@ -1,6 +1,7 @@
 const multer  = require('multer');
 const fs = require('fs');
 const uuidv1 = require('uuid/v1');
+const sharp = require('sharp');
 const { BlobServiceClient, StorageSharedKeyCredential } = require("@azure/storage-blob");
 
 const account = "venodev";
@@ -37,11 +38,8 @@ async function _getContainerClient(containerName: string) {
 function uploadToAzure(file: any) {
   return new Promise(async (resolve, reject) => {
     if (!file) reject({ ex: { message: 'File not uploaded' }});
-    // if (!containerClient) reject({ ex: { message: 'Container not found' }});
 
-    // console.log("containerClient", containerClient);
     const isVideo = file.originalname.split(".")[1] === ('mp4' || '3gpp' || 'quicktime');
-    // const containerName = isVideo ? videosContainer : imagesContainer;
     const containerClient = await _getContainerClient('veno-media');
     const blobName = (isVideo ? 'videos/' : 'images/') + uuidv1() + '.' + file.originalname.split('.')[1];
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
@@ -59,6 +57,32 @@ function uploadToAzure(file: any) {
   });
 }
 
+const resizeImage = (file: any, width: any, height: any) => {
+  return new Promise((resolve, reject) => {
+    sharp(file.path)
+    .resize(width, height)
+    // .jpeg()
+    .rotate()
+    .toBuffer()
+    .then((data: any) =>  {
+      const newFilePath = 'uploads/resize/' + file.path.split('uploads/')[1];
+      fs.writeFile(newFilePath, data, function (err: any) {
+        if (err) reject('Resize Failed .. ' + err);
+
+        const updatedFile = Object.assign({}, file, { path: newFilePath });
+        resolve(updatedFile);
+      });
+    }).catch((err: any) => {
+      console.log(err, 'exception in resizings');
+      reject('Resize Failed .. ' + err);
+      if (fs.exists(file)) {
+        fs.unlink(file);
+      }
+    });
+  });
+}
+
+const dimensions = [[620, 350]];
 export default ((req: any, res: any) => {
   upload(req, res, function (err: any) {
     if (req.fileValidationError) {
@@ -69,17 +93,35 @@ export default ((req: any, res: any) => {
 
     const uploadPaths: any = [],
     failedPaths: any = [];
-    req.files.forEach((file: any, i: number) => {
-      uploadToAzure(file)
-        .then((response: any) => {
-          uploadPaths.push(response);
-          sendResponse(i);
-        }).catch((ex) => {
-          failedPaths.push({ 
-            path: ex.file ? ex.file.path.split('##')[1] : ''
+    req.files.forEach(async (file: any, i: number) => {
+      const isVideo = file.originalname.split(".")[1] === ('mp4' || '3gpp' || 'quicktime');
+
+      if (isVideo) {
+        uploadToAzure(file)
+          .then((response: any) => {
+            uploadPaths.push(response);
+            sendResponse(i);
+          }).catch((ex) => {
+            failedPaths.push({ 
+              path: ex.file ? ex.file.path.split('##')[1] : ''
+            });
+            sendResponse(i);
           });
-          sendResponse(i);
+      } else {
+        resizeImage(file, dimensions[0][0], dimensions[0][1])
+          .then(function(resizedFile: any) {
+            uploadToAzure(resizedFile)
+              .then((response: any) => {
+                uploadPaths.push(response);
+                sendResponse(i);
+              }).catch((ex) => {
+                failedPaths.push({ 
+                  path: ex.file ? ex.file.path.split('##')[1] : ''
+                });
+                sendResponse(i);
+              });
         });
+      }
     });
 
     function sendResponse(i: number) {
