@@ -76,7 +76,7 @@ export const FeedsService = {
                     likesCount: 0,
                     commentsCount: 0,
                     tipsCount: 0,
-                    timeStamps: "2020-07-09T09:03:28.8766667"
+                    timeStamp: "2020-07-09T09:03:28.8766667"
                 }, {
                     name: "sohaib",
                     username: "venotv1234",
@@ -92,7 +92,7 @@ export const FeedsService = {
                     likesCount: 0,
                     commentsCount: 0,
                     tipsCount: 0,
-                    timeStamps: "2020-07-09T09:03:28.8766667"
+                    timeStamp: "2020-07-09T09:03:28.8766667"
                 }, {
                     name: "sohaib",
                     username: "venotv1234",
@@ -108,7 +108,7 @@ export const FeedsService = {
                     likesCount: 0,
                     commentsCount: 0,
                     tipsCount: 0,
-                    timeStamps: "2020-07-09T09:03:28.8766667"
+                    timeStamp: "2020-07-09T09:03:28.8766667"
                 }, {
                     name: "sohaib",
                     username: "venotv1234",
@@ -124,7 +124,7 @@ export const FeedsService = {
                     likesCount: 0,
                     commentsCount: 0,
                     tipsCount: 0,
-                    timeStamps: "2020-07-09T09:03:28.8766667"
+                    timeStamp: "2020-07-09T09:03:28.8766667"
                 }]
             };
         }
@@ -263,7 +263,7 @@ export const FeedsService = {
                     likesCount: 0,
                     commentsCount: 0,
                     tipsCount: 0,
-                    timeStamps: "2020-07-09T09:03:28.8766667"
+                    timeStamp: "2020-07-09T09:03:28.8766667"
                 }]
             };
         }
