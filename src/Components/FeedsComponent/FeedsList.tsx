@@ -109,7 +109,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
                         className="scroll-item align-items-center justify-content-center"
                         ref={setMediaRef}>
                             {media.type === 2 && <VideoPlayer src={mediaBaseUrl + '/' + media.url + media.token}  />}
-                            {media.type === 1 && <BackgroundImage paddingBottom="54.25%" src={ mediaBaseUrl + '/' + media.url + media.token} />}
+                            {media.type === 1 && <BackgroundImage paddingBottom="54.25%" src={ [mediaBaseUrl + '/' + media.url + media.token, '/images/feed_placeholder.png'] } />}
                             {/* {media.type === 1 && <BackgroundImage src={"https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/74327.jpg?v=2020-08-06T19:45:35.177Z"} />} */}
                 </div>
             })}
