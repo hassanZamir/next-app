@@ -14,7 +14,8 @@ const INITIAL_STATE: IPersistState.IStateProps = {
 
 export const PersistReducer = (
     state = INITIAL_STATE,
-    action: IAction<IPersistState.Actions.ISetStatusFeed & IPersistState.Actions.ISetSession 
+    action: IAction<IPersistState.Actions.ISetStatusFeed 
+    & IPersistState.Actions.ISetSession 
     & IPersistState.Actions.IUpdatePaymentInfoInSession>
 ) => {
     switch (action.type) {
@@ -23,6 +24,15 @@ export const PersistReducer = (
 
             return Object.assign({}, state, {
                 feed: feed
+            });
+        }
+        case ActionConsts.Status.UpdatePersistFeedCommentCount: {
+            const updatedFeed = Object.assign({}, state.feed, {
+                commentsCount: state.feed.commentsCount ? state.feed.commentsCount + 1 : 1
+            });
+            
+            return Object.assign({}, state, {
+                feed: updatedFeed
             });
         }
         case ActionConsts.Login.SetUserPayload: {
@@ -49,7 +59,6 @@ export const PersistReducer = (
         case ActionConsts.Payment.OnBecomeCreatorSuccess: {
             Router.push("/");
             
-            debugger;
             return Object.assign({}, state, {
                 session:  Object.assign({}, state.session, {
                     isCreator: true

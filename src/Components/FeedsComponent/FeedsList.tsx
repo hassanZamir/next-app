@@ -86,7 +86,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
     
     const renderNavigation = () => {
         return (<div className="d-flex align-items-center justify-content-center position-absolute bottom-0"
-            style={{ left: "44%" }}>
+            style={{ left: "45%", right: "45%" }}>
 
             {mediaUrl.map((validMQ, index) => (
               <div
@@ -97,7 +97,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
             ))}
         </div>);
     }
-      
+    
     return (<div className="d-flex flex-column position-relative">
         {mediaUrl.length > 1 && <div className="position-absolute rounded text-white bg-darkGrey font-8px d-flex align-items-center justify-content-center" 
             style={{ width: "22px", height: "12px", right: "20px", top: "10px" }}>
@@ -248,6 +248,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
         </div>
 
     return (<div className="d-flex flex-column w-100 px-4">
+            
         {'id' in clickedTipFeed && <TipSubmitModal 
             isShowing={isShowing} 
             clickedFeed={clickedTipFeed} 

@@ -26,6 +26,9 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
     const [showPaymentSettings, setShowPaymentSettings] = useState(false);
+    const [scrolledToBottom, setScrolledToBottom] = useState(false);
+    const [clickedPaymentSettings, setClickedPaymentSettings] = useState(false);
+    const [openPaymentSettingsModal, setOpenPaymentSettingsModal] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -37,6 +40,12 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
             dispatch(CreatorProfileActions.GetProfileFollowers(followersParams));
         }
     }, []);
+
+    useEffect(() => {
+        if (!clickedPaymentSettings)
+            setTimeout(() => { setShowPaymentSettings(false); }, 7000);
+
+    }, [clickedPaymentSettings]);
 
     const sendFollowRequest = (followOrUnFollow: boolean) => {
         const followParams = { 
@@ -54,7 +63,9 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
     const onFollow = (followOrUnFollow: boolean) => {
         if (user && user.id) {
             if (user.paymentMode) toggle();
-            else setShowPaymentSettings(true);
+            else {
+                setShowPaymentSettings(true);
+            }
         } else {
             Router.push({
                 pathname: "/login",
@@ -63,11 +74,9 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
         }
     }
     
-    const onPaymentSettingsClick = () => {
-        toggle();
-    }
+    const onPaymentSettingsClick = () => {}
 
-    return (<div style={{ overflowY: "scroll" }} 
+    return (<div 
         className="w-100 h-100 row flex-column justify-content-between flex-nowrap custom-scroller">
             
         <PaymentConfirmationModal 
@@ -79,12 +88,20 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
             paymentMode={user.paymentMode} 
             creatorProfile={creatorProfile} />
         
-        {showPaymentSettings && <AnimatePopup>
-            <PaymentSettings user={user} />
+        {showPaymentSettings && <AnimatePopup animateIn={showPaymentSettings}>
+            <PaymentSettings 
+                user={user} 
+                setClickedPaymentSettings={setClickedPaymentSettings} 
+                />
         </AnimatePopup>}
-
-        <div style={{ marginBottom: "40px" }}>
-            <div className="bg-gradient d-flex flex-column h-100">
+        
+        <div className="custom-scroller" 
+            style={{ overflowY: "scroll", marginBottom: "40px", flex: 1 }}
+            onScroll={(e: any) => {
+                const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+                setScrolledToBottom(bottom);
+            }}>
+            <div className="bg-gradient d-flex flex-column">
                 <div className="back-icon cursor-pointer" onClick={() => Router.back()}>
                     <FontAwesomeIcon icon={faArrowLeft} color="white" size="lg" />
                 </div>
@@ -94,6 +111,8 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
                     isFollower={followers && followers[0] && followers[0].userId === user.id} />
 
                 <CreatorContent 
+                    scrolledToBottom={scrolledToBottom}
+                    followingFee={creatorProfile.followingFee}
                     contentCount={contentCount}
                     imagesCount={imagesCount}
                     videosCount={videosCount} 
@@ -106,6 +125,5 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
         </div>
         <Footer selected={name} user={user} 
                 onPaymentSettingsClick={onPaymentSettingsClick} />
-        {/* <Footer selected="Profile" user={user} /> */}
     </div>);
 }

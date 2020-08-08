@@ -49,11 +49,13 @@ const VenoWallet: React.FunctionComponent<{ userCards: PAYMENT_CARD[], userWalle
         <ParagraphText className="font-25px text-white text-center">Veno Wallet</ParagraphText>
         {!showAddWallet && <React.Fragment>
             <div style={{ minHeight: "50px" }}>
-                {userWallet && userWallet.balance && <div className="my-2 border-bottom border-white">
+                {userWallet && userWallet.balance && <div 
+                    className="my-2 border-bottom border-white">
                     <ParagraphText className="font-28px text-white text-center">{'$ ' + userWallet.balance}</ParagraphText>
                 </div>}
             </div>
-            <div onClick={() => { setTimeout(() => { setShowAddWallet(true)}) }} className="cursor-pointer border border-white rounded font-12px lato-regular text-white p-2 text-center">
+            <div style={{ opacity: userCards.length > 0 ? '1' : '0.7' }}
+                onClick={() => { userCards.length > 0 && setTimeout(() => { setShowAddWallet(true)}) }} className="cursor-pointer border border-white rounded font-12px lato-regular text-white p-2 text-center">
                 Add funds to your Veno Tv Wallet
             </div>
         </React.Fragment>}

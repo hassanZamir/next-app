@@ -17,13 +17,19 @@ const DynamicPaymentsModal: any = dynamic(
     { ssr: false }
 );
 
-export const PaymentSettings: React.FunctionComponent<{user: USER_SESSION}> = ({ user }) => {
+export const PaymentSettings: React.FunctionComponent<{ user: USER_SESSION, setClickedPaymentSettings?: (a: boolean)=>void}> 
+    = ({ user, setClickedPaymentSettings }) => {
+    const onCloseModal = () => { setClickedPaymentSettings && !showAddCard && setClickedPaymentSettings(false); }
     const modalRef = useRef<HTMLDivElement>(null);
-    const { isShowing, toggle } = useModal(modalRef);
+    const { isShowing, toggle } = useModal(modalRef, onCloseModal);
     const [ showAddCard, setShowAddCard ] = React.useState(false);
-    
+
     return (<React.Fragment>
-        <CardStatus user={user} onClick={() => { setShowAddCard(false); toggle(); }} />
+        <CardStatus user={user} onClick={() => { 
+            if (!isShowing && setClickedPaymentSettings) setClickedPaymentSettings(true)
+            setShowAddCard(false); 
+            toggle(); 
+        }} />
         {!showAddCard && <DynamicPaymentsModal
             toggle={toggle}
             isShowing={isShowing}  

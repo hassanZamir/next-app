@@ -11,10 +11,10 @@ export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creat
     
     const [bioToggle, setBioToggle] = useState(false);
     return <React.Fragment>
-        <BackgroundImage src={creatorProfile.coverImageUrl} paddingBottom="56.25%" />
+        <BackgroundImage src={[creatorProfile.coverImageUrl, "/images/cover_image_placeholder.jpg"]} paddingBottom="56.25%" />
         <div className="position-relative">
             <div style={{ position: "absolute", left: "1rem", bottom: "-2rem" }}>
-                <CircularImage src={creatorProfile.profileImageUrl} height="100px" width="100px" />
+                <CircularImage src={[creatorProfile.profileImageUrl, '/images/profile_image_placeholder.jpg']} height="100px" width="100px" />
             </div>
         </div>
         <div className="d-flex justify-content-between w-100 px-4 py-2" style={{ marginTop: "2rem", minHeight: "100px" }}>

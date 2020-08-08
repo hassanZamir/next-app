@@ -8,7 +8,7 @@ import { FeedsService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IFeedsPage, IFeed } from "@Interfaces";
+import { IFeedsPage, IFeed, UploadMediaFilesModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const FeedsActions = {
@@ -58,8 +58,8 @@ export const FeedsActions = {
         return result;
     },
     PostContent: (payload: IFeedsPage.Actions.IGetUploadMediaFilesPayload) => async (dispatch: Dispatch) => {
-        const result = await FeedsService.UploadMediaOnStorage(payload);
-        if (!result.status && payload.media_url) {
+        const result = payload.media_url ? await FeedsService.UploadMediaOnStorage(payload) : null;
+        if (result && !result.status && payload.media_url) {
             dispatch({
                 payload: result.error || "Media upload failed",
                 type: ActionConsts.Feeds.PostContentError
@@ -68,7 +68,7 @@ export const FeedsActions = {
         }
         const postContent = await FeedsService.PostContent({ 
             title: payload.title, 
-            media_url: result.uploadSuccess,
+            media_url: result ? result.uploadSuccess : [],
             userId: payload.userId
         });
         dispatch({

@@ -100,12 +100,12 @@ export default ((req: any, res: any) => {
         uploadToAzure(file)
           .then((response: any) => {
             uploadPaths.push(response);
-            sendResponse(i);
+            sendResponse();
           }).catch((ex) => {
             failedPaths.push({ 
               path: ex.file ? ex.file.path.split('##')[1] : ''
             });
-            sendResponse(i);
+            sendResponse();
           });
       } else {
         resizeImage(file, dimensions[0][0], dimensions[0][1])
@@ -113,19 +113,19 @@ export default ((req: any, res: any) => {
             uploadToAzure(resizedFile)
               .then((response: any) => {
                 uploadPaths.push(response);
-                sendResponse(i);
+                sendResponse();
               }).catch((ex) => {
                 failedPaths.push({ 
                   path: ex.file ? ex.file.path.split('##')[1] : ''
                 });
-                sendResponse(i);
+                sendResponse();
               });
         });
       }
     });
 
-    function sendResponse(i: number) {
-      if (i >= req.files.length - 1) 
+    function sendResponse() {
+      if ((uploadPaths.length + failedPaths.length) >= req.files.length) 
         res.end(JSON.stringify({ status: true, uploadSuccess: uploadPaths, uploadError: failedPaths }));
     }
   });

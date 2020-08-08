@@ -44,7 +44,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                 className={"cursor-pointer d-flex align-items-center justify-content-center h-100 " + (selected === config.name ? "highlight-footer-option" : "")} 
                 style={{ width: "20%", position: 'relative' }}>
                 
-                {config.name === 'Account' && <AccountOptionsModal 
+                {config.name === 'Account' && 'id' in user &&  <AccountOptionsModal 
                     isShowing={isShowing} 
                     modalRef={modalRef}
                     onLogout={onLogout} 

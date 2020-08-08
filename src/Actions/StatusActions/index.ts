@@ -23,6 +23,12 @@ export const StatusActions = {
     ) => {
         const result = await StatusService.PostComment(payload);
         
+        if (result.status) {
+            dispatch({
+                payload: {},
+                type: result.status ? ActionConsts.Status.UpdatePersistFeedCommentCount : ''
+            });            
+        }
         dispatch({
             payload: result.status ? { comment: result.response } : { comment: {} },
             type: result.status ? ActionConsts.Status.PostCommentSuccess : ActionConsts.Status.PostCommentError

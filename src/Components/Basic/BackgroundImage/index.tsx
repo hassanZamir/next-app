@@ -3,8 +3,10 @@ import styled from "styled-components";
 
 import { IBackgroundImage } from "./BackgroundImage";
 
+import { getBgImageUrl } from "@Services/UI";
+
 const Container = styled.div<IBackgroundImage.IProps>`
-    background-image: url(${({ src }) => src });
+    background-image: ${({ src }) => { return src ? getBgImageUrl(src) : 'url(unknown)' }};
     background-size: cover;
     background-position: ${({ backgroundPosition }) => {return backgroundPosition ? backgroundPosition : "center center" }};
     background-repeat: no-repeat;
