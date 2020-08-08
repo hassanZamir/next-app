@@ -27,8 +27,6 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
     const { isShowing, toggle } = useModal(modalRef);
     const [showPaymentSettings, setShowPaymentSettings] = useState(false);
     const [scrolledToBottom, setScrolledToBottom] = useState(false);
-    const [clickedPaymentSettings, setClickedPaymentSettings] = useState(false);
-    const [openPaymentSettingsModal, setOpenPaymentSettingsModal] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -40,12 +38,6 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
             dispatch(CreatorProfileActions.GetProfileFollowers(followersParams));
         }
     }, []);
-
-    useEffect(() => {
-        if (!clickedPaymentSettings)
-            setTimeout(() => { setShowPaymentSettings(false); }, 7000);
-
-    }, [clickedPaymentSettings]);
 
     const sendFollowRequest = (followOrUnFollow: boolean) => {
         const followParams = { 
@@ -89,10 +81,7 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
             creatorProfile={creatorProfile} />
         
         {showPaymentSettings && <AnimatePopup animateIn={showPaymentSettings}>
-            <PaymentSettings 
-                user={user} 
-                setClickedPaymentSettings={setClickedPaymentSettings} 
-                />
+            <PaymentSettings user={user} />
         </AnimatePopup>}
         
         <div className="custom-scroller" 
