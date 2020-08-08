@@ -91,7 +91,7 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         
-        // if (enableLogin) {
+        if (enableLogin) {
             setEnableLogin(false);
             await dispatch(LoginActions.UserLogin({
                 params: {
@@ -101,7 +101,7 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                 }
             }));
             setEnableLogin(true);
-        // }
+        }
     }
 
     const handleCaptchaChange = (token: string | null) => {
