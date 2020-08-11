@@ -54,7 +54,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             title: title, 
             userId: user.id 
         }));
-        if (postContent.status) { setFiles([]); setTitle('') }
+        if (postContent && postContent.status) { setFiles([]); setTitle('') }
         setLoading(false);
     };
     
