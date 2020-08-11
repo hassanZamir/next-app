@@ -54,7 +54,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             title: title, 
             userId: user.id 
         }));
-        if (postContent && postContent.status) { setFiles([]); setTitle('') }
+        if (postContent && postContent.status) { setFiles([]); setTitle(""); setShowPostSelection(false); }
         setLoading(false);
     };
     
@@ -78,7 +78,9 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
                 }}
                 className="add-icon border border-lightGrey ml-1 cursor-pointer">+</div>
         </div>}
-        <Textarea rows={files.length <= 0 ? 2 : 1} 
+        <Textarea 
+            value={title}
+            rows={files.length <= 0 ? 2 : 1} 
             maxLength={256}
             onChange={handleTitleChange}
             columns={100} 

@@ -6,21 +6,28 @@ const slideInFromTop = keyframes`
     100% { transform: translate3d(0, 0, 0) }
 `
 
-const Container = styled.div`
+const slideInToTop = keyframes`
+    0% { transform: translate3d(0, 0, 0) }
+    10% { transform: translate3d(0, -20px, 0) }
+    20% { transform: translate3d(0, -40px, 0) }
+    100% { transform: translate3d(0, -200px, 0) }
+`
+
+const Container = styled.div<{ animateIn: boolean}>`
     position: absolute;
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: center;
     top: 35px;
-    animation-name: ${slideInFromTop};
+    animation-name: ${({ animateIn }) => { return animateIn ? slideInFromTop : slideInToTop }};
     transform: translate3d(0, 0, 0);
     animation-duration: .3s;
 `;
 
-export const AnimatePopup: React.FunctionComponent<{ border?: string, borderRadius?: string, width?: string }> = ({children, ...rest}) => {
+export const AnimatePopup: React.FunctionComponent<{ animateIn: boolean }> = ({children, animateIn}) => {
     return <React.Fragment>
-        <Container {...rest}>
+        <Container animateIn={animateIn}>
             {children}
         </Container>
     </React.Fragment>

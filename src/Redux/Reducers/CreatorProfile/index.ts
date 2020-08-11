@@ -49,7 +49,7 @@ export const CreatorProfileReducer = (
             let { feeds } = action.payload!;
 
             return Object.assign({}, state, {
-                creatorFeeds: feeds
+                creatorFeeds: [...state.creatorFeeds, ...feeds]
             });
         }
         case ActionConsts.CreatorProfile.GetCreatorFeedsError: {

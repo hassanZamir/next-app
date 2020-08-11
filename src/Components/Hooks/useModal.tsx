@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useModal = (ref: any) => {
+const useModal = (ref: any, onCloseModal?: any) => {
   const [isShowing, setIsShowing] = useState(false);
 
   function toggle() {
@@ -8,7 +8,11 @@ const useModal = (ref: any) => {
   }
 
   const handleClick = (e: any) => {
-    if (ref.current && !ref.current.contains(e.target)) {
+    if (ref.current && 
+      !ref.current.contains(e.target) && 
+      e.target.className === 'modal-wrapper'
+    ) {
+      onCloseModal && onCloseModal();
       toggle();
     }
   };

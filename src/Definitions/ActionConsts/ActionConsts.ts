@@ -52,7 +52,8 @@ export const ActionConsts = {
         PostCommentSuccess: "PostCommentSuccess",
         PostCommentError: "PostCommentError",
         LikeCommentSuccess: "LikeCommentSuccess",
-        LikeCommentError: "LikeCommentError"
+        LikeCommentError: "LikeCommentError",
+        UpdatePersistFeedCommentCount: "UpdatePersistFeedCommentCount"
     },
     Payment: {
         GetPaymentSettingsSuccess: "GetPaymentSettingsSuccess",

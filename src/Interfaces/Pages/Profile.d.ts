@@ -16,7 +16,7 @@ declare namespace IProfilePage {
         }
 
         export interface IMapCreatorFeedsResponse {
-            feeds: CreatorProfileModel.GetCreatorFeedsResponse
+            feeds: FEED[]
         }
 
         export interface IMapProfileFollowersResponse {

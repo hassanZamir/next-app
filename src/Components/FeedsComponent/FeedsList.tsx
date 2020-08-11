@@ -86,7 +86,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
     
     const renderNavigation = () => {
         return (<div className="d-flex align-items-center justify-content-center position-absolute bottom-0"
-            style={{ left: "44%" }}>
+            style={{ left: "45%", right: "45%" }}>
 
             {mediaUrl.map((validMQ, index) => (
               <div
@@ -97,7 +97,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
             ))}
         </div>);
     }
-      
+    
     return (<div className="d-flex flex-column position-relative">
         {mediaUrl.length > 1 && <div className="position-absolute rounded text-white bg-darkGrey font-8px d-flex align-items-center justify-content-center" 
             style={{ width: "22px", height: "12px", right: "20px", top: "10px" }}>
@@ -109,7 +109,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
                         className="scroll-item align-items-center justify-content-center"
                         ref={setMediaRef}>
                             {media.type === 2 && <VideoPlayer src={mediaBaseUrl + '/' + media.url + media.token}  />}
-                            {media.type === 1 && <BackgroundImage paddingBottom="54.25%" src={ mediaBaseUrl + '/' + media.url + media.token} />}
+                            {media.type === 1 && <BackgroundImage paddingBottom="54.25%" src={ [mediaBaseUrl + '/' + media.url + media.token, '/images/feed_placeholder.png'] } />}
                             {/* {media.type === 1 && <BackgroundImage src={"https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/74327.jpg?v=2020-08-06T19:45:35.177Z"} />} */}
                 </div>
             })}
@@ -248,6 +248,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
         </div>
 
     return (<div className="d-flex flex-column w-100 px-4">
+            
         {'id' in clickedTipFeed && <TipSubmitModal 
             isShowing={isShowing} 
             clickedFeed={clickedTipFeed} 

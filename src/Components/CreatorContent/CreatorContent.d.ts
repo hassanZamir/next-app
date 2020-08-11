@@ -2,6 +2,8 @@ import { USER_SESSION } from "@Interfaces";
 
 declare namespace ICreatorContent {
     export interface IProps {
+        scrolledToBottom: boolean,
+        followingFee: number,
         contentCount: number, 
         imagesCount: number, 
         videosCount: number,

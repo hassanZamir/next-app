@@ -49,11 +49,13 @@ const VenoWallet: React.FunctionComponent<{ userCards: PAYMENT_CARD[], userWalle
         <ParagraphText className="font-25px text-white text-center">Veno Wallet</ParagraphText>
         {!showAddWallet && <React.Fragment>
             <div style={{ minHeight: "50px" }}>
-                {userWallet && userWallet.balance && <div className="my-2 border-bottom border-white">
+                {userWallet && userWallet.balance && <div 
+                    className="my-2 border-bottom border-white">
                     <ParagraphText className="font-28px text-white text-center">{'$ ' + userWallet.balance}</ParagraphText>
                 </div>}
             </div>
-            <div onClick={() => { setTimeout(() => { setShowAddWallet(true)}) }} className="cursor-pointer border border-white rounded font-12px lato-regular text-white p-2 text-center">
+            <div style={{ opacity: userCards.length > 0 ? '1' : '0.7' }}
+                onClick={() => { userCards.length > 0 && setTimeout(() => { setShowAddWallet(true)}) }} className="cursor-pointer border border-white rounded font-12px lato-regular text-white p-2 text-center">
                 Add funds to your Veno Tv Wallet
             </div>
         </React.Fragment>}
@@ -94,8 +96,8 @@ const AllCards: React.FunctionComponent<{ user: USER_SESSION, userCards: PAYMENT
             <div style={{ height: "150px", overflowY: "scroll", padding: "5px 0px" }}>
                 {userCards && userCards.length > 0 && userCards.map((card, i) => {
                     return <div key={i} onClick={()=>{ onCardClick(card) }} className={"cursor-pointer d-flex align-items-center mx-2 my-1 p-2 rounded border " + (card.id === defaultCard ? 'border-primary' : 'border-darkGrey')}>
-                        <img height="20" width="30" src="/images/credit_card.png" />
-                        <div className="text-primary font-10px ml-2 w-100 text-center">{ card.cardTitle + ' Card ending in ' + card.cardNumber}</div>
+                        <img height="20" width="20" src="/images/credit_card.png" />
+                        <div className="text-primary font-10px w-100 text-center">{ card.cardTitle + ' Card ending in ' + card.cardNumber}</div>
                     </div>
                 })}
             </div>
@@ -141,7 +143,7 @@ export const PaymentSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
         (async () => {
             await dispatch(PaymentActions.GetPaymentSettings({ userId: user.id }));
         })()
-    }, [user]);
+    }, []);
 
     function onModalClose(e: any) {
         if (modalRef!.current && !modalRef!.current.contains(e.target)) {

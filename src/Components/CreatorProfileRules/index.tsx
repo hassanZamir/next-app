@@ -7,13 +7,13 @@ import { theme } from "@Definitions/Styled/theme";
 export const CreatorProfileRules: React.FunctionComponent<{creatorProfile: CREATOR_PROFILE}> = ({ creatorProfile }) => {
     return <div className="position-relative">
         <BackgroundImage 
-            src={creatorProfile.coverImageUrl} 
+            src={[creatorProfile.coverImageUrl, "/images/cover_image_placeholder.jpg"]} 
             paddingBottom="26.25%" 
             borderRadius="16px 16px 0px 0px" />
         <div className="position-relative">
             <div style={{ position: "absolute", left: "1rem", bottom: "-2rem" }}>
                 <CircularImage 
-                    src={creatorProfile.profileImageUrl} 
+                    src={[creatorProfile.profileImageUrl, '/images/profile_image_placeholder.jpg']} 
                     height="75px" 
                     width="75px" 
                     border={"2px solid " + theme.colors.primary} />

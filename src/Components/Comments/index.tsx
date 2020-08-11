@@ -18,7 +18,7 @@ import { CurrentTimeDifference }from "@Services/Time";
 const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment: COMMENT)=>void, commentsListRef: any}> = 
     ({ comment, likeComment, commentsListRef }) => {
     return <div style={{ minHeight: "50px" }} className="d-flex px-3 align-items-center my-4 w-100" ref={commentsListRef}>
-        <CircularImage src={comment.profileImageUrl} height="50px" width="50px" border={"1px solid " + theme.colors.primary} />
+        <CircularImage src={[comment.profileImageUrl, '/images/profile_image_placeholder.jpg']} height="50px" width="50px" border={"1px solid " + theme.colors.primary} />
         <div className="d-flex flex-column pl-2 w-100 justify-content-between">
             <div className="d-flex justify-content-between align-items-center w-100">
                 <span className="seoge-ui-bold font-13px text-primary">{ comment.userName }</span>
@@ -27,7 +27,7 @@ const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment
                     <FontAwesomeIcon icon={faHeart} color={comment.content_viewer_like ? "#F57B52" : "#A0A0A0"} size="lg" />
                 </div>
             </div>
-            <div className="font-11px text-darkGrey">{ comment.text }</div>
+            <div className="font-13px text-darkGrey">{ comment.text }</div>
             <div className="font-11px text-darkGrey">{ CurrentTimeDifference(comment.timeStamp) }</div>
         </div>
     </div>
@@ -72,7 +72,7 @@ const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: numb
 
     return <div className="px-4 d-flex flex-column pb-2 pt-4">
         <div className="d-flex align-items-center justify-content-between">
-            <CircularImage src={user.profileImageUrl} height="35px" width="35px" />
+            <CircularImage src={[user.profileImageUrl, '/images/profile_image_placeholder.jpg']} height="35px" width="35px" />
             <div className="d-flex justify-content-between align-items-center w-100 ml-2">
                 <Textarea 
                     placeholder="Type Comment"

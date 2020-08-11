@@ -15,8 +15,8 @@ import { ProfileComponent } from "@Components";
 // #region Interface Imports
 // #endregion Interface Imports
 
-const Authenticated: any = dynamic(
-    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{session: USER_SESSION, name: string}>>,
+const DynamicProfile: any = dynamic(
+    () => import('@Components/ProfileComponent').then((mod) => mod.ProfileComponent) as Promise<React.FunctionComponent<{user: USER_SESSION, profileUserName: string}>>,
     { ssr: false }
 );
 
@@ -25,7 +25,7 @@ const UserProfile: NextPage<IProfilePage.IProps> = () => {
     const router = useRouter();
     const profileUserName = router.query["username"] as string;
 
-    return <ProfileComponent user={session} profileUserName={profileUserName} />
+    return <DynamicProfile user={session} profileUserName={profileUserName} />
     // return <Authenticated session={login.session} name="Profile">
     //     <ProfileComponent user={login.session} profileUserName={profileUserName} />
     // </Authenticated>;

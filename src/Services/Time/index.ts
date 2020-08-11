@@ -4,12 +4,20 @@ export const CurrentTimeDifference = (time: string) => {
     const msPerDay = msPerHour * 24;
     const msPerMonth = msPerDay * 30;
     const msPerYear = msPerDay * 365;
-
-    debugger;
-    const elapsed = new Date().getTime() - new Date(time).getTime();
-
+    
+    const utcOffset = new Date().getTimezoneOffset();
+    let postTime = null;
+    if (utcOffset > 0) {
+        postTime = new Date(time).valueOf() + (utcOffset * 60 * 1000);
+    } else {
+        postTime = new Date(time).valueOf() - (utcOffset * 60 * 1000);
+    }
+    let elapsed = new Date().valueOf() - postTime;
+    
+    if (elapsed < 0) return 'just now'
+    
     if (elapsed < msPerMinute) {
-         return Math.round(elapsed/1000) + ' seconds ago';   
+        return Math.round(elapsed/1000) + ' seconds ago';   
     }
 
     else if (elapsed < msPerHour) {
