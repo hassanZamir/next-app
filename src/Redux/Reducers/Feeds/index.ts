@@ -24,6 +24,11 @@ export const FeedsReducer = (
         case ActionConsts.Feeds.PostContentSuccess: {
             let { feed } = action.payload!;
 
+            if (!feed) return Object.assign({}, state, {
+                feeds: state.feeds,
+                errors: 'Post content failed',
+                postContentStatus: 'error'
+            });
             return Object.assign({}, state, {
                 feeds: [feed[0], ...state.feeds],
                 errors: '',

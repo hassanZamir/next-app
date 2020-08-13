@@ -4,8 +4,8 @@ import { faFileImage } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from "react-redux";
 
 import { USER_SESSION } from "@Interfaces";
-import { PrimaryButton } from "@Components";
-import { Textarea, ToggleAnimate } from "@Components/Basic";
+import { PrimaryButton, TakePictureWithWebcam } from "@Components";
+import { Textarea, ToggleAnimate, AnimatePopup } from "@Components/Basic";
 import { FeedsActions } from "@Actions";
 
 interface IUploadImage {
@@ -24,6 +24,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
     const [files, setFiles] = useState<IUploadImage[]>([]);
     const [title, setTitle] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showWebam, setShowWebcam] = useState(false);
     const dispatch = useDispatch();
     const handleTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { value } = e.currentTarget;
@@ -56,6 +57,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
         }));
         if (postContent && postContent.status) { setFiles([]); setTitle(""); setShowPostSelection(false); }
         setLoading(false);
+        setShowWebcam(false);
     };
     
     const isActivePost = !loading && (title.length > 0 || files.length > 0);
@@ -114,19 +116,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
                                 onChange={handleChange} />
                         </button>
                         <button className="take-picture-icon" onClick={(e: any)=> { 
-                            return false;
-                            // const canvas: any = document.getElementById('canvas');
-                            // const context = canvas && canvas.getContext('2d');
-                            // const player = document.getElementById('player');
-                            // context.drawImage(player, 0, 0, canvas.width, canvas.height);
-                            // const constraints = {
-                            //     video: true,
-                            //   };
-                            // navigator.mediaDevices.getUserMedia(constraints)
-                            // .then((stream) => {
-                            //     player.srcObject = stream;
-                            // });
-                            
+                            setShowWebcam(true);                     
                         }}>
                         </button>
                     </ToggleAnimate>}
@@ -139,5 +129,15 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
                 Post
             </PrimaryButton>
         </div>
+        {showWebam && <div className="animate-in-from-bottom position-absolute bg-white w-100">
+            <TakePictureWithWebcam 
+                onUploadPhoto={(preview: any, file: any) => { 
+                    setFiles([...files, {
+                        preview: preview,
+                        raw: file
+                    } as IUploadImage]);
+                }} 
+                onClose={setShowWebcam} />
+        </div>}
     </div>
 }

@@ -120,13 +120,19 @@ export default ((req: any, res: any) => {
                 });
                 sendResponse();
               });
-        });
+          })
+          .catch(function(ex) {
+            failedPaths.push({ 
+              path: ex.file ? ex.file.path.split('##')[1] : ''
+            });
+            sendResponse();
+          });
       }
     });
 
     function sendResponse() {
       if ((uploadPaths.length + failedPaths.length) >= req.files.length) 
-        res.end(JSON.stringify({ status: true, uploadSuccess: uploadPaths, uploadError: failedPaths }));
+        res.end(JSON.stringify({ status: failedPaths.length <= 0 ? true : false, uploadSuccess: uploadPaths, uploadError: failedPaths }));
     }
   });
 });

@@ -32,3 +32,4 @@ export { CreditCardStaticImages } from "@Components/CreditCardStaticImages";
 export { BankingInfo } from "@Components/BankingInfo";
 export { CreatePost } from "@Components/CreatePost";
 export { VideoPlayer } from "@Components/VideoPlayer";
+export { TakePictureWithWebcam } from "@Components/TakePictureWithWebcam";

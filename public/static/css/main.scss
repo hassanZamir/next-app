@@ -359,3 +359,22 @@ input:checked + .slider:before {
         font-size: 20px;
     }
 }
+
+// slideInFromTop = keyframes`
+//     0% { transform: translate3d(0, -600px, 0) }
+//     100% { transform: translate3d(0, 0, 0) }
+// `
+
+@keyframes animate-in-from-bottom {
+    0% { transform: translate3d(0, 2600px, 0) }
+    100% { transform: translate3d(0, 0, 0) }
+}
+
+.animate-in-from-bottom {
+    animation-name: animate-in-from-bottom;
+    animation-duration: 0.3s;
+    bottom: 0px;
+    top: 210px;
+    transform: translate3d(0, 0, 0);
+    z-index: 9999;
+}
