@@ -9,7 +9,7 @@ export const TakePictureWithWebcam: React.FunctionComponent<{ onClose: (a: boole
     const videoRef = useRef(document.createElement("video"));
     const containerRef = useRef(document.createElement("div"));
     const [showCamVideo, setShowCamVideo] = useState(true);
-    const [currentStream, setCurrentStream] = useState();
+    const [currentStream, setCurrentStream] = useState<any>();
 
     const processDevices = (devices: any) => {
         devices.forEach((device: any) => {
@@ -19,7 +19,7 @@ export const TakePictureWithWebcam: React.FunctionComponent<{ onClose: (a: boole
 
     const setDevice = async (device: any) => {
         const { deviceId } = device;
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: { deviceId } });
+        const stream: any = await navigator.mediaDevices.getUserMedia({ audio: false, video: { deviceId } });
         setCurrentStream(stream);
         videoRef.current.srcObject = stream;
         videoRef.current.play();
