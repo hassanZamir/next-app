@@ -10,6 +10,7 @@ export const TakePictureWithWebcam: React.FunctionComponent<{ onClose: (a: boole
     const containerRef = useRef(document.createElement("div"));
     const [showCamVideo, setShowCamVideo] = useState(true);
     const [currentStream, setCurrentStream] = useState<any>();
+    let localStream: any = null;
 
     const processDevices = (devices: any) => {
         devices.forEach((device: any) => {
@@ -21,6 +22,9 @@ export const TakePictureWithWebcam: React.FunctionComponent<{ onClose: (a: boole
         const { deviceId } = device;
         const stream: any = await navigator.mediaDevices.getUserMedia({ audio: false, video: { deviceId } });
         setCurrentStream(stream);
+        // console.log("setDevice", stream);
+        localStream = stream;
+        // console.log("localStream", localStream);
         videoRef.current.srcObject = stream;
         videoRef.current.play();
     }
@@ -30,6 +34,10 @@ export const TakePictureWithWebcam: React.FunctionComponent<{ onClose: (a: boole
             const cameras = await navigator.mediaDevices.enumerateDevices();
             processDevices(cameras);
         })();
+
+        return () => {
+            closeCamera();
+        }
     }, []);
 
     const takePhoto = () => {
@@ -44,13 +52,38 @@ export const TakePictureWithWebcam: React.FunctionComponent<{ onClose: (a: boole
         canvasContainer.src = dataUri;
     }
 
+    const closeCamera = () => {
+        try {
+            const stream: any = videoRef.current.srcObject;
+            const tracks = stream.getTracks();
+    
+            tracks.forEach(function(track: any) {
+                track.stop();
+            });
+    
+            videoRef.current.srcObject = null;
+    
+            if (currentStream) {
+                currentStream.getTracks().forEach(function(track: any) {
+                    track.stop();
+                });
+            }
+            if (localStream) {
+                localStream.getTracks().forEach(function(track: any) {
+                    track.stop();
+                });
+            }
+        } catch(e) {
+            console.log("Exception closing webcam : ", e);
+        } finally {
+            onClose(false);
+        }
+    }
+
     const uploadPhoto = (blob: any) => {
         const image = document.getElementById('cam-photo') as HTMLImageElement;
         onUploadPhoto(image.src, new File([blob], new Date().valueOf() + ".png"));
-        currentStream.getTracks().forEach(function(track: any) {
-            track.stop();
-        });
-        onClose(false);
+        closeCamera();
     }
     
     return <div ref={containerRef} 
@@ -58,7 +91,7 @@ export const TakePictureWithWebcam: React.FunctionComponent<{ onClose: (a: boole
             >
                 <div className="d-flex align-items-center justify-content-between bg-primary w-100 p-2 mb-1">
                     <div>
-                        <FontAwesomeIcon className="cursor-pointer" icon={faTimes} color="white" onClick={()=> { onClose(false) }} />
+                        <FontAwesomeIcon className="cursor-pointer" icon={faTimes} color="white" onClick={closeCamera} />
                         <span className="text-white font-20px ml-2">Take Photo</span>
                     </div>
                     {!showCamVideo && <div className="cursor-pointer" onClick={()=> {

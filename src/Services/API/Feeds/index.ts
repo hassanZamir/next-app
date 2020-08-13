@@ -21,7 +21,6 @@ export const FeedsService = {
             return query;
         };
         try {
-            console.log("lalad ", getQueryParams(payload));
             response = await Http.Request<ProfilesSuggestionModel.GetProfilesSuggestionResponse>(
                 "GET",
                 "/profiles/suggestion" + getQueryParams(payload),
