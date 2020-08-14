@@ -26,7 +26,7 @@ const UserStatus: NextPage<IProfilePage.IProps> = () => {
     const userName = router.query["username"] as string,
     contentId = parseInt(router.query["contentId"] as string);
 
-    return <Authenticated session={session} name="ContentPage">
+    return <Authenticated session={session} name="Home">
         <ContentComponent 
             userName={userName} 
             contentId={contentId} 

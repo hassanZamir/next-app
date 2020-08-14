@@ -102,7 +102,11 @@
 }
 
 .highlight-footer-option {
-    border-top: 2px solid $footerHighlight;
+    height: 32px;
+    width: 32px;
+    border-radius: 50px;
+    background: white;
+    // border-top: 2px solid $footerHighlight;
 }
 .footer-navigation {
     width: 100%;

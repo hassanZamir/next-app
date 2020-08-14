@@ -24,7 +24,7 @@ const Home: NextPage = () => {
     const persistState = useSelector((state: IStore) => state.persistState);
     const { session } = persistState;
 
-    return <Authenticated session={session} name="Home">
+    return <Authenticated session={session} name="Account">
         <BankingInfo user={session} />
         {/* <DynamicFeeds user={session} /> */}
     </Authenticated>

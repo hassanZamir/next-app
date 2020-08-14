@@ -112,7 +112,7 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
                     isFollower={followers[0] && followers[0].userId === user.id} />
             </div>
         </div>
-        <Footer selected={name} user={user} 
+        <Footer selected="Home" user={user} 
                 onPaymentSettingsClick={onPaymentSettingsClick} />
     </div>);
 }
