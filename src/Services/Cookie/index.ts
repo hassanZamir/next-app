@@ -26,6 +26,15 @@ export const getCookie = (key: string, req: any) => {
     return process.browser ? getCookieFromBrowser(key) : getCookieFromServer(key, req);
 };
 
+export const getQueryParams = (params: any) => {
+    let query = '';
+    Object.keys(params).forEach((key, index) => {
+        if (!index) query += ('?' + key + '=' + params[key])
+        else query += ('&' + key + '=' + params[key])
+    });
+    return query;
+};
+
 const getCookieFromBrowser = (key: string) => {
     return cookie.get(key);
 };

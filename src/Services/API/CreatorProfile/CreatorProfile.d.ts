@@ -9,7 +9,9 @@ import {
     PostCreatorProfilePayload,
     PostCreatorProfileResponse,
     UploadProfileImagesPayload,
-    UploadProfileImagesResponse
+    UploadProfileImagesResponse,
+    GETMediaGallaryPayload,
+    GETMediaGallaryResponse
 
 } from "@Interfaces"; 
 // #endregion Interface Imports
@@ -29,6 +31,9 @@ declare namespace CreatorProfileModel {
 
     export interface GetUploadProfileImagesPayload extends UploadProfileImagesPayload {}
     export interface GetUploadProfileImagesResponse extends UploadProfileImagesResponse {}
+
+    export interface GetGETMediaGallaryPayload extends GETMediaGallaryPayload {}
+    export interface GetGETMediaGallaryResponse extends GETMediaGallaryResponse {}
 }
 
 export { CreatorProfileModel };

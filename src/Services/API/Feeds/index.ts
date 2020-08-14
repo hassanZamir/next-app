@@ -1,5 +1,5 @@
 // #region Local Imports
-import { Http } from "@Services";
+import { Http, getQueryParams } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -12,14 +12,6 @@ export const FeedsService = {
     ): Promise<ProfilesSuggestionModel.GetProfilesSuggestionResponse> => {
         let response: ProfilesSuggestionModel.GetProfilesSuggestionResponse
 
-        const getQueryParams = (params: any) => {
-            let query = '';
-            Object.keys(params).forEach((key, index) => {
-                if (!index) query += ('?' + key + '=' + params[key])
-                else query += ('&' + key + '=' + params[key])
-            });
-            return query;
-        };
         try {
             response = await Http.Request<ProfilesSuggestionModel.GetProfilesSuggestionResponse>(
                 "GET",

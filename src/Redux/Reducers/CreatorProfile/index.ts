@@ -3,10 +3,11 @@ import { ActionConsts } from "@Definitions";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, IProfilePage, FEED, CREATOR_PROFILE } from "@Interfaces";
+import { IAction, IProfilePage, FEED, CREATOR_PROFILE, mediaUrl } from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IProfilePage.IStateProps = {
+    mediaGallary: new Array<mediaUrl>(),
     errors: '',
     creatorProfile: <CREATOR_PROFILE>{},
     creatorFeeds: new Array<FEED>(),
@@ -17,9 +18,22 @@ export const CreatorProfileReducer = (
     state = INITIAL_STATE,
     action: IAction<IProfilePage.Actions.IMapCreatorFeedsResponse & 
         IProfilePage.Actions.IMapCreatorProfileResponse & 
-        IProfilePage.Actions.IMapProfileFollowersResponse>
+        IProfilePage.Actions.IMapProfileFollowersResponse &
+        IProfilePage.Actions.IMapMediaGallaryResponse>
 ) => {
     switch (action.type) {
+        case ActionConsts.CreatorProfile.GetMediaGallarySuccess: {
+            let { mediaGallary } = action.payload!;
+            return Object.assign({}, state, {
+                mediaGallary: mediaGallary,
+                errors: ""
+            });
+        }
+        case ActionConsts.CreatorProfile.GetMediaGallaryError: {
+            return Object.assign({}, state, {
+                errors: "Error getting media gallary."
+            });
+        }
         case ActionConsts.CreatorProfile.GetProfileFollowersSuccess: {
             let { followers } = action.payload!;
             return Object.assign({}, state, {

@@ -1,4 +1,4 @@
-import { FEED, CREATOR_PROFILE, CreatorProfileModel, ProfileFollowersModel } from "@Interfaces";
+import { FEED, CREATOR_PROFILE, CreatorProfileModel, ProfileFollowersModel, mediaUrl } from "@Interfaces";
 
 declare namespace IProfilePage {
     export interface IProps {}
@@ -7,6 +7,7 @@ declare namespace IProfilePage {
         errors: '',
         creatorProfile: CREATOR_PROFILE,
         creatorFeeds: FEED[],
+        mediaGallary: mediaUrl[],
         followers: {userId: number}[]
     }
 
@@ -17,6 +18,10 @@ declare namespace IProfilePage {
 
         export interface IMapCreatorFeedsResponse {
             feeds: FEED[]
+        }
+
+        export interface IMapMediaGallaryResponse {
+            mediaGallary: mediaUrl[]
         }
 
         export interface IMapProfileFollowersResponse {
@@ -31,6 +36,9 @@ declare namespace IProfilePage {
 
         export interface IGetFollowProfilePayload extends CreatorProfileModel.GetFollowProfilePayload {}
         export interface IGetFollowProfileResponse extends CreatorProfileModel.GetFollowProfileResponse {}
+
+        export interface IGetGETMediaGallaryPayload extends CreatorProfileModel.GetGETMediaGallaryPayload {}
+        export interface IGetGETMediaGallaryResponse extends CreatorProfileModel.GetGETMediaGallaryResponse {}
 
         export interface IGetProfileFollowersPayload extends ProfileFollowersModel.GetProfileFollowersPayload {}
         export interface IGetProfileFollowersResponse extends ProfileFollowersModel.GetProfileFollowersResponse {}

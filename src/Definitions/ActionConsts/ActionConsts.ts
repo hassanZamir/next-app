@@ -45,7 +45,9 @@ export const ActionConsts = {
         GetCreatorFeedsSuccess: "GetCreatorFeedsSuccess",
         GetCreatorFeedsError: "GetCreatorFeedsError",
         GetProfileFollowersSuccess: "GetProfileFollowersSuccess",
-        GetProfileFollowersError: "GetProfileFollowersError"
+        GetProfileFollowersError: "GetProfileFollowersError",
+        GetMediaGallarySuccess: "GetMediaGallarySuccess",
+        GetMediaGallaryError: "GetMediaGallaryError"
     },
     Status: {
         GetAllCommentsSuccess: "GetAllCommentsSuccess",

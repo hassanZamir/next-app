@@ -1,5 +1,5 @@
 // #region Local Imports
-import { Http } from "@Services";
+import { Http, getQueryParams } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -128,7 +128,6 @@ export const CreatorProfileService = {
         let response: CreatorProfileModel.GetPostCreatorProfileResponse;
 
         const { username, ...rest } = payload;
-        debugger;
         try {
             response = await Http.Request<CreatorProfileModel.GetPostCreatorProfileResponse>(
                 "POST",
@@ -208,6 +207,27 @@ export const CreatorProfileService = {
                 "/profiles/" + payload.username + '/follow',
                 undefined,
                 {userId: payload.userId}
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: []
+            };
+        }
+        return response;
+    },
+    GetMediaGallary: async (
+        payload: CreatorProfileModel.GetGETMediaGallaryPayload
+    ): Promise<CreatorProfileModel.GetGETMediaGallaryResponse> => {
+        let response: CreatorProfileModel.GetGETMediaGallaryResponse;
+
+        const { username, ...restPayload } = payload;
+        console.log("/profiles/" + username + '/gallery' + getQueryParams({ ...restPayload }));
+        try {
+            response = await Http.Request<CreatorProfileModel.GetGETMediaGallaryResponse>(
+                "GET",
+                "/profiles/" + username + '/gallery' + getQueryParams({ ...restPayload }),
+                undefined
             );
         } catch (error) {
             response = {

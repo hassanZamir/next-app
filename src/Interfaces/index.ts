@@ -58,6 +58,8 @@ export * from "@Services/API/CreatorProfile/ProfileFollowersPayload";
 export * from "@Services/API/CreatorProfile/ProfileFollowersResponse";
 export * from "@Services/API/CreatorProfile/ProfileFollowers";
 
+export * from "@Services/API/CreatorProfile/GETMediaGallaryPayload";
+export * from "@Services/API/CreatorProfile/GETMediaGallaryResponse";
 export * from "@Services/API/CreatorProfile/UploadProfileImagesPayload";
 export * from "@Services/API/CreatorProfile/UploadProfileImagesResponse";
 export * from "@Services/API/CreatorProfile/PostCreatorProfilePayload";

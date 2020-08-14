@@ -60,5 +60,14 @@ export const CreatorProfileActions = {
             payload: { followers: result.response ? result.response : result },
             type: result.status ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
         });
+    },
+    GetMediaGallary: (payload: IProfilePage.Actions.IGetGETMediaGallaryPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await CreatorProfileService.GetMediaGallary(payload);
+        dispatch({
+            payload: { mediaGallary: result.response && result.status ? result.response : [] },
+            type: result.response && result.status ? ActionConsts.CreatorProfile.GetMediaGallarySuccess : ActionConsts.CreatorProfile.GetMediaGallaryError
+        });
     }
 };
