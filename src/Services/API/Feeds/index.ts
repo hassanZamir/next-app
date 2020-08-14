@@ -267,5 +267,43 @@ export const FeedsService = {
             };
         }
         return response;
+    },
+    GetFeed: async (
+        payload: FeedsModel.GetGetFeedPayload
+    ): Promise<FeedsModel.GetGetFeedResponse> => {
+        let response: FeedsModel.GetGetFeedResponse;
+        try {
+            response = await Http.Request<FeedsModel.GetGetFeedResponse>(
+                "GET",
+                "/content/" + payload.contentId + "?viewerId=" + payload.viewerId,
+                undefined
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: {
+                    name: "sohaib",
+                    username: "venotv1234",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    content_viewer_like: false,
+                    id: 7,
+                    title: "My First Post",
+                    media_url: [{
+                        url: "bad.jpg",
+                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                        type: 1
+                    }, {
+                        url: "sample_video.mp4",
+                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                        type: 2
+                    }],
+                    likesCount: 0,
+                    commentsCount: 0,
+                    tipsCount: 0,
+                    timeStamp: "2020-07-09T09:03:28.8766667"
+                }
+            };
+        }
+        return response;
     }
 };

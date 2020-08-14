@@ -26,6 +26,11 @@ export const PersistReducer = (
                 feed: feed
             });
         }
+        case ActionConsts.Feeds.ClearPersistFeed: {
+            return Object.assign({}, state, {
+                feed: {}
+            });
+        }
         case ActionConsts.Status.UpdatePersistFeedCommentCount: {
             const updatedFeed = Object.assign({}, state.feed, {
                 commentsCount: state.feed.commentsCount ? state.feed.commentsCount + 1 : 1

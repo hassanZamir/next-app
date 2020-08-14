@@ -263,14 +263,14 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({ feeds, u
             user={user} />}
 
         {_FEEDS && _FEEDS.map((feed: FEED, i: number) => {
-            return (<Feed feed={feed} 
+            return ('id' in feed ? <Feed feed={feed} 
                 index={i} 
                 key={i} 
                 toggleTipModal={toggleTipModal} 
                 likeContent={likeContent} 
                 onReportClick={onReportClick} 
                 onCommentClick={onCommentClick}
-                onCopyClick={onCopyClick} />);
+                onCopyClick={onCopyClick} /> : null);
         })}
     </div>);
 }

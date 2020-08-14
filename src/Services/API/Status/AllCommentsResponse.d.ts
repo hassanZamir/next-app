@@ -8,7 +8,8 @@ export type COMMENT = {
       text: string,
       likesCount: number,
       timeStamp: string,
-      content_viewer_like: boolean
+      content_viewer_like: boolean,
+      isTipComment: boolean
 }
 export interface AllCommentsResponse {
       status: boolean;

@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 
 // #region Local Imports
 import { ActionConsts } from "@Definitions";
-import { StatusService } from "@Services";
+import { StatusService, FeedsService } from "@Services";
 import { IStatusPage } from "@Interfaces";
 
 export const StatusActions = {
@@ -53,5 +53,13 @@ export const StatusActions = {
             payload: result.status ? { commentId: payload.commentId, like: false } : { commentId: null },
             type: result.status ? ActionConsts.Status.LikeCommentSuccess : ActionConsts.Status.LikeCommentError
         });
+    },
+    GetFeed: (payload: IStatusPage.Actions.IGetGetFeedPayload) => async () => {
+        const result = await FeedsService.GetFeed(payload);
+        return result;
+        // dispatch({
+        //     payload: { feed: result.status && result.response ? result.response : {}},
+        //     type: result.status ? ActionConsts.Status.LikeCommentSuccess : ActionConsts.Status.LikeCommentError
+        // });
     }
 };

@@ -1,5 +1,5 @@
 // #region Global Imports
-import * as React from "react";
+import React from "react";
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
@@ -24,12 +24,12 @@ const UserStatus: NextPage<IProfilePage.IProps> = () => {
     const { session, feed } = useSelector((state: IStore) => state.persistState);
     const router = useRouter();
     const userName = router.query["username"] as string,
-    contentId = router.query["contentId"] as string;
+    contentId = parseInt(router.query["contentId"] as string);
 
     return <Authenticated session={session} name="ContentPage">
         <ContentComponent 
             userName={userName} 
-            contentId={feed.id} 
+            contentId={contentId} 
             user={session} 
             feed={feed} />
     </Authenticated>;

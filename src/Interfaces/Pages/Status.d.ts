@@ -1,4 +1,4 @@
-import { AllCommentsModel, COMMENT, PostCommentModel, LikeCommentModel } from "@Interfaces";
+import { AllCommentsModel, COMMENT, PostCommentModel, LikeCommentModel, FeedsModel } from "@Interfaces";
 
 declare namespace IStatusPage {
     export interface IProps {}
@@ -29,6 +29,9 @@ declare namespace IStatusPage {
 
         export interface IGetLikeCommentPayload extends LikeCommentModel.GetLikeCommentPayload {}
         export interface IGetLikeCommentResponse extends LikeCommentModel.GetLikeCommentResponse {}
+
+        export interface IGetGetFeedPayload extends FeedsModel.GetGetFeedPayload {}
+        export interface IGetGetFeedResponse extends FeedsModel.GetGetFeedResponse {}
     }
 }
 
