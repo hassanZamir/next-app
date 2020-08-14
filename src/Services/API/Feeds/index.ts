@@ -3,7 +3,7 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { FeedsModel, ProfilesSuggestionModel, UploadMediaFilesModel, PostContentModel } from "@Interfaces";
+import { FeedsModel, ProfilesSuggestionModel, UploadMediaFilesModel, PostContentModel, CreatorProfileModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const FeedsService = {

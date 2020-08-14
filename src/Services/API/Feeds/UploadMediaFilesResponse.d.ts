@@ -1,6 +1,6 @@
 export interface UploadMediaFilesResponse {
     status: boolean;
     error?:string;
-    uploadSuccess?: {path: string}[];
-    uploadError?: {path: string}[];
+    uploadSuccess?: {url: string}[];
+    uploadError?: {url: string}[];
 }

@@ -12,6 +12,7 @@ import { AccountVerifyReducer } from "./AccountVerify";
 import { PersistReducer } from "./PersistReducer";
 import { StatusReducer } from "./StatusReducer";
 import { PaymentReducer } from "./Payment";
+import { BankingInfoReducer } from "./BankingInfo";
 // #endregion Local Imports
 
 export default combineReducers({
@@ -24,5 +25,6 @@ export default combineReducers({
     accountVerify: AccountVerifyReducer,
     persistState: PersistReducer,
     statusPage: StatusReducer,
-    payment: PaymentReducer
+    payment: PaymentReducer,
+    bankingInfo: BankingInfoReducer
 });

@@ -10,7 +10,7 @@ import { theme } from "@Definitions/Styled";
 
 const Container = styled(Button)<IPrimaryButton.IProps>`
     background: ${({ isActive }) => (isActive ? ({ theme }) => theme.colors.primaryBackground : theme.colors.borderGrey)};
-    padding: 8px 32px;
+    padding: ${({ padding }) => {return (padding ? padding : "8px 32px")}};
     border-radius: ${({ borderRadius }) => {return (borderRadius ? borderRadius : "22px")}};
     color: white;
 `;
@@ -22,10 +22,11 @@ export const PrimaryButton: React.FunctionComponent<IPrimaryButton.IProps> = ({
     className,
     type,
     borderRadius,
-    showLoader
+    showLoader,
+    padding
 }) => {
     return (
-        <Container isActive={isActive} onClick={onClick} className={className} type={type} borderRadius={borderRadius}>
+        <Container padding={padding} isActive={isActive} onClick={onClick} className={className} type={type} borderRadius={borderRadius}>
             {children} <span>{showLoader && <FontAwesomeIcon icon={faSpinner} color="white" className="fa-spin"/>}</span>
         </Container>
     );

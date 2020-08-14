@@ -8,6 +8,7 @@ declare namespace IPrimaryButton {
         type?: string;
         name?: string;
         showLoader?: boolean;
+        padding?: string;
     }
 }
 

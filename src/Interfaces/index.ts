@@ -52,6 +52,10 @@ export * from "@Services/API/CreatorProfile/ProfileFollowersPayload";
 export * from "@Services/API/CreatorProfile/ProfileFollowersResponse";
 export * from "@Services/API/CreatorProfile/ProfileFollowers";
 
+export * from "@Services/API/CreatorProfile/UploadProfileImagesPayload";
+export * from "@Services/API/CreatorProfile/UploadProfileImagesResponse";
+export * from "@Services/API/CreatorProfile/PostCreatorProfilePayload";
+export * from "@Services/API/CreatorProfile/PostCreatorProfileResponse";
 export * from "@Services/API/CreatorProfile/CreatorProfilePayload";
 export * from "@Services/API/CreatorProfile/CreatorProfileResponse";
 export * from "@Services/API/CreatorProfile/FollowProfilePayload";
@@ -86,6 +90,7 @@ export * from "@Services/API/Payment/PaymentSettings";
 // #endregion Service Interfaces
 
 // #region Page Interfaces
+export * from "@Interfaces/Pages/BankingInfo";
 export * from "@Interfaces/Pages/Payment";
 export * from "@Interfaces/Pages/AccountVerify";
 export * from "@Interfaces/Pages/Status";

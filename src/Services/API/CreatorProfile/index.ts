@@ -122,6 +122,40 @@ export const CreatorProfileService = {
         }
         return response;
     },
+    PostCreatorProfile: async (
+        payload: CreatorProfileModel.GetPostCreatorProfilePayload
+    ): Promise<CreatorProfileModel.GetPostCreatorProfileResponse> => {
+        let response: CreatorProfileModel.GetPostCreatorProfileResponse;
+
+        const { username, ...rest } = payload;
+        debugger;
+        try {
+            response = await Http.Request<CreatorProfileModel.GetPostCreatorProfileResponse>(
+                "POST",
+                "/profiles/" + username,
+                undefined,
+                {...rest}
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: {
+                    name: "sohaib",
+                    coverImageUrl: "/images/5.jpg",
+                    profileImageUrl: "/images/Capture@2x.png",
+                    location: "Pakistan",
+                    bio: "technology Geek",
+                    followersCount: 0,
+                    contentCount: 0,
+                    imagesCount: 0,
+                    videosCount: 0,
+                    followingFee: 0.0,
+                    userName: "sohaibminhas789"
+                }
+            };
+        }
+        return response;
+    },
     GetProfileFollowers: async (
         payload: ProfileFollowersModel.GetProfileFollowersPayload
     ): Promise<ProfileFollowersModel.GetProfileFollowersResponse> => {

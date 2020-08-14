@@ -18,7 +18,7 @@ export const CreatorProfileActions = {
         const result = await CreatorProfileService.GetCreatorProfile(payload);
         
         dispatch({
-            payload: { profile: result.response },
+            payload: { profile: result.status && result.response ? result.response : {}},
             type: result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
         });
     },

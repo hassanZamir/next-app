@@ -12,7 +12,7 @@ declare namespace IProfilePage {
 
     namespace Actions {
         export interface IMapCreatorProfileResponse {
-            profile: CreatorProfileModel.GetCreatorProfileResponse
+            profile: CREATOR_PROFILE
         }
 
         export interface IMapCreatorFeedsResponse {

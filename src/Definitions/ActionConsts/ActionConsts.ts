@@ -68,5 +68,12 @@ export const ActionConsts = {
         AddFundsToWalletError: "AddFundsToWalletError",
         OnBecomeCreatorSuccess: "OnBecomeCreatorSuccess",
         OnBecomeCreatorError: "OnBecomeCreatorError",
+    },
+    BankingInfo: {
+        GetUserProfileSuccess: "GetUserProfileSuccess",
+        GetUserProfileError: "GetUserProfileError",
+        UploadProfileImagesError: "UploadProfileImagesError",
+        UpdateUserProfileSuccess: "UpdateUserProfileSuccess",
+        UpdateUserProfileError: "UpdateUserProfileError"
     }
 };

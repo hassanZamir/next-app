@@ -5,7 +5,11 @@ import {
     CreatorFeedsPayload, 
     CreatorFeedsResponse,
     FollowProfilePayload,
-    FollowProfileResponse
+    FollowProfileResponse,
+    PostCreatorProfilePayload,
+    PostCreatorProfileResponse,
+    UploadProfileImagesPayload,
+    UploadProfileImagesResponse
 
 } from "@Interfaces"; 
 // #endregion Interface Imports
@@ -19,6 +23,12 @@ declare namespace CreatorProfileModel {
 
     export interface GetFollowProfilePayload extends FollowProfilePayload {}
     export interface GetFollowProfileResponse extends FollowProfileResponse {}
+
+    export interface GetPostCreatorProfilePayload extends PostCreatorProfilePayload {}
+    export interface GetPostCreatorProfileResponse extends PostCreatorProfileResponse {}
+
+    export interface GetUploadProfileImagesPayload extends UploadProfileImagesPayload {}
+    export interface GetUploadProfileImagesResponse extends UploadProfileImagesResponse {}
 }
 
 export { CreatorProfileModel };
