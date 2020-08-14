@@ -74,6 +74,8 @@ export const ActionConsts = {
         GetUserProfileError: "GetUserProfileError",
         UploadProfileImagesError: "UploadProfileImagesError",
         UpdateUserProfileSuccess: "UpdateUserProfileSuccess",
-        UpdateUserProfileError: "UpdateUserProfileError"
+        UpdateUserProfileError: "UpdateUserProfileError",
+        PostBankingInfoSuccess: "PostBankingInfoSuccess",
+        PostBankingInfoError: "PostBankingInfoError"
     }
 };

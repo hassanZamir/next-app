@@ -3,7 +3,7 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { LoginModel, SignUpModel, AccountVerifyModel, SendResetPasswordEmailModel, ChangePasswordModel } from "@Interfaces";
+import { LoginModel, SignUpModel, AccountVerifyModel, SendResetPasswordEmailModel, ChangePasswordModel, PostPersonalInformationModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const LoginService = {
@@ -119,6 +119,25 @@ export const LoginService = {
             response = await Http.Request<ChangePasswordModel.GetChangePasswordResponse>(
                 "POST",
                 "/accounts/password/update",
+                undefined,
+                {...payload}
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                error: "Something went wrong"
+            };
+        }
+        return response;
+    },
+    PostPersonalInformation: async (
+        payload: PostPersonalInformationModel.GetPostPersonalInformationPayload
+    ): Promise<PostPersonalInformationModel.GetPostPersonalInformationResponse> => {
+        let response: PostPersonalInformationModel.GetPostPersonalInformationResponse;
+        try {
+            response = await Http.Request<PostPersonalInformationModel.GetPostPersonalInformationResponse>(
+                "POST",
+                "/accounts/" + payload.userId + "/banking",
                 undefined,
                 {...payload}
             );

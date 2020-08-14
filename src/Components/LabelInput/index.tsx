@@ -5,7 +5,7 @@ import { ILabelInput, ISelectInput, IMultiLabelInput } from "./LabelInput";
 import { RegInput, Select, } from "../Basic";
 
 const Container = styled(RegInput)`
-    height: 32px;
+    height: 29px;
     width: 100%;
     border: none;
     border: 1px solid ${({ theme }) => theme.colors.borderGrey};

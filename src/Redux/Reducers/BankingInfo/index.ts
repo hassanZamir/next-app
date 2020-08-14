@@ -8,6 +8,7 @@ import { IAction, IBankingInfoPage, CREATOR_PROFILE, IProfilePage } from "@Inter
 
 const INITIAL_STATE: IBankingInfoPage.IStateProps = {
     errors: [],
+    success: [],
     creatorProfile: <CREATOR_PROFILE>{},
     showPersonalInformation: false
 };
@@ -33,6 +34,20 @@ export const BankingInfoReducer = (
         case ActionConsts.BankingInfo.UploadProfileImagesError: {
             return Object.assign({}, state, {
                 errors: ['Error uploading profile images']
+            });
+        }
+        case ActionConsts.BankingInfo.PostBankingInfoSuccess: {
+            debugger;
+            return Object.assign({}, state, {
+                errors: [],
+                success: ["Successfuly added banking info"]
+            });
+        }
+        case ActionConsts.BankingInfo.PostBankingInfoError: {
+            debugger;
+            return Object.assign({}, state, {
+                errors: [action.payload!, 'Error adding banking info'],
+                success: []
             });
         }
         // case ActionConsts.BankingInfo.UpdateUserProfileSuccess: {

@@ -1,4 +1,4 @@
-import { USER_SESSION, CREATOR_PROFILE, UploadMediaFilesModel, CreatorProfileModel } from "@Interfaces";
+import { USER_SESSION, CREATOR_PROFILE, UploadMediaFilesModel, CreatorProfileModel, PostPersonalInformationModel } from "@Interfaces";
 
 declare namespace IBankingInfoPage {
     export interface IProps {
@@ -9,11 +9,15 @@ declare namespace IBankingInfoPage {
         showPersonalInformation: boolean;
         creatorProfile: CREATOR_PROFILE;
         errors: string[];
+        success: string[];
     }
 
     namespace Actions {
         export interface IGetUploadProfileImagesPayload extends CreatorProfileModel.GetUploadProfileImagesPayload {}
         export interface IGetUploadProfileImagesResponse extends CreatorProfileModel.GetUploadProfileImagesResponse {}
+
+        export interface IGetPostPersonalInformationPayload extends PostPersonalInformationModel.GetPostPersonalInformationPayload {}
+        export interface IGetPostPersonalInformationResponse extends PostPersonalInformationModel.GetPostPersonalInformationResponse {}
     }
 }
 

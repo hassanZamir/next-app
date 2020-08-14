@@ -8,6 +8,8 @@ declare namespace IRadioInput {
         validationRules?: {};
         formErrors?: { [key: string]: {message: string;}; };
         wrapperClass?: string;
+        labelTextClass?: string;
+        inputMargin?: string;
     }
 }
 

@@ -55,7 +55,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                 email: data.email,
                 password: data.password,
                 country: data.country,
-                birthDate : data.dob.year + "-" + (DobConst.months.indexOf(data.dob.month) + 1)  + "-" + data.dob.date,
+                birthDate : data.dob.year + "-" + (DobConst.months.indexOf(data.dob.month) + 2)  + "-" + data.dob.date,
                 account_created: true
             }
             setEnableSignUp(false);

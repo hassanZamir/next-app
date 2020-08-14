@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 
 // #region Local Imports
 import { ActionConsts } from "@Definitions";
-import { CreatorProfileService, FeedsService } from "@Services";
+import { CreatorProfileService, FeedsService, LoginService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -34,7 +34,7 @@ export const BankingInfoActions = {
             const result = await FeedsService.UploadMediaOnStorage({
                 media_url: mediaUrl[i].url
             } as any);
-            if (result && result.status) {
+            if (result && result.status && result.uploadSuccess! && result.uploadSuccess![0]) {
                 if (mediaUrl[i].key === 'profileImageUrl') 
                     postCreatorProfileParams.profileImageUrl = result.uploadSuccess![0].url;
                 if (mediaUrl[i].key === 'coverImageUrl') 
@@ -46,11 +46,45 @@ export const BankingInfoActions = {
                 })
             }
             if (i === mediaUrl.length - 1) {
-                const result = await CreatorProfileService.PostCreatorProfile({ username: payload.username, ...postCreatorProfileParams });
+                const postResult = await CreatorProfileService.PostCreatorProfile({ username: payload.username, ...postCreatorProfileParams });
                 dispatch({
-                    payload: { profile: result.status && result.response ? result.response : {}},
-                    type: result.status ? ActionConsts.BankingInfo.GetUserProfileSuccess : ActionConsts.BankingInfo.UpdateUserProfileError
+                    payload: { profile: postResult.status && postResult.response ? postResult.response : {}},
+                    type: postResult.status ? ActionConsts.BankingInfo.GetUserProfileSuccess : ActionConsts.BankingInfo.UpdateUserProfileError
                 })
+            }
+        }
+    },
+    PostPersonalInformation: (payload: IBankingInfoPage.Actions.IGetPostPersonalInformationPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        debugger;
+        const mediaUrl = payload.media_url;
+        let updatedPayload = {...payload}
+        for (let i = 0; i < mediaUrl.length; i++) {
+            const result = await FeedsService.UploadMediaOnStorage({
+                media_url: mediaUrl[i].url
+            } as any);
+            if (result && result.status) {
+                if (mediaUrl[i].key === 'docPhoto') 
+                    updatedPayload.docPhoto = result.uploadSuccess![0].url;
+                if (mediaUrl[i].key === 'docUserPhoto') 
+                    updatedPayload.docUserPhoto = result.uploadSuccess![0].url;
+            } else {
+                debugger;
+                dispatch({
+                    type: ActionConsts.BankingInfo.UploadProfileImagesError,
+                    payload: null
+                });
+                return;
+            }
+            if (i === mediaUrl.length - 1) {
+                debugger;
+                const postResult = await LoginService.PostPersonalInformation({ ...updatedPayload });
+                debugger;
+                dispatch({
+                    payload: postResult.status && !postResult.error ? "Success" : postResult.error,
+                    type: postResult.status ? ActionConsts.BankingInfo.PostBankingInfoSuccess : ActionConsts.BankingInfo.PostBankingInfoError
+                });
             }
         }
     }

@@ -3,6 +3,7 @@ import { BankingInfoActions } from "@Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "@Redux/IStore";
 import { ParagraphText, LoadingSpinner, CircularImage, PrimaryButton } from "@Components";
+import { UploadPersonalInformation } from "@Components/BankingInfo/UploadPersonalInformation";
 import { BackgroundImage } from "@Components/Basic";
 import React, { useEffect, useState } from "react";
 import { theme } from "@Definitions/Styled";
@@ -28,7 +29,6 @@ const UploadProfileImages: React.FunctionComponent<{user: USER_SESSION; coverIma
     const dispatch = useDispatch();
 
     const handleImageChange = (e: any, key: string) => {
-        debugger;
         if (e.target.files.length) {
             const uploadedFiles = [];
             
@@ -132,44 +132,39 @@ const UploadProfileImages: React.FunctionComponent<{user: USER_SESSION; coverIma
     </div>);
 }
 
-const UploadPersonalInformation: React.FunctionComponent<{}> 
-    = ({ }) => {
-
-    return (<div>Personal Information</div>);
-}
-
 export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION; }> 
     = ({ user }) => {
     
     const dispatch = useDispatch();
     const bankingInfo = useSelector((state: IStore) => state.bankingInfo);
-    const { creatorProfile, errors, showPersonalInformation } = bankingInfo;
+    const { creatorProfile, errors, showPersonalInformation, success } = bankingInfo;
 
     useEffect(() => {
         const params = { username: user.username };
         dispatch(BankingInfoActions.GetCreatorProfile(params));
     }, []);
 
-    return <div className="d-flex flex-column align-items-center flex-fill h-100 body-background">
+    return <div style={{ minHeight: "100%" }} className="d-flex flex-column align-items-center flex-fill body-background">
         <ParagraphText className="text-primary font-25px">Banking</ParagraphText>
-        {!('name' in creatorProfile) && errors.length <= 0 && <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+        {!creatorProfile.name && errors.length <= 0 && <div style={{ flex: 1 }} className="w-100 h-100 d-flex align-items-center justify-content-center">
             <LoadingSpinner size="3x"/>
         </div>}
-        {!('name' in creatorProfile) && errors.length > 0 && <div className="d-flex flex-column">
-            {errors.map((error: string, i: number) => {
-                return <div className="text-danger font-12px">{ error }</div>
-            })}</div>
-        }
-        {'name' in creatorProfile && errors.length <= 0 && <React.Fragment>
+        {creatorProfile.name && <React.Fragment>
             {!showPersonalInformation ? <UploadProfileImages 
                 coverImageUrl={creatorProfile.coverImageUrl}
                 profileImageUrl={creatorProfile.profileImageUrl} 
                 user={user} /> 
-                : <UploadPersonalInformation />}
+                : <UploadPersonalInformation user={user} />}
+        {success.length > 0 && <div className="d-flex flex-column">
+            {success.map((msg: string, i: number) => {
+                return <div className="text-success font-12px text-center">{ msg }</div>
+            })}</div>
+        }
+        {errors.length > 0 && <div className="d-flex flex-column">
+            {errors.map((error: string, i: number) => {
+                return <div className="text-danger font-12px text-center">{ error }</div>
+            })}</div>
+        }
         </React.Fragment>}
-
-        {/* <PrimaryButton isActive={true} onClick={()=> { dispatch(PaymentActions.OnBecomeCreator({ userName: user.username })) }}>
-            Become Creator
-        </PrimaryButton> */}
     </div>
 }
