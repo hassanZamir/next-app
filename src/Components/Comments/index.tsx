@@ -27,7 +27,7 @@ const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment
                         <span className="font-13px text-darkGrey mr-1">{ comment.likesCount || 0 }</span>
                         <FontAwesomeIcon icon={faHeart} color={comment.content_viewer_like ? "#F57B52" : "#A0A0A0"} size="lg" />
                     </div>
-                    {!comment.isTipComment && <img style={{ margin: "0px -15px 0px 5px" }} src="/images/money_copy@2x.png" height="20px" width="20px" />}
+                    {comment.isTipComment && <img style={{ margin: "0px -15px 0px 5px" }} src="/images/money_copy@2x.png" height="20px" width="20px" />}
                 </div>
             </div>
             <div className="font-13px text-darkGrey">{ comment.text }</div>
@@ -40,12 +40,17 @@ const CommentsList: React.FunctionComponent<{onSeeLatestComments: ()=>void; scro
     ({ onSeeLatestComments, scrolledToTop, commentsCount, loading, error, comments, likeComment, commentsListRef, onViewAllComments, viewAllComments, setViewAllComments, onScroll }) => {
     
     const [COMMENT_COUNT, setCOMMENT_COUNT] = useState(commentsCount);
+    const [scrollingTop, setScrollingTop] = useState(false);
 
-    return <div onScroll={onScroll}
+    return <div onScroll={(e: any)=> {
+            const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
+            !bottom ? setScrollingTop(true) : setScrollingTop(false); 
+            onScroll(e);
+        }}
         style={{ flex: "1", overflowY: "scroll" }} 
         className={"scroll-y d-flex align-items-center flex-column px-4 border border-top-1 border-right-0 border-left-0 border-bottom-1 border-lightGrey " + (loading ? "justify-content-center" : "")}>
         {loading && <LoadingSpinner size="2x" />}
-        {!viewAllComments && !loading && commentsCount > 6 && <div onClick={()=>{ setViewAllComments(true); onViewAllComments() }} 
+        {!viewAllComments && !loading && commentsCount > 6 && scrollingTop && <div onClick={()=>{ setViewAllComments(true); onViewAllComments() }} 
             className="px-3 py-2 bg-primary text-white font-12px mt-2 text-underline cursor-pointer"
             style={{ 
                 position: scrolledToTop ? "initial" : "absolute",
@@ -190,8 +195,6 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
             dispatch(StatusActions.UnLikeComment(params));
         }
     }
-
-    // console.log(commentsCount);
 
     return (<div className="position-relative full-flex-scroll d-flex flex-column w-100 h-100">
         <CommentsList 
