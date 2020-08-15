@@ -9,15 +9,19 @@ import { IRadioInput } from "./RadioInput";
 
 import { RegInput } from "../Basic";
 
-const Container = styled(RegInput)<{ inputMargin: string | undefined}>`
+const Container = styled(RegInput)<{ inputMargin: string | undefined, inputHeight?: string, inputWidth?: string}>`
     margin: ${({ inputMargin }) => { return inputMargin ? inputMargin : "5px 10px 0px 0px"}};
+    height: ${({ inputHeight }) => { return inputHeight ? inputHeight : "initial" }};
+    width: ${({ inputWidth }) => { return inputWidth ? inputWidth : "initial" }};
 `;
 
-export const RadioInput: React.FunctionComponent<IRadioInput.IProps> = ({ type, inputMargin, labelText, value, name, register, formErrors, ...props }) => {
+export const RadioInput: React.FunctionComponent<IRadioInput.IProps> 
+    = ({ labelTextElem, type, inputMargin, labelText, value, name, register, formErrors, ...props }) => {
     return (
         <div className={"d-flex align-items-start w-100 " + (props.wrapperClass ? props.wrapperClass : "")}>
             <Container inputMargin={inputMargin} name={name} ref={register} type={type} value={value} {...props} />
-            <label className={props.labelTextClass ? props.labelTextClass : "text-primary font-13px"}>{labelText}</label>
+            {labelTextElem ? labelTextElem 
+                : <label className={props.labelTextClass ? props.labelTextClass : "text-primary font-13px"}>{labelText}</label>}
             {/* <div className="text-danger font-10px">{ formErrors ? formErrors[name] ? formErrors[name].message : '' : ''}</div> */}
         </div>
     )

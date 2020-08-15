@@ -3,13 +3,16 @@ declare namespace IRadioInput {
         type: string;
         name: string;
         value: string;
-        labelText: string;
+        labelText?: string;
         register?: ()=>void;
         validationRules?: {};
         formErrors?: { [key: string]: {message: string;}; };
         wrapperClass?: string;
         labelTextClass?: string;
         inputMargin?: string;
+        inputHeight?: string;
+        inputWidth?: string;
+        labelTextElem?: React.ReactNode;
     }
 }
 

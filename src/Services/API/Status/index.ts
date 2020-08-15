@@ -24,6 +24,7 @@ export const StatusService = {
             response = {
                 status: false,
                 response: [{
+                    "isTipComment": true,
                     "name": "sohaib Riaz",
                     "profileImageUrl": "",
                     "userName": "sohaibminhas",
@@ -56,6 +57,7 @@ export const StatusService = {
             response = {
                 status: false,
                 response: {
+                    "isTipComment": false,
                     "name": "sohaib Riaz",
                     "profileImageUrl": "",
                     "userName": "sohaibminhas",

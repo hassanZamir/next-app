@@ -12,7 +12,8 @@ import {
     StaticImage, 
     ParagraphText, 
     FormComponent, 
-    SelectInput
+    SelectInput,
+    RadioInput
 } from "@Components";
 import { LinkText } from "@Components/Basic";
 import { IStore } from "@Redux/IStore";
@@ -48,7 +49,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     }
 
     async function handleSubmit(data: any) {
-        if (enableSignUp && recaptchaToken) {
+        if (enableSignUp && recaptchaToken && data.termsOfService === "1") {
             const params = {
                 name: data.name,
                 username: data.username,
@@ -79,105 +80,144 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                     <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
                 </div>
                 <div className="row no-gutters justify-content-center mt-3">
-                    <FormComponent 
-                        onSubmit={handleSubmit} 
-                        defaultValues={{}} 
-                        submitActive={enableSignUp && recaptchaToken ? true : false}
-                        submitSuccess={errors.message === "" && successMessage !== ""}>
+                    <div style={{ width: "320px" }}>
+                        <FormComponent 
+                            onSubmit={handleSubmit} 
+                            defaultValues={{}} 
+                            submitActive={enableSignUp && recaptchaToken ? true : false}
+                            submitSuccess={errors.message === "" && successMessage !== ""}>
 
-                        <LabelInput 
-                            type="text"
-                            labelText="Full Name" 
-                            name="name"
-                            validationRules={{ required: {value: true, message: "Full Name is required" } }} 
+                            <LabelInput 
+                                type="text"
+                                labelText="Full Name" 
+                                name="name"
+                                validationRules={{ required: {value: true, message: "Full Name is required" } }} 
+                                />
+                            
+                            <SelectInput
+                                type={["number", "number", "number"]}
+                                labelText="Date of Birth" 
+                                name={["dob.date", "dob.month", "dob.year"]}
+                                options={[DobConst.date, DobConst.months, DobConst.year]} 
+                                wrapperClass="mt-3"
+                                validationRules={[{ 
+                                    required: "Date is required",
+                                    validate: (value: string) => {
+                                        return value !== "DD" ? true : "Please select Date of Birth"
+                                    } 
+                                }, { 
+                                    required: "Month is required",
+                                    validate: (value: string) => {
+                                        return value !== "MM" ? true : "Please select Month of Birth"
+                                    }
+                                }, { 
+                                    required: "Year is required",
+                                    validate: (value: string) => {
+                                        return value !== "YYYY" ? true : "Please select Year of Birth"
+                                    } 
+                                }]}
                             />
-                        
-                        <SelectInput
-                            type={["number", "number", "number"]}
-                            labelText="Date of Birth" 
-                            name={["dob.date", "dob.month", "dob.year"]}
-                            options={[DobConst.date, DobConst.months, DobConst.year]} 
-                            wrapperClass="mt-3"
-                            validationRules={[{ required: "Date is required" }, { required: "Month is required" }, { required: "Year is required" }]}
-                        />
 
-                        <SelectInput 
-                            type={["text"]}
-                            labelText="Country" 
-                            name={["country"]}
-                            options={[LocationsList.countries]} 
-                            wrapperClass="mt-3"
-                            validationRules={[{ required: "Country selection is required."}]}
-                        />
-                        <LabelInput 
-                            type="email"
-                            labelText="Email" 
-                            name="email" 
-                            wrapperClass="mt-3"
-                            validationRules={{ 
-                                required: "Email is required",
-                                validate: async (value: string) => {
-                                    const helper = await validateUserName({ email: value });
-                                    const response = await helper();
-                                    if (response && response.errors.filter((error) => { return error && error.field === 'email' }).length > 0)
-                                        return "Email is already taken.";
-                                    
-                                    return true;
-                                }
-                            }}
-                        />
-                        <LabelInput 
-                            type="text"
-                            labelText="Username" 
-                            name="username" 
-                            wrapperClass="mt-3"
-                            validationRules={{ 
-                                required: "Username is required",
-                                validate: async (value: string) => {
-                                    const helper = await validateUserName({ username: value });
-                                    const response = await helper();
-                                    if (response && response.errors
-                                        .filter((error) => { return error && error.field === 'username' })
-                                        .length > 0)
-                                    return "Username is already taken.";
-                                    
-                                    return true;
-                                }
-                            }}
-                        />
-                        <LabelInput 
-                            type="password"
-                            labelText="Password" 
-                            name="password" 
-                            wrapperClass="mt-3"
-                            validationRules={{ required: {value: true, message: "Password is required" } }}
-                        />
-                        <LabelInput 
-                            type="password"
-                            labelText="Re-Type Password" 
-                            name="reTypePassword"
-                            wrapperClass="mt-3" 
-                            validationRules={{ 
-                                required: "Re Type password is required"
-                            }}
-                        />
-                        <div className="captcha-container mt-3" 
-                            style={{ height: "78px" }}>
-                            <ReCAPTCHA
-                                size="normal"
-                                sitekey="6LcPdqsZAAAAADygw6uZ0kPMd-OW8F55aPEtq5FK"
-                                onChange={handleCaptchaChange}
+                            <SelectInput 
+                                type={["text"]}
+                                labelText="Country" 
+                                name={["country"]}
+                                options={[LocationsList.countries]} 
+                                wrapperClass="mt-3"
+                                validationRules={[{ required: "Country selection is required."}]}
                             />
-                        </div>
-                        <PrimaryButton  
-                            type="submit"
-                            className="mt-2 font-20px"
-                            name="signUp"
-                            showLoader={!enableSignUp}>
-                                Sign Up
-                        </PrimaryButton>
-                        {!successMessage && <ParagraphText className="py-4 text-danger text-center">{ errors.message }</ParagraphText>}
-                    </FormComponent>
+                            <LabelInput 
+                                type="email"
+                                labelText="Email" 
+                                name="email" 
+                                wrapperClass="mt-3"
+                                validationRules={{ 
+                                    required: "Email is required",
+                                    validate: async (value: string) => {
+                                        const helper = await validateUserName({ email: value });
+                                        const response = await helper();
+                                        if (response && response.errors.filter((error) => { return error && error.field === 'email' }).length > 0)
+                                            return "Email is already taken.";
+                                        
+                                        return true;
+                                    }
+                                }}
+                            />
+                            <LabelInput 
+                                type="text"
+                                labelText="Username" 
+                                name="username" 
+                                wrapperClass="mt-3"
+                                validationRules={{ 
+                                    required: "Username is required",
+                                    validate: async (value: string) => {
+                                        const helper = await validateUserName({ username: value });
+                                        const response = await helper();
+                                        if (response && response.errors
+                                            .filter((error) => { return error && error.field === 'username' })
+                                            .length > 0)
+                                        return "Username is already taken.";
+                                        
+                                        return true;
+                                    }
+                                }}
+                            />
+                            <LabelInput 
+                                type="password"
+                                labelText="Password" 
+                                name="password" 
+                                wrapperClass="mt-3"
+                                validationRules={{ 
+                                    required: "Password is required",
+                                    validate: (value: string) => {
+                                        const regex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+                                        return regex.test(value) ? true : "Password should contain letters and alphabets and need to be 6 digit long";
+                                    }
+                                }}
+                            />
+                            <LabelInput 
+                                type="password"
+                                labelText="Re-Type Password" 
+                                name="reTypePassword"
+                                wrapperClass="mt-3" 
+                                validationRules={{ 
+                                    required: "Re Type password is required"
+                                }}
+                            />
+                            <div className="captcha-container" 
+                                style={{ height: "78px" }}>
+                                <ReCAPTCHA
+                                    size="normal"
+                                    sitekey="6LcPdqsZAAAAADygw6uZ0kPMd-OW8F55aPEtq5FK"
+                                    onChange={handleCaptchaChange}
+                                />
+                            </div>
+
+                            <RadioInput 
+                                type="radio"
+                                value="1" 
+                                inputHeight="25px"
+                                inputWidth="25px"
+                                inputMargin="0px 10px 0px 0px"
+                                labelTextElem={<div className="text-darkGrey lato-regular font-11px">
+                                    By signing up you agree to our <span className="text-primary mx-1"><Link href="">Terms of Service</Link></span> 
+                                    and <span className="text-primary mx-1"><Link href="">Privacy Policy</Link></span>
+                                </div>}
+                                name="termsOfService" 
+                                wrapperClass=""
+                                validationRules={{ required: {value: true, message: "Report Reason is required" } }}
+                            />
+
+                            <PrimaryButton  
+                                type="submit"
+                                className="mt-2 mb-4 font-20px"
+                                name="signUp"
+                                showLoader={!enableSignUp}>
+                                    Sign Up
+                            </PrimaryButton>
+                            {!successMessage && <ParagraphText className="py-4 text-danger text-center">{ errors.message }</ParagraphText>}
+                        </FormComponent>
+                    </div>
                     <Link href="/login" passHref>
                         <LinkText style={{ height: "40px" }} className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white">
                             Have an account? Log in here!

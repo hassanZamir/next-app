@@ -18,6 +18,7 @@ const SelectContainer = styled(Select)`
     height: 32px;
     width: 100%;
     border: none;
+    color: ${({ theme }) => theme.colors.inputTextClor};
     border: 1px solid ${({ theme }) => theme.colors.borderGrey};
     border-radius: 6px;
 `;

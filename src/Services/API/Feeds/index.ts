@@ -273,7 +273,7 @@ export const FeedsService = {
         } catch (error) {
             response = {
                 status: false,
-                response: {
+                response: [{
                     name: "sohaib",
                     username: "venotv1234",
                     profileImageUrl: "/images/Capture@2x.png",
@@ -293,7 +293,7 @@ export const FeedsService = {
                     commentsCount: 0,
                     tipsCount: 0,
                     timeStamp: "2020-07-09T09:03:28.8766667"
-                }
+                }]
             };
         }
         return response;
