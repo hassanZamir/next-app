@@ -17,6 +17,7 @@ import { ToastProvider } from 'react-toast-notifications';
 import { Footer, Toast } from '@Components';
 
 import "@Static/css/main.scss";
+import "../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 import { Layout } from "@Components";
 // #endregion Local Imports
 

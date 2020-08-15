@@ -9,7 +9,7 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 import { IFeedsList, IFeed, IFeedOptions, FEED, mediaUrl } from "@Interfaces";
 import { BackgroundImage } from "@Components/Basic";
-import { ParagraphText, VideoPlayer } from "@Components";
+import { ParagraphText, VideoPlayer, MediaCarousel } from "@Components";
 import { TipSubmitModal } from "../Modals/TipSubmitModal";
 import { FeedOptionsModal } from "../Modals/FeedOptionsModal";
 import { ReportFeedModal } from "../Modals/ReportFeedModal";
@@ -66,6 +66,9 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
     const [selected, setSelected] = useState(0);
     const mediaRefs: any = [];
     const container: any = useRef(null);
+    const [showMediaCarousel, setShowMediaCarousel] = useState(false);
+    const modalRef = useRef<HTMLDivElement>(null);
+    const { isShowing, toggle } = useModal(modalRef);
 
     const setMediaRef = (ref: any) => {
         ref !== null && mediaRefs.push(ref);
@@ -108,13 +111,13 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
                 return <div key={i}
                         className="scroll-item align-items-center justify-content-center"
                         ref={setMediaRef}>
-                            {media.type === 2 && <VideoPlayer videoHeight="260px" src={mediaBaseUrl + '/' + media.url + media.token}  />}
-                            {media.type === 1 && <BackgroundImage paddingBottom="54.25%" src={ [mediaBaseUrl + '/' + media.url + media.token, '/images/feed_placeholder.png'] } />}
-                            {/* {media.type === 1 && <BackgroundImage src={"https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/74327.jpg?v=2020-08-06T19:45:35.177Z"} />} */}
+                            {media.type === 2 && <VideoPlayer onClick={(e)=> { e.preventDefault(); setShowMediaCarousel(true); toggle(); }} videoHeight="260px" src={mediaBaseUrl + '/' + media.url + media.token}  />}
+                            {media.type === 1 && <BackgroundImage onClick={(e)=> { setShowMediaCarousel(true); toggle(); }} paddingBottom="54.25%" src={ [mediaBaseUrl + '/' + media.url + media.token, '/images/feed_placeholder.png'] } />}
                 </div>
             })}
         </div>
         {mediaUrl.length > 1 && renderNavigation()}
+        {showMediaCarousel && <MediaCarousel media={mediaUrl} isShowing={isShowing} modalRef={modalRef} toggle={toggle} />}
     </div>);
 }
 const Feed: React.FunctionComponent<IFeed.IProps> 

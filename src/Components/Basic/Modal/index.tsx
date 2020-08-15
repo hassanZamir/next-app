@@ -7,10 +7,10 @@ const slideInFromTop = keyframes`
     100% { transform: translate3d(0, 0, 0) }
 `
 
-const ModalContainer = styled.div<{ border?: string, borderRadius?: string, width?: string }>`
+const ModalContainer = styled.div<{ border?: string, borderRadius?: string, width?: string, background?: string }>`
     border: ${({ border }) => { return (border ? '2.5px solid ' + border : '0px') + ';'}}
     z-index: 100;
-    background: white;
+    background: ${({ background }) => { return (background ? background : 'white') }};
     position: relative;
     margin: auto;
     border-radius: ${({ borderRadius }) => { return (borderRadius ? borderRadius: '6px') + ';'}}
@@ -22,7 +22,7 @@ const ModalContainer = styled.div<{ border?: string, borderRadius?: string, widt
 
 `;
 
-export const Modal: React.FunctionComponent<{ border?: string, borderRadius?: string, width?: string }> = ({children, ...rest}) => {
+export const Modal: React.FunctionComponent<{ border?: string, borderRadius?: string, width?: string, background?: string }> = ({children, ...rest}) => {
     return <React.Fragment>
         <div className="modal-overlay"/>
         <div className="modal-wrapper">

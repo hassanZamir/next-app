@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { mediaUrl } from "@Interfaces";
 import { BackgroundImage } from "@Components/Basic";
-import { VideoPlayer } from "@Components";
+import { VideoPlayer, MediaCarousel  } from "@Components";
+import { useModal } from '../Hooks';
 
 const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
 
 export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: mediaUrl[], errors: string }> 
     = ({ mediaGallary, errors }) => {
     
+    const [showMediaCarousel, setShowMediaCarousel] = useState(false);
+    const modalRef = useRef<HTMLDivElement>(null);
+    const { isShowing, toggle } = useModal(modalRef);
+
     const chunk = (array: any, size: number) => {
         const chunked_arr = [];
         let index = 0;
@@ -26,12 +31,18 @@ export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: mediaUrl[
                     return <div style={{ padding: 0, height: "120px", flex: "0 0 33.33333%", maxWidth: "33.33333%" }} 
                         >
                         <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-                            {media.type === 2 && <VideoPlayer src={mediaBaseUrl + '/' + media.url + media.token}  />}
-                            {media.type === 1 && <BackgroundImage paddingBottom="65.25%" src={[mediaBaseUrl + '/' + media.url + media.token, '/images/feed_placeholder.png']} />}
+                            {media.type === 2 && <VideoPlayer 
+                                onClick={(e)=> { e.preventDefault(); setShowMediaCarousel(true); toggle(); }} 
+                                src={mediaBaseUrl + '/' + media.url + media.token}  />}
+
+                            {media.type === 1 && <BackgroundImage paddingBottom="65.25%" 
+                                onClick={(e)=> { setShowMediaCarousel(true); toggle(); }}
+                                src={[mediaBaseUrl + '/' + media.url + media.token, '/images/feed_placeholder.png']} />}
                         </div>
                     </div>
                 })}
             </div>
         })}
+        {showMediaCarousel && <MediaCarousel media={mediaGallary} isShowing={isShowing} modalRef={modalRef} toggle={toggle} />}
     </div>
 }

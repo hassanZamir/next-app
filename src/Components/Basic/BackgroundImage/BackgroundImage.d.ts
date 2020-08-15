@@ -4,6 +4,7 @@ declare namespace IBackgroundImage {
         paddingBottom?: string;
         borderRadius?: string;
         backgroundPosition?: string;
+        onClick?: (e: any)=>void
     }
 }
 
