@@ -210,7 +210,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
 
                             <PrimaryButton  
                                 type="submit"
-                                className="mt-2 mb-4 font-20px"
+                                className="mt-2 mb-3 font-20px"
                                 name="signUp"
                                 showLoader={!enableSignUp}>
                                     Sign Up

@@ -170,7 +170,22 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                             name={["dob.date", "dob.month", "dob.year"]}
                             options={[DobConst.date, DobConst.months, DobConst.year]} 
                             wrapperClass="mt-3"
-                            validationRules={[{ required: "Date is required" }, { required: "Month is required" }, { required: "Year is required" }]}
+                            validationRules={[{ 
+                                required: "Date is required",
+                                validate: (value: string) => {
+                                    return value !== "DD" ? true : "Please select Date of Birth"
+                                } 
+                            }, { 
+                                required: "Month is required",
+                                validate: (value: string) => {
+                                    return value !== "MM" ? true : "Please select Month of Birth"
+                                }
+                            }, { 
+                                required: "Year is required",
+                                validate: (value: string) => {
+                                    return value !== "YYYY" ? true : "Please select Year of Birth"
+                                } 
+                            }]}
                         />
 
                         <SelectInput 

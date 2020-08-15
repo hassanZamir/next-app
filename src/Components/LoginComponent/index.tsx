@@ -14,6 +14,7 @@ import {
     ParagraphText, 
     CreatorProfileRules, 
     LoadingSpinner,
+    SocialLogin
 } from "@Components";
 import { CheckYourEmailModal } from "../Modals/CheckYourEmailModal";
 import { EmailVerifiedModal }from "../Modals/EmailVerifiedModal";
@@ -145,6 +146,8 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                 modalRef={modalRef} 
                 token={changePasswordToken} />}
 
+
+
             {!profile && <div className="mt-5 row justify-content-center no-gutters">
                 <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
             </div>}
@@ -154,6 +157,10 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                 { !('name' in creatorProfile) && !errors && <LoadingSpinner size="xl" /> }
                 { !('name' in creatorProfile) && errors && <div>{ errors }</div> }
             </div>}
+            <SocialLogin />
+            
+            <div className="font-19px text-darkGrey my-3">-----OR-----</div>
+
             <form name="login-form" className="flex-column d-flex align-items-center"
                 style={{ width: "271px" }} 
                 onSubmit={handleSubmit}
