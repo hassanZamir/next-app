@@ -27,7 +27,9 @@ const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment
                         <span className="font-13px text-darkGrey mr-1">{ comment.likesCount || 0 }</span>
                         <FontAwesomeIcon icon={faHeart} color={comment.content_viewer_like ? "#F57B52" : "#A0A0A0"} size="lg" />
                     </div>
-                    {comment.isTipComment && <img style={{ margin: "0px -15px 0px 5px" }} src="/images/money_copy@2x.png" height="20px" width="20px" />}
+                    <div style={{ width: "20px", height: "20px" }}>
+                        {comment.isTipComment && <img style={{ margin: "0px -15px 0px 5px" }} src="/images/money_copy@2x.png" height="20px" width="20px" />}
+                    </div>
                 </div>
             </div>
             <div className="font-13px text-darkGrey">{ comment.text }</div>

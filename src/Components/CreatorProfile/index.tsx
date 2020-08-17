@@ -38,7 +38,7 @@ export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creat
                     {!isFollower && <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-12px">Follow for ${creatorProfile.followingFee} a month</PrimaryButton>}
                     {isFollower && <div className="d-flex flex-column">
                         <PrimaryButton borderRadius="10px" isActive={true} 
-                            // onClick={() => onFollow(false)}
+                            onClick={() => onFollow(false)}
                             className="gibson-regular font-15px">
                             <span className="mr-2">Following</span>
                             <FontAwesomeIcon icon={faCheck} color="white" />

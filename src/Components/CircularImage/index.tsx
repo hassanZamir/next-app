@@ -10,6 +10,8 @@ const Container = styled.div<ICircularImage.IProps>`
     border: ${({ border }) => {return border ? border : "0px" }};
     height: ${({ height }) => height };
     width: ${({ width }) => width };
+    min-height: ${({ height }) => height };
+    min-width: ${({ width }) => width };
     background-image: ${({ src }) => { return src ? getBgImageUrl(src) : 'url(unknown)' }};
     background-size: cover;
     background-position: center;

@@ -53,16 +53,20 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
     }
 
     const onFollow = (followOrUnFollow: boolean) => {
-        if (user && user.id) {
-            if (user.paymentMode) toggle();
-            else {
-                setShowPaymentSettings(true);
-            }
+        if (!followOrUnFollow) {
+            const unfollowParams = { 
+                username: profileUserName, 
+                userId: user.id, 
+                shouldFollow: followOrUnFollow
+            };
+            dispatch(CreatorProfileActions.UnFollowProfile(unfollowParams));
         } else {
-            Router.push({
-                pathname: "/login",
-                query: { profile: profileUserName }
-            });
+            if (user && user.id) {
+                if (user.paymentMode) toggle();
+                else setShowPaymentSettings(true);
+            } else {
+                Router.push({ pathname: "/login", query: { profile: profileUserName } });
+            }
         }
     }
     
