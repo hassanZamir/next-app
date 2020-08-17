@@ -112,7 +112,7 @@ export const BankingInfoActions = {
         
         dispatch({
             payload: { personalInformation: result.status && result.response ? result.response : {} },
-            type: result.status && result.response ? ActionConsts.BankingInfo.GetBankingInfoSuccess : ActionConsts.BankingInfo.GetBankingInfoError
+            type: result.status && result.response ? ActionConsts.BankingInfo.GetBankingInfoSuccess : null
         });
     }
 }
