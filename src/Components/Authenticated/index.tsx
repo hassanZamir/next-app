@@ -4,32 +4,26 @@ import dynamic from 'next/dynamic';
 
 import { useModal } from '../Hooks';
 import { AddCardModal } from "../Modals/AddCardModal";
-import { ILoginPage, USER_SESSION } from '@Interfaces';
-import { Footer, Toast } from '@Components';
+import { ILoginPage, USER_SESSION } from "@Interfaces";
+import { Footer, Toast } from "@Components";
+import { PaymentSettingsContainer } from "@Components";
 
 const DynamicLogin: any = dynamic(
     () => import('@Components/LoginComponent').then((mod) => mod.LoginComponent) as Promise<React.FunctionComponent<ILoginPage.IProps>>,
     { ssr: false }
 );
 
-const DynamicPaymentsModal: any = dynamic(
-    () => import('../Modals/PaymentSettingsModal').then((mod) => mod.PaymentSettingsModal) as Promise<React.FunctionComponent<{ user: USER_SESSION }>>,
-    { ssr: false }
-);
 
 export const Authenticated: React.FunctionComponent<{session: USER_SESSION, name: string}> = ({ session, children, name }) => {
-    const modalRef = useRef<HTMLDivElement>(null);
-    const { isShowing, toggle } = useModal(modalRef);
-    const [ showAddCard, setShowAddCard ] = useState(false);
-
+    const [showPaymentSettings, setShowPaymentSettings] = useState(false);
+    
     useEffect(() => {
         if (!session || !('id' in session))
             Router.push("/login", "/login", { shallow: true });
     }, [session]);
     
     const onPaymentSettingsClick = () => {
-        if (!isShowing) setShowAddCard(false);
-        toggle();
+        setShowPaymentSettings(true)
     }
 
     if (!session || !('id' in session)) {
@@ -45,17 +39,11 @@ export const Authenticated: React.FunctionComponent<{session: USER_SESSION, name
             
             <Footer selected={name} user={session} 
                 onPaymentSettingsClick={onPaymentSettingsClick} />
-            {!showAddCard && <DynamicPaymentsModal
-                toggle={toggle}
-                isShowing={isShowing}  
-                modalRef={modalRef} 
-                user={session} 
-                onAddCard={setShowAddCard} />}
-            {showAddCard && <AddCardModal
-                toggle={toggle}
-                isShowing={isShowing}  
-                modalRef={modalRef} 
-                user={session} />}
+
+            <PaymentSettingsContainer 
+                session={session} 
+                showPaymentSettings={showPaymentSettings} 
+                onModalClose={()=> { setShowPaymentSettings(false) }} />
         </div>
     }
 }

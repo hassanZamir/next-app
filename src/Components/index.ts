@@ -36,4 +36,6 @@ export { TakePictureWithWebcam } from "@Components/TakePictureWithWebcam";
 export { MediaGridGallary } from "@Components/MediaGridGallary";
 export { MediaCarousel } from "@Components/MediaCarousel";
 export { SocialLogin } from "@Components/SocialLogin";
+export { PaymentSettingsContainer } from "@Components/PaymentSettingsContainer";
+
 

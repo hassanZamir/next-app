@@ -15,6 +15,7 @@ import { useModal } from '../Hooks';
 import { CreatorProfile, CreatorContent, PaymentSettings } from "@Components";
 import { AnimatePopup } from "@Components/Basic";
 import { PaymentConfirmationModal } from "@Components/Modals/PaymentConfirmationModal";
+import { PaymentSettingsContainer } from "@Components";
 // #endregion Local Imports
 
 export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, profileUserName: string }> 
@@ -25,7 +26,8 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
     const { contentCount, imagesCount, videosCount, name } = creatorProfile;
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
-    const [showPaymentSettings, setShowPaymentSettings] = useState(false);
+    const [showPaymentSettingsPopup, setShowPaymentSettingsPopup] = useState(false);
+    const [showPaymentSettingsModal, setShowPaymentSettingsModal] = useState(false);
     const [scrolledToBottom, setScrolledToBottom] = useState(false);
     const dispatch = useDispatch();
 
@@ -63,14 +65,16 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
         } else {
             if (user && user.id) {
                 if (user.paymentMode) toggle();
-                else setShowPaymentSettings(true);
+                else setShowPaymentSettingsPopup(true);
             } else {
                 Router.push({ pathname: "/login", query: { profile: profileUserName } });
             }
         }
     }
     
-    const onPaymentSettingsClick = () => {}
+    const onPaymentSettingsClick = () => {
+        setShowPaymentSettingsModal(true);
+    }
 
     return (<div 
         className="w-100 h-100 row flex-column justify-content-between flex-nowrap custom-scroller">
@@ -84,7 +88,7 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
             paymentMode={user.paymentMode} 
             creatorProfile={creatorProfile} />
         
-        {showPaymentSettings && <AnimatePopup animateIn={showPaymentSettings}>
+        {showPaymentSettingsPopup && <AnimatePopup animateIn={showPaymentSettingsPopup}>
             <PaymentSettings user={user} />
         </AnimatePopup>}
         
@@ -118,5 +122,10 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
         </div>
         <Footer selected="Home" user={user} 
                 onPaymentSettingsClick={onPaymentSettingsClick} />
+        
+        <PaymentSettingsContainer 
+                session={user} 
+                showPaymentSettings={showPaymentSettingsModal} 
+                onModalClose={()=> { setShowPaymentSettingsModal(false) }} />
     </div>);
 }
