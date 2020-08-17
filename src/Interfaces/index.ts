@@ -34,6 +34,10 @@ export * from "@Services/API/Login/PostPersonalInformationPayload";
 export * from "@Services/API/Login/PostPersonalInformationResponse";
 export * from "@Services/API/Login/PostPersonalInformation";
 
+export * from "@Services/API/Login/GETPersonalInformationPayload";
+export * from "@Services/API/Login/GETPersonalInformationResponse";
+export * from "@Services/API/Login/GETPersonalInformation";
+
 export * from "@Services/API/Feeds/GetFeedPayload";
 export * from "@Services/API/Feeds/GetFeedResponse";
 export * from "@Services/API/Feeds/PostContent";

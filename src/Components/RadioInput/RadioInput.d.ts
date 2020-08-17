@@ -3,6 +3,7 @@ declare namespace IRadioInput {
         type: string;
         name: string;
         value: string;
+        checked?: boolean;
         labelText?: string;
         register?: ()=>void;
         validationRules?: {};

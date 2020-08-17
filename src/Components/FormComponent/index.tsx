@@ -2,14 +2,13 @@ import React, { useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { IFormComponent } from "./FormComponent";
-import { JSXElement } from "@babel/types";
 
 export const FormComponent: React.FunctionComponent<IFormComponent.IProps> = ({ submitSuccess, submitActive, defaultValues, children, onSubmit }) => {
   const methods = useForm({ 
     defaultValues, 
     mode: 'onBlur'
   });
-  const { handleSubmit, errors, formState, watch, reset } = methods;
+  const { handleSubmit, errors, formState, watch, reset, setValue } = methods;
 
   const password = useRef({});
   password.current = watch("password", "");
@@ -17,7 +16,13 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps> = ({ 
   useEffect(() => {
     if (submitSuccess) reset({});
   }, [submitSuccess]);
-  
+
+  useEffect(() => {
+    if (defaultValues && ('id' in defaultValues)) {
+      reset(defaultValues);
+    }
+  }, [defaultValues]);
+
   const returnChildren: any = (children: {props: any, type: any, children: any}[]) => {
     return children.map(child => {
       if (child && child.props && child.props.name) {

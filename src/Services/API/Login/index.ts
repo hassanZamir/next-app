@@ -3,7 +3,7 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { LoginModel, SignUpModel, AccountVerifyModel, SendResetPasswordEmailModel, ChangePasswordModel, PostPersonalInformationModel } from "@Interfaces";
+import { LoginModel, SignUpModel, AccountVerifyModel, SendResetPasswordEmailModel, ChangePasswordModel, PostPersonalInformationModel, GETPersonalInformationModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const LoginService = {
@@ -145,6 +145,37 @@ export const LoginService = {
             response = {
                 status: false,
                 error: "Something went wrong"
+            };
+        }
+        return response;
+    },
+    GetPersonalInformation: async (
+        payload: GETPersonalInformationModel.GetGETPersonalInformationPayload
+    ): Promise<GETPersonalInformationModel.GetGETPersonalInformationResponse> => {
+        let response: GETPersonalInformationModel.GetGETPersonalInformationResponse;
+        try {
+            response = await Http.Request<GETPersonalInformationModel.GetGETPersonalInformationResponse>(
+                "GET",
+                "/accounts/" + payload.userId + "/banking"
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: {
+                    firstName: "",
+                    lastName: "",
+                    street: "",
+                    city: "",
+                    state: "",
+                    postCode: 11111,
+                    country: "pakistan",
+                    dob: "",
+                    docType: 1,
+                    docPhoto: "",
+                    docUserPhoto: "",
+                    docNumber: "",
+                    docExpiry: ""
+                }
             };
         }
         return response;

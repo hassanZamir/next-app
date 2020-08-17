@@ -10,14 +10,27 @@ const INITIAL_STATE: IBankingInfoPage.IStateProps = {
     errors: [],
     success: [],
     creatorProfile: <CREATOR_PROFILE>{},
-    showPersonalInformation: false
+    showPersonalInformation: false,
+    defaultPersonalInformation: {}
 };
 
 export const BankingInfoReducer = (
     state = INITIAL_STATE,
-    action: IAction<IProfilePage.Actions.IMapCreatorProfileResponse>
+    action: IAction<IProfilePage.Actions.IMapCreatorProfileResponse &
+    IBankingInfoPage.Actions.IMapGetPersonalInformation>
 ) => {
     switch (action.type) {
+        case ActionConsts.BankingInfo.GetBankingInfoSuccess: {
+            let { personalInformation } = action.payload!;
+            return Object.assign({}, state, {
+                defaultPersonalInformation: personalInformation
+            });
+        }
+        case ActionConsts.BankingInfo.GetBankingInfoError: {
+            return Object.assign({}, state, {
+                errors: ['Error getting personal information']
+            });
+        }
         case ActionConsts.BankingInfo.GetUserProfileSuccess: {
             let { profile } = action.payload!;
             return Object.assign({}, state, {
@@ -37,14 +50,12 @@ export const BankingInfoReducer = (
             });
         }
         case ActionConsts.BankingInfo.PostBankingInfoSuccess: {
-            debugger;
             return Object.assign({}, state, {
                 errors: [],
                 success: ["Successfuly added banking info"]
             });
         }
         case ActionConsts.BankingInfo.PostBankingInfoError: {
-            debugger;
             return Object.assign({}, state, {
                 errors: [action.payload!, 'Error adding banking info'],
                 success: []

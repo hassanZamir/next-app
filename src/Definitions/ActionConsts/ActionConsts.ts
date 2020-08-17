@@ -79,6 +79,8 @@ export const ActionConsts = {
         UpdateUserProfileSuccess: "UpdateUserProfileSuccess",
         UpdateUserProfileError: "UpdateUserProfileError",
         PostBankingInfoSuccess: "PostBankingInfoSuccess",
-        PostBankingInfoError: "PostBankingInfoError"
+        PostBankingInfoError: "PostBankingInfoError",
+        GetBankingInfoSuccess: "GetBankingInfoSuccess",
+        GetBankingInfoError: "GetBankingInfoError"
     }
 };

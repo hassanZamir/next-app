@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { IStore } from "@Redux/IStore";
 
 import { 
     PrimaryButton, 
@@ -13,6 +14,7 @@ import { BankingInfoActions } from "@Actions";
 import DobConst from "../../../pages/signup/dob-constants.json";
 import LocationsList from "../../../pages/signup/locations-list.json";
 import { USER_SESSION } from "@Interfaces/index.js";
+const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
 
 interface IUploadImage {
     key: string,
@@ -26,17 +28,16 @@ interface IUploadImage {
 }
 
 const DOC_TYPES = ["Identity Card", "Passport", "Driving Lisence", "Insurence"];
-export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SESSION}> 
-    = ({ user }) => {
+export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SESSION, defaultPersonalInformation: any}> 
+    = ({ user, defaultPersonalInformation }) => {
     
     const [enableSumit, setEnableSumit] = useState(true);
     const [files, setFiles] = useState<IUploadImage[]>([]);
     const dispatch = useDispatch();
-    // const [loading, setLoading] = useState(false);
+    
 
     async function handleSubmit(data: any) {
-        console.log("in handle submit");
-        if (enableSumit && files.length >= 2) {
+        if (('id' in defaultPersonalInformation) || (enableSumit && files.length >= 2)) {
             const filesPayload: any = [];
             files.forEach((file) => {
                 const formData = new FormData();
@@ -46,6 +47,7 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                     url: formData
                 });
             });
+            
             const params = {
                 firstName: data.firstName,
                 lastName: data.lastName,
@@ -54,12 +56,12 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                 state: data.state,
                 postCode: data.postCode,
                 country: data.country,
-                dob: data.dob.year + "-" + (DobConst.months.indexOf(data.dob.month) + 2)  + "-" + data.dob.date,
+                dob: data.dob.year + "-" + DobConst.months.indexOf(data.dob.month)  + "-" + data.dob.date,
                 docType: DOC_TYPES.indexOf(data.documentType) + 1,
                 docPhoto: "",
                 docUserPhoto: "",
                 docNumber: data.docNumber,
-                docExpiry: data.docExpiry.year + "-" + data.docExpiry.month  + "-" + data.docExpiry.date,
+                docExpiry: data.docExpiry.year + "-" + DobConst.months.indexOf(data.docExpiry.month)  + "-" + data.docExpiry.date,
                 explicitContent: true,
                 media_url: filesPayload,
                 userId: user.id
@@ -93,6 +95,35 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
         return filtered && filtered[0] ? filtered[0].preview : "";
     }
 
+    const mapDefaultValues = (defaultPersonalInfo: any) => {
+        try {
+            if (!('id' in defaultPersonalInfo)) return {};
+
+            const { dob, docType, docExpiry, docPhoto, docUserPhoto, ...rest } = defaultPersonalInfo;
+            const dateOfBirth = dob.split("T")[0].split("-");
+            const documentExpiry = docExpiry.split("T")[0].split("-");
+
+            return {
+                ...rest,
+                docPhoto: docPhoto,
+                docUserPhoto: docUserPhoto,
+                dob: {
+                    date: dateOfBirth[2],
+                    month: DobConst.months[parseInt(dateOfBirth[1])],
+                    year: dateOfBirth[0]
+                },
+                docType: DOC_TYPES[docType - 1],
+                docExpiry: {
+                    date: documentExpiry[2],
+                    month: DobConst.months[parseInt(documentExpiry[1])],
+                    year: documentExpiry[0]
+                }
+            }
+        } catch (e) {
+            console.log("Exception mapping default personal info");
+        }
+    }
+
     return (<div className="d-flex flex-column w-100 px-4">
         <div className="py-2 text-primary font-12px border-top border-bottom d-flex align-items-center justify-content-start">
             Personal Information
@@ -101,8 +132,8 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
             <div className="py-2" style={{ width: "300px" }}>
                 <FormComponent 
                     onSubmit={handleSubmit} 
-                    defaultValues={{}} 
-                    submitActive={enableSumit && files.length >= 2}
+                    defaultValues={defaultPersonalInformation ? mapDefaultValues(defaultPersonalInformation) : {}} 
+                    submitActive={('id' in defaultPersonalInformation) || (enableSumit && files.length >= 2)}
                     submitSuccess={false}
                     >
 
@@ -200,7 +231,13 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                         <div className="d-flex flex-column font-13px">
                             <div className="lato-semibold text-darkGrey my-2">Photo of your ID</div>
                             <div className="d-flex">
-                                {!getFilePreview(files, 'docPhoto') && <img src="/images/card_copy@2x.png" height="69" width="69" />}
+                                {!getFilePreview(files, 'docPhoto') && <img 
+                                    src={
+                                        defaultPersonalInformation && defaultPersonalInformation.docPhoto 
+                                        ? mediaBaseUrl + '/' + defaultPersonalInformation.docPhoto 
+                                        : "/images/card_copy@2x.png"
+                                    }
+                                    height="69" width="69" />}
                                 {getFilePreview(files, 'docPhoto') && <img height="69" width="69" src={getFilePreview(files, 'docPhoto')} />}
                                 <div className="d-flex flex-column ml-2">
                                     <div className="text-primary">Example</div>
@@ -223,7 +260,12 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                             </div>
                             <div className="lato-semibold text-darkGrey my-2">Photo of you holding your ID</div>
                             <div className="d-flex">
-                                {!getFilePreview(files, 'docUserPhoto') && <img src="/images/doc_holding_image@2x.png" height="69" width="69" />}
+                                {!getFilePreview(files, 'docUserPhoto') && <img src={
+                                        defaultPersonalInformation && defaultPersonalInformation.docUserPhoto 
+                                        ? mediaBaseUrl + '/' + defaultPersonalInformation.docUserPhoto
+                                        : "/images/doc_holding_image@2x.png"
+                                    } 
+                                    height="69" width="69" />}
                                 {getFilePreview(files, 'docUserPhoto') && <img height="69" width="69" src={getFilePreview(files, 'docUserPhoto')} />}
                                 <div className="d-flex flex-column ml-2">
                                     <div className="text-primary">Example</div>
@@ -277,6 +319,7 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                         <RadioInput 
                             type="radio"
                             value="1" 
+                            checked={defaultPersonalInformation && 'id' in defaultPersonalInformation}
                             labelText="Will you be posting explicit content?"
                             name="explicitContentRadio" 
                             wrapperClass="mt-3"

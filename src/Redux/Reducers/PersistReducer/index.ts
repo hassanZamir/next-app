@@ -61,15 +61,15 @@ export const PersistReducer = (
                 })
             });
         }
-        // case ActionConsts.Payment.OnBecomeCreatorSuccess: {
-        //     Router.push("/");
+        case ActionConsts.Payment.OnBecomeCreatorSuccess: {
+            Router.push("/");
             
-        //     return Object.assign({}, state, {
-        //         session:  Object.assign({}, state.session, {
-        //             isCreator: true
-        //         })
-        //     });
-        // }
+            return Object.assign({}, state, {
+                session:  Object.assign({}, state.session, {
+                    isCreator: true
+                })
+            });
+        }
         case ActionConsts.Login.DoLogout: {
             Router.push("/login");
             return INITIAL_STATE;

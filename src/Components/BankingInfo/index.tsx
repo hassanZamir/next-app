@@ -137,7 +137,20 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION; }>
     
     const dispatch = useDispatch();
     const bankingInfo = useSelector((state: IStore) => state.bankingInfo);
-    const { creatorProfile, errors, showPersonalInformation, success } = bankingInfo;
+    const { 
+        creatorProfile, 
+        errors, 
+        showPersonalInformation, 
+        success, 
+        defaultPersonalInformation 
+    } = bankingInfo;
+
+    useEffect(() => {
+        if (showPersonalInformation) {
+            const params = { userId: user.id };
+            dispatch(BankingInfoActions.GetPersonalInformation(params));
+        }
+    }, [showPersonalInformation]);
 
     useEffect(() => {
         const params = { username: user.username };
@@ -154,7 +167,9 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION; }>
                 coverImageUrl={creatorProfile.coverImageUrl}
                 profileImageUrl={creatorProfile.profileImageUrl} 
                 user={user} /> 
-                : <UploadPersonalInformation user={user} />}
+                : <UploadPersonalInformation 
+                    user={user} 
+                    defaultPersonalInformation={defaultPersonalInformation} />}
         {success.length > 0 && <div className="d-flex flex-column">
             {success.map((msg: string, i: number) => {
                 return <div className="text-success font-12px text-center">{ msg }</div>

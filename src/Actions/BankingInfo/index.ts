@@ -57,35 +57,62 @@ export const BankingInfoActions = {
     PostPersonalInformation: (payload: IBankingInfoPage.Actions.IGetPostPersonalInformationPayload) => async (
         dispatch: Dispatch
     ) => {
-        debugger;
         const mediaUrl = payload.media_url;
-        let updatedPayload = {...payload}
-        for (let i = 0; i < mediaUrl.length; i++) {
-            const result = await FeedsService.UploadMediaOnStorage({
-                media_url: mediaUrl[i].url
-            } as any);
-            if (result && result.status) {
-                if (mediaUrl[i].key === 'docPhoto') 
-                    updatedPayload.docPhoto = result.uploadSuccess![0].url;
-                if (mediaUrl[i].key === 'docUserPhoto') 
-                    updatedPayload.docUserPhoto = result.uploadSuccess![0].url;
-            } else {
-                debugger;
+        let updatedPayload = {...payload};
+        
+        const checkIsCreator = (result: IBankingInfoPage.Actions.IGetPostPersonalInformationResponse) => {
+            if (result.session && result.session.isCreator) {
                 dispatch({
-                    type: ActionConsts.BankingInfo.UploadProfileImagesError,
-                    payload: null
-                });
-                return;
-            }
-            if (i === mediaUrl.length - 1) {
-                debugger;
-                const postResult = await LoginService.PostPersonalInformation({ ...updatedPayload });
-                debugger;
-                dispatch({
-                    payload: postResult.status && !postResult.error ? "Success" : postResult.error,
-                    type: postResult.status ? ActionConsts.BankingInfo.PostBankingInfoSuccess : ActionConsts.BankingInfo.PostBankingInfoError
+                    payload: null,
+                    type: result.status ? ActionConsts.Payment.OnBecomeCreatorSuccess : ''
                 });
             }
         }
+
+        if (!mediaUrl.length) {
+            const postResult = await LoginService.PostPersonalInformation({ ...updatedPayload });
+            
+            checkIsCreator(postResult);
+            dispatch({
+                payload: postResult.status && !postResult.error ? "Success" : postResult.error,
+                type: postResult.status ? ActionConsts.BankingInfo.PostBankingInfoSuccess : ActionConsts.BankingInfo.PostBankingInfoError
+            });
+        } else {
+            for (let i = 0; i < mediaUrl.length; i++) {
+                const result = await FeedsService.UploadMediaOnStorage({
+                    media_url: mediaUrl[i].url
+                } as any);
+                if (result && result.status) {
+                    if (mediaUrl[i].key === 'docPhoto') 
+                        updatedPayload.docPhoto = result.uploadSuccess![0].url;
+                    if (mediaUrl[i].key === 'docUserPhoto') 
+                        updatedPayload.docUserPhoto = result.uploadSuccess![0].url;
+                } else {
+                    dispatch({
+                        type: ActionConsts.BankingInfo.UploadProfileImagesError,
+                        payload: null
+                    });
+                    return;
+                }
+                if (i === mediaUrl.length - 1) {
+                    const postResult = await LoginService.PostPersonalInformation({ ...updatedPayload });
+                    checkIsCreator(postResult);
+                    dispatch({
+                        payload: postResult.status && !postResult.error ? "Success" : postResult.error,
+                        type: postResult.status ? ActionConsts.BankingInfo.PostBankingInfoSuccess : ActionConsts.BankingInfo.PostBankingInfoError
+                    });
+                }
+            }
+        }
+    },
+    GetPersonalInformation: (payload: IBankingInfoPage.Actions.IGetGETPersonalInformationPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await LoginService.GetPersonalInformation(payload);
+        
+        dispatch({
+            payload: { personalInformation: result.status && result.response ? result.response : {} },
+            type: result.status && result.response ? ActionConsts.BankingInfo.GetBankingInfoSuccess : ActionConsts.BankingInfo.GetBankingInfoError
+        });
     }
 }
