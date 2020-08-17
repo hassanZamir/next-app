@@ -170,6 +170,7 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION; }>
                 : <UploadPersonalInformation 
                     user={user} 
                     defaultPersonalInformation={defaultPersonalInformation} />}
+        </React.Fragment>}
         {success.length > 0 && <div className="d-flex flex-column">
             {success.map((msg: string, i: number) => {
                 return <div className="text-success font-12px text-center">{ msg }</div>
@@ -180,6 +181,5 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION; }>
                 return <div className="text-danger font-12px text-center">{ error }</div>
             })}</div>
         }
-        </React.Fragment>}
     </div>
 }

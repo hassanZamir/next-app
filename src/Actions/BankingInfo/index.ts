@@ -19,7 +19,7 @@ export const BankingInfoActions = {
 
         dispatch({
             payload: { profile: result.status && result.response ? result.response : {}},
-            type: result.status ? ActionConsts.BankingInfo.GetUserProfileSuccess : ActionConsts.BankingInfo.GetUserProfileError
+            type: result.status && result.response ? ActionConsts.BankingInfo.GetUserProfileSuccess : ActionConsts.BankingInfo.GetUserProfileError
         });
     },
     UploadProfileImages: (payload: IBankingInfoPage.Actions.IGetUploadProfileImagesPayload) => async (
