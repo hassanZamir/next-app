@@ -10,7 +10,8 @@ import { ICreatorContent } from "./CreatorContent";
 import { CONTENT_TYPE } from "src/Constants";
 
 export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps> 
-    = ({ user, scrolledToBottom, followingFee, contentCount, imagesCount, videosCount, name, profileUserName, isFollower, onFollow }) => {
+    = ({ user, scrolledToBottom, followingFee, contentCount, imagesCount, 
+        videosCount, name, profileUserName, isFollower, onFollow }) => {
 
     const creatorProfileState = useSelector((state: IStore) => state.creatorProfile);
     const { creatorFeeds, mediaGallary, errors } = creatorProfileState;
@@ -44,26 +45,30 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
     }, [selectedTab]);
 
     const getCreatorFeeds = async () => {
-        const params = {
-            username: profileUserName,
-            type: 0,
-            page: paginationPageNo,
-            offset: 5,
-            viewer: user ? user.id : 0
-        };
-        await dispatch(CreatorProfileActions.GetCreatorFeeds(params));
-        setPaginationPageNo(paginationPageNo+1);
+        if (isFollower) {
+            const params = {
+                username: profileUserName,
+                type: 0,
+                page: paginationPageNo,
+                offset: 5,
+                viewer: user ? user.id : 0
+            };
+            await dispatch(CreatorProfileActions.GetCreatorFeeds(params));
+            setPaginationPageNo(paginationPageNo + 1);
+        }
     }
 
     const getMediaGallary = async () => {
-        const params = {
-            username: profileUserName,
-            type: selectedTab,
-            page: paginationPageNo,
-            offset: 10
-        };
-        await dispatch(CreatorProfileActions.GetMediaGallary(params));
-        setPaginationPageNo(paginationPageNo+1);
+        if (isFollower) {
+            const params = {
+                username: profileUserName,
+                type: selectedTab,
+                page: paginationPageNo,
+                offset: 10
+            };
+            await dispatch(CreatorProfileActions.GetMediaGallary(params));
+            setPaginationPageNo(paginationPageNo + 1);
+        }
     }
     
     const changeTab = (param: CONTENT_TYPE) => {
