@@ -57,8 +57,8 @@ export const BankingInfoActions = {
     PostPersonalInformation: (payload: IBankingInfoPage.Actions.IGetPostPersonalInformationPayload) => async (
         dispatch: Dispatch
     ) => {
-        const mediaUrl = payload.media_url;
-        let updatedPayload = {...payload};
+        const { media_url, ...rest } = payload;
+        let updatedPayload = {...rest};
         
         const checkIsCreator = (result: IBankingInfoPage.Actions.IGetPostPersonalInformationResponse) => {
             if (result.session && result.session.isCreator) {
@@ -68,9 +68,9 @@ export const BankingInfoActions = {
                 });
             }
         }
-
-        if (!mediaUrl.length) {
-            const postResult = await LoginService.PostPersonalInformation({ ...updatedPayload });
+        
+        if (!media_url.length) {
+            const postResult = await LoginService.PostPersonalInformation({ ...updatedPayload } as any);
             
             checkIsCreator(postResult);
             dispatch({
@@ -78,14 +78,14 @@ export const BankingInfoActions = {
                 type: postResult.status ? ActionConsts.BankingInfo.PostBankingInfoSuccess : ActionConsts.BankingInfo.PostBankingInfoError
             });
         } else {
-            for (let i = 0; i < mediaUrl.length; i++) {
+            for (let i = 0; i < media_url.length; i++) {
                 const result = await FeedsService.UploadMediaOnStorage({
-                    media_url: mediaUrl[i].url
+                    media_url: media_url[i].url
                 } as any);
                 if (result && result.status) {
-                    if (mediaUrl[i].key === 'docPhoto') 
+                    if (media_url[i].key === 'docPhoto') 
                         updatedPayload.docPhoto = result.uploadSuccess![0].url;
-                    if (mediaUrl[i].key === 'docUserPhoto') 
+                    if (media_url[i].key === 'docUserPhoto') 
                         updatedPayload.docUserPhoto = result.uploadSuccess![0].url;
                 } else {
                     dispatch({
@@ -94,8 +94,8 @@ export const BankingInfoActions = {
                     });
                     return;
                 }
-                if (i === mediaUrl.length - 1) {
-                    const postResult = await LoginService.PostPersonalInformation({ ...updatedPayload });
+                if (i === media_url.length - 1) {
+                    const postResult = await LoginService.PostPersonalInformation({ ...updatedPayload } as any);
                     checkIsCreator(postResult);
                     dispatch({
                         payload: postResult.status && !postResult.error ? "Success" : postResult.error,

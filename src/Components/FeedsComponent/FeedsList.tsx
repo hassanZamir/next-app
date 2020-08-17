@@ -66,7 +66,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
     const [selected, setSelected] = useState(0);
     const mediaRefs: any = [];
     const container: any = useRef(null);
-    const [showMediaCarousel, setShowMediaCarousel] = useState(false);
+    const [showMediaCarousel, setShowMediaCarousel] = useState(-1);
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
 
@@ -111,13 +111,18 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
                 return <div key={i}
                         className="scroll-item align-items-center justify-content-center"
                         ref={setMediaRef}>
-                            {media.type === 2 && <VideoPlayer onClick={(e)=> { e.preventDefault(); setShowMediaCarousel(true); toggle(); }} videoHeight="260px" src={mediaBaseUrl + '/' + media.url + media.token}  />}
-                            {media.type === 1 && <BackgroundImage onClick={(e)=> { setShowMediaCarousel(true); toggle(); }} paddingBottom="54.25%" src={ [mediaBaseUrl + '/' + media.url + media.token, '/images/feed_placeholder.png'] } />}
+                            {media.type === 2 && <VideoPlayer onClick={(e)=> { e.preventDefault(); setShowMediaCarousel(i); toggle(); }} videoHeight="260px" src={mediaBaseUrl + '/' + media.url + media.token}  />}
+                            {media.type === 1 && <BackgroundImage onClick={(e)=> { setShowMediaCarousel(i); toggle(); }} paddingBottom="54.25%" src={ [mediaBaseUrl + '/' + media.url + media.token, '/images/feed_placeholder.png'] } />}
                 </div>
             })}
         </div>
         {mediaUrl.length > 1 && renderNavigation()}
-        {showMediaCarousel && <MediaCarousel media={mediaUrl} isShowing={isShowing} modalRef={modalRef} toggle={toggle} />}
+        {showMediaCarousel >= 0 && <MediaCarousel 
+            media={mediaUrl} 
+            isShowing={isShowing} 
+            modalRef={modalRef} 
+            toggle={toggle} 
+            startingIndex={showMediaCarousel} />}
     </div>);
 }
 const Feed: React.FunctionComponent<IFeed.IProps> 

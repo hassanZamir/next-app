@@ -9,7 +9,7 @@ const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
 export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: mediaUrl[], errors: string }> 
     = ({ mediaGallary, errors }) => {
     
-    const [showMediaCarousel, setShowMediaCarousel] = useState(false);
+    const [showMediaCarousel, setShowMediaCarousel] = useState(-1);
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
 
@@ -32,17 +32,21 @@ export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: mediaUrl[
                         >
                         <div className={"w-100 h-100 d-flex align-items-center justify-content-center " + (j === 1 ? "mx-1" : "")}>
                             {media.type === 2 && <VideoPlayer 
-                                onClick={(e)=> { e.preventDefault(); setShowMediaCarousel(true); toggle(); }} 
+                                onClick={(e)=> { e.preventDefault(); setShowMediaCarousel(i*3 + j); toggle(); }} 
                                 src={mediaBaseUrl + '/' + media.url + media.token}  />}
 
                             {media.type === 1 && <BackgroundImage paddingBottom="65.25%" 
-                                onClick={(e)=> { setShowMediaCarousel(true); toggle(); }}
+                                onClick={(e)=> { setShowMediaCarousel(i*3 + j); toggle(); }}
                                 src={[mediaBaseUrl + '/' + media.url + media.token, '/images/feed_placeholder.png']} />}
                         </div>
                     </div>
                 })}
             </div>
         })}
-        {showMediaCarousel && <MediaCarousel media={mediaGallary} isShowing={isShowing} modalRef={modalRef} toggle={toggle} />}
+        {showMediaCarousel >= 0 && <MediaCarousel media={mediaGallary} 
+            isShowing={isShowing} 
+            modalRef={modalRef} 
+            toggle={toggle} 
+            startingIndex={showMediaCarousel} />}
     </div>
 }

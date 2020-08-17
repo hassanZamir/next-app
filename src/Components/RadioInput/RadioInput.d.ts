@@ -14,6 +14,7 @@ declare namespace IRadioInput {
         inputHeight?: string;
         inputWidth?: string;
         labelTextElem?: React.ReactNode;
+        onClick?: ()=>void
     }
 }
 

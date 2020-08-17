@@ -11,13 +11,14 @@ declare namespace IMediaCarousel {
       isShowing: boolean;
       modalRef?: RefObject<HTMLDivElement>;
       media: mediaUrl[],
-      toggle: ()=>void
+      toggle: ()=>void,
+      startingIndex: number
   }
 }
 const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
 
 export const MediaCarousel: React.RefForwardingComponent<HTMLDivElement, IMediaCarousel.IProps>
-    = ({ media, isShowing, modalRef, toggle }) => {
+    = ({ media, isShowing, modalRef, toggle, startingIndex }) => {
     
     const renderItem = (a: any) => {
       if (a.type === 1)
@@ -44,7 +45,8 @@ export const MediaCarousel: React.RefForwardingComponent<HTMLDivElement, IMediaC
             </button>
         </div>
         <ImageGallery items={mapMedia(media)} renderItem={renderItem} 
-          showThumbnails={false} showIndex={true} />
+          showThumbnails={false} showIndex={true} 
+          startIndex={startingIndex} />
       </div>
     </Modal>, document.body) : null
 }

@@ -27,14 +27,19 @@ interface IUploadImage {
     }
 }
 
-const DOC_TYPES = ["Identity Card", "Passport", "Driving Lisence", "Insurence"];
+const DOC_TYPES = ["Identity Card", "Passport", "Driving Licence"];
 export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SESSION, defaultPersonalInformation: any}> 
     = ({ user, defaultPersonalInformation }) => {
     
     const [enableSumit, setEnableSumit] = useState(true);
     const [files, setFiles] = useState<IUploadImage[]>([]);
+    const [checkedConsent, setCheckedConsent] = useState(false);
     const dispatch = useDispatch();
     
+    useEffect(() => {
+        if (defaultPersonalInformation && ('id' in defaultPersonalInformation))
+            setCheckedConsent(true);
+    }, []);
 
     async function handleSubmit(data: any) {
         if (('id' in defaultPersonalInformation) || (enableSumit && files.length >= 2)) {
@@ -62,7 +67,7 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                 docUserPhoto: "",
                 docNumber: data.docNumber,
                 docExpiry: data.docExpiry.year + "-" + DobConst.months.indexOf(data.docExpiry.month)  + "-" + data.docExpiry.date,
-                explicitContent: true,
+                explicitContent: checkedConsent,
                 media_url: filesPayload,
                 userId: user.id
             }
@@ -99,7 +104,10 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
         try {
             if (!('id' in defaultPersonalInfo)) return {};
 
-            const { dob, docType, docExpiry, docPhoto, docUserPhoto, ...rest } = defaultPersonalInfo;
+            const { dob, docType, docExpiry, 
+                docPhoto, docUserPhoto, 
+                explicitContent,
+                ...rest } = defaultPersonalInfo;
             const dateOfBirth = dob.split("T")[0].split("-");
             const documentExpiry = docExpiry.split("T")[0].split("-");
 
@@ -107,6 +115,7 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                 ...rest,
                 docPhoto: docPhoto,
                 docUserPhoto: docUserPhoto,
+                explicitContent: explicitContent ? setCheckedConsent(true) : setCheckedConsent(false),
                 dob: {
                     date: dateOfBirth[2],
                     month: DobConst.months[parseInt(dateOfBirth[1])],
@@ -297,7 +306,31 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                             validationRules={{ required: {value: true, message: "Card Number is required" } }} 
                         />
                         
-                        <MultiLabelInput 
+                        <SelectInput
+                            type={["number", "number", "number"]}
+                            labelText="Expiry" 
+                            name={["docExpiry.date", "docExpiry.month", "docExpiry.year"]}
+                            options={[DobConst.date, DobConst.months, DobConst.year]} 
+                            wrapperClass="mt-3"
+                            validationRules={[{ 
+                                required: "Date is required",
+                                validate: (value: string) => {
+                                    return value !== "DD" ? true : "Please select Date of Birth"
+                                } 
+                            }, { 
+                                required: "Month is required",
+                                validate: (value: string) => {
+                                    return value !== "MM" ? true : "Please select Month of Birth"
+                                }
+                            }, { 
+                                required: "Year is required",
+                                validate: (value: string) => {
+                                    return value !== "YYYY" ? true : "Please select Year of Birth"
+                                } 
+                            }]}
+                        />
+
+                        {/* <MultiLabelInput 
                             type={["text", "text", "text"]}
                             labelText="Expiry" 
                             name={["docExpiry.date", "docExpiry.month", "docExpiry.year"]} 
@@ -310,22 +343,24 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                             }, { 
                                 required: "Expiry is required"
                             }]}
-                        />
+                        /> */}
 
                         <div className="w-100 mt-3 d-flex align-items-start text-darkGrey font-10px lato-semibold">
-                            Explicit Content <span className="lato-regular">(Tick if yes)</span>
+                            Explicit Content <span className="lato-regular ml-1">(Tick if yes)</span>
                         </div>
                         
                         <RadioInput 
+                            onClick={() => { 
+                                setCheckedConsent(!checkedConsent) 
+                            }}
                             type="radio"
-                            value="1" 
-                            checked={defaultPersonalInformation && 'id' in defaultPersonalInformation}
+                            value={checkedConsent ? "1" : "0"} 
+                            checked={checkedConsent}
                             labelText="Will you be posting explicit content?"
                             name="explicitContentRadio" 
                             wrapperClass="mt-3"
                             inputMargin="0px 5px 0px 0px"
                             labelTextClass="text-darkGrey font-10px"
-                            validationRules={{ required: {value: true, message: "Explicit content tick is required" } }}
                         />
 
                         <PrimaryButton  

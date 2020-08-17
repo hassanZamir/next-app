@@ -22,13 +22,14 @@ const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment
         <div className="d-flex flex-column pl-2 w-100 justify-content-between">
             <div className="d-flex justify-content-between align-items-center w-100">
                 <span className="seoge-ui-bold font-13px text-primary">{ comment.userName }</span>
-                <div className="d-flex">
-                    <div className="d-flex align-items-center cursor-pointer" onClick={() => { likeComment(comment) }}>
+                <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center cursor-pointer mr-1" onClick={() => { likeComment(comment) }}>
                         <span className="font-13px text-darkGrey mr-1">{ comment.likesCount || 0 }</span>
                         <FontAwesomeIcon icon={faHeart} color={comment.content_viewer_like ? "#F57B52" : "#A0A0A0"} size="lg" />
                     </div>
-                    <div style={{ width: "20px", height: "20px" }}>
-                        {comment.isTipComment && <img style={{ margin: "0px -15px 0px 5px" }} src="/images/money_copy@2x.png" height="20px" width="20px" />}
+                    <div style={{ minWidth: "20px", minHeight: "20px" }}>
+                        {comment.isTipComment && <img src="/images/money_copy@2x.png" 
+                            height="20px" width="20px" />}
                     </div>
                 </div>
             </div>
@@ -41,9 +42,15 @@ const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment
 const CommentsList: React.FunctionComponent<{onSeeLatestComments: ()=>void; scrolledToTop: boolean; commentsCount: number; onScroll: any; viewAllComments: boolean; setViewAllComments: (a: boolean)=>void; onViewAllComments: ()=>void; commentsListRef: RefObject<HTMLDivElement>, loading: boolean, error: string, comments: COMMENT[], likeComment: (comment: COMMENT)=>void }> = 
     ({ onSeeLatestComments, scrolledToTop, commentsCount, loading, error, comments, likeComment, commentsListRef, onViewAllComments, viewAllComments, setViewAllComments, onScroll }) => {
     
-    const [COMMENT_COUNT, setCOMMENT_COUNT] = useState(commentsCount);
+    const [defaultCommentsCount, setDefaultCommentCount] = useState(commentsCount);
     const [scrollingTop, setScrollingTop] = useState(false);
+    const [showSeeAllComments, setShowSeeAllComments] = useState(false);
 
+    useEffect(() => {
+        if (commentsCount > defaultCommentsCount) setShowSeeAllComments(true);
+        else setShowSeeAllComments(false);
+    }, [commentsCount]);
+    
     return <div onScroll={(e: any)=> {
             const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
             !bottom ? setScrollingTop(true) : setScrollingTop(false); 
@@ -52,7 +59,7 @@ const CommentsList: React.FunctionComponent<{onSeeLatestComments: ()=>void; scro
         style={{ flex: "1", overflowY: "scroll" }} 
         className={"scroll-y d-flex align-items-center flex-column px-4 border border-top-1 border-right-0 border-left-0 border-bottom-1 border-lightGrey " + (loading ? "justify-content-center" : "")}>
         {loading && <LoadingSpinner size="2x" />}
-        {!viewAllComments && !loading && commentsCount > 6 && scrollingTop && <div onClick={()=>{ setViewAllComments(true); onViewAllComments() }} 
+        {!viewAllComments && !loading && commentsCount > 6 && scrollingTop && <div onClick={()=>{ setViewAllComments(true); setShowSeeAllComments(false); onViewAllComments() }} 
             className="px-3 py-2 bg-primary text-white font-12px mt-2 text-underline cursor-pointer"
             style={{ 
                 position: scrolledToTop ? "initial" : "absolute",
@@ -63,11 +70,11 @@ const CommentsList: React.FunctionComponent<{onSeeLatestComments: ()=>void; scro
         {!loading && comments.map((comment: COMMENT, i) => {
             return <Comment key={i} comment={comment} likeComment={likeComment} commentsListRef={i >= comments.length - 1 ? commentsListRef : null} />
         })}
-        {viewAllComments && !loading && commentsCount > COMMENT_COUNT && <div onClick={()=>{ setViewAllComments(false); onSeeLatestComments() }} 
+        {viewAllComments && !loading && showSeeAllComments && <div onClick={()=>{ setViewAllComments(false); onSeeLatestComments() }} 
             className="px-3 py-2 bg-primary text-white font-12px mt-2 text-underline cursor-pointer"
             style={{ 
                 position: "absolute",
-                borderRadius: "7px", bottom: "70px" 
+                borderRadius: "7px", bottom: "75px" 
             }}>
             See New Comments
         </div>}
@@ -147,18 +154,18 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
         scrollToLastComment();
     }
 
-    const trackScrolling = (e: any) => {
+    const trackScrolling = async (e: any) => {
         const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
         const top = e.target.scrollTop <= 10;
         if (bottom && viewAllComments) {
             const params = {
                 contentId: contentId, 
-                pageNo: paginationPageNo + 1, 
+                pageNo: paginationPageNo, 
                 offset: 7, 
                 userId: user ? user.id : 0,
                 sort: 'asc'
             };
-            getComments(params);
+            await getComments(params);
             setPaginationPageNo(paginationPageNo+1)
         }
         if (top && !viewAllComments) {
@@ -186,6 +193,7 @@ export const Comments: React.FunctionComponent<{ contentId: number; user: USER_S
             sort: 'asc'
         };
         await getComments(params);
+        setPaginationPageNo(1);
         setLoading(false);
     }
     
