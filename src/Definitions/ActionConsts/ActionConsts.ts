@@ -47,7 +47,8 @@ export const ActionConsts = {
         GetProfileFollowersSuccess: "GetProfileFollowersSuccess",
         GetProfileFollowersError: "GetProfileFollowersError",
         GetMediaGallarySuccess: "GetMediaGallarySuccess",
-        GetMediaGallaryError: "GetMediaGallaryError"
+        GetMediaGallaryError: "GetMediaGallaryError",
+        TabChanged: "TabChanged"
     },
     Status: {
         GetAllCommentsSuccess: "GetAllCommentsSuccess",

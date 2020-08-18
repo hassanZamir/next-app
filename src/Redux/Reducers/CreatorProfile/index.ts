@@ -7,6 +7,9 @@ import { IAction, IProfilePage, FEED, CREATOR_PROFILE, mediaUrl } from "@Interfa
 // #endregion Interface Imports
 
 const INITIAL_STATE: IProfilePage.IStateProps = {
+    emptyPageNoFeeds: 9999,
+    emptyPageNoImage: 9999,
+    emptyPageNoVideo: 9999,
     mediaGallary: new Array<mediaUrl>(),
     errors: '',
     creatorProfile: <CREATOR_PROFILE>{},
@@ -22,12 +25,26 @@ export const CreatorProfileReducer = (
         IProfilePage.Actions.IMapMediaGallaryResponse>
 ) => {
     switch (action.type) {
+        // case ActionConsts.CreatorProfile.TabChanged: {
+        //     return Object.assign({}, state, {
+        //         mediaGallary: [],
+        //         creatorFeeds: [],
+        //         errors: ""
+        //     });
+        // }
         case ActionConsts.CreatorProfile.GetMediaGallarySuccess: {
-            let { mediaGallary } = action.payload!;
-            return Object.assign({}, state, {
-                mediaGallary: mediaGallary,
-                errors: ""
-            });
+            let { mediaGallary, type, page } = action.payload!;
+
+            if (mediaGallary.length) {
+                return Object.assign({}, state, {
+                    mediaGallary: [...state.mediaGallary, ...mediaGallary],
+                    errors: ""
+                });
+            } else {
+                if (type === 1) return Object.assign({}, state, { emptyPageNoImage: page });
+                else if (type === 2) return Object.assign({}, state, { emptyPageNoVideo: page });
+                else return Object.assign({}, state, { errors: 'Something went wrong' });
+            }
         }
         case ActionConsts.CreatorProfile.GetMediaGallaryError: {
             return Object.assign({}, state, {
@@ -60,11 +77,15 @@ export const CreatorProfileReducer = (
             });
         }
         case ActionConsts.CreatorProfile.GetCreatorFeedsSuccess: {
-            let { feeds } = action.payload!;
+            let { feeds, page } = action.payload!;
 
-            return Object.assign({}, state, {
-                creatorFeeds: [...state.creatorFeeds, ...feeds]
-            });
+            if (feeds.length) {
+                return Object.assign({}, state, {
+                    creatorFeeds: [...state.creatorFeeds, ...feeds]
+                });
+            } else {
+                return Object.assign({}, state, { emptyPageNoFeeds: page });
+            }   
         }
         case ActionConsts.CreatorProfile.GetCreatorFeedsError: {
             return Object.assign({}, state, {

@@ -8,6 +8,9 @@ declare namespace IProfilePage {
         creatorProfile: CREATOR_PROFILE,
         creatorFeeds: FEED[],
         mediaGallary: mediaUrl[],
+        emptyPageNoFeeds: number,
+        emptyPageNoImage: number,
+        emptyPageNoVideo: number,
         followers: {userId: number}[]
     }
 
@@ -17,11 +20,14 @@ declare namespace IProfilePage {
         }
 
         export interface IMapCreatorFeedsResponse {
+            page: number,
             feeds: FEED[]
         }
 
         export interface IMapMediaGallaryResponse {
-            mediaGallary: mediaUrl[]
+            mediaGallary: mediaUrl[],
+            type: number,
+            page: number
         }
 
         export interface IMapProfileFollowersResponse {

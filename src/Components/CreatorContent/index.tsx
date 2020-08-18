@@ -14,17 +14,21 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
         videosCount, name, profileUserName, isFollower, onFollow }) => {
 
     const creatorProfileState = useSelector((state: IStore) => state.creatorProfile);
-    const { creatorFeeds, mediaGallary, errors } = creatorProfileState;
+    const { creatorFeeds, mediaGallary, errors,
+        emptyPageNoFeeds, emptyPageNoImage, emptyPageNoVideo } = creatorProfileState;
+
     const dispatch = useDispatch();
     const [selectedTab, setSetectedTab] = useState(0);
-    const [paginationPageNo, setPaginationPageNo] = useState(0);
+    const [paginationPageNoFeeds, setPaginationPageNoFeeds] = useState(0);
+    const [paginationPageNoImage, setPaginationPageNoImage] = useState(0);
+    const [paginationPageNoVideo, setPaginationPageNoVideo] = useState(0);
 
     useEffect(() => {
         if (isFollower) {
             const params = {
                 username: profileUserName,
                 type: 0,
-                page: paginationPageNo,
+                page: paginationPageNoFeeds,
                 offset: 5,
                 viewer: user ? user.id : 0
             };
@@ -45,34 +49,40 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
     }, [selectedTab]);
 
     const getCreatorFeeds = async () => {
-        if (isFollower) {
+        const hasPaginationNumber = paginationPageNoFeeds < emptyPageNoFeeds;
+        if (isFollower && hasPaginationNumber) {
             const params = {
                 username: profileUserName,
                 type: 0,
-                page: paginationPageNo,
+                page: paginationPageNoFeeds,
                 offset: 5,
                 viewer: user ? user.id : 0
             };
             await dispatch(CreatorProfileActions.GetCreatorFeeds(params));
-            setPaginationPageNo(paginationPageNo + 1);
+            setPaginationPageNoFeeds(paginationPageNoFeeds + 1);
         }
     }
 
     const getMediaGallary = async () => {
-        if (isFollower) {
+        const isImageGallary = selectedTab === 1,
+        hasPaginationNumber = isImageGallary ? paginationPageNoImage < emptyPageNoImage 
+            : paginationPageNoVideo < emptyPageNoVideo;
+
+        if (isFollower && hasPaginationNumber) {
             const params = {
                 username: profileUserName,
                 type: selectedTab,
-                page: paginationPageNo,
+                page: isImageGallary ? paginationPageNoImage : paginationPageNoVideo,
                 offset: 10
             };
             await dispatch(CreatorProfileActions.GetMediaGallary(params));
-            setPaginationPageNo(paginationPageNo + 1);
+
+            isImageGallary ? setPaginationPageNoImage(paginationPageNoImage + 1)
+            : setPaginationPageNoVideo(paginationPageNoVideo + 1);
         }
     }
     
     const changeTab = (param: CONTENT_TYPE) => {
-        setPaginationPageNo(0);
         setSetectedTab(param);
     }
 
@@ -95,7 +105,10 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
                 </div>)
             }
             {
-                (selectedTab === 1 || selectedTab === 2) && (<MediaGridGallary errors={errors} mediaGallary={mediaGallary} />)
+                (selectedTab === 1 || selectedTab === 2) && (<MediaGridGallary errors={errors} 
+                        mediaGallary={mediaGallary.filter((media: any) => {
+                            return media.type === selectedTab;
+                        })} />)
             }
         </React.Fragment>}
     </div>

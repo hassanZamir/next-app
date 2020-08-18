@@ -28,7 +28,10 @@ export const CreatorProfileActions = {
         const result = await CreatorProfileService.GetCreatorFeeds(payload);
         
         dispatch({
-            payload: { feeds: result.response },
+            payload: { 
+                feeds: result.status && result.response ? result.response : [],
+                page: payload.page
+            },
             type: result.status ? ActionConsts.CreatorProfile.GetCreatorFeedsSuccess : ActionConsts.CreatorProfile.GetCreatorFeedsError
         });
     },
@@ -66,8 +69,20 @@ export const CreatorProfileActions = {
     ) => {
         const result = await CreatorProfileService.GetMediaGallary(payload);
         dispatch({
-            payload: { mediaGallary: result.response && result.status ? result.response : [] },
+            payload: { 
+                mediaGallary: result.response && result.status ? result.response : [], 
+                type: payload.type,
+                page: payload.page
+            },
             type: result.response && result.status ? ActionConsts.CreatorProfile.GetMediaGallarySuccess : ActionConsts.CreatorProfile.GetMediaGallaryError
+        });
+    },
+    TabChanged: (payload: number) => async (
+        dispatch: Dispatch
+    ) => {
+        dispatch({
+            payload: {tabIndex: payload},
+            type: ActionConsts.CreatorProfile.TabChanged
         });
     }
 };
