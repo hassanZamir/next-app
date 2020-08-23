@@ -8,20 +8,22 @@ import { theme } from "@Definitions/Styled/theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
+const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
+
 export const ProfileSuggestion: React.FunctionComponent<{creatorProfile: CREATOR_PROFILE}> = ({ creatorProfile }) => {
     return <Link href={"/profile/" + creatorProfile.userName}>
         <div className="position-relative my-3 cursor-pointer">
             <div className="primary-border-thick border-primary" 
                 style={{ borderRadius: "13px 13px 0px 0px", border: "1.5px solid" }}>
                 <BackgroundImage 
-                    src={[creatorProfile.coverImageUrl, "/images/cover_image_placeholder.jpg"]} 
+                    src={[mediaBaseUrl + '/' + creatorProfile.coverImageUrl, "/images/cover_image_placeholder.jpg"]} 
                     paddingBottom="17.25%" 
                     borderRadius="13px 13px 0px 0px" 
                     backgroundPosition="top" />
                 <div className="position-relative">
                     <div style={{ position: "absolute", left: "1rem", bottom: "-2rem" }}>
                         <CircularImage 
-                            src={[creatorProfile.profileImageUrl, '/images/profile_image_placeholder.jpg']} 
+                            src={[mediaBaseUrl + '/' + creatorProfile.profileImageUrl, '/images/profile_image_placeholder.jpg']} 
                             height="75px" 
                             width="75px" 
                             border={"2px solid " + theme.colors.primary} />

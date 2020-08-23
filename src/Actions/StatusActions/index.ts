@@ -54,12 +54,12 @@ export const StatusActions = {
             type: result.status ? ActionConsts.Status.LikeCommentSuccess : ActionConsts.Status.LikeCommentError
         });
     },
-    GetFeed: (payload: IStatusPage.Actions.IGetGetFeedPayload) => async () => {
+    GetFeed: (payload: IStatusPage.Actions.IGetGetFeedPayload) => async (dispatch: Dispatch) => {
         const result = await FeedsService.GetFeed(payload);
-        return result;
-        // dispatch({
-        //     payload: { feed: result.status && result.response ? result.response : {}},
-        //     type: result.status ? ActionConsts.Status.LikeCommentSuccess : ActionConsts.Status.LikeCommentError
-        // });
+        
+        dispatch({
+            payload: { feed: result.status && result.response ? result.response[0] : {} },
+            type: ActionConsts.Feeds.SetPersistFeed
+        });
     }
 };

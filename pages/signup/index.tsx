@@ -151,6 +151,9 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                                 validationRules={{ 
                                     required: "Username is required",
                                     validate: async (value: string) => {
+                                        var regex = /^[a-zA-Z0-9_-]+$/;
+                                        if (!regex.test(value)) return "Username can contain alphanumeric characters, _ or -"
+
                                         const helper = await validateUserName({ username: value });
                                         const response = await helper();
                                         if (response && response.errors

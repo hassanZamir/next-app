@@ -25,14 +25,17 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
 
     useEffect(() => {
         if (isFollower) {
-            const params = {
-                username: profileUserName,
-                type: 0,
-                page: paginationPageNoFeeds,
-                offset: 5,
-                viewer: user ? user.id : 0
-            };
-            dispatch(CreatorProfileActions.GetCreatorFeeds(params));
+            (async ()=>{
+                const params = {
+                    username: profileUserName,
+                    type: 0,
+                    page: paginationPageNoFeeds,
+                    offset: 5,
+                    viewer: user ? user.id : 0
+                };
+                await dispatch(CreatorProfileActions.GetCreatorFeeds(params));  
+                setPaginationPageNoFeeds(paginationPageNoFeeds + 1);
+            })();
         }
     }, [isFollower]);
 

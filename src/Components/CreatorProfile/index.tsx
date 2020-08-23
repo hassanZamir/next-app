@@ -6,15 +6,17 @@ import { CREATOR_PROFILE } from "@Interfaces";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faEnvelope, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
+const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
+
 export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creatorProfile: CREATOR_PROFILE, onFollow: (followOrUnfolow: boolean)=>void}> 
     = ({ creatorProfile, onFollow, isFollower }) => {
     
     const [bioToggle, setBioToggle] = useState(false);
     return <React.Fragment>
-        <BackgroundImage src={[creatorProfile.coverImageUrl, "/images/cover_image_placeholder.jpg"]} paddingBottom="56.25%" />
+        <BackgroundImage src={[mediaBaseUrl + '/' + creatorProfile.coverImageUrl, "/images/cover_image_placeholder.jpg"]} paddingBottom="56.25%" />
         <div className="position-relative">
             <div style={{ position: "absolute", left: "1rem", bottom: "-2rem" }}>
-                <CircularImage src={[creatorProfile.profileImageUrl, '/images/profile_image_placeholder.jpg']} height="100px" width="100px" />
+                <CircularImage src={[mediaBaseUrl + '/' + creatorProfile.profileImageUrl, '/images/profile_image_placeholder.jpg']} height="100px" width="100px" />
             </div>
         </div>
         <div className="d-flex justify-content-between w-100 px-4 py-2" style={{ marginTop: "2rem", minHeight: "100px" }}>

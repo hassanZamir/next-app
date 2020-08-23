@@ -16,19 +16,10 @@ export const ContentComponent: React.FunctionComponent<{ userName: string, conte
     
     const [getFeedError, setGetFeedError] = useState('');
     const dispatch = useDispatch();
-
+    
     const pollFeed = () => {
         const params = { viewerId: user.id, contentId: contentId };
-        StatusActions.GetFeed(params)().then(function(apiResponse) {
-            if (apiResponse.status && apiResponse.response) {
-                dispatch({
-                    payload: { feed: apiResponse.response[0] },
-                    type: ActionConsts.Feeds.SetPersistFeed
-                });
-            } else {
-                setGetFeedError("Couldn't get feed");
-            }
-        });
+        dispatch(StatusActions.GetFeed(params));
     }
 
     useEffect(() => {

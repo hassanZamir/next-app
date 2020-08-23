@@ -109,7 +109,6 @@ export const BankingInfoActions = {
         dispatch: Dispatch
     ) => {
         const result = await LoginService.GetPersonalInformation(payload);
-        
         dispatch({
             payload: { personalInformation: result.status && result.response ? result.response : {} },
             type: result.status && result.response ? ActionConsts.BankingInfo.GetBankingInfoSuccess : null

@@ -37,9 +37,10 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
     const dispatch = useDispatch();
     
     useEffect(() => {
-        if (defaultPersonalInformation && ('id' in defaultPersonalInformation))
+        if ('id' in defaultPersonalInformation && defaultPersonalInformation.explicitContent)
             setCheckedConsent(true);
-    }, []);
+
+    }, [defaultPersonalInformation]);
 
     async function handleSubmit(data: any) {
         if (('id' in defaultPersonalInformation) || (enableSumit && files.length >= 2)) {
@@ -110,12 +111,12 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                 ...rest } = defaultPersonalInfo;
             const dateOfBirth = dob.split("T")[0].split("-");
             const documentExpiry = docExpiry.split("T")[0].split("-");
-
+            
             return {
                 ...rest,
                 docPhoto: docPhoto,
                 docUserPhoto: docUserPhoto,
-                explicitContent: explicitContent ? setCheckedConsent(true) : setCheckedConsent(false),
+                explicitContent: explicitContent,
                 dob: {
                     date: dateOfBirth[2],
                     month: DobConst.months[parseInt(dateOfBirth[1])],
@@ -133,6 +134,7 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
         }
     }
 
+    const mappedDefaultPermissions = ('id' in defaultPersonalInformation) ? mapDefaultValues(defaultPersonalInformation) : {}
     return (<div className="d-flex flex-column w-100 px-4">
         <div className="py-2 text-primary font-12px border-top border-bottom d-flex align-items-center justify-content-start">
             Personal Information
@@ -141,7 +143,7 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
             <div className="py-2" style={{ width: "300px" }}>
                 <FormComponent 
                     onSubmit={handleSubmit} 
-                    defaultValues={defaultPersonalInformation ? mapDefaultValues(defaultPersonalInformation) : {}} 
+                    defaultValues={mappedDefaultPermissions} 
                     submitActive={('id' in defaultPersonalInformation) || (enableSumit && files.length >= 2)}
                     submitSuccess={false}
                     >
