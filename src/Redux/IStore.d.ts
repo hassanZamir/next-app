@@ -9,7 +9,8 @@ import {
     IPersistState,
     IStatusPage,
     IPayment,
-    IBankingInfoPage
+    IBankingInfoPage,
+    INotificationsPage
 } from "@Interfaces";
 // #endregion Interface Imports
 
@@ -25,4 +26,5 @@ export interface IStore {
     persistState: IPersistState.IStateProps;
     payment: IPayment.IStateProps;
     bankingInfo: IBankingInfoPage;
+    notification: INotificationsPage
 }

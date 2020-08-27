@@ -9,4 +9,5 @@ export { CurrentTimeDifference } from "@Services/Time";
 export { getBgImageUrl } from "@Services/UI";
 export { PaymentService } from "@Services/API/Payment";
 export { getQueryParams } from "@Services/Cookie";
+export { NotificationService } from "@Services/API/Notification";
 // #endregion Local Imports

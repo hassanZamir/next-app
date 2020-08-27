@@ -91,9 +91,21 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
 
     return <div className="h-100">
         <Tabs>
-            <Tab active={selectedTab === 0} onClick={() => changeTab(0)} border={true}>{ (contentCount ? contentCount : "") + ' Posts' }</Tab>
-            <Tab active={selectedTab === 1} onClick={() => changeTab(CONTENT_TYPE.IMAGE)} border={true}>{ (imagesCount ? imagesCount : "") + ' Images'}</Tab>
-            <Tab active={selectedTab === 2} onClick={() => changeTab(CONTENT_TYPE.VIDEO)} border={false}>{ (videosCount ? videosCount : "") + ' Videos'}</Tab>
+            <Tab active={selectedTab === 0} 
+                onClick={() => changeTab(0)} 
+                borderRight={true}>
+                { (contentCount ? contentCount : "") + ' Posts' }
+            </Tab>
+            <Tab active={selectedTab === 1} 
+                onClick={() => changeTab(CONTENT_TYPE.IMAGE)} 
+                borderRight={true}>
+                { (imagesCount ? imagesCount : "") + ' Images'}
+            </Tab>
+            <Tab active={selectedTab === 2} 
+                onClick={() => changeTab(CONTENT_TYPE.VIDEO)} 
+                borderRight={false}>
+                { (videosCount ? videosCount : "") + ' Videos'}
+            </Tab>
         </Tabs>
         {!isFollower ? <CreatorContentPrivacy name={name} onFollow={onFollow} followingFee={followingFee} /> : <React.Fragment>
             <ParagraphText className="gibson-semibold font-16px text-headingBlue px-4 mt-2">

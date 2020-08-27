@@ -32,8 +32,7 @@ export const Authenticated: React.FunctionComponent<{session: USER_SESSION, name
         return <div 
             className="w-100 h-100 row flex-column justify-content-between flex-nowrap">
 
-            <div className="custom-scroller" 
-                style={{ overflowY: "scroll", marginBottom: "40px", flex: 1 }}>
+            <div className="custom-scroller d-flex flex-column">
                 { children }
             </div>
             

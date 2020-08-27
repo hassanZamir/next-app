@@ -11,6 +11,7 @@ export type USER_SESSION  = {
     paymentMode: number;
     cardNumber: string;
     cardTitle: string;
+    notificationCount: number;
 }
 
 export interface LoginResponse {

@@ -37,6 +37,9 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                     } else if (config.name === 'Home') {
                         Router.push('/');
                         return;
+                    } else if (config.name === 'Notification') {
+                        Router.push('/notifications');
+                        return;
                     } else {
                         return null
                     }
@@ -45,6 +48,10 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                 style={{ width: "20%", position: 'relative' }}>
                 
                 <div className={"d-flex align-items-center justify-content-center " + (selected === config.name ? "highlight-footer-option" : "")}>
+                    {config.name === 'Notification' && user.notificationCount > 0 && 
+                        <span className="notification-counter">
+                        { user.notificationCount }
+                    </span>}
                     <StaticImage 
                         src={selected === config.name ? config.imageSelected.src : config.image.src} 
                         height={selected === config.name ? config.imageSelected.height : config.image.height} 
@@ -74,14 +81,14 @@ const FooterConfig = [{
         width: '18px'
     }
 }, {
-    name: 'Bell',
+    name: 'Notification',
     image: {
         src: '/images/bell_white@2x.png',
         height: '20px',
         width: '20px'
     },
     imageSelected: {
-        src: '',
+        src: '/images/notification_filled@3x.png',
         height: '18px',
         width: '18px'
     }

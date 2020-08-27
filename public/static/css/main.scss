@@ -327,6 +327,10 @@ input:checked + .slider:before {
 
 
 .custom-scroller {
+    overflow-y: scroll;
+    margin-bottom: 40px;
+    flex: 1;
+     
     &::-webkit-scrollbar {
         height: 0px;
         width: 0px;
@@ -384,4 +388,24 @@ input:checked + .slider:before {
 }
 .body-background {
     background: $bodyBackground;
+}
+.notification-counter {
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    background: red;
+    padding: 0px 5px;
+    border-radius: 50%;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.hover-bg {
+    opacity: 1;
+    transition: 0.3s;
+
+    &:hover {
+        opacity: 0.9;
+    }
 }

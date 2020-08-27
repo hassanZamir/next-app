@@ -23,6 +23,7 @@ export const LoginService = {
             response = {
                 status: "false",
                 session: {
+                    notificationCount: 0,
                     id: 0,
                     name: '',
                     username: '',

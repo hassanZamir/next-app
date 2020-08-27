@@ -13,6 +13,7 @@ import { PersistReducer } from "./PersistReducer";
 import { StatusReducer } from "./StatusReducer";
 import { PaymentReducer } from "./Payment";
 import { BankingInfoReducer } from "./BankingInfo";
+import { NotificationReducer } from "./Notification";
 // #endregion Local Imports
 
 export default combineReducers({
@@ -26,5 +27,6 @@ export default combineReducers({
     persistState: PersistReducer,
     statusPage: StatusReducer,
     payment: PaymentReducer,
-    bankingInfo: BankingInfoReducer
+    bankingInfo: BankingInfoReducer,
+    notification: NotificationReducer
 });

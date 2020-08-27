@@ -83,5 +83,13 @@ export const ActionConsts = {
         PostBankingInfoError: "PostBankingInfoError",
         GetBankingInfoSuccess: "GetBankingInfoSuccess",
         GetBankingInfoError: "GetBankingInfoError"
+    },
+    Notifications: {
+        GetNotifiactionsSuccess: "GetNotifiactionsSuccess",
+        GetNotifiactionsError: "GetNotifiactionsError",
+        SeenNotifiactionSuccess: "SeenNotifiactionSuccess",
+        SeenNotifiactionError: "SeenNotifiactionError",
+        ViewNotificationsSuccess: "ViewNotificationsSuccess",
+        ViewNotificationsError: "ViewNotificationsError"
     }
 };

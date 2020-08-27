@@ -70,6 +70,13 @@ export const PersistReducer = (
                 })
             });
         }
+        case ActionConsts.Notifications.ViewNotificationsSuccess: {
+            return Object.assign({}, state, {
+                session:  Object.assign({}, state.session, {
+                    notificationCount: 0
+                })
+            });
+        }
         case ActionConsts.Login.DoLogout: {
             Router.push("/login");
             return INITIAL_STATE;
