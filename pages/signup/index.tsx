@@ -30,7 +30,9 @@ import { ISignUpPage } from "@Interfaces";
 
 const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     const [enableSignUp, setEnableSignUp] = useState(true);
+    const [termsOfService, setTermsOfService] = useState(false);
     const [recaptchaToken, setToken] = useState("");
+    const [triggerValidation, setTriggerValidation] = useState(false);
 
     const signUpState = useSelector((state: IStore) => state.signUp);
     const { errors, successMessage } = signUpState;
@@ -43,7 +45,6 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                 payload: { errors: 'Captcha expired', session: {} }
             });
         } else {
-            console.log("Setting Token", token);
             setToken(token);
         }
     }
@@ -76,16 +77,18 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
 
     return (
             <div className="w-100 d-flex flex-column justify-content-between align-items-center">
-                <div className="mt-5 row justify-content-center no-gutters">
+                <div className="mt-4 row justify-content-center no-gutters">
                     <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
                 </div>
                 <div className="row no-gutters justify-content-center mt-3">
                     <div style={{ width: "320px" }}>
+                        
                         <FormComponent 
                             onSubmit={handleSubmit} 
                             defaultValues={{}} 
                             submitActive={enableSignUp && recaptchaToken ? true : false}
-                            submitSuccess={errors.message === "" && successMessage !== ""}>
+                            submitSuccess={errors.message === "" && successMessage !== ""}
+                            triggerValidation={triggerValidation}>
 
                             <LabelInput 
                                 type="text"
@@ -198,17 +201,26 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
 
                             <RadioInput 
                                 type="radio"
-                                value="1" 
+                                value={termsOfService ? "1" : "0"}
+                                onClick={() => { 
+                                    setTermsOfService(!termsOfService);
+                                    setTriggerValidation(true);
+                                }}
                                 inputHeight="25px"
                                 inputWidth="25px"
                                 inputMargin="0px 10px 0px 0px"
                                 labelTextElem={<div className="text-darkGrey lato-regular font-11px">
-                                    By signing up you agree to our <span className="text-primary mx-1"><Link href="">Terms of Service</Link></span> 
-                                    and <span className="text-primary mx-1"><Link href="">Privacy Policy</Link></span>
+                                    By signing up you agree to our <span className="text-primary mx-1">
+                                        <Link href="">Terms of Service</Link>
+                                    </span> and <span className="text-primary mx-1">
+                                        <Link href="">Privacy Policy</Link>
+                                    </span>
                                 </div>}
                                 name="termsOfService" 
                                 wrapperClass=""
-                                validationRules={{ required: {value: true, message: "Report Reason is required" } }}
+                                validationRules={{ 
+                                    required: {value: true, message: "Check privacy policy is required" } 
+                                }}
                             />
 
                             <PrimaryButton  

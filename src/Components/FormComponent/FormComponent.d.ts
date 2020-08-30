@@ -5,6 +5,7 @@ declare namespace IFormComponent {
         defaultValues?: {};
         children?: ReactNode;
         submitSuccess?: boolean;
+        triggerValidation?: boolean;
     }
 }
 

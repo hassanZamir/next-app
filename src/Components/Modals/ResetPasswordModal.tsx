@@ -53,7 +53,7 @@ export const ResetPasswordModal: React.RefForwardingComponent<HTMLDivElement, IR
                     {(sendResetPasswordEmailStatus === '' || sendResetPasswordEmailStatus === 'error') && <div className="modal-content d-flex flex-column justify-content-center align-items-center">
                         <ParagraphText className="text-primary font-25px text-center">Reset Password</ParagraphText>
                         <ParagraphText className="text-grey100 font-12px text-center mt-3">
-                            Enter the email associated with your account to recieve link to reset your password.
+                            Enter the email associated with your account to receive link to reset your password.
                         </ParagraphText>
                         
                         <div className="d-flex flex-column w-100">

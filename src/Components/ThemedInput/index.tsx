@@ -10,6 +10,7 @@ const Container = styled(Input)<{ border?: string, width?: string}>`
     border: none;
     border-bottom: 1px solid ${({ border }) => (border ? border : ({ theme }) => theme.colors.primary)};
     border-radius: 0px;
+    outline: none;
 `;
 
 export const ThemedInput: React.FunctionComponent<IThemeInput.IProps> = (props) => {

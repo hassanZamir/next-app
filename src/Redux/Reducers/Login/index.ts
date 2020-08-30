@@ -62,10 +62,10 @@ export const LoginErrorReducer = (
             });
         }
         case ActionConsts.Login.SetLoginError: {
-            let { errors } = action.payload!;
+            let { status } = action.payload!;
 
             return Object.assign({}, state, {
-                errors: errors ? errors : "Authentication failed for these credentials.",
+                errors: status ? status : "Authentication failed for these credentials.",
                 session: {}
             });
         }

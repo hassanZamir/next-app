@@ -159,7 +159,7 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
             </div>}
             <SocialLogin />
             
-            <div className="font-19px text-darkGrey my-3">-----OR-----</div>
+            <div className="font-19px text-darkGrey">-----OR-----</div>
 
             <form name="login-form" className="flex-column d-flex align-items-center"
                 style={{ width: "271px" }} 
@@ -191,7 +191,7 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                     </LinkText>
                 </div>
                 
-                <div className="captcha-container mt-3" 
+                <div className="captcha-container" 
                     style={{ height: "78px" }}>
                     <ReCAPTCHA
                         size="normal"
@@ -201,11 +201,13 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                 </div>
                 <PrimaryButton  
                     type="submit"
-                    className="mt-2 font-20px" 
+                    className="font-20px" 
                     isActive={enableLogin}>
                         LOGIN
                 </PrimaryButton>
-                {errors && <ParagraphText className="text-danger text-center">{ errors }</ParagraphText>}
+                <div style={{ height: "30px" }}>
+                    {errors && <ParagraphText className="text-danger text-center font-12px">{ errors }</ParagraphText>}
+                </div>
             </form>
             <Link href="/signup" passHref>
                 <LinkText style={{ height: "40px" }} className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white">

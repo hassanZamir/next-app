@@ -12,6 +12,7 @@ const Container = styled(RegInput)`
     color: ${({ theme }) => theme.colors.inputTextClor};
     border-radius: 6px;
     padding-left: 5px;
+    outline: none;
 `;
 
 const SelectContainer = styled(Select)`
