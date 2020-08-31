@@ -23,6 +23,7 @@ const Container = styled.div<{ animateIn: boolean}>`
     animation-name: ${({ animateIn }) => { return animateIn ? slideInFromTop : slideInToTop }};
     transform: translate3d(0, 0, 0);
     animation-duration: .3s;
+    z-index: 999;
 `;
 
 export const AnimatePopup: React.FunctionComponent<{ animateIn: boolean }> = ({children, animateIn}) => {

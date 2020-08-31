@@ -64,7 +64,9 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
             dispatch(CreatorProfileActions.UnFollowProfile(unfollowParams));
         } else {
             if (user && user.id) {
-                if (user.paymentMode) toggle();
+                if (user.paymentMode) {
+                    toggle();
+                }
                 else setShowPaymentSettingsPopup(true);
             } else {
                 Router.push({ pathname: "/login", query: { profile: profileUserName } });
@@ -74,10 +76,11 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
     
     const onPaymentSettingsClick = () => {
         setShowPaymentSettingsModal(true);
+        setShowPaymentSettingsPopup(false);
     }
 
     return (<div 
-        className="w-100 h-100 row flex-column justify-content-between flex-nowrap custom-scroller">
+        className="w-100 h-100 row flex-column justify-content-between flex-nowrap">
             
         <PaymentConfirmationModal 
             toggle={toggle}
@@ -97,6 +100,7 @@ export const ProfileComponent: React.FunctionComponent<{user: USER_SESSION, prof
             onScroll={(e: any) => {
                 const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
                 setScrolledToBottom(bottom);
+                setShowPaymentSettingsPopup(false);
             }}>
             <div className="bg-gradient d-flex flex-column">
                 <div className="back-icon cursor-pointer" onClick={() => Router.back()}>

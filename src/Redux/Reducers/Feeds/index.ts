@@ -9,7 +9,11 @@ import { IAction, IFeedsPage, IFeed, FEED } from "@Interfaces";
 const INITIAL_STATE: IFeedsPage.IStateProps = {
     errors: '',
     postContentStatus: 'default',
-    feeds: [],
+    feeds: {
+        paginationNo: 0,
+        emptyPageNo: 9999,
+        value: []
+    },
     profilesSuggestion: []
 };
 
@@ -30,7 +34,7 @@ export const FeedsReducer = (
                 postContentStatus: 'error'
             });
             return Object.assign({}, state, {
-                feeds: [feed[0], ...state.feeds],
+                feeds: [feed[0], ...state.feeds.value],
                 errors: '',
                 postContentStatus: 'success'
             });
@@ -50,7 +54,7 @@ export const FeedsReducer = (
             let { profiles } = action.payload!;
 
             return Object.assign({}, state, {
-                profilesSuggestion: profiles,
+                profilesSuggestion: [...state.profilesSuggestion, ...profiles],
                 errors: ''
             });
         }
@@ -60,24 +64,38 @@ export const FeedsReducer = (
             });
         }
         case ActionConsts.Feeds.GetAllFeedsSuccess: {
-            let { feeds } = action.payload!;
+            let { feeds, page } = action.payload!;
 
+            if (feeds && feeds.length > 0) {
+                return Object.assign({}, state, {
+                    feeds: {
+                        value: [...state.feeds.value, ...feeds],
+                        paginationNo: page + 1,
+                        emptyPageNo: state.feeds.paginationNo
+                    },
+                    errors: ''
+                });
+            }
             return Object.assign({}, state, {
-                feeds: feeds,
+                feeds: {
+                    value: state.feeds.value,
+                    paginationNo: page,
+                    emptyPageNo: page
+                },
                 errors: ''
             });
         }
         case ActionConsts.Feeds.GetAllFeedsError: {
             return Object.assign({}, state, {
                 errors: "Something went wrong.",
-                feeds: []
+                feeds: state.feeds
             });
         }
         case ActionConsts.Feeds.LikeFeedSuccess: {
             let { contentId, like } = action.payload!;
             const { feeds } = state;
 
-            const _updatedFeeds = feeds.map((feed) => {
+            const _updatedFeeds = feeds.value.map((feed) => {
                 if (feed.id === contentId) {
                     feed.content_viewer_like = (like ? true : false);
                     like ? feed.likesCount++ : feed.likesCount--

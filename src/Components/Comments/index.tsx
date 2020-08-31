@@ -93,12 +93,14 @@ const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: numb
     }
 
     const postComment = async () => {
-        const params = { contentId: contentId, userId: user.id, commentText: comment };
-        setLoading(true);
-        await dispatch(StatusActions.PostComment(params))
-        setLoading(false);
-        setComment('');
-        onSuccess();
+        if (comment) {
+            const params = { contentId: contentId, userId: user.id, commentText: comment };
+            setLoading(true);
+            await dispatch(StatusActions.PostComment(params))
+            setLoading(false);
+            setComment('');
+            onSuccess();
+        }
     }
 
     return <div className="px-4 d-flex flex-column pb-2 pt-4">

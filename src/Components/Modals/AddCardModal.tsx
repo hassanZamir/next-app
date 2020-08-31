@@ -61,6 +61,11 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                 <Modal border={theme.colors.primary} borderRadius="18px"
                     width="initial">
                     <div className="w-100 h-100 d-flex flex-column" ref={modalRef}>
+                        <div className="modal-header" style={{ position: 'absolute', top: '-38px', right: '15px' }}>
+                            <button type="button" className="font-28px text-white modal-close-button" onClick={()=>{ toggle() }}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Enter your card details</ParagraphText>
                         <div style={{ width: "250px" }}>
                             <FormComponent 
@@ -84,7 +89,11 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                     name="cardNumber" 
                                     wrapperClass="mt-2"
                                     validationRules={{ 
-                                        required: "Card Number is required"
+                                        required: "Card Number is required",
+                                        validate: (value: string) => {
+                                            const regex = new RegExp("^4[0-9]{12}(?:[0-9]{3})?$");
+                                            return regex.test(value) ? true : "Should be 16 digit valid credit/debit card number";
+                                        }
                                     }}
                                 />
                                 
@@ -96,9 +105,17 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                         wrapperClass="mt-2"
                                         placeholder={["MM", "YYYY"]}
                                         validationRules={[{ 
-                                            required: "Expiry is required"
+                                            required: "Expiry is required",
+                                            validate: (value: string) => {
+                                                const regex = new RegExp("^[0-9]{2}$");
+                                                return regex.test(value) ? true : "Should be a 2 digit number";
+                                            }
                                         }, { 
-                                            required: "Expiry is required"
+                                            required: "Expiry is required",
+                                            validate: (value: string) => {
+                                                const regex = new RegExp("^[0-9]{4}$");
+                                                return regex.test(value) ? true : "Should be a 4 digit number";
+                                            }
                                         }]}
                                     />
                                     <LabelInput 
@@ -107,7 +124,11 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                         name="cvc" 
                                         wrapperClass="mt-2"
                                         validationRules={{ 
-                                            required: "CVC is required"
+                                            required: "CVC is required",
+                                            validate: (value: string) => {
+                                                const regex = new RegExp("^[0-9]{3}$");
+                                                return regex.test(value) ? true : "Should be a 3 digit number";
+                                            }
                                         }}
                                     />  
                                 </div>

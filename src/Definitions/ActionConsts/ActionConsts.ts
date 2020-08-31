@@ -32,6 +32,7 @@ export const ActionConsts = {
         LikeFeedError: "LikeFeedError",
         LikeFeedSuccess: "LikeFeedSuccess",
         SetPersistFeed: "SetPersistFeed",
+        SetPolledPersistFeed: "SetPolledPersistFeed",
         ClearPersistFeed: "ClearPersistFeed",
         ProfilesSuggestionSuccess: "ProfilesSuggestionSuccess",
         ProfilesSuggestionError: "ProfilesSuggestionError",

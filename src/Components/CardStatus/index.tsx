@@ -19,7 +19,7 @@ const Container = styled.div<ICardStatus.IProps>`
 export const CardStatus: React.FunctionComponent<ICardStatus.IProps> = (props) => {
     return (
         <Container {...props}>
-            <span style={{ marginRight: "4px" }}>{props.user.paymentMode ? "Card added successfully" : "Please add a card to follow creator's content"}</span>
+            <span style={{ marginRight: "4px" }}>{props.user.paymentMode ? "Card added successfully" : "Please add a card to follow creator's account"}</span>
             {!props.user.paymentMode ? <FontAwesomeIcon icon={faPlusCircle} color="white" /> : <FontAwesomeIcon icon={faCheckCircle} color="white" />}
         </Container>
     );

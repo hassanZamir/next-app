@@ -19,6 +19,16 @@ export const PersistReducer = (
     & IPersistState.Actions.IUpdatePaymentInfoInSession>
 ) => {
     switch (action.type) {
+        case ActionConsts.Feeds.SetPolledPersistFeed: {
+            let { feed } = action.payload!;
+
+            return Object.assign({}, state, {
+                feed: Object.assign({}, feed, {
+                    commentsCount: feed.commentsCount,
+                    media_url: state.feed.media_url
+                })
+            });
+        }
         case ActionConsts.Feeds.SetPersistFeed: {
             let { feed } = action.payload!;
 

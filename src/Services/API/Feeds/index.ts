@@ -43,10 +43,11 @@ export const FeedsService = {
     ): Promise<FeedsModel.GetAllFeedsResponse> => {
         let response: FeedsModel.GetAllFeedsResponse
 
+        const { userId, ...rest } = payload;
         try {
             response = await Http.Request<FeedsModel.GetAllFeedsResponse>(
                 "GET",
-                "/users/" + payload.userId + "/feed",
+                "/users/" + userId + "/feed" + getQueryParams({...rest}),
                 undefined
             );
         } catch (error) {

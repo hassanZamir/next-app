@@ -8,13 +8,18 @@ declare namespace IFeedsPage {
     export interface IStateProps {
         postContentStatus: 'default' | 'error' | 'success' | 'loading';
         errors: '',
-        feeds: FEED[],
+        feeds: {
+            paginationNo: number,
+            value: FEED[],
+            emptyPageNo: number
+        },
         profilesSuggestion: CREATOR_PROFILE[]
     }
 
     namespace Actions {
         export interface IMapAllFeedsResponse {
-            feeds: FeedsModel.GetAllFeedsResponse
+            feeds: FEED[],
+            page: number
         }
 
         export interface IMapPostContentResponse {
@@ -22,7 +27,7 @@ declare namespace IFeedsPage {
         }
 
         export interface IMapProfilesSuggestionResponse {
-            profiles: ProfilesSuggestionModel.GetProfilesSuggestionResponse
+            profiles: CREATOR_PROFILE[]
         }
 
         export interface IGetAllFeedsPayload extends FeedsModel.GetAllFeedsPayload {}

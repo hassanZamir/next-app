@@ -59,7 +59,7 @@ export const StatusActions = {
         
         dispatch({
             payload: { feed: result.status && result.response ? result.response[0] : {} },
-            type: ActionConsts.Feeds.SetPersistFeed
+            type: ActionConsts.Feeds.SetPolledPersistFeed
         });
     }
 };

@@ -1,5 +1,5 @@
 // #region Global Imports
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -13,6 +13,7 @@ import { IStore } from "@Redux/IStore";
 // #region Interface Imports
 import { IFeedsPage, USER_SESSION } from "@Interfaces";
 import dynamic from 'next/dynamic';
+import { useScroll } from "@Components/Hooks";
 // #endregion Interface Imports
 
 const DynamicFeeds: any = dynamic(
@@ -26,10 +27,16 @@ const Authenticated: any = dynamic(
 
 const Home: NextPage = () => {
     const persistState = useSelector((state: IStore) => state.persistState);
+    // const { scrollY, scrollX, scrollDirection } = useScroll();
     const { session } = persistState;
+    const [scrolledToBottom, setScrolledToBottom] = useState(false);
+    
+    const onScroll = (bottom: boolean) => {
+        bottom ? setScrolledToBottom(true) : setScrolledToBottom(false);
+    }
 
-    return <Authenticated session={session} name="Home">
-        <DynamicFeeds user={session} />
+    return <Authenticated session={session} name="Home" onScroll={onScroll}>
+        <DynamicFeeds user={session} scrolledToBottom={scrolledToBottom}/>
     </Authenticated>
 };
 

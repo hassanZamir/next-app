@@ -10,7 +10,7 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps>
       defaultValues, 
       mode: 'onBlur'
     });
-    const { handleSubmit, errors, formState, watch, reset, setValue, trigger } = methods;
+    const { handleSubmit, errors, formState, watch, reset, setValue, trigger, register } = methods;
 
     const password = useRef({});
     password.current = watch("password", "");
@@ -42,10 +42,11 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps>
             }
           }
 
+          console.log(child.props.name);
           return React.createElement(child.type, {
             ...{
               ...child.props,
-              register: !child.props.validationRules || Array.isArray(child.props.validationRules) ? methods.register : methods.register(child.props.validationRules),
+              register: !child.props.validationRules || Array.isArray(child.props.validationRules) ? register : register(child.props.validationRules),
               key: child.props.name,
               formErrors: errors,
               isActive: submitActive && formState.isValid,
@@ -62,8 +63,7 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps>
     }
     
     return (
-      <form className="flex-column d-flex align-items-center" onSubmit={handleSubmit(onSubmit)}
-      autocomplete="off" >
+      <form className="flex-column d-flex align-items-center" onSubmit={handleSubmit(onSubmit)}>
         {Array.isArray(children) ? returnChildren(children) : children}
       </form>
     );

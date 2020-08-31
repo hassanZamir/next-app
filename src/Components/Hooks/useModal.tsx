@@ -5,6 +5,9 @@ const useModal = (ref: any, onCloseModal?: any) => {
 
   function toggle() {
     setIsShowing(!isShowing);
+    if (isShowing) {
+      onCloseModal && onCloseModal();
+    }
   }
 
   const handleClick = (e: any) => {

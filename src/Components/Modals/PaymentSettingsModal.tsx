@@ -53,6 +53,10 @@ const VenoWallet: React.FunctionComponent<{ userCards: PAYMENT_CARD[], userWalle
                     className="my-2 border-bottom border-white">
                     <ParagraphText className="font-28px text-white text-center">{'$ ' + userWallet.balance}</ParagraphText>
                 </div>}
+                {userWallet && !userWallet.balance && <div 
+                    className="my-2">
+                    <ParagraphText className="font-28px text-white text-center">$ 0.00</ParagraphText>
+                </div>}
             </div>
             <div style={{ opacity: userCards.length > 0 ? '1' : '0.7' }}
                 onClick={() => { userCards.length > 0 && setTimeout(() => { setShowAddWallet(true)}) }} className="cursor-pointer border border-white rounded font-12px lato-regular text-white p-2 text-center">
@@ -94,12 +98,12 @@ const AllCards: React.FunctionComponent<{ user: USER_SESSION, userCards: PAYMENT
         style={{ borderRadius: "13px" }}>
             <ParagraphText className="font-11px text-darkGrey lato-semibold">Your Cards</ParagraphText>
             <div style={{ height: "150px", overflowY: "scroll", padding: "5px 0px" }}>
-                {userCards && userCards.length > 0 && userCards.map((card, i) => {
+                {userCards && userCards.length > 0 ? userCards.map((card, i) => {
                     return <div key={i} onClick={()=>{ onCardClick(card) }} className={"cursor-pointer d-flex align-items-center mx-2 my-1 p-2 rounded border " + (card.id === defaultCard ? 'border-primary' : 'border-darkGrey')}>
                         <img height="20" width="20" src="/images/credit_card.png" />
                         <div className="text-primary font-10px w-100 text-center">{ card.cardTitle + ' Card ending in ' + card.cardNumber}</div>
                     </div>
-                })}
+                }) : <div className="h-100 d-flex align-items-center justify-content-center text-darkGrey font-12px">No card added yet</div>}
             </div>
             
             <div className="d-flex flex-column justify-content-center align-items-center">
@@ -168,8 +172,13 @@ export const PaymentSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
                 <Modal border={theme.colors.primary} borderRadius="18px"
                     width="initial">
                     <div className="w-100 h-100 d-flex flex-column" ref={modalRef}>
+                        <div className="modal-header" style={{ position: 'absolute', top: '-38px', right: '15px' }}>
+                            <button type="button" className="font-28px text-white modal-close-button" onClick={()=>{ toggle() }}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <div className="text-danger font-12px text-center">{ paymentSettingsError }</div>
-                        <div className="border-bottom" style={{ margin: "0px -2rem", padding: "10px 2rem 20px" }}>
+                        <div className="border-bottom" style={{ margin: "0px -2rem", padding: "10px 15px 20px" }}>
                                 <VenoWallet userWallet={userWallet} user={user} userCards={userCard} />
                                 <div className="lato-semibold font-13px text-darkGrey text-underline px-3 py-2">Payment through</div>
                                 <div className={"d-flex align-items-center my-2 " + (!userSettings || !userSettings.paymentMode ? "disable-click" : "")}>

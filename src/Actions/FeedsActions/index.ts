@@ -27,8 +27,8 @@ export const FeedsActions = {
         const result = await FeedsService.GetAllFeeds(payload);
         
         dispatch({
-            payload: {feeds: result.response},
-            type: result.status ? ActionConsts.Feeds.GetAllFeedsSuccess : ActionConsts.Feeds.GetAllFeedsError
+            payload: {feeds: result.status && result.response ? result.response : [], page: payload.page},
+            type: result.status && result.response ? ActionConsts.Feeds.GetAllFeedsSuccess : ActionConsts.Feeds.GetAllFeedsError
         });
     },
     TipFeed: (payload: IFeed.Actions.ITipFeedPayload) => async () => {

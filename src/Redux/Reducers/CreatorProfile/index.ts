@@ -42,8 +42,7 @@ export const CreatorProfileReducer = (
                 });
             } else {
                 if (type === 1) return Object.assign({}, state, { emptyPageNoImage: page });
-                else if (type === 2) return Object.assign({}, state, { emptyPageNoVideo: page });
-                else return Object.assign({}, state, { errors: 'Something went wrong' });
+                if (type === 2) return Object.assign({}, state, { emptyPageNoVideo: page });
             }
         }
         case ActionConsts.CreatorProfile.GetMediaGallaryError: {
