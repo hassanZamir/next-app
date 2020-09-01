@@ -3,7 +3,7 @@ declare namespace ILinkText {
         href?: string;
         className?: string;
         style?: {};
-        onCick?: React.MouseEvent<HTMLElement>;
+        onClick?: (e: any)=>void;
     }
 }
 

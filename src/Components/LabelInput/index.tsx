@@ -30,7 +30,8 @@ export const SelectInput: React.FunctionComponent<ISelectInput.IProps> = ({ opti
             <label className="text-primary font-13px">{labelText}</label>
             <div className="d-flex justify-content-between w-100">
                 {name.map((inputName, index) => {
-                    return <div key={index} className={name.length <= 1 ? "w-100" : ""}>
+                    return <div key={index} 
+                        style={{ width: name.length <= 1 ? "100%" : ((100 / name.length) - 2) + "%" }}>
                         <SelectContainer 
                             options={options[index]} 
                             name={inputName} 
@@ -53,18 +54,32 @@ export const LabelInput: React.FunctionComponent<ILabelInput.IProps> = ({ type, 
     )
 };
 
-export const MultiLabelInput: React.FunctionComponent<IMultiLabelInput.IProps> = ({ placeholder, type, labelText, name, register, formErrors, validationRules, ...props }) => {
-    return (
-        <div className={"d-flex flex-column align-items-start w-100 " + (props.wrapperClass ? props.wrapperClass : "")}>
-            <label className="text-primary font-13px">{labelText}</label>
-            <div className="d-flex justify-content-between w-100">
-                {name.map((inputName, index) => {
-                    return <div key={index} className={"mr-2 " + (name.length <= 1 ? "w-100" : "")}>
-                        <Container placeholder={placeholder![index]} name={inputName} ref={register} type={type[index]} {...props} />
+export const MultiLabelInput: React.FunctionComponent<IMultiLabelInput.IProps> 
+    = ({ placeholder, type, labelText, name, register, formErrors, validationRules, ...props }) => {
+        const errorFields = name.map((field, i) => {
+            return {
+                label: field.split('.')[0],
+                labelInput: field.split('.')[1]
+            };
+        });
+        return (
+            <div className={"d-flex flex-column align-items-start w-100 " + (props.wrapperClass ? props.wrapperClass : "")}>
+                <label className="text-primary font-13px">{labelText}</label>
+                <div className="d-flex justify-content-between w-100">
+                    {name.map((inputName, index) => {
+                        return <div key={index} className={"mr-2 " + (name.length <= 1 ? "w-100" : "")}>
+                            <Container placeholder={placeholder![index]} 
+                                name={inputName} 
+                                ref={register ? register(validationRules[index]) : null} 
+                                type={type[index]} {...props} />
+                        </div>
+                    })}
+                </div>
+                {errorFields.map((field) => {
+                    return <div className="text-danger font-10px">
+                        { formErrors[field.label] && formErrors[field.label][field.labelInput] ? formErrors[field.label][field.labelInput].message : '' }
                     </div>
                 })}
             </div>
-            <div className="text-danger font-10px">{ formErrors ? formErrors[name[0]] ? formErrors[name[0]].message : '' : ''}</div>
-        </div>
-    )
+        )
 };

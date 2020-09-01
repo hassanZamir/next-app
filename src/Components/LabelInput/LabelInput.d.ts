@@ -30,7 +30,7 @@ declare namespace IMultiLabelInput {
         register?: (rule: {})=>void;
         labelText: string;
         validationRules: {}[];
-        formErrors?: { [key: string]: {message: string;}; };
+        formErrors?: { [key: string]: {message: string;}; } | any;
         wrapperClass?: string;
         placeholder?: string[];
     }

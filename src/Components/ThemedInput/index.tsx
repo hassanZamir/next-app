@@ -11,6 +11,7 @@ const Container = styled(Input)<{ border?: string, width?: string}>`
     border-bottom: 1px solid ${({ border }) => (border ? border : ({ theme }) => theme.colors.primary)};
     border-radius: 0px;
     outline: none;
+    font-family: 'Lato Bold';
 `;
 
 export const ThemedInput: React.FunctionComponent<IThemeInput.IProps> = (props) => {

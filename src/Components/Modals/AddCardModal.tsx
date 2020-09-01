@@ -4,7 +4,8 @@ import ReactDOM from "react-dom";
 
 import { Modal } from "@Components/Basic";
 import { theme } from "@Definitions/Styled/theme"
-import { ParagraphText, FormComponent, LabelInput, MultiLabelInput ,PrimaryButton } from "@Components";
+import { ParagraphText, FormComponent, LabelInput, MultiLabelInput ,PrimaryButton, SelectInput } from "@Components";
+import DobConst from "../../../pages/signup/dob-constants.json";
 import { PaymentActions } from "@Actions";
 import { USER_SESSION } from "@Interfaces";
 import { IStore } from "@Redux/IStore";
@@ -67,7 +68,7 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                             </button>
                         </div>
                         <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Enter your card details</ParagraphText>
-                        <div style={{ width: "250px" }}>
+                        <div style={{ width: "275px" }}>
                             <FormComponent 
                                 onSubmit={handleSubmit} 
                                 defaultValues={{}} 
@@ -98,7 +99,25 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                 />
                                 
                                 <div className="d-flex justify-content-between">
-                                    <MultiLabelInput 
+                                    <SelectInput
+                                        type={["number", "number"]}
+                                        labelText="Expiry" 
+                                        name={["expiry.month", "expiry.year"]}
+                                        options={[DobConst.months, DobConst.year]} 
+                                        wrapperClass="mt-3"
+                                        validationRules={[{ 
+                                            required: "Month is required",
+                                            validate: (value: string) => {
+                                                return value !== "MM" ? true : "Please select Month of Birth"
+                                            }
+                                        }, { 
+                                            required: "Year is required",
+                                            validate: (value: string) => {
+                                                return value !== "YYYY" ? true : "Please select Year of Birth"
+                                            } 
+                                        }]}
+                                    />
+                                    {/* <MultiLabelInput 
                                         type={["text", "text"]}
                                         labelText="Expiry" 
                                         name={["expiry.month", "expiry.year"]} 
@@ -108,21 +127,21 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                             required: "Expiry is required",
                                             validate: (value: string) => {
                                                 const regex = new RegExp("^[0-9]{2}$");
-                                                return regex.test(value) ? true : "Should be a 2 digit number";
+                                                return regex.test(value) ? true : "MM be a 2 digit number";
                                             }
                                         }, { 
                                             required: "Expiry is required",
                                             validate: (value: string) => {
                                                 const regex = new RegExp("^[0-9]{4}$");
-                                                return regex.test(value) ? true : "Should be a 4 digit number";
+                                                return regex.test(value) ? true : "YYYY be a 4 digit number";
                                             }
                                         }]}
-                                    />
+                                    /> */}
                                     <LabelInput 
                                         type="text"
                                         labelText="CVC" 
                                         name="cvc" 
-                                        wrapperClass="mt-2"
+                                        wrapperClass="mt-3 ml-2"
                                         validationRules={{ 
                                             required: "CVC is required",
                                             validate: (value: string) => {

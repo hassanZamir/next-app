@@ -106,9 +106,42 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
             style={{ width: "22px", height: "12px", right: "20px", top: "10px" }}>
             {(selected + 1) + '/' + mediaUrl.length}
         </div>}
-        <div className="scroll-flex" ref={container}>
+        <div className="scroll-flex" 
+            ref={container} 
+            onScroll={(e) => { 
+                const _scrollLeft = container.current.scrollLeft;
+
+                for (let i = 0; i < mediaRefs.length; i++) {
+                    if (!_scrollLeft) {
+                        setSelected(0);
+                        return;
+                    }
+
+                    if (i < mediaRefs.length - 1) {
+                        if (_scrollLeft > mediaRefs[i].offsetLeft && _scrollLeft < mediaRefs[i + 1].offsetLeft) {
+                            setSelected(i);
+                            return;
+                        }
+                    } else {
+                        setSelected(mediaRefs.length - 1);
+                    }
+                }
+                // setSelected(mediaRefs.length - 1);
+                // mediaRefs.map((ref, i)=> {
+                //     // return ref.offsetLeft / scrollWidth
+                //     // debugger;
+                //     // console.log("container", container.current.scrollWidth);
+                //     console.log("container", ref.offsetLeft);
+                //     // console.log("---");
+                //     console.log(container.current.scrollLeft);
+                //     // console.log(ref.scrollWidth);
+
+                // })
+                // debugger; 
+            }}>
             {mediaUrl.map((media, i) => {
-                return <div key={i}
+                return <div 
+                        key={i}
                         className="scroll-item align-items-center justify-content-center"
                         ref={setMediaRef}>
                             {media.type === 2 && <VideoPlayer onClick={(e)=> { e.preventDefault(); setShowMediaCarousel(i); toggle(); }} videoHeight="260px" src={mediaBaseUrl + '/' + media.url + media.token}  />}
@@ -128,7 +161,9 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
 const Feed: React.FunctionComponent<IFeed.IProps> 
     = ({ likeContent, feed, index, toggleTipModal, onReportClick, onCopyClick, onCommentClick }) => {
     return (
-        <div className="w-100 h-100 my-2 move-enter move-enter-active" style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}>
+        <div className="w-100 h-100 my-2 move-enter move-enter-active" 
+            style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}>
+            
             <MediaContainer mediaUrl={feed.media_url} />
             <div className="d-flex flex-column w-100 px-2">
                 <ParagraphText className="text-primary lato-semibold font-12px">

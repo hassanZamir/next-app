@@ -22,7 +22,12 @@ export const MediaCarousel: React.RefForwardingComponent<HTMLDivElement, IMediaC
     
     const renderItem = (a: any) => {
       if (a.type === 1)
-        return <BackgroundImage paddingBottom="54.25%" src={ [a.original, '/images/feed_placeholder.png'] } />
+        return <div className="d-flex align-items-center justify-content-center">
+          <div className="f-flex flex-column">
+            <img src={a.original} style={{ border: 0, maxWidth: "100%", maxHeight: "100vh"}} />
+            {/* <BackgroundImage paddingBottom="54.25%" src={ [a.original, '/images/feed_placeholder.png'] } /> */}
+          </div>
+        </div>
       if (a.type === 2)
         return <VideoPlayer src={a.original}  />
     }
@@ -44,8 +49,11 @@ export const MediaCarousel: React.RefForwardingComponent<HTMLDivElement, IMediaC
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <ImageGallery items={mapMedia(media)} renderItem={renderItem} 
-          showThumbnails={false} showIndex={true} 
+        <ImageGallery 
+          items={mapMedia(media)} 
+          renderItem={renderItem} 
+          showThumbnails={false} 
+          showIndex={true} 
           startIndex={startingIndex} />
       </div>
     </Modal>, document.body) : null

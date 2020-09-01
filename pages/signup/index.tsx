@@ -200,7 +200,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             </div>
 
                             <RadioInput 
-                                type="radio"
+                                type="checkbox"
                                 value={termsOfService ? "1" : "0"}
                                 onClick={() => { 
                                     setTermsOfService(!termsOfService);

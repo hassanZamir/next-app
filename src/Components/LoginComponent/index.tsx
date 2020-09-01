@@ -182,11 +182,11 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                     autoComplete="new-password"
                     className="mt-3" />
                 
-                <div className="w-100 mt-1 text-left cursor-pointer" 
-                    onClick={forgetPasswordClick}> 
+                <div className="w-100 mt-1 text-left"> 
                     <LinkText 
                         style={{ textDecoration: "underline" }} 
-                        className="text-primary font-10px ">
+                        className="text-primary font-10px cursor-pointer"
+                        onClick={forgetPasswordClick}>
                             Forgot Password?
                     </LinkText>
                 </div>

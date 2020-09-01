@@ -48,10 +48,11 @@ export const TipSubmitModal: React.RefForwardingComponent<HTMLDivElement, ITipSu
                                     <div className="background-circle-primary"></div>
                                 </div>
                                 <ThemedInputWithLabel 
-                                    labelProps={{labelText: "$", labelClass: "position-absolute bottom-0" }} 
+                                    labelProps={{labelText: "$", labelClass: "lato-bold position-absolute bottom-0" }} 
                                     onChange={handleChange} 
+                                    placeholder="0.00"
                                     name="amount"
-                                    style={{ paddingLeft: "20px" }}
+                                    style={{ paddingLeft: "25px" }}
                                     type="number" />
                             </div>
                         </div>

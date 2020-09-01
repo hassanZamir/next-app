@@ -12,14 +12,14 @@ const Container = styled.div<ICardStatus.IProps>`
     align-items: center;
     justify-content: center;
     color: white;
-    padding: 15px;
+    padding: 13px 17px;
     cursor: pointer;
 `;
 
 export const CardStatus: React.FunctionComponent<ICardStatus.IProps> = (props) => {
     return (
         <Container {...props}>
-            <span style={{ marginRight: "4px" }}>{props.user.paymentMode ? "Card added successfully" : "Please add a card to follow creator's account"}</span>
+            <div className="lato-regular font-12px" style={{ marginRight: "8px" }}>{props.user.paymentMode ? "Card added successfully" : "Please add a card to follow creator's account"}</div>
             {!props.user.paymentMode ? <FontAwesomeIcon icon={faPlusCircle} color="white" /> : <FontAwesomeIcon icon={faCheckCircle} color="white" />}
         </Container>
     );

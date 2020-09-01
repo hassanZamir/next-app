@@ -42,7 +42,6 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps>
             }
           }
 
-          console.log(child.props.name);
           return React.createElement(child.type, {
             ...{
               ...child.props,
@@ -54,10 +53,11 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps>
             }
           })
         } else {
-          if (child && child.props && Array.isArray(child.props.children))
+          if (child && child.props && Array.isArray(child.props.children)) {
             return <div className={child.props.className}>{ returnChildren(child.props.children) }</div>
-          else
+          } else {
             return child;
+          }
         }
       })
     }
