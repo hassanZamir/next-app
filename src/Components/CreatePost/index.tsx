@@ -61,7 +61,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
     };
     
     const isActivePost = !loading && (title.length > 0 || files.length > 0);
-    return <div style={{ minHeight: "135px" }} 
+    return <div 
         className="my-3 d-flex flex-column flex-fil border-top border-bottom border-primary">
 
         {files.length > 0 && <div className="px-2 py-1 d-flex align-items-center">

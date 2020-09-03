@@ -28,13 +28,22 @@ export const FeedsReducer = (
         case ActionConsts.Feeds.PostContentSuccess: {
             let { feed } = action.payload!;
 
+            debugger;
             if (!feed) return Object.assign({}, state, {
-                feeds: state.feeds,
+                feeds: { 
+                    value: [feed[0], ...state.feeds.value],
+                    emptyPaginationNo: state.feeds.emptyPageNo,
+                    paginationNo: state.feeds.paginationNo 
+                },
                 errors: 'Post content failed',
                 postContentStatus: 'error'
             });
             return Object.assign({}, state, {
-                feeds: [feed[0], ...state.feeds.value],
+                feeds: { 
+                    value: [feed[0], ...state.feeds.value],
+                    emptyPaginationNo: state.feeds.emptyPageNo,
+                    paginationNo: state.feeds.paginationNo 
+                },
                 errors: '',
                 postContentStatus: 'success'
             });

@@ -26,13 +26,17 @@ export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: mediaUrl[
     return <div style={{ minHeight: "400px" }} className="w-100 d-flex flex-column align-items-center">
         {errors && <div className="px-4 w-100 d-flex text-danger font-12px">{errors}</div>}
         {mediaGallary.length > 0 && chunk(mediaGallary, 3).map((mediaChunk, i) => {
-            return <div className="px-2 d-flex w-100 justify-content-between align-items-center" 
+            return <div className="px-2 d-flex w-100 align-items-center" 
                 key={i}>
                     
                 {mediaChunk.map((media: mediaUrl, j: number) => {
-                    return <div key={j} style={{ flex: "0 0 33%", maxWidth: "33%", marginTop: '2px' }} 
-                        >
-                        <div className={"w-100 h-100 d-flex align-items-center justify-content-center " + (j === 1 ? "" : "")}>
+                    return <div key={j} 
+                        style={{ 
+                            flex: "0 0 33%", 
+                            maxWidth: "33%",
+                            margin: j === 1 ? "2px 2px 0px 2px" : "2px 0px 0px 0px" 
+                        }}>
+                        <div className="w-100 h-100 d-flex align-items-center">
                             {media.type === 2 && <VideoPlayer 
                                 onClick={(e)=> { e.preventDefault(); setShowMediaCarousel(i*3 + j); toggle(); }} 
                                 src={mediaBaseUrl + '/' + media.url + media.token}  />}

@@ -34,7 +34,7 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
         const params = {
             cardTitle: data.name,
             cardNumber: data.cardNumber,
-            expMonth: data.expiry.month,
+            expMonth: DobConst.months.indexOf(data.expiry.month) + 2,
             expYear: data.expiry.year,
             cvc: data.expiry.cvc,
             userId: user.id
