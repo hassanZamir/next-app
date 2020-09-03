@@ -31,7 +31,9 @@ declare namespace IProfilePage {
         }
 
         export interface IMapProfileFollowersResponse {
-            followers: ProfileFollowersModel.GetProfileFollowersResponse
+            followers: ProfileFollowersModel.GetProfileFollowersResponse,
+            hasFollowed?: boolean,
+            hasUnFollowed?: boolean
         }
 
         export interface IGetCreatorProfilePayload extends CreatorProfileModel.GetCreatorProfilePayload {}

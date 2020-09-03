@@ -51,9 +51,15 @@ export const CreatorProfileReducer = (
             });
         }
         case ActionConsts.CreatorProfile.GetProfileFollowersSuccess: {
-            let { followers } = action.payload!;
+            let { followers, hasFollowed, hasUnFollowed } = action.payload!;
+
             return Object.assign({}, state, {
-                followers: followers
+                followers: followers,
+                creatorProfile: Object.assign({}, state.creatorProfile, {
+                    followersCount: hasFollowed ? state.creatorProfile.followersCount + 1 
+                    : hasUnFollowed ? state.creatorProfile.followersCount - 1 
+                    : state.creatorProfile.followersCount
+                })
             });
         }
         case ActionConsts.CreatorProfile.GetProfileFollowersError: {

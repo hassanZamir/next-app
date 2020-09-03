@@ -41,8 +41,8 @@ export const CreatorProfileActions = {
         const result = await CreatorProfileService.FollowProfile(payload);
         
         dispatch({
-            payload: { followers: result.response ? result.response : result },
-            type: result.status ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
+            payload: { followers: result.status && result.response ? result.response : result, hasFollowed: result.status && result.response ? true : false },
+            type: result.status && result.response ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
         });
     },
     UnFollowProfile: (payload: IProfilePage.Actions.IGetFollowProfilePayload) => async (
@@ -51,8 +51,8 @@ export const CreatorProfileActions = {
         const result = await CreatorProfileService.UnFollowProfile(payload);
         
         dispatch({
-            payload: { followers: result.response ? result.response : result },
-            type: result.status ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
+            payload: { followers: result.status && result.response ? result.response : result, hasUnFollowed: result.status && result.response ? true : false },
+            type: result.status && result.response ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
         });
     },
     GetProfileFollowers: (payload: IProfilePage.Actions.IGetProfileFollowersPayload) => async (
