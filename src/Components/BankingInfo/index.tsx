@@ -157,7 +157,7 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION; }>
         dispatch(BankingInfoActions.GetCreatorProfile(params));
     }, []);
 
-    return <div style={{ minHeight: "100%" }} className="d-flex flex-column align-items-center flex-fill body-background">
+    return <div className="d-flex flex-column align-items-center flex-fill body-background">
         <ParagraphText className="text-primary font-25px">Banking</ParagraphText>
         {!creatorProfile.name && errors.length <= 0 && <div style={{ flex: 1 }} className="w-100 h-100 d-flex align-items-center justify-content-center">
             <LoadingSpinner size="3x"/>

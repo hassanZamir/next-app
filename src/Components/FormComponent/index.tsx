@@ -18,7 +18,7 @@ export const FormComponent: React.FunctionComponent<IFormComponent.IProps>
     useEffect(() => {
       if (triggerValidation) {
         (async () => {
-          const result = await trigger();
+          await trigger();
         })()
       }
     }, [triggerValidation]);

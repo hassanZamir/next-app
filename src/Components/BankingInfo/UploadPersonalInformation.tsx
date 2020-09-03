@@ -176,7 +176,13 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                             labelText="City" 
                             name="city"
                             wrapperClass="mt-3"
-                            validationRules={{ required: {value: true, message: "City is required" } }} 
+                            validationRules={{ 
+                                required: "City is required",
+                                validate: (value: string) => {
+                                    var regex = /^[a-zA-Z]+$/;
+                                    if (!regex.test(value)) return "City must be a string"
+                                }
+                            }} 
                         />
                                 
                         <div className="d-flex justify-content-between mt-3">
@@ -185,7 +191,13 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                                 labelText="State" 
                                 name="state"
                                 wrapperClass="mr-2"
-                                validationRules={{ required: {value: true, message: "State is required" } }} 
+                                validationRules={{ 
+                                    required: "State is required",
+                                    validate: (value: string) => {
+                                        var regex = /^[a-zA-Z]+$/;
+                                        if (!regex.test(value)) return "State must be a string"
+                                    }
+                                }} 
                             />
 
                             <LabelInput 
@@ -193,7 +205,13 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                                 labelText="Post Code" 
                                 name="postCode"
                                 wrapperClass="ml-2"
-                                validationRules={{ required: {value: true, message: "Post Code is required" } }} 
+                                validationRules={{ 
+                                    required: "Post Code is required",
+                                    validate: (value: string) => {
+                                        var regex = /^[0-9]+$/;
+                                        if (!regex.test(value)) return "Post Code must be a number"
+                                    }
+                                }} 
                             />
                         </div>
 
@@ -300,12 +318,25 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                             </div>
                         </div>
 
-                        <LabelInput 
+                        {/* <LabelInput 
                             type="text"
                             labelText="Card Number" 
                             name="docNumber"
                             wrapperClass="mt-3"
                             validationRules={{ required: {value: true, message: "Card Number is required" } }} 
+                        /> */}
+                        <LabelInput 
+                            type="text"
+                            labelText="Card Number" 
+                            name="docNumber" 
+                            wrapperClass="mt-3"
+                            validationRules={{ 
+                                required: "Card Number is required",
+                                validate: (value: string) => {
+                                    const regex = new RegExp("^4[0-9]{12}(?:[0-9]{3})?$");
+                                    return regex.test(value) ? true : "Should be 16 digit valid credit/debit card number";
+                                }
+                            }}
                         />
                         
                         <SelectInput
