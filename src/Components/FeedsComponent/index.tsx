@@ -34,8 +34,8 @@ export const FeedsComponent: React.FunctionComponent<{user: USER_SESSION, scroll
                 if (emptyPageNo < paginationNo) {
                     const params = { userId: user.id, page: paginationNo };
                     await getUserFeeds(params);
+                    await getProfilesFollowers({ page: paginationNo }); 
                 }
-                getProfilesFollowers({});
             }
         })()
     }, [scrolledToBottom]);
