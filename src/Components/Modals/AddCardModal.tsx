@@ -88,7 +88,7 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                         required: "Card Number is required",
                                         validate: (value: string) => {
                                             const regex = new RegExp("^4[0-9]{12}(?:[0-9]{3})?$");
-                                            return regex.test(value) ? true : "Should be 16 digit valid credit/debit card number";
+                                            return regex.test(value) ? true : "Should be 16 digit valid visa card number";
                                         }
                                     }}
                                 />
