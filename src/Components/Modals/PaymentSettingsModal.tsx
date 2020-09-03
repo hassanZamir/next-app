@@ -68,6 +68,7 @@ const VenoWallet: React.FunctionComponent<{ userCards: PAYMENT_CARD[], userWalle
                 <ThemedInputWithLabel 
                     labelProps={{labelText: "$", labelClass: "position-absolute bottom-0 left-40px" }} 
                     onChange={handleChange} 
+                    fontFamily="Lato Bold"
                     name="amount"
                     style={{ paddingLeft: "60px" }}
                     type="number" 

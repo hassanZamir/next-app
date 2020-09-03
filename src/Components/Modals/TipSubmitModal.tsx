@@ -53,7 +53,8 @@ export const TipSubmitModal: React.RefForwardingComponent<HTMLDivElement, ITipSu
                                     placeholder="0.00"
                                     name="amount"
                                     style={{ paddingLeft: "25px" }}
-                                    type="number" />
+                                    type="number" 
+                                    fontFamily="Lato Bold" />
                             </div>
                         </div>
                         <div className="d-flex flex-column w-100">

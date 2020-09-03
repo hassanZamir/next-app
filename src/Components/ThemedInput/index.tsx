@@ -5,13 +5,13 @@ import { IThemeInput, IThemeInputWithLabel } from "./ThemedInput";
 
 import { Input } from "../Basic";
 
-const Container = styled(Input)<{ border?: string, width?: string}>`
+const Container = styled(Input)<{ border?: string, width?: string, fontFamily?: string}>`
     width: ${({ width }) => { return width ? width : '100%'}};
     border: none;
     border-bottom: 1px solid ${({ border }) => (border ? border : ({ theme }) => theme.colors.primary)};
     border-radius: 0px;
     outline: none;
-    font-family: 'Lato Bold';
+    font-family: ${({ fontFamily }) => { return fontFamily ? fontFamily : 'inherit'}};
 `;
 
 export const ThemedInput: React.FunctionComponent<IThemeInput.IProps> = (props) => {

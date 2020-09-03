@@ -62,11 +62,6 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                 <Modal border={theme.colors.primary} borderRadius="18px"
                     width="initial">
                     <div className="w-100 h-100 d-flex flex-column" ref={modalRef}>
-                        <div className="modal-header" style={{ position: 'absolute', top: '-38px', right: '15px' }}>
-                            <button type="button" className="font-28px text-white modal-close-button" onClick={()=>{ toggle() }}>
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
                         <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Enter your card details</ParagraphText>
                         <div style={{ width: "275px" }}>
                             <FormComponent 

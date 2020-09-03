@@ -116,7 +116,7 @@ const PostComment: React.FunctionComponent<{ user: USER_SESSION, contentId: numb
                     onChange={handleChange}
                     value={comment}/>
                 <div onClick={() => { postComment() }} 
-                    className="cursor-pointer ml-2 rounded-circle bg-darkGrey d-flex align-items-center justify-content-center" 
+                    className={"cursor-pointer ml-2 rounded-circle d-flex align-items-center justify-content-center " + (loading || comment === '' ? "bg-darkGrey" : "bg-primary")}
                     style={{ height: "30px", width: "35px" }}>
                     {!loading && <FontAwesomeIcon color="white" icon={faPaperPlane} />}
                     {loading && <FontAwesomeIcon color="white" icon={faSpinner} size="sm" />}
