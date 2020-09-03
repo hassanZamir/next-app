@@ -4,6 +4,6 @@ export const NotificationTabs = [
     { name: 'Interactions', type: 3, key: 'comments' }, 
     { name: 'Subscribed', type: 1, key: 'subscribed' }, 
     { name: 'Tipped', type: 4, key: 'tipped' }, 
-    { name: 'Promotions', type: 4, key: 'promotions' }, 
+    { name: 'Promotions', type: 6, key: 'promotions' }, 
     { name: 'Purchases', type: 5, key: 'purchases' }
 ];

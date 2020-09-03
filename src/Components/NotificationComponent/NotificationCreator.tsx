@@ -33,7 +33,7 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION }
                 userId: user.id, 
                 type: 0, 
                 key: 'all', 
-                page: notifications[currentTabKey].paginationNo 
+                page: notifications[currentTabKey].paginationNo
             };
             setLoading(true);
             await dispatch(NotificationActions.GetNotification(params));
@@ -47,17 +47,21 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION }
         if (notifications[NotificationTabs[index].key].emptyPaginationNo 
             > notifications[NotificationTabs[index].key].paginationNo) {
             
-            const params = { 
-                userId: user.id, 
-                type: NotificationTabs[index].type, 
-                key: NotificationTabs[index].key,
-                page: notifications[NotificationTabs[index].key].paginationNo
-            };
-            if (!notifications[NotificationTabs[index].key].values.length) 
-                setLoading(true);
-            
-            await dispatch(NotificationActions.GetNotification(params));
-            setLoading(false);
+            if (notifications[NotificationTabs[index].key].values.length <= 0
+                && notifications[NotificationTabs[index].key] !== 'promotions') {
+                    
+                const params = { 
+                    userId: user.id, 
+                    type: NotificationTabs[index].type, 
+                    key: NotificationTabs[index].key,
+                    page: notifications[NotificationTabs[index].key].paginationNo
+                };
+                if (!notifications[NotificationTabs[index].key].values.length) 
+                    setLoading(true);
+                
+                await dispatch(NotificationActions.GetNotification(params));
+                setLoading(false);
+            }
         }
     }
 
@@ -136,7 +140,8 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION }
             <ParagraphText className="my-2 font-12px text-primary px-2">
                 {NotificationTabs[selectedTab].name}
             </ParagraphText>
-            <div className="d-flex align-items-center justify-content-center"
+            
+            {currentTabKey !== 'promotions' ? <div className="d-flex align-items-center justify-content-center"
                 style={{ flex: 1 }}>
                 <LoadingSpinner size="3x" showLoading={loading}>
                     <div className="d-flex flex-column h-100 w-100 px-2">
@@ -147,6 +152,8 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION }
                         </div>}
                     </div>
                 </LoadingSpinner>
-            </div>
+            </div> : <div className="px-2 text-darkGrey lato-simibold">
+                This feature is not availaible yet
+            </div>}
         </div>);
 }

@@ -19,7 +19,11 @@ export const NotificationActions = {
         const result = await NotificationService.GetNotifications({ ...rest });
 
         dispatch({
-            payload: { notifications: result.status && result.response ? result.response : [], key: key, page: payload.page },
+            payload: { 
+                notifications: result.status && result.response ? result.response : [], 
+                key: key, 
+                page: payload.page
+            },
             type: result.status && result.response ? ActionConsts.Notifications.GetNotifiactionsSuccess : ActionConsts.Notifications.GetNotifiactionsError
         });
     },
