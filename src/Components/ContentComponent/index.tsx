@@ -24,15 +24,13 @@ export const ContentComponent: React.FunctionComponent<{ userName: string, conte
 
     useEffect(() => {
         const i = setInterval(pollFeed, 10000);
-        if (!('id' in feed)) pollFeed();
-
-        return () => {
-            clearInterval(i);
-            // dispatch({
-            //     payload: { feed: {} },
-            //     type: ActionConsts.Feeds.ClearPersistFeed
-            // });
-        }   
+        if (contentId !== feed.id) {
+            dispatch({
+                payload: { feed: {} },
+                type: ActionConsts.Feeds.ClearPersistFeed
+            });
+        }
+        pollFeed();
     }, []);
 
     return (<div className="d-flex flex-column" style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>

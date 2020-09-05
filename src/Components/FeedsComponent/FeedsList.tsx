@@ -92,9 +92,14 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
             style={{ left: "45%", right: "45%" }}>
 
             {mediaUrl.map((validMQ, index) => (
-              <div
-                  key={index}
-                  onClick={() => { setSelected(index); navigateTo(index) }}
+                <div
+                    key={index}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation(); 
+                        setSelected(index); 
+                        navigateTo(index);
+                    }}
                   className={selected === index ? "navigation-dot active" : "navigation-dot"}
                 />
             ))}
@@ -102,17 +107,16 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
     }
     
     return (<div className="d-flex flex-column position-relative">
-        {mediaUrl.length > 1 && <div className="position-absolute rounded text-white bg-darkGrey font-8px d-flex align-items-center justify-content-center" 
+        {mediaUrl && mediaUrl.length > 1 && <div className="position-absolute rounded text-white bg-darkGrey font-8px d-flex align-items-center justify-content-center" 
             style={{ width: "22px", height: "12px", right: "20px", top: "10px" }}>
             {(selected + 1) + '/' + mediaUrl.length}
         </div>}
         <div className="scroll-flex" 
             ref={container} 
             onScroll={(e) => { 
-                const _scrollLeft = container.current.scrollLeft;
-
+                const _scrollLeft = container.current.scrollLeft + 20;
                 for (let i = 0; i < mediaRefs.length; i++) {
-                    if (!_scrollLeft) {
+                    if (_scrollLeft <= 20) {
                         setSelected(0);
                         return;
                     }
@@ -126,20 +130,8 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
                         setSelected(mediaRefs.length - 1);
                     }
                 }
-                // setSelected(mediaRefs.length - 1);
-                // mediaRefs.map((ref, i)=> {
-                //     // return ref.offsetLeft / scrollWidth
-                //     // debugger;
-                //     // console.log("container", container.current.scrollWidth);
-                //     console.log("container", ref.offsetLeft);
-                //     // console.log("---");
-                //     console.log(container.current.scrollLeft);
-                //     // console.log(ref.scrollWidth);
-
-                // })
-                // debugger; 
             }}>
-            {mediaUrl.map((media, i) => {
+            {mediaUrl && mediaUrl.map((media, i) => {
                 return <div 
                         key={i}
                         className="scroll-item align-items-center justify-content-center"
@@ -149,7 +141,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[]}>
                 </div>
             })}
         </div>
-        {mediaUrl.length > 1 && renderNavigation()}
+        {mediaUrl && mediaUrl.length > 1 && renderNavigation()}
         {showMediaCarousel >= 0 && <MediaCarousel 
             media={mediaUrl} 
             isShowing={isShowing} 

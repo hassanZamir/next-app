@@ -25,7 +25,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     }
 
     useEffect(() => {
-        const channelName = 'creators:' + user.id;
+        const channelName = 'creator-' + user.id;
         NotificationPusher.getChannel(channelName)
             .then((channel: any) => {
                 NotificationPusher.subscribe('like', channel, notificationSubscriptionCallback);

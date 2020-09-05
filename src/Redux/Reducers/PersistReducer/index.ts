@@ -28,13 +28,16 @@ export const PersistReducer = (
         }
         case ActionConsts.Feeds.SetPolledPersistFeed: {
             let { feed } = action.payload!;
-
-            return Object.assign({}, state, {
-                feed: Object.assign({}, feed, {
-                    commentsCount: feed.commentsCount,
-                    media_url: state.feed.media_url
-                })
-            });
+            
+            if ('id' in state.feed && state.feed.id === feed.id) {
+                return Object.assign({}, state, {
+                    feed: Object.assign({}, feed, {
+                        media_url: state.feed.media_url
+                    })
+                });
+            } else {
+                return Object.assign({}, state, { feed: feed });
+            }
         }
         case ActionConsts.Feeds.SetPersistFeed: {
             let { feed } = action.payload!;

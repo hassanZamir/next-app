@@ -1,8 +1,9 @@
 // #region Global Imports
-import React from "react";
+import React, { useEffect } from "react";
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
+import { useDispatch } from "react-redux";
 import dynamic from 'next/dynamic';
 // #endregion Global Imports
 
@@ -10,6 +11,7 @@ import dynamic from 'next/dynamic';
 import { IStore } from "@Redux/IStore";
 import { IProfilePage, USER_SESSION } from "@Interfaces";
 import { ContentComponent } from "@Components";
+import { ActionConsts } from "@Definitions";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -25,6 +27,18 @@ const UserStatus: NextPage<IProfilePage.IProps> = () => {
     const router = useRouter();
     const userName = router.query["username"] as string,
     contentId = parseInt(router.query["contentId"] as string);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        // debugger;
+        return () => {
+            // debugger;
+            // dispatch({
+            //     payload: { feed: {} },
+            //     type: ActionConsts.Feeds.ClearPersistFeed
+            // });
+        }   
+    }, []);
 
     return <Authenticated session={session} name="Home">
         <ContentComponent 

@@ -13,15 +13,20 @@ import { IStore } from "@Redux/IStore";
 import { COMMENT, USER_SESSION, IStatusPage } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
 import { CurrentTimeDifference }from "@Services/Time";
+import Link from "next/link";
 // #endregion Local Imports
 
 const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment: COMMENT)=>void, commentsListRef: any}> = 
     ({ comment, likeComment, commentsListRef }) => {
+    
+        console.log("comment", comment);
     return <div style={{ minHeight: "50px" }} className="d-flex px-3 align-items-center my-4 w-100" ref={commentsListRef}>
         <CircularImage src={[comment.profileImageUrl, '/images/profile_image_placeholder.jpg']} height="50px" width="50px" border={"1px solid " + theme.colors.primary} />
         <div className="d-flex flex-column pl-2 w-100 justify-content-between">
             <div className="d-flex justify-content-between align-items-center w-100">
-                <span className="seoge-ui-bold font-13px text-primary">{ comment.userName }</span>
+                <Link href={"/profile/" + comment.userName}>
+                    <a className="seoge-ui-bold font-13px text-primary cursor-pointer">{ comment.userName }</a>
+                </Link>
                 <div className="d-flex align-items-center">
                     <div className="d-flex align-items-center cursor-pointer mr-1" onClick={() => { likeComment(comment) }}>
                         <span className="font-13px text-darkGrey mr-1">{ comment.likesCount || 0 }</span>

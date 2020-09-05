@@ -11,12 +11,12 @@ import { theme } from "@Definitions/Styled";
 import { USER_SESSION } from "@Interfaces";
 import { ParagraphText } from "@Components/ParagraphText";
 import { NotificationCreator } from "@Components/NotificationComponent/NotificationCreator";
-import { NotificationUser } from "@Components/NotificationComponent/NotificationUser";
+// import { NotificationUser } from "@Components/NotificationComponent/NotificationUser";
 import { NotificationActions } from "@Actions";
 // #endregion Local Imports
 
-export const NotificationComponent: React.FunctionComponent<{ user: USER_SESSION }> 
-    = ({ user }) => {
+export const NotificationComponent: React.FunctionComponent<{ user: USER_SESSION, scrolledToBottom: boolean }> 
+    = ({ user, scrolledToBottom }) => {
 
     const dispatch = useDispatch();
 
@@ -32,6 +32,6 @@ export const NotificationComponent: React.FunctionComponent<{ user: USER_SESSION
             <FontAwesomeIcon className="cursor-pointer" icon={faSearch} color={theme.colors.primary} size="lg" />
         </div>
         <ParagraphText className="mb-2 font-40px gibson-semibold font-40px text-center text-primary">Notifications</ParagraphText>
-        <NotificationCreator user={user} />
+        <NotificationCreator user={user} scrolledToBottom={scrolledToBottom} />
     </React.Fragment>);
 }

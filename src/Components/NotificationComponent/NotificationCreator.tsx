@@ -17,8 +17,8 @@ import { NotificationActions } from "@Actions";
 import { ParagraphText } from "@Components/ParagraphText";
 // #endregion Local Imports
 
-export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION }> 
-    = ({ user }) => {
+export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, scrolledToBottom: boolean }> 
+    = ({ user, scrolledToBottom }) => {
     const notificationState = useSelector((state: IStore) => state.notification);
     const { notifications } = notificationState;
     const [loading, setLoading] = useState(false);
@@ -28,18 +28,30 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION }
     const currentTabKey = NotificationTabs[selectedTab].key;
 
     useEffect(() => {
-        (async () => {
+        if (!notifications[NotificationTabs[0].key].values.length) {
+            (async () => {
+                setLoading(true);
+                await getNotifications(0);
+                setLoading(false);
+            })();
+        }
+    }, []);
+
+    useEffect(() => {
+        if (scrolledToBottom) getNotifications(selectedTab);
+    }, [scrolledToBottom]);
+
+    const getNotifications = async (index: number) => {
+        if (notifications[NotificationTabs[index].key] !== 'promotions') {
             const params = { 
                 userId: user.id, 
-                type: 0, 
-                key: 'all', 
-                page: notifications[currentTabKey].paginationNo
+                type: NotificationTabs[index].type, 
+                key: NotificationTabs[index].key,
+                page: notifications[NotificationTabs[index].key].paginationNo
             };
-            setLoading(true);
             await dispatch(NotificationActions.GetNotification(params));
-            setLoading(false);
-        })();
-    }, []);
+        }
+    }
 
     const changeTab = async (index: number) => {
         setSetectedTab(index);
@@ -47,19 +59,9 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION }
         if (notifications[NotificationTabs[index].key].emptyPaginationNo 
             > notifications[NotificationTabs[index].key].paginationNo) {
             
-            if (notifications[NotificationTabs[index].key].values.length <= 0
-                && notifications[NotificationTabs[index].key] !== 'promotions') {
-                    
-                const params = { 
-                    userId: user.id, 
-                    type: NotificationTabs[index].type, 
-                    key: NotificationTabs[index].key,
-                    page: notifications[NotificationTabs[index].key].paginationNo
-                };
-                if (!notifications[NotificationTabs[index].key].values.length) 
-                    setLoading(true);
-                
-                await dispatch(NotificationActions.GetNotification(params));
+            if (!notifications[NotificationTabs[index].key].values.length) {   
+                setLoading(true);
+                await getNotifications(index);
                 setLoading(false);
             }
         }
@@ -146,7 +148,10 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION }
                 <LoadingSpinner size="3x" showLoading={loading}>
                     <div className="d-flex flex-column h-100 w-100 px-2">
                         {notifications[currentTabKey].values.length > 0 ? notifications[currentTabKey].values.map((notification: NOTIFICATION, i: number) => {
-                            return <Notification notification={notification} key={i} user={user} />
+                            return <Notification 
+                                        notification={notification} 
+                                        key={i} 
+                                        user={user} />
                         }) : <div className="text-darkGrey lato-simibold">
                             You don't have any Notification in this section
                         </div>}
