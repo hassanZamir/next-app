@@ -34,7 +34,6 @@ export const PersistReducer = (
             });
         }
         case ActionConsts.Notifications.PusherNotificationRecieved: {
-            debugger;
             return Object.assign({}, state, {
                 notificationStats: Object.assign({}, state.notificationStats, {
                     notifications_unseen_counter: state.notificationStats.notifications_unseen_counter + 1

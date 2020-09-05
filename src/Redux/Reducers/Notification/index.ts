@@ -5,6 +5,7 @@ import Router from "next/router";
 
 // #region Interface Imports
 import { INotificationsPage, IAction } from "@Interfaces";
+import { NotificationTabs } from "@Components/NotificationComponent/NotificationTabs";
 // #endregion Interface Imports
 
 const INITIAL_STATE: INotificationsPage.IStateProps = {
@@ -50,9 +51,35 @@ const INITIAL_STATE: INotificationsPage.IStateProps = {
 
 export const NotificationReducer = (
     state = INITIAL_STATE,
-    action: IAction<INotificationsPage.Actions.IMapGetNotificationPayload>
+    action: IAction<INotificationsPage.Actions.IMapGetNotificationPayload
+        & INotificationsPage.Actions.IMapPusherNotification>
     ) => {
     switch (action.type) {
+        case ActionConsts.Notifications.AddPusherNotificationToList: {
+            const { notification } = action.payload!;
+            const tab = NotificationTabs.filter((tab, i) => {
+                return tab.type === notification.type
+            })[0];
+
+            if (!tab) return;
+
+            return Object.assign({}, state, {
+                notifications: {
+                    ...state.notifications,
+                    [tab.key]: {
+                        values: [notification, ...state.notifications[tab.key].values],
+                        paginationNo: state.notifications[tab.key].paginationNo,
+                        emptyPaginationNo: state.notifications[tab.key].emptyPaginationNo
+                    },
+                    all: {
+                        values: [notification, ...state.notifications.all.values],
+                        paginationNo: state.notifications.all.paginationNo,
+                        emptyPaginationNo: state.notifications.all.emptyPaginationNo
+                    }
+                }
+            });
+
+        }
         case ActionConsts.Notifications.GetNotifiactionsSuccess: {
             const { key, notifications, page } = action.payload!;
             

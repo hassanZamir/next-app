@@ -57,6 +57,10 @@ declare namespace INotificationsPage {
             page: number
         }
 
+        export interface IMapPusherNotification {
+            notification: NOTIFICATION
+        }
+
         export interface IGetGETNotificationPayload extends NotificationModel.GetGETNotificationPayload {}
         export interface IGetGETNotificationResponse extends NotificationModel.GetGETNotificationResponse {}
 

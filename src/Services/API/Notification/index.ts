@@ -91,7 +91,8 @@ export const NotificationService = {
             response = await Http.Request<NotificationModel.GetViewNotificationsResponse>(
                 "POST",
                 "/users/" + payload.userId + "/notifications/view",
-                undefined
+                undefined,
+                { type: payload.type }
             );
         } catch (error) {
             response = {

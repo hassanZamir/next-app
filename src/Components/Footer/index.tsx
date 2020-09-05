@@ -12,6 +12,7 @@ import Router from "next/router";
 import { LoginActions, NotificationActions } from "@Actions";
 import { useModal } from '../Hooks';
 import { NotificationPusher } from '@Services/Pusher';
+import { NOTIFICATION } from "@Interfaces";
 // #endregion Local Imports
 
 const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPaymentSettingsClick }): JSX.Element => {
@@ -23,7 +24,10 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
 
     const onLogout = () => { dispatch(LoginActions.UserLogout()); };
 
-    const notificationSubscriptionCallback = (param: any) => {
+    const notificationSubscriptionCallback = (param: NOTIFICATION) => {
+        if (window.location.href.includes("notifications"))
+            dispatch(NotificationActions.AddPusherNotificationToList(param));
+
         dispatch(NotificationActions.PusherNotificationRecieved({}));
     }
 
@@ -46,7 +50,6 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
         }
     }, []);
 
-    
     return <div style={{ height: "40px" }} 
         className={"footer-navigation d-flex align-items-center justify-content-between text-white bg-primary"}>
         {FooterConfig.map((config, index) => {

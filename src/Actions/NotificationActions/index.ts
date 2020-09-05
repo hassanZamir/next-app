@@ -8,10 +8,18 @@ import { NotificationService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { INotificationsPage } from "@Interfaces";
+import { INotificationsPage, NOTIFICATION } from "@Interfaces";
 // #endregion Interface Imports
 
 export const NotificationActions = {
+    AddPusherNotificationToList: (payload: NOTIFICATION) => async (
+        dispatch: Dispatch
+    ) => {
+        dispatch({
+            payload: {notification: payload},
+            type: ActionConsts.Notifications.AddPusherNotificationToList
+        });
+    },
     GetNotificationStats: (payload: INotificationsPage.Actions.IGetGETNotificationStatsPayload) => async (
         dispatch: Dispatch
     ) => {

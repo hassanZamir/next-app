@@ -86,6 +86,7 @@ export const ActionConsts = {
         GetBankingInfoError: "GetBankingInfoError"
     },
     Notifications: {
+        AddPusherNotificationToList: "AddPusherNotificationToList",
         PusherNotificationRecieved: "PusherNotificationRecieved",
         GetNotifiactionStatsSuccess: "GetNotifiactionStatsSuccess",
         GetNotifiactionStatsError: "GetNotifiactionStatsError",
