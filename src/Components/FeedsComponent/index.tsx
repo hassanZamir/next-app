@@ -34,7 +34,6 @@ export const FeedsComponent: React.FunctionComponent<{user: USER_SESSION, scroll
                 if (emptyPageNo < paginationNo) {
                     const params = { userId: user.id, page: paginationNo };
                     await getUserFeeds(params);
-                    await getProfilesFollowers({ page: paginationNo }); 
                 }
             }
         })()
@@ -49,7 +48,7 @@ export const FeedsComponent: React.FunctionComponent<{user: USER_SESSION, scroll
         })()
     }, []);
     
-    return (<React.Fragment>
+    return (<div>
         <div className="my-2 row justify-content-center no-gutters">
             <Link href="/">
                 <a>
@@ -61,15 +60,16 @@ export const FeedsComponent: React.FunctionComponent<{user: USER_SESSION, scroll
                 </a>
             </Link>
         </div>
-        {user.isCreator && <CreatePost user={user} />}
+        {user.isCreator && <div>
+            <CreatePost user={user} />
+        </div>}
         {errors && <div className="text-danger font-12px">{ errors }</div>}
-        {feeds && feeds.value.length > 0 && !loading && <FeedsList feeds={feeds.value} user={user} /> }
+        {feeds && feeds.value.length > 0 && !loading && <FeedsList feeds={feeds.value} user={user} />}
         {feeds && feeds.value.length <= 0 && !loading && <div className="py-3 border-bottom border-top d-flex flex-column align-items-center justify-content-center">
             {!user.isCreator && <PaymentSettings user={user} />}
             <div className="mt-4 lato-regular font-17px text-grey200">Nothing New</div>
         </div>}
-        {!loading && <SuggestedFollowersList 
-            profilesSuggestion={profilesSuggestion} />}
+        {!loading && <SuggestedFollowersList profilesSuggestion={profilesSuggestion} />}
         {loading && <FeedsLoaderDiv />}
-    </React.Fragment>);
+    </div>);
 }
