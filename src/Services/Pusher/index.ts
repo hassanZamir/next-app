@@ -1,4 +1,5 @@
 let _localPusher: any = null;
+let _channel: any = null;
 const pusherKey = process.env.PUSHER_KEY;
 
 const getChannel = (name: string) => {
@@ -13,15 +14,15 @@ const getChannel = (name: string) => {
                             cluster: 'ap4',
                             encrypted: true
                         } as any);
-                          
-                        const channel = _localPusher.subscribe(name);
-                        resolve(channel);
+                        
+                        if (!_channel) _channel = _localPusher.subscribe(name);
+                        resolve(_channel);
                     }).catch((err) => {
                         reject("FAILED LOAD PUSHER");
                     });
             } else {
-                const channel = await _localPusher.subscribe(name);
-                resolve(channel);
+                if (!_channel) _channel = _localPusher.subscribe(name);
+                resolve(_channel);
             }
         } else {
             reject("PUSHER KEY NOT SET");

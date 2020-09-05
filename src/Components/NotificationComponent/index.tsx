@@ -21,7 +21,7 @@ export const NotificationComponent: React.FunctionComponent<{ user: USER_SESSION
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(NotificationActions.ViewNotifications({ userId: user.id }));
+        dispatch(NotificationActions.ViewNotifications({ userId: user.id, type: 0 }));
     }, []);
 
     return (<React.Fragment>

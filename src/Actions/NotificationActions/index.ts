@@ -12,6 +12,16 @@ import { INotificationsPage } from "@Interfaces";
 // #endregion Interface Imports
 
 export const NotificationActions = {
+    GetNotificationStats: (payload: INotificationsPage.Actions.IGetGETNotificationStatsPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await NotificationService.GetNotificationStats(payload);
+
+        dispatch({
+            payload: {notificationStats: result.status && result.response ? result.response : {}},
+            type: result.status && result.response ? ActionConsts.Notifications.GetNotifiactionStatsSuccess : ActionConsts.Notifications.GetNotifiactionStatsError
+        });
+    },
     PusherNotificationRecieved: (payload: any) => async (
         dispatch: Dispatch
     ) => {
@@ -51,7 +61,7 @@ export const NotificationActions = {
         const result = await NotificationService.ViewNotifications(payload);
 
         dispatch({
-            payload: result.status ? true : false,
+            payload: {type: result.status ? payload.type : -1},
             type: result.status ? ActionConsts.Notifications.ViewNotificationsSuccess : ActionConsts.Notifications.ViewNotificationsError
         });
     }

@@ -4,26 +4,52 @@ import Router from "next/router";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, IPersistState, USER_SESSION, FEED } from "@Interfaces";
+import { IAction, IPersistState, USER_SESSION, FEED, NOTIFICATION_STATS } from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IPersistState.IStateProps = {
     session: <USER_SESSION>{},
-    feed: <FEED>{}
+    feed: <FEED>{},
+    notificationStats: <NOTIFICATION_STATS>{}
 };
 
 export const PersistReducer = (
     state = INITIAL_STATE,
     action: IAction<IPersistState.Actions.ISetStatusFeed 
     & IPersistState.Actions.ISetSession 
-    & IPersistState.Actions.IUpdatePaymentInfoInSession>
+    & IPersistState.Actions.ISetNotificationStats
+    & IPersistState.Actions.IUpdatePaymentInfoInSession
+    & IPersistState.Actions.IViewNotificationType>
 ) => {
     switch (action.type) {
-        case ActionConsts.Notifications.PusherNotificationRecieved: {
+        case ActionConsts.Notifications.GetNotifiactionStatsSuccess: {
+            const { notificationStats } = action.payload!;
             return Object.assign({}, state, {
-                session:  Object.assign({}, state.session, {
-                    notificationCount: state.session.notificationCount + 1
+                notificationStats: notificationStats
+            });
+        }
+        case ActionConsts.Notifications.GetNotifiactionStatsError: {
+            return Object.assign({}, state, {
+                notificationStats: state.notificationStats
+            });
+        }
+        case ActionConsts.Notifications.PusherNotificationRecieved: {
+            debugger;
+            return Object.assign({}, state, {
+                notificationStats: Object.assign({}, state.notificationStats, {
+                    notifications_unseen_counter: state.notificationStats.notifications_unseen_counter + 1
                 })
+            });
+        }
+        case ActionConsts.Notifications.ViewNotificationsSuccess: {
+            const { type } = action.payload!;
+
+            return Object.assign({}, state, {
+                notificationStats: {
+                    notifications_unseen_counter: type === 0 ? 0 : state.notificationStats.notifications_unseen_counter,
+                    likes_unseen_counter: type === 2 ? 0 : state.notificationStats.likes_unseen_counter,
+                    comments_unseen_counter: type === 3 ? 0 : state.notificationStats.comments_unseen_counter
+                }
             });
         }
         case ActionConsts.Feeds.SetPolledPersistFeed: {
@@ -74,7 +100,7 @@ export const PersistReducer = (
                 return  paymentSettings.userSettings && card.id === paymentSettings.userSettings.defaultCard
             });
             return Object.assign({}, state, {
-                session:  Object.assign({}, state.session, {
+                session: Object.assign({}, state.session, {
                     paymentMode: paymentSettings.userSettings ? paymentSettings.userSettings.paymentMode : 0,
                     cardNumber: defaultCard ? defaultCard.cardNumber : '',
                     cardTitle: defaultCard ? defaultCard.cardTitle : ''
@@ -85,15 +111,8 @@ export const PersistReducer = (
             Router.push("/");
             
             return Object.assign({}, state, {
-                session:  Object.assign({}, state.session, {
+                session: Object.assign({}, state.session, {
                     isCreator: true
-                })
-            });
-        }
-        case ActionConsts.Notifications.ViewNotificationsSuccess: {
-            return Object.assign({}, state, {
-                session:  Object.assign({}, state.session, {
-                    notificationCount: 0
                 })
             });
         }

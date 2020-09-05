@@ -1,9 +1,10 @@
 // #region Global Imports
 import React, { useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // #endregion Global Imports
 
 // #region Local Imports
+import { IStore } from "@Redux/IStore";
 import { IFooter } from "./Footer";
 import { StaticImage } from "@Components";
 import { AccountOptionsModal } from "@Components/AccountOptionsModal";
@@ -15,6 +16,8 @@ import { NotificationPusher } from '@Services/Pusher';
 
 const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPaymentSettingsClick }): JSX.Element => {
     const dispatch = useDispatch();
+    const persistState = useSelector((state: IStore) => state.persistState);
+    const { notificationStats } = persistState;
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
 
@@ -25,19 +28,25 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     }
 
     useEffect(() => {
-        const channelName = 'creator-' + user.id;
-        NotificationPusher.getChannel(channelName)
-            .then((channel: any) => {
-                NotificationPusher.subscribe('like', channel, notificationSubscriptionCallback);
-                NotificationPusher.subscribe('comment', channel, notificationSubscriptionCallback);
-                NotificationPusher.subscribe('subscribe', channel, notificationSubscriptionCallback);
-                NotificationPusher.subscribe('tip', channel, notificationSubscriptionCallback);
-                NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
-            }).catch((err: any) => {
-                console.log("Error occured subscribing pusher : ", err);
-            });
+        dispatch(NotificationActions.GetNotificationStats({ userId: user.id }))
+
+        if (typeof window !== "undefined" && !(window as any).Pusher) {
+            const channelName = 'creators-' + user.id;
+            NotificationPusher.getChannel(channelName)
+                .then((channel: any) => {
+                    NotificationPusher.subscribe('like', channel, notificationSubscriptionCallback);
+                    NotificationPusher.subscribe('comment', channel, notificationSubscriptionCallback);
+                    NotificationPusher.subscribe('subscribe', channel, notificationSubscriptionCallback);
+                    NotificationPusher.subscribe('tip', channel, notificationSubscriptionCallback);
+                    NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
+                    NotificationPusher.subscribe('comment-like', channel, notificationSubscriptionCallback);
+                }).catch((err: any) => {
+                    console.log("Error occured subscribing pusher : ", err);
+                });
+        }
     }, []);
 
+    
     return <div style={{ height: "40px" }} 
         className={"footer-navigation d-flex align-items-center justify-content-between text-white bg-primary"}>
         {FooterConfig.map((config, index) => {
@@ -60,9 +69,9 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                 style={{ width: "20%", position: 'relative' }}>
                 
                 <div className={"d-flex align-items-center justify-content-center " + (selected === config.name ? "highlight-footer-option" : "")}>
-                    {config.name === 'Notification' && user.notificationCount > 0 && 
+                    { notificationStats && config.name === 'Notification' && notificationStats.notifications_unseen_counter > 0 && 
                         <span className="notification-counter">
-                        { user.notificationCount }
+                        { notificationStats.notifications_unseen_counter }
                     </span>}
                     <StaticImage 
                         src={selected === config.name ? config.imageSelected.src : config.image.src} 

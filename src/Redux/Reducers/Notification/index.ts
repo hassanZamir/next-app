@@ -56,6 +56,19 @@ export const NotificationReducer = (
         case ActionConsts.Notifications.GetNotifiactionsSuccess: {
             const { key, notifications, page } = action.payload!;
             
+            if (!page) {
+                return Object.assign({}, state, {
+                    notifications: {
+                        ...state.notifications,
+                        [key]: {
+                            values: [...notifications],
+                            paginationNo: page + 1,
+                            emptyPaginationNo: state.notifications[key].emptyPaginationNo
+                        }
+                    }
+                });
+            }
+            
             if (notifications.length) {
                 return Object.assign({}, state, {
                     notifications: {

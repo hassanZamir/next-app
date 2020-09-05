@@ -87,6 +87,8 @@ export const ActionConsts = {
     },
     Notifications: {
         PusherNotificationRecieved: "PusherNotificationRecieved",
+        GetNotifiactionStatsSuccess: "GetNotifiactionStatsSuccess",
+        GetNotifiactionStatsError: "GetNotifiactionStatsError",
         GetNotifiactionsSuccess: "GetNotifiactionsSuccess",
         GetNotifiactionsError: "GetNotifiactionsError",
         SeenNotifiactionSuccess: "SeenNotifiactionSuccess",

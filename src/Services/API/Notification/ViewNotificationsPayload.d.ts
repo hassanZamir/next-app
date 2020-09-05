@@ -1,3 +1,4 @@
 export interface ViewNotificationsPayload {
-    userId: number
+    userId: number,
+    type: number
 }

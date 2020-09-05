@@ -7,6 +7,30 @@ import { NotificationModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const NotificationService = {
+    GetNotificationStats: async (
+        payload: NotificationModel.GetGETNotificationStatsPayload
+    ): Promise<NotificationModel.GetGETNotificationStatsResponse> => {
+        let response: NotificationModel.GetGETNotificationStatsResponse;
+        
+        const { userId } = payload;
+        try {
+            response = await Http.Request<NotificationModel.GetGETNotificationStatsResponse>(
+                "GET",
+                "/users/" + userId + "/notifications/stats",
+                undefined
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: {
+                    notifications_unseen_counter: 0,
+                    likes_unseen_counter: 1,
+                    comments_unseen_counter: 0
+                }
+            };
+        }
+        return response;
+    },
     GetNotifications: async (
         payload: NotificationModel.GetGETNotificationPayload
     ): Promise<NotificationModel.GetGETNotificationResponse> => {

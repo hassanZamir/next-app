@@ -20,7 +20,9 @@ import { ParagraphText } from "@Components/ParagraphText";
 export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, scrolledToBottom: boolean }> 
     = ({ user, scrolledToBottom }) => {
     const notificationState = useSelector((state: IStore) => state.notification);
+    const persistState = useSelector((state: IStore) => state.persistState);
     const { notifications } = notificationState;
+    const { notificationStats } = persistState;
     const [loading, setLoading] = useState(false);
     const [selectedTab, setSetectedTab] = useState(0);
     const dispatch = useDispatch();
@@ -28,13 +30,11 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
     const currentTabKey = NotificationTabs[selectedTab].key;
 
     useEffect(() => {
-        if (!notifications[NotificationTabs[0].key].values.length) {
-            (async () => {
-                setLoading(true);
-                await getNotifications(0);
-                setLoading(false);
-            })();
-        }
+        (async () => {
+            if (!notifications[NotificationTabs[0].key].values.length) setLoading(true);
+            await getNotifications(0);
+            if (!notifications[NotificationTabs[0].key].values.length) setLoading(false);
+        })();
     }, []);
 
     useEffect(() => {
@@ -56,17 +56,22 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
     const changeTab = async (index: number) => {
         setSetectedTab(index);
 
+        if (index >= 1 && index <= 2) {
+            dispatch(NotificationActions.ViewNotifications({ 
+                userId: user.id, 
+                type: index === 1 ? 2 : 3
+            }));
+        } 
+
         if (notifications[NotificationTabs[index].key].emptyPaginationNo 
             > notifications[NotificationTabs[index].key].paginationNo) {
             
-            if (!notifications[NotificationTabs[index].key].values.length) {   
-                setLoading(true);
-                await getNotifications(index);
-                setLoading(false);
-            }
+            if (!notifications[NotificationTabs[index].key].values.length) setLoading(true);
+            await getNotifications(index);
+            if (!notifications[NotificationTabs[index].key].values.length) setLoading(false);
         }
     }
-
+    
     return (<div className="d-flex flex-column" 
             style={{ flex: 1 }}>
             
@@ -89,6 +94,11 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
                     width="14%"
                     borderRight={false}
                     showBorderBottom={true}>
+
+                    {notificationStats && notificationStats.likes_unseen_counter > 0 && 
+                        <span className="notification-counter text-white">
+                        { notificationStats.likes_unseen_counter }
+                    </span>}
                     <FontAwesomeIcon icon={faHeart} 
                         color={selectedTab === 1 ? "#F57B52" : "#A0A0A0"} size="lg" />
                 </Tab>
@@ -98,6 +108,10 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
                     width="14%"
                     borderRight={false}
                     showBorderBottom={true}>
+                    {notificationStats && notificationStats.comments_unseen_counter > 0 && 
+                        <span className="notification-counter text-white">
+                        { notificationStats.comments_unseen_counter }
+                    </span>}
                     <FontAwesomeIcon icon={selectedTab === 2 ? faCommentAlt : faRegularCommentAlt} 
                         color="#F57B52" size="lg" />
                 </Tab>

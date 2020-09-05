@@ -6,6 +6,9 @@ export * from "@Redux/IStore";
 // #region Service Interfaces
 export * from "@Services/API/Http/Http";
 
+export * from "@Services/API/Notification/GETNotificationStatsResponse";
+export * from "@Services/API/Notification/GETNotificationStatsPayload";
+export * from "@Services/API/Notification/ViewNotificationsResponse";
 export * from "@Services/API/Notification/ViewNotificationsPayload";
 export * from "@Services/API/Notification/ViewNotificationsResponse";
 export * from "@Services/API/Notification/SeenNotificationPayload";

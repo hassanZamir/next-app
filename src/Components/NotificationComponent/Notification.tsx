@@ -18,7 +18,7 @@ export const Notification: React.FunctionComponent<{ notification: NOTIFICATION,
     const dispatch = useDispatch();
 
     const getRedirectUrl = (notification: NOTIFICATION) => {
-        if (notification.type === 2 || notification.type === 3 || notification.type === 4)
+        if (notification.type === 2 || notification.type === 3 || notification.type === 4 || notification.type === 6)
             return "/profile/" + user.username + "/status/" + notification.contentId; 
         else
             return "";
@@ -79,12 +79,21 @@ export const Notification: React.FunctionComponent<{ notification: NOTIFICATION,
                         notification.type === NotificationTabs[4].type 
                             && <span>Paid you a tip of ${notification.tipAmount}</span>
                     }
-                    {
+                    {/* {
                         notification.type === NotificationTabs[5].type 
                             && <span>has purchased your <span className={(notification.seen ? "text-primary" : "text-darkGrey" )}>
                                 message
                             </span> for $ {notification.tipAmount}!
                         </span>
+                    } */}
+                    {
+                        notification.type === 6 
+                            &&  <div className="d-flex flex-column">
+                                <span>
+                                    has liked your <span className={(notification.seen ? "text-primary" : "text-darkGrey" )}>comment:</span>
+                            </span>
+                            <span style={{ fontStyle: "italic" }}>"{notification.commentText}"</span>
+                        </div>
                     }
                 </div>
             </div>
