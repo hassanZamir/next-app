@@ -1,7 +1,6 @@
 // #region Global Imports
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import dynamic from 'next/dynamic';
 // #endregion Global Imports
 
 // #region Local Imports
@@ -9,15 +8,10 @@ import { IFooter } from "./Footer";
 import { StaticImage } from "@Components";
 import { AccountOptionsModal } from "@Components/AccountOptionsModal";
 import Router from "next/router";
-import { LoginActions } from "@Actions";
+import { LoginActions, NotificationActions } from "@Actions";
 import { useModal } from '../Hooks';
-import { USER_SESSION } from "@Interfaces";
+import { NotificationPusher } from '@Services/Pusher';
 // #endregion Local Imports
-
-const DynamicPaymentsModal: any = dynamic(
-    () => import('../Modals/PaymentSettingsModal').then((mod) => mod.PaymentSettingsModal) as Promise<React.FunctionComponent<{ user: USER_SESSION }>>,
-    { ssr: false }
-);
 
 const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPaymentSettingsClick }): JSX.Element => {
     const dispatch = useDispatch();
@@ -25,6 +19,24 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     const { isShowing, toggle } = useModal(modalRef);
 
     const onLogout = () => { dispatch(LoginActions.UserLogout()); };
+
+    const notificationSubscriptionCallback = (param: any) => {
+        dispatch(NotificationActions.PusherNotificationRecieved({}));
+    }
+
+    useEffect(() => {
+        const channelName = 'creators:' + user.id;
+        NotificationPusher.getChannel(channelName)
+            .then((channel: any) => {
+                NotificationPusher.subscribe('like', channel, notificationSubscriptionCallback);
+                NotificationPusher.subscribe('comment', channel, notificationSubscriptionCallback);
+                NotificationPusher.subscribe('subscribe', channel, notificationSubscriptionCallback);
+                NotificationPusher.subscribe('tip', channel, notificationSubscriptionCallback);
+                NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
+            }).catch((err: any) => {
+                console.log("Error occured subscribing pusher : ", err);
+            });
+    }, []);
 
     return <div style={{ height: "40px" }} 
         className={"footer-navigation d-flex align-items-center justify-content-between text-white bg-primary"}>

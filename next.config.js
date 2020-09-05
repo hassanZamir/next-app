@@ -4,7 +4,7 @@ const withSass = require("@zeit/next-sass");
 const withBundleAnalyzer = require("@next/bundle-analyzer");
 const nextRuntimeDotenv = require("next-runtime-dotenv");
 
-const withConfig = nextRuntimeDotenv({ public: ["API_URL", "API_KEY"] });
+const withConfig = nextRuntimeDotenv({ public: ["API_URL", "API_KEY", "PUSHER_KEY"] });
 
 const nextConfig = {
     analyzeServer: ["server", "both"].includes(process.env.BUNDLE_ANALYZE),
@@ -23,9 +23,11 @@ const nextConfig = {
         PROXY_MODE: process.env.PROXY_MODE,
         API_URL: process.env.API_URL,
         API_KEY: process.env.API_KEY,
-        STATIC_PATH: process.env.STATIC_PATH
+        STATIC_PATH: process.env.STATIC_PATH,
+        PUSHER_KEY: process.env.PUSHER_KEY
     },
     env: {
+        PUSHER_KEY: process.env.PUSHER_KEY,
         API_URL: process.env.API_URL,
         MEDIA_BASE_URL: process.env.MEDIA_BASE_URL
     }

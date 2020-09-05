@@ -19,6 +19,13 @@ export const PersistReducer = (
     & IPersistState.Actions.IUpdatePaymentInfoInSession>
 ) => {
     switch (action.type) {
+        case ActionConsts.Notifications.PusherNotificationRecieved: {
+            return Object.assign({}, state, {
+                session:  Object.assign({}, state.session, {
+                    notificationCount: state.session.notificationCount + 1
+                })
+            });
+        }
         case ActionConsts.Feeds.SetPolledPersistFeed: {
             let { feed } = action.payload!;
 

@@ -12,6 +12,14 @@ import { INotificationsPage } from "@Interfaces";
 // #endregion Interface Imports
 
 export const NotificationActions = {
+    PusherNotificationRecieved: (payload: any) => async (
+        dispatch: Dispatch
+    ) => {
+        dispatch({
+            payload: true,
+            type: ActionConsts.Notifications.PusherNotificationRecieved
+        });
+    },
     GetNotification: (payload: INotificationsPage.Actions.IGetGETNotificationPayload) => async (
         dispatch: Dispatch
     ) => {
