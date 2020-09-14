@@ -42,7 +42,8 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
     }, [scrolledToBottom]);
 
     const getNotifications = async (index: number) => {
-        if (notifications[NotificationTabs[index].key] !== 'promotions') {
+        // if (notifications[NotificationTabs[index].key] !== 'promotions') {
+        if (index !== 5) {
             const params = { 
                 userId: user.id, 
                 type: NotificationTabs[index].type, 
@@ -51,6 +52,7 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
             };
             await dispatch(NotificationActions.GetNotification(params));
         }
+        // }
     }
 
     const changeTab = async (index: number) => {

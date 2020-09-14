@@ -96,5 +96,9 @@ export const ActionConsts = {
         SeenNotifiactionError: "SeenNotifiactionError",
         ViewNotificationsSuccess: "ViewNotificationsSuccess",
         ViewNotificationsError: "ViewNotificationsError"
+    },
+    Messages: {
+        GetAllMessagesSuccess: "GetAllMessagesSuccess",
+        GetAllMessagesError: "GetAllMessagesError"
     }
 };

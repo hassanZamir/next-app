@@ -64,6 +64,9 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                     } else if (config.name === 'Notification') {
                         Router.push('/notifications');
                         return;
+                    } else if (config.name === 'Messages') {
+                        Router.push('/messages');
+                        return;
                     } else {
                         return null
                     }
@@ -129,7 +132,7 @@ const FooterConfig = [{
         width: '18px'
     }
 }, {
-    name: 'Comments',
+    name: 'Messages',
     image: {
         src: '/images/comment_white@2x.png',
         height: '20px',

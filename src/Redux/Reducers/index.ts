@@ -14,11 +14,10 @@ import { StatusReducer } from "./StatusReducer";
 import { PaymentReducer } from "./Payment";
 import { BankingInfoReducer } from "./BankingInfo";
 import { NotificationReducer } from "./Notification";
+import { MessagesReducer } from "./Messages";
 // #endregion Local Imports
 
 export default combineReducers({
-    // home: HomeReducer,
-    // loginSuccess: LoginSuccessReducer,
     loginError: LoginErrorReducer,
     signUp: SignUpReducer,
     feeds: FeedsReducer,
@@ -28,5 +27,6 @@ export default combineReducers({
     statusPage: StatusReducer,
     payment: PaymentReducer,
     bankingInfo: BankingInfoReducer,
-    notification: NotificationReducer
+    notification: NotificationReducer,
+    messages: MessagesReducer
 });
