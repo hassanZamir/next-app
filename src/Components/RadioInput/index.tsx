@@ -16,13 +16,18 @@ const Container = styled(RegInput)<{ inputMargin: string | undefined, inputHeigh
 `;
 
 export const RadioInput: React.FunctionComponent<IRadioInput.IProps> 
-    = ({ labelTextElem, type, inputMargin, labelText, value, name, register, formErrors, ...props }) => {
-    return (
-        <div className={"d-flex align-items-start w-100 " + (props.wrapperClass ? props.wrapperClass : "")}>
-            <Container inputMargin={inputMargin} name={name} ref={register} type={type} value={value} {...props} />
-            {labelTextElem ? labelTextElem 
-                : <label className={props.labelTextClass ? props.labelTextClass : "text-primary font-13px"}>{labelText}</label>}
-            {/* <div className="text-danger font-10px">{ formErrors ? formErrors[name] ? formErrors[name].message : '' : ''}</div> */}
-        </div>
-    )
+    = ({ showLabel, labelTextElem, type, inputMargin, labelText, value, name, register, formErrors, ...props }) => {
+    
+    if (showLabel) {
+        return (
+            <div className={"d-flex align-items-start w-100 " + (props.wrapperClass ? props.wrapperClass : "")}>
+                <Container inputMargin={inputMargin} name={name} ref={register} type={type} value={value} {...props} />
+                {labelTextElem ? labelTextElem 
+                    : <label className={props.labelTextClass ? props.labelTextClass : "text-primary font-13px"}>{labelText}</label>}
+            </div>
+        )
+    } else {
+        return <Container inputMargin={inputMargin} name={name} ref={register} type={type} value={value} {...props} />  
+    }
+    
 };

@@ -1,48 +1,47 @@
 // #region Global Imports
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faHeart, faCommentAlt, faUserPlus, faDollarSign, faBullhorn } from '@fortawesome/free-solid-svg-icons';
-// import { faCommentAlt as faRegularCommentAlt} from '@fortawesome/free-regular-svg-icons';
+import React from "react";
 // #endregion Global Imports
 
 // #region Local Imports
-import { IStore } from "@Redux/IStore";
 import { CurrentTimeDifference }from "@Services/Time";
-import { LoadingSpinner } from "@Components";
 import { BackgroundImage } from "@Components/Basic";
-import { USER_SESSION } from "@Interfaces";
-import { ParagraphText } from "@Components/ParagraphText";
+import { MESSAGE_LIST_ITEM } from "@Interfaces";
+import { theme } from "@Definitions/Styled";
 // #endregion Local Imports
 
-export const MessageRow: React.FunctionComponent<{ message: any }> 
+export const MessageRow: React.FunctionComponent<{ message: MESSAGE_LIST_ITEM }> 
     = ({ message }) => {
     
-    console.log("message", message);
     return (<div onClick={()=>{ }} 
         style={{ 
-            marginBottom: "1px", 
-            marginLeft: "-1.5rem",
-            marginRight: "-1.5rem"
+            marginBottom: "1px",
+            borderBottom: "1px solid " + theme.colors.grey300
         }}
-        className="hover-bg cursor-pointer d-flex px-4 py-3">
-        <div style={{ minHeight: "50px", minWidth: "50px" }}>
+        className="hover-bg cursor-pointer d-flex mx-4 py-4">
+        <div style={{ minHeight: "62px", minWidth: "62px" }}>
             <BackgroundImage 
                 paddingBottom="100%"
                 borderRadius="12px" 
                 src={[message.profileImageUrl ,'/images/profile_image_placeholder.jpg']} />
         </div>
-        <div className="d-flex flex-column px-3 justify-content-between w-100">
+        <div className="d-flex flex-column px-3 w-100">
             <div className="d-flex justify-content-between align-items-center">
                 <div className="gibson-semibold font-16px text-primary">
                     { message.name }
                 </div>
-                <div className="font-14px gibson-regular text-inputText">
-                    { CurrentTimeDifference(message.timeStamp) }
+                <div className="position-relative">
+                    <div className="font-15px gibson-semibold text-inputText ">{ CurrentTimeDifference(message.lastVisited, 'short') }</div>
+                    {message.participantSeenStatus && <div className="circle position-absolute" style={{ 
+                        background: theme.colors.purple, 
+                        width: "8px", 
+                        height: "8px",
+                        right: "-20px",
+                        top: "5px"
+                    }}></div>}
                 </div>
             </div>
-            <div className={"font-14px gibson-regular " + (message.seen ? "text-inputText" : "text-darkGrey")}>
-                {message.text}
+            <div className={"font-12px " + (message.participantSeenStatus ? "gibson-regular text-inputText" : "gibson-semibold text-primary")}>
+                {message.message}
             </div>
         </div>
     </div>);

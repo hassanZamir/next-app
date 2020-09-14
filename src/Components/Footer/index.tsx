@@ -65,7 +65,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                         Router.push('/notifications');
                         return;
                     } else if (config.name === 'Messages') {
-                        Router.push('/messages');
+                        Router.push('/message');
                         return;
                     } else {
                         return null

@@ -99,6 +99,8 @@ export const ActionConsts = {
     },
     Messages: {
         GetAllMessagesSuccess: "GetAllMessagesSuccess",
-        GetAllMessagesError: "GetAllMessagesError"
+        GetAllMessagesError: "GetAllMessagesError",
+        GetMessagesRecipientsSuccess: "GetMessagesRecipientsSuccess",
+        GetMessagesRecipientsError: "GetMessagesRecipientsError"
     }
 };

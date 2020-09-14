@@ -8,8 +8,8 @@ import dynamic from 'next/dynamic';
 
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
-import { IProfilePage, USER_SESSION } from "@Interfaces";
-import { ContentComponent } from "@Components";
+import { USER_SESSION } from "@Interfaces";
+import { ConversationComponent } from "@Components";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -20,18 +20,13 @@ const Authenticated: any = dynamic(
     { ssr: false }
 );
 
-const UserStatus: NextPage<IProfilePage.IProps> = () => {
-    const { session, feed } = useSelector((state: IStore) => state.persistState);
+const UserStatus: NextPage = () => {
+    const { session } = useSelector((state: IStore) => state.persistState);
     const router = useRouter();
-    const userName = router.query["username"] as string,
-    contentId = parseInt(router.query["contentId"] as string);
+    const conversationId = router.query["conversationId"] as string;
 
-    return <Authenticated session={session} name="Home">
-        <ContentComponent 
-            userName={userName} 
-            contentId={contentId} 
-            user={session} 
-            feed={feed} />
+    return <Authenticated session={session} name="Messages">
+        <ConversationComponent user={session} />
     </Authenticated>;
 };
 

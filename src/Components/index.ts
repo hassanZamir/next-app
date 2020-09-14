@@ -39,4 +39,4 @@ export { SocialLogin } from "@Components/SocialLogin";
 export { PaymentSettingsContainer } from "@Components/PaymentSettingsContainer";
 export { NotificationComponent } from "@Components/NotificationComponent";
 export { MessagesComponent } from "@Components/MessagesComponent";
-
+export { ConversationComponent } from "@Components/ConversationComponent";

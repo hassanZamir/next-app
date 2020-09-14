@@ -1,11 +1,12 @@
 export type MESSAGE_LIST_ITEM = {
     id: number,
-    username: string,
-    name: string,
-    profilePic: string,
+    lastVisited: string,
     message: string,
-    lastUpdated: string,
-    participantSeenStatus: boolean
+    name: string,
+    participantSeenStatus: boolean,
+    profileImageUrl: string,
+    userId: number,
+    userName: string
 }
 
 export interface GETAllMessagesResponse {
