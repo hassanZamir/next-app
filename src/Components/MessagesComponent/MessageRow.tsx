@@ -18,6 +18,7 @@ import { ParagraphText } from "@Components/ParagraphText";
 export const MessageRow: React.FunctionComponent<{ message: any }> 
     = ({ message }) => {
     
+    console.log("message", message);
     return (<div onClick={()=>{ }} 
         style={{ 
             marginBottom: "1px", 

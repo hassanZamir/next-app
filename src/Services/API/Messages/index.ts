@@ -16,7 +16,7 @@ export const MessagesService = {
         try {
             response = await Http.Request<MessagesModel.GetGETAllMessagesResponse>(
                 "GET",
-                "/users/" + userId + "/conversations",
+                "/users/" + userId + "/messages",
                 undefined
             );
         } catch (error) {

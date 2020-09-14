@@ -139,7 +139,7 @@ const FooterConfig = [{
         width: '20px'
     },
     imageSelected: {
-        src: '',
+        src: '/images/messages_filled@2x.png',
         height: '18px',
         width: '18px'
     }

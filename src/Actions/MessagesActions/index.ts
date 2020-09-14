@@ -17,6 +17,7 @@ export const MessagesActions = {
     ) => {
         const result = await MessagesService.GetAllMessages(payload);
 
+        debugger;
         dispatch({
             payload: { 
                 allMessages: result.status && result.response ? result.response : [], 
