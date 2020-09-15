@@ -21,12 +21,16 @@ const Authenticated: any = dynamic(
 );
 
 const UserStatus: NextPage = () => {
-    const { session } = useSelector((state: IStore) => state.persistState);
+    const { session, activeConversation } = useSelector((state: IStore) => state.persistState);
     const router = useRouter();
     const conversationId = router.query["conversationId"] as string;
 
     return <Authenticated session={session} name="Messages">
-        <ConversationComponent user={session} />
+        <ConversationComponent 
+            user={session} 
+            conversationId={parseInt(conversationId)}
+            messageListItem={activeConversation} />
+
     </Authenticated>;
 };
 

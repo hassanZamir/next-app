@@ -12,3 +12,4 @@ export { AnimatePopup } from "./AnimatePopup";
 export { PositionedModal } from "./PositionedModal";
 export { ToggleAnimate } from "./ToggleAnimate";
 export { Tabs, Tab, Content } from "./Tabs";
+export { TextMessageContainer } from "./TextMessageContainer";

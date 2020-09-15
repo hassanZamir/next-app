@@ -4,13 +4,14 @@ import Router from "next/router";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, IPersistState, USER_SESSION, FEED, NOTIFICATION_STATS } from "@Interfaces";
+import { IAction, IPersistState, USER_SESSION, FEED, NOTIFICATION_STATS, MESSAGE_LIST_ITEM } from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IPersistState.IStateProps = {
     session: <USER_SESSION>{},
     feed: <FEED>{},
-    notificationStats: <NOTIFICATION_STATS>{}
+    notificationStats: <NOTIFICATION_STATS>{},
+    activeConversation: <MESSAGE_LIST_ITEM>{}
 };
 
 export const PersistReducer = (
@@ -19,9 +20,23 @@ export const PersistReducer = (
     & IPersistState.Actions.ISetSession 
     & IPersistState.Actions.ISetNotificationStats
     & IPersistState.Actions.IUpdatePaymentInfoInSession
-    & IPersistState.Actions.IViewNotificationType>
+    & IPersistState.Actions.IViewNotificationType
+    & IPersistState.Actions.ISetActiveConversation>
 ) => {
     switch (action.type) {
+        case ActionConsts.Messages.SetActiveConversationSuccess: {
+            const { conversation } = action.payload!;
+            Router.push("/message/" + conversation.id, "/message/" + conversation.id);
+
+            return Object.assign({}, state, {
+                activeConversation: conversation
+            });
+        }
+        case ActionConsts.Messages.SetActiveConversationError: {
+            return Object.assign({}, state, {
+                activeConversation: {}
+            });
+        }
         case ActionConsts.Notifications.GetNotifiactionStatsSuccess: {
             const { notificationStats } = action.payload!;
             return Object.assign({}, state, {

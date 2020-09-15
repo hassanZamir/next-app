@@ -11,6 +11,8 @@ declare module "styled-components" {
             disabledGrey: string;
             inputTextClor: string;
             grey300: string;
+            grey400: string;
+            grey500: string;
             lightGrey: string;
             darkGrey: string;
             headingBlue: string;

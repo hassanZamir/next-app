@@ -1,11 +1,12 @@
 import { FEED, USER_SESSION, PAYMENT_USER_SETTINGS, PAYMENT_USER_WALLET, 
-        PAYMENT_CARD, NOTIFICATION_STATS } from "@Interfaces";
+        PAYMENT_CARD, NOTIFICATION_STATS, MESSAGE_LIST_ITEM } from "@Interfaces";
 
 declare namespace IPersistState {
     export interface IStateProps {
         session: USER_SESSION;
         feed: FEED;
         notificationStats: NOTIFICATION_STATS;
+        activeConversation: MESSAGE_LIST_ITEM;
     }
 
     namespace Actions {
@@ -20,6 +21,9 @@ declare namespace IPersistState {
         }
         export interface ISetNotificationStats {
             notificationStats: NOTIFICATION_STATS;
+        }
+        export interface ISetActiveConversation {
+            conversation: MESSAGE_LIST_ITEM;
         }
         export interface IUpdatePaymentInfoInSession {
             paymentSettings: {

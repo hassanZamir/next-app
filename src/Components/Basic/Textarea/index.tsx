@@ -16,7 +16,6 @@ const _Textarea = styled.textarea`
     background: white;
     min-height: 35px;
 `;
-
 export const Textarea: React.FunctionComponent<ITextarea.IProps> = ({ rows, columns, ...rest}) => {
     return <_Textarea rows={rows} cols={columns} {...rest} />;
 };

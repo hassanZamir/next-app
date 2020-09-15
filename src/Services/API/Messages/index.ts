@@ -89,5 +89,64 @@ export const MessagesService = {
             };
         }
         return response;
+    },
+    GetConversation: async (
+        payload: MessagesModel.GetGETConversationPayload
+    ): Promise<MessagesModel.GetGETConversationResponse> => {
+        let response: MessagesModel.GetGETConversationResponse;
+        
+        const { conversationId } = payload;
+        try {
+            response = await Http.Request<MessagesModel.GetGETConversationResponse>(
+                "GET",
+                "/user/" + conversationId + "/conversations",
+                undefined
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: [{
+                    id: 5,
+                    lastVisited: "2020-09-12T14:17:10.5233333",
+                    userId:130,
+                    profileImageUrl: "",
+                    userName: "",
+                    name: "Sohaib Riaz",
+                    message: "Hello buddy",
+                    participantSeenStatus: true
+                }]
+            };
+        }
+        return response;
+    },
+    CreateMessage: async (
+        payload: MessagesModel.GetPOSTCreateMessagePayload
+    ): Promise<MessagesModel.GetPOSTCreateMessageResponse> => {
+        let response: MessagesModel.GetPOSTCreateMessageResponse;
+        
+        const { conversationId, ...rest } = payload;
+        try {
+            response = await Http.Request<MessagesModel.GetPOSTCreateMessageResponse>(
+                "POST",
+                "/conversation/" + conversationId,
+                undefined,
+                { ...rest }
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: {
+                    id: 5,
+                    lastVisited: "2020-09-12T14:17:10.5233333",
+                    userId:130,
+                    profileImageUrl: "",
+                    userName: "",
+                    name: "Sohaib Riaz",
+                    message: "Hello buddy",
+                    participantSeenStatus: true
+                }
+            };
+        }
+        return response;
     }
 }

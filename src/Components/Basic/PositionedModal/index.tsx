@@ -23,7 +23,7 @@ const PositionedModalContainer = styled.div<{ border?: string, borderRadius?: st
     z-index: 1050;
 `;
 
-const TriangleDown = styled.div<{ triangleProps?: {right?: string, top?: string}}>`
+export const TriangleDown = styled.div<{ triangleProps?: {right?: string, top?: string}}>`
     width: 0;
     height: 0;
     border-left: 15px solid transparent;

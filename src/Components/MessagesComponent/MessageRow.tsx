@@ -1,18 +1,26 @@
 // #region Global Imports
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 // #endregion Global Imports
 
 // #region Local Imports
 import { CurrentTimeDifference }from "@Services/Time";
 import { BackgroundImage } from "@Components/Basic";
-import { MESSAGE_LIST_ITEM } from "@Interfaces";
+import { MESSAGE_LIST_ITEM, USER_SESSION } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
+import { MessagesActions } from "@Actions";
 // #endregion Local Imports
 
-export const MessageRow: React.FunctionComponent<{ message: MESSAGE_LIST_ITEM }> 
-    = ({ message }) => {
+export const MessageRow: React.FunctionComponent<{ message: MESSAGE_LIST_ITEM, user: USER_SESSION }> 
+    = ({ message, user }) => {
     
-    return (<div onClick={()=>{ }} 
+    const dispatch = useDispatch();
+
+    const goToConversation = () => {
+        dispatch(MessagesActions.SetConversation({ conversation: message } ));
+    }
+
+    return (<div onClick={()=>{ goToConversation() }} 
         style={{ 
             marginBottom: "1px",
             borderBottom: "1px solid " + theme.colors.grey300
@@ -31,7 +39,7 @@ export const MessageRow: React.FunctionComponent<{ message: MESSAGE_LIST_ITEM }>
                 </div>
                 <div className="position-relative">
                     <div className="font-15px gibson-semibold text-inputText ">{ CurrentTimeDifference(message.lastVisited, 'short') }</div>
-                    {message.participantSeenStatus && <div className="circle position-absolute" style={{ 
+                    {!message.participantSeenStatus && <div className="circle position-absolute" style={{ 
                         background: theme.colors.purple, 
                         width: "8px", 
                         height: "8px",

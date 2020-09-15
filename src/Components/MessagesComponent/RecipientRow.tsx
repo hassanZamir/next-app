@@ -1,5 +1,6 @@
 // #region Global Imports
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // #endregion Global Imports
 
 // #region Local Imports
@@ -15,20 +16,20 @@ import Router from "next/router";
 export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIENT, user: USER_SESSION }> 
     = ({ recipient, user }) => {
     
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-
+    
     const onRecipientClick = async (recipient: MESSAGE_RECIPIENT) => {
         setLoading(true);
-        const result = await MessagesActions.CreateConversation({ userId: user.id, recipientId: recipient.id})();
+        await dispatch(MessagesActions.CreateConversation({ userId: user.id, recipientId: recipient.id}));
 
-        if (result.status && result.response) {
-            const conversation = result.response;
-            Router.push("/message/" + conversation.id, "/message/" + conversation.id);
-        } else {
-            setError("Error getting conversation");
-            setLoading(false);
-        }
+        // if (result.status && result.response) {
+        //     const conversation = result.response;
+        //     Router.push("/message/" + conversation.id, "/message/" + conversation.id);
+        // } else {
+        //     setError("Error getting conversation");
+        //     setLoading(false);
+        // }
     }
 
     return (<div onClick={() => { !loading && onRecipientClick(recipient); }} 
@@ -63,7 +64,6 @@ export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIEN
                         <LoadingSpinner size="1x" showLoading={loading}></LoadingSpinner>
                     </div>}
                 </div>
-                {error && <div className="text-danger font-12px">{ error }</div>}
             </div>
     </div>);
 }

@@ -15,6 +15,7 @@ import { PaymentReducer } from "./Payment";
 import { BankingInfoReducer } from "./BankingInfo";
 import { NotificationReducer } from "./Notification";
 import { MessagesReducer } from "./Messages";
+import { ConversationReducer } from "./Conversation";
 // #endregion Local Imports
 
 export default combineReducers({
@@ -28,5 +29,6 @@ export default combineReducers({
     payment: PaymentReducer,
     bankingInfo: BankingInfoReducer,
     notification: NotificationReducer,
-    messages: MessagesReducer
+    messages: MessagesReducer,
+    conversationState: ConversationReducer
 });

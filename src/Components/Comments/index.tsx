@@ -19,7 +19,6 @@ import Link from "next/link";
 const Comment: React.FunctionComponent<{ comment: COMMENT, likeComment: (comment: COMMENT)=>void, commentsListRef: any}> = 
     ({ comment, likeComment, commentsListRef }) => {
     
-        console.log("comment", comment);
     return <div style={{ minHeight: "50px" }} className="d-flex px-3 align-items-center my-4 w-100" ref={commentsListRef}>
         <CircularImage src={[comment.profileImageUrl, '/images/profile_image_placeholder.jpg']} height="50px" width="50px" border={"1px solid " + theme.colors.primary} />
         <div className="d-flex flex-column pl-2 w-100 justify-content-between">

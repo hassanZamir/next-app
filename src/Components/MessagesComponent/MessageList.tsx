@@ -47,7 +47,7 @@ export const MessageList: React.FunctionComponent<{ user: USER_SESSION, scrolled
                 <LoadingSpinner size="3x" showLoading={loading}>
                     {allMessages.values.length > 0 && <div className="d-flex flex-column h-100 w-100">
                         {allMessages.values.map((message, i) => {
-                            return <MessageRow message={message} key={i} />
+                            return <MessageRow message={message} key={i} user={user} />
                         })}
                     </div>}
                     {allMessages.values.length <=0 && <ParagraphText 

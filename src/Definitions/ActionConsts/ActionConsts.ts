@@ -101,6 +101,14 @@ export const ActionConsts = {
         GetAllMessagesSuccess: "GetAllMessagesSuccess",
         GetAllMessagesError: "GetAllMessagesError",
         GetMessagesRecipientsSuccess: "GetMessagesRecipientsSuccess",
-        GetMessagesRecipientsError: "GetMessagesRecipientsError"
+        GetMessagesRecipientsError: "GetMessagesRecipientsError",
+        SetActiveConversationSuccess: "SetActiveConversationSuccess",
+        SetActiveConversationError: "SetActiveConversationError"
+    },
+    Conversation: {
+        GetConversationSuccess: "GetConversationSuccess",
+        GetConversationError: "GetConversationError",
+        CreateMessageSuccess: "CreateMessageSuccess",
+        CreateMessageError: "CreateMessageError"
     }
 };

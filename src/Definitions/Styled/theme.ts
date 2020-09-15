@@ -9,6 +9,8 @@ const theme: DefaultTheme = {
         borderGrey: "#B4B4B4",
         disabledGrey: "#555555",
         grey300: "#F4F4F6",
+        grey400: "#A9A9A9",
+        grey500: "#D3EBFF",
         purple: "#FF4F9A",
         inputTextClor: "#78849E",
         lightGrey: "#A0A0A0",

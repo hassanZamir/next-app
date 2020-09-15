@@ -6,6 +6,10 @@ export * from "@Redux/IStore";
 // #region Service Interfaces
 export * from "@Services/API/Http/Http";
 
+export * from "@Services/API/Messages/POSTCreateMessagePayload";
+export * from "@Services/API/Messages/POSTCreateMessageResponse";
+export * from "@Services/API/Messages/GETConversationPayload.d";
+export * from "@Services/API/Messages/GETConversationResponse";
 export * from "@Services/API/Messages/POSTConversationCreateThreadPayload";
 export * from "@Services/API/Messages/POSTConversationCreateThreadResponse";
 export * from "@Services/API/Messages/GETMessageRecipientsPayload";
@@ -119,6 +123,7 @@ export * from "@Services/API/Payment/PaymentSettings";
 // #endregion Service Interfaces
 
 // #region Page Interfaces
+export * from "@Interfaces/Pages/Conversation";
 export * from "@Interfaces/Pages/Messages";
 export * from "@Interfaces/Pages/Notifications";
 export * from "@Interfaces/Pages/BankingInfo";

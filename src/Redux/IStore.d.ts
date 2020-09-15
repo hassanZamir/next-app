@@ -11,13 +11,13 @@ import {
     IPayment,
     IBankingInfoPage,
     INotificationsPage,
-    IMessagesPage
+    IMessagesPage,
+    IConversationPage
 } from "@Interfaces";
 // #endregion Interface Imports
 
 export interface IStore {
     home: IHomePage.IStateProps;
-    // loginSuccess: ILoginPage.IStateProps;
     loginError: ILoginPage.IStateProps;
     signUp: ISignUpPage.IStateProps;
     feeds: IFeedsPage.IStateProps;
@@ -28,5 +28,6 @@ export interface IStore {
     payment: IPayment.IStateProps;
     bankingInfo: IBankingInfoPage.IStateProps;
     notification: INotificationsPage.IStateProps,
-    messages: IMessagesPage.IStateProps
+    messages: IMessagesPage.IStateProps,
+    conversationState: IConversationPage.IStateProps
 }
