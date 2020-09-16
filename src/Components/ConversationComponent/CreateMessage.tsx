@@ -12,8 +12,8 @@ import { USER_SESSION } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
 // #endregion Local Imports
 
-export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conversationId: number }> 
-    = ({ user, conversationId }) => {
+export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conversationId: number, onSuccess: ()=>void }> 
+    = ({ user, conversationId, onSuccess }) => {
 
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
@@ -31,11 +31,11 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
             senderId: user.id,
             type: 1,
             message: message,
+            onSuccessScroll: onSuccess,
             sentAt: date.getFullYear() 
                 + "-" + (date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth()) 
                 + "-" + (new Date().getDate() < 10 ? "0" + date.getDate() : date.getDate())
         }
-        debugger;
         await dispatch(MessagesActions.CreateMessage(params));
         setMessage('');
     }
@@ -55,7 +55,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
             name="message" 
             rows={2} 
             columns={10} 
-            className="border-grey500 rounded w-100 font-10px text-primary mx-2 text-area-box-shadow" 
+            className="border-grey500 rounded w-100 font-14px text-primary mx-2 text-area-box-shadow" 
             onChange={handleChange}
             value={message}/>
         <FontAwesomeIcon

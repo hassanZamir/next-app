@@ -1,5 +1,5 @@
 // #region Global Imports
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, RefObject } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
@@ -22,8 +22,13 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
 
     const conversationState = useSelector((state: IStore) => state.conversationState);
     const { conversation } = conversationState;
+    const messagesListRef:RefObject<HTMLDivElement> = useRef(null);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+
+    const scrollToLastComment = () => {
+        messagesListRef.current && messagesListRef.current!.scrollIntoView({behavior: "smooth"});
+    }
 
     useEffect(() => {
         if (messageListItem.id !== conversationId) {
@@ -53,11 +58,16 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             </div>
         </div>
         <div className="d-flex flex-column w-100 h-100" style={{ overflow: "hidden" }}>
-            <div className="d-flex align-items-center justify-content-center h-100 w-100 full-flex-scroll hide-scroller">
+            <div onScroll={(e: any)=> {
+                // const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
+                // !bottom ? setScrollingTop(true) : setScrollingTop(false); 
+                // onScroll(e);
+            }} className="d-flex align-items-center justify-content-center h-100 w-100 full-flex-scroll hide-scroller">
                 <LoadingSpinner size="3x" showLoading={loading}>
                     {conversation.values.length > 0 ? <div className="d-flex flex-column h-100 w-100 px-4">
                         {conversation.values.map((conversationMessage: CONVERSATION_MESSAGE, i) => {
                             return <ConversationMessage 
+                                messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
                                 conversationMessage={conversationMessage} 
                                 isMessageRecieved={user.id !== conversationMessage.senderId} 
                                 key={i} />
@@ -69,7 +79,8 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             </div>
             <CreateMessage 
                 user={user} 
-                conversationId={conversationId} />
+                conversationId={conversationId} 
+                onSuccess={scrollToLastComment} />
         </div>        
     </div>);
 }

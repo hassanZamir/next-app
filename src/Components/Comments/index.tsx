@@ -72,7 +72,10 @@ const CommentsList: React.FunctionComponent<{onSeeLatestComments: ()=>void; scro
             Load Previous Comments
         </div>}
         {!loading && comments.map((comment: COMMENT, i) => {
-            return <Comment key={i} comment={comment} likeComment={likeComment} commentsListRef={i >= comments.length - 1 ? commentsListRef : null} />
+            return <Comment key={i} 
+                comment={comment} 
+                likeComment={likeComment} 
+                commentsListRef={i >= comments.length - 1 ? commentsListRef : null} />
         })}
         {viewAllComments && !loading && showSeeAllComments && <div onClick={()=>{ setViewAllComments(false); onSeeLatestComments() }} 
             className="px-3 py-2 bg-primary text-white font-12px mt-2 text-underline cursor-pointer"

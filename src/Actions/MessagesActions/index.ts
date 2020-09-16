@@ -73,10 +73,14 @@ export const MessagesActions = {
         dispatch: Dispatch
     ) => {
         const result = await MessagesService.CreateMessage(payload);
-        
+
         dispatch({
             payload: { conversationMessage: result.status && result.response ? result.response : {} },
             type: result.status && result.response ? ActionConsts.Conversation.CreateMessageSuccess : ActionConsts.Conversation.CreateMessageError
         });
+        
+        if (result.status && result.response) {
+            payload.onSuccessScroll();
+        }
     }
 }

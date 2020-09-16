@@ -4,4 +4,5 @@ export interface POSTCreateMessagePayload {
     type: number;
     message: string;
     sentAt: string;
+    onSuccessScroll: ()=>void;
 }
