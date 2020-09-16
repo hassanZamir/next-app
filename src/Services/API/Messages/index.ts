@@ -45,7 +45,7 @@ export const MessagesService = {
         try {
             response = await Http.Request<MessagesModel.GetGETMessageRecipientsResponse>(
                 "GET",
-                "/users/" + "117" + "/recipients" + getQueryParams({ ...rest }),
+                "/users/" + userId + "/recipients" + getQueryParams({ ...rest }),
                 undefined
             );
         } catch (error) {
@@ -99,21 +99,20 @@ export const MessagesService = {
         try {
             response = await Http.Request<MessagesModel.GetGETConversationResponse>(
                 "GET",
-                "/user/" + conversationId + "/conversations",
+                "/conversation/" + conversationId,
                 undefined
             );
         } catch (error) {
             response = {
                 status: false,
                 response: [{
-                    id: 5,
-                    lastVisited: "2020-09-12T14:17:10.5233333",
-                    userId:130,
-                    profileImageUrl: "",
-                    userName: "",
-                    name: "Sohaib Riaz",
-                    message: "Hello buddy",
-                    participantSeenStatus: true
+                    conversationId: 14,
+                    id: 11,
+                    message: "ass",
+                    recipientId: 0,
+                    senderId: 112,
+                    sentAt: "2020-08-16T00:00:00",
+                    type: 1
                 }]
             };
         }
@@ -136,14 +135,13 @@ export const MessagesService = {
             response = {
                 status: false,
                 response: {
-                    id: 5,
-                    lastVisited: "2020-09-12T14:17:10.5233333",
-                    userId:130,
-                    profileImageUrl: "",
-                    userName: "",
-                    name: "Sohaib Riaz",
-                    message: "Hello buddy",
-                    participantSeenStatus: true
+                    conversationId: 14,
+                    id: 11,
+                    message: "ass",
+                    recipientId: 0,
+                    senderId: 112,
+                    sentAt: "2020-08-16T00:00:00",
+                    type: 1
                 }
             };
         }

@@ -328,7 +328,12 @@ input:checked + .slider:before {
     border-radius: 2px;
 }
 
-
+.hide-scroller {
+    &::-webkit-scrollbar {
+        height: 0px;
+        width: 0px;
+    }
+}
 .custom-scroller {
     overflow-y: scroll;
     margin-bottom: 40px;

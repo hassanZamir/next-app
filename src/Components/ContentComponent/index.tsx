@@ -33,7 +33,9 @@ export const ContentComponent: React.FunctionComponent<{ userName: string, conte
         pollFeed();
     }, []);
 
-    return (<div className="d-flex flex-column" style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>
+    return (<div className="d-flex flex-column" 
+        style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>
+            
         <div className="my-2 row justify-content-center no-gutters">
             <Link href="/">
                 <a>

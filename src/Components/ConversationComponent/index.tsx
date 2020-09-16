@@ -10,7 +10,7 @@ import Router from 'next/router';
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
 import { theme } from "@Definitions/Styled";
-import { USER_SESSION, MESSAGE_LIST_ITEM } from "@Interfaces";
+import { USER_SESSION, MESSAGE_LIST_ITEM, CONVERSATION_MESSAGE } from "@Interfaces";
 import { ParagraphText, LoadingSpinner } from "@Components";
 import { ConversationMessage } from "./ConversationMessage";
 import { CreateMessage } from "./CreateMessage";
@@ -36,13 +36,15 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             setLoading(false);
         })()
     }, []);
+    
+    return (<div className="d-flex flex-column" 
+    style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>
 
-    return (<React.Fragment>
-        <div className="mt-4 mb-2 d-flex justify-content-between align-items-center no-gutters mx-4">
+        <div className="pt-4 pb-3 d-flex justify-content-between align-items-center no-gutters mx-4">
             <FontAwesomeIcon
                 onClick={() => Router.back()}
                 className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
-            <ParagraphText className="text-primary lato-bold">{ messageListItem.name || "Hassan" }</ParagraphText>
+            <ParagraphText className="text-primary lato-bold">{ messageListItem.name || "Name not coming in api" }</ParagraphText>
             <div className="d-flex align-items-center">
                 <FontAwesomeIcon className="cursor-pointer" icon={faStar} 
                     color={theme.colors.primary} size="lg" />
@@ -50,14 +52,14 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                     color={theme.colors.primary} size="lg" />
             </div>
         </div>
-        <div className="d-flex flex-column" style={{ flex: 1 }}>
-            <div className="d-flex align-items-center justify-content-center h-100 w-100">
+        <div className="d-flex flex-column w-100 h-100" style={{ overflow: "hidden" }}>
+            <div className="d-flex align-items-center justify-content-center h-100 w-100 full-flex-scroll hide-scroller">
                 <LoadingSpinner size="3x" showLoading={loading}>
                     {conversation.values.length > 0 ? <div className="d-flex flex-column h-100 w-100 px-4">
-                        {conversation.values.map((conversationMessage, i) => {
+                        {conversation.values.map((conversationMessage: CONVERSATION_MESSAGE, i) => {
                             return <ConversationMessage 
                                 conversationMessage={conversationMessage} 
-                                isMessageRecieved={user.id !== conversationMessage.userId} 
+                                isMessageRecieved={user.id !== conversationMessage.senderId} 
                                 key={i} />
                         })}
                     </div> : <ParagraphText className="text-primary font-20px lato-bold">
@@ -69,5 +71,5 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                 user={user} 
                 conversationId={conversationId} />
         </div>        
-    </React.Fragment>);
+    </div>);
 }

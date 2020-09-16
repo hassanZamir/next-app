@@ -1,12 +1,11 @@
 export type CONVERSATION_MESSAGE = {
+    conversationId: number,
     id: number,
-    lastVisited: string,
-    userId: number,
-    profileImageUrl: string,
-    userName: string,
-    name: string,
     message: string,
-    participantSeenStatus: boolean
+    recipientId: number,
+    senderId: number,
+    sentAt: string
+    type: number
 }
 export interface GETConversationResponse {
     status: boolean,

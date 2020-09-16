@@ -35,6 +35,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
                 + "-" + (date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth()) 
                 + "-" + (new Date().getDate() < 10 ? "0" + date.getDate() : date.getDate())
         }
+        debugger;
         await dispatch(MessagesActions.CreateMessage(params));
         setMessage('');
     }
