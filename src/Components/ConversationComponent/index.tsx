@@ -15,6 +15,7 @@ import { ParagraphText, LoadingSpinner } from "@Components";
 import { ConversationMessage } from "./ConversationMessage";
 import { CreateMessage } from "./CreateMessage";
 import { MessagesActions } from "@Actions";
+import { NotificationPusher } from '@Services/Pusher';
 // #endregion Local Imports
 
 export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION, conversationId: number, messageListItem: MESSAGE_LIST_ITEM }> 
@@ -30,7 +31,25 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
         messagesListRef.current && messagesListRef.current!.scrollIntoView({behavior: "smooth"});
     }
 
+    const memberAddedCallBack = (member: any) => {
+        console.log("memberAddedCallBack", member);
+    }
+
     useEffect(() => {
+        const channelName = 'presence-channel-' + conversationId;
+        const apiUrl = process.env.API_URL;
+        NotificationPusher.getChannel(channelName, { 
+            cluster: 'ap4', encrypted: true, 
+            authTransport: 'jsonp',
+            authEndpoint:  apiUrl + '/pusher/auth',
+            auth: { params: { userId: user.id } }
+        })
+        .then((channel: any) => {
+            NotificationPusher.subscribe('pusher:member_added', channel, memberAddedCallBack);
+        }).catch((err: any) => {
+            console.log("Error occured subscribing pusher : ", err);
+        });
+
         if (messageListItem.id !== conversationId) {
             Router.push("/messages", "/messages");
             return;
@@ -39,6 +58,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             setLoading(true);
             await dispatch(MessagesActions.GetConversation({ conversationId: conversationId }));
             setLoading(false);
+            scrollToLastComment();
         })()
     }, []);
     

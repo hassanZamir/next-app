@@ -36,7 +36,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
 
         if (typeof window !== "undefined" && !(window as any).Pusher) {
             const channelName = 'creators-' + user.id;
-            NotificationPusher.getChannel(channelName)
+            NotificationPusher.getChannel(channelName, { cluster: 'ap4', encrypted: true })
                 .then((channel: any) => {
                     NotificationPusher.subscribe('like', channel, notificationSubscriptionCallback);
                     NotificationPusher.subscribe('comment', channel, notificationSubscriptionCallback);
