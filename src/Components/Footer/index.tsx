@@ -9,10 +9,10 @@ import { IFooter } from "./Footer";
 import { StaticImage } from "@Components";
 import { AccountOptionsModal } from "@Components/AccountOptionsModal";
 import Router from "next/router";
-import { LoginActions, NotificationActions } from "@Actions";
+import { LoginActions, NotificationActions, MessagesActions } from "@Actions";
 import { useModal } from '../Hooks';
 import { NotificationPusher } from '@Services/Pusher';
-import { NOTIFICATION } from "@Interfaces";
+import { NOTIFICATION, CONVERSATION_MESSAGE } from "@Interfaces";
 // #endregion Local Imports
 
 const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPaymentSettingsClick }): JSX.Element => {
@@ -31,6 +31,13 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
         dispatch(NotificationActions.PusherNotificationRecieved({}));
     }
 
+    const newMessageRecievedCallBack = (message: CONVERSATION_MESSAGE) => {
+        debugger;
+        if (message.senderId !== user.id) {
+            dispatch(MessagesActions.MessageRecieved(message));
+        }
+    }
+
     useEffect(() => {
         dispatch(NotificationActions.GetNotificationStats({ userId: user.id }))
 
@@ -44,6 +51,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                     NotificationPusher.subscribe('tip', channel, notificationSubscriptionCallback);
                     NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
                     NotificationPusher.subscribe('comment-like', channel, notificationSubscriptionCallback);
+                    NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
                 }).catch((err: any) => {
                     console.log("Error occured subscribing pusher : ", err);
                 });

@@ -8,7 +8,7 @@ import { MessagesService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IMessagesPage, IConversationPage, IPersistState } from "@Interfaces";
+import { IMessagesPage, IConversationPage, IPersistState, CONVERSATION_MESSAGE } from "@Interfaces";
 // #endregion Interface Imports
 
 export const MessagesActions = {
@@ -82,5 +82,13 @@ export const MessagesActions = {
         if (result.status && result.response) {
             payload.onSuccessScroll();
         }
+    },
+    MessageRecieved: (payload: CONVERSATION_MESSAGE) => async (
+        dispatch: Dispatch
+    ) => {
+        dispatch({
+            payload: { conversationMessage: payload },
+            type: ActionConsts.Conversation.PusherMessageRecieved
+        });
     }
 }

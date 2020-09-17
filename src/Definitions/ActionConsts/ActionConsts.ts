@@ -106,6 +106,7 @@ export const ActionConsts = {
         SetActiveConversationError: "SetActiveConversationError"
     },
     Conversation: {
+        PusherMessageRecieved: "PusherMessageRecieved",
         GetConversationSuccess: "GetConversationSuccess",
         GetConversationError: "GetConversationError",
         CreateMessageSuccess: "CreateMessageSuccess",

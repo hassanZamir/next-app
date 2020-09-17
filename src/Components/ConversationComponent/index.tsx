@@ -31,9 +31,10 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
         messagesListRef.current && messagesListRef.current!.scrollIntoView({behavior: "smooth"});
     }
 
-    const memberAddedCallBack = (member: any) => {
-        console.log("memberAddedCallBack", member);
-    }
+    useEffect(() => {
+        scrollToLastComment();
+        console.log("scrolling to last");
+    }, [conversation.values]);
 
     useEffect(() => {
         const channelName = 'presence-channel-' + conversationId;
@@ -45,7 +46,9 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             auth: { params: { userId: user.id } }
         })
         .then((channel: any) => {
-            NotificationPusher.subscribe('pusher:member_added', channel, memberAddedCallBack);
+            console.log("Presence channel subscribed");
+            // NotificationPusher.subscribe('pusher:member_added', channel, memberAddedCallBack);
+            // NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
         }).catch((err: any) => {
             console.log("Error occured subscribing pusher : ", err);
         });

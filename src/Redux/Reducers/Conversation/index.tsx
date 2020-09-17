@@ -21,6 +21,17 @@ export const ConversationReducer = (
             & IConversationPage.Actions.IMapCreateMessage> 
 ) => {
     switch (action.type) {
+        case ActionConsts.Conversation.PusherMessageRecieved: {
+            const { conversationMessage } = action.payload!;
+
+            return Object.assign({}, state, {
+                conversation: {
+                    values: [...state.conversation.values, conversationMessage],
+                    paginationNo: state.conversation.paginationNo,
+                    emptyPaginationNo: state.conversation.emptyPaginationNo
+                }
+            });
+        }
         case ActionConsts.Conversation.CreateMessageSuccess: {
             const { conversationMessage } = action.payload!;
 
