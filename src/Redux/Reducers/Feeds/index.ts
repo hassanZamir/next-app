@@ -28,7 +28,6 @@ export const FeedsReducer = (
         case ActionConsts.Feeds.PostContentSuccess: {
             let { feed } = action.payload!;
 
-            debugger;
             if (!feed) return Object.assign({}, state, {
                 feeds: { 
                     value: [feed[0], ...state.feeds.value],

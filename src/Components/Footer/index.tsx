@@ -32,10 +32,8 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     }
 
     const newMessageRecievedCallBack = (message: CONVERSATION_MESSAGE) => {
-        debugger;
-        if (message.senderId !== user.id) {
+        if (message.senderId !== user.id)
             dispatch(MessagesActions.MessageRecieved(message));
-        }
     }
 
     useEffect(() => {

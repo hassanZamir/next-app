@@ -1,6 +1,3 @@
-// let _localPusher: any = null;
-let _channel: any = null;
-
 const getChannel = (name: string, config: { cluster: string, encrypted: boolean, authTransport?: string, authEndpoint?: string, auth?: any}) => {
     return new Promise(async (resolve, reject) => {
         const pusherKey = process.env.PUSHER_KEY;
@@ -11,9 +8,7 @@ const getChannel = (name: string, config: { cluster: string, encrypted: boolean,
                 .then((pusherModule: any) => {
                     const Pusher = pusherModule.default;
                     const _pusher = new Pusher(pusherId, config);
-                    
-                    if (!_channel) _channel = _pusher.subscribe(name);
-                    resolve(_channel);
+                    resolve(_pusher.subscribe(name));
                 }).catch((err) => {
                     reject("FAILED LOAD PUSHER");
                 });
