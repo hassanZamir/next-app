@@ -26,17 +26,18 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
     const messagesListRef:RefObject<HTMLDivElement> = useRef(null);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+    const [scrolledTop, setScrolledTop] = useState(false);
 
     const scrollToLastComment = () => {
         messagesListRef.current && messagesListRef.current!.scrollIntoView({behavior: "smooth"});
     }
 
     useEffect(() => {
-        scrollToLastComment();
-        console.log("scrolling to last");
+        if (!scrolledTop) 
+            scrollToLastComment();
     }, [conversation.values]);
 
-    useEffect(() => {
+    const subscribePresenceChannel = () => {
         const channelName = 'presence-channel-' + conversationId;
         const apiUrl = process.env.API_URL;
         NotificationPusher.getChannel(channelName, { 
@@ -44,29 +45,41 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             authTransport: 'jsonp',
             authEndpoint:  apiUrl + '/pusher/auth',
             auth: { params: { userId: user.id } }
-        })
-        .then((channel: any) => {
+        }).then((channel: any) => {
             console.log("Presence channel subscribed");
-            // NotificationPusher.subscribe('pusher:member_added', channel, memberAddedCallBack);
-            // NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
         }).catch((err: any) => {
             console.log("Error occured subscribing pusher : ", err);
         });
+    }
 
+    useEffect(() => {
         if (messageListItem.id !== conversationId) {
             Router.push("/messages", "/messages");
             return;
         }
         (async () => {
             setLoading(true);
-            await dispatch(MessagesActions.GetConversation({ conversationId: conversationId }));
+            dispatch(MessagesActions.ConversationSeen({ userId: user.id, conversationId: conversationId }));
+            subscribePresenceChannel();
+            await dispatch(MessagesActions.GetConversation({ 
+                conversationId: conversationId 
+            }));
             setLoading(false);
             scrollToLastComment();
         })()
     }, []);
     
+    const fetchPaginatedResponse = () => {
+        if (conversation.paginationNo < conversation.emptyPaginationNo) {
+            dispatch(MessagesActions.GetConversation({ 
+                conversationId: conversationId,
+                page: conversation.paginationNo
+            }));
+        }
+    }
+
     return (<div className="d-flex flex-column" 
-    style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>
+        style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>
 
         <div className="pt-4 pb-3 d-flex justify-content-between align-items-center no-gutters mx-4">
             <FontAwesomeIcon
@@ -82,10 +95,14 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
         </div>
         <div className="d-flex flex-column w-100 h-100" style={{ overflow: "hidden" }}>
             <div onScroll={(e: any)=> {
-                // const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight
-                // !bottom ? setScrollingTop(true) : setScrollingTop(false); 
-                // onScroll(e);
-            }} className="d-flex align-items-center justify-content-center h-100 w-100 full-flex-scroll hide-scroller">
+                    if (e.target.scrollTop <= 0) {
+                        setScrolledTop(true);
+                        fetchPaginatedResponse();                        
+                    }
+                    if (e.target.scrollTop > 30) {
+                        setScrolledTop(false);
+                    }
+                }} className="d-flex align-items-center justify-content-center h-100 w-100 full-flex-scroll hide-scroller">
                 <LoadingSpinner size="3x" showLoading={loading}>
                     {conversation.values.length > 0 ? <div className="d-flex flex-column h-100 w-100 px-4">
                         {conversation.values.map((conversationMessage: CONVERSATION_MESSAGE, i) => {

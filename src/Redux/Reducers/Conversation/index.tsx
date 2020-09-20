@@ -68,7 +68,7 @@ export const ConversationReducer = (
             if (conversation.length) {
                 return Object.assign({}, state, {
                     conversation: {
-                        values: [...state.conversation.values, ...conversation],
+                        values: [...conversation, ...state.conversation.values],
                         paginationNo: page + 1,
                         emptyPaginationNo: state.conversation.emptyPaginationNo
                     }

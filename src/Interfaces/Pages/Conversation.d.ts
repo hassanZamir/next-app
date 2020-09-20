@@ -27,7 +27,8 @@ declare namespace IConversationPage {
         export interface IGetPOSTCreateMessagePayload extends MessagesModel.GetPOSTCreateMessagePayload {}
         export interface IGetPOSTCreateMessageResponse extends MessagesModel.GetPOSTCreateMessageResponse {}
 
-        export interface IGetPOSTCreateMessageResponse extends MessagesModel.GetPOSTCreateMessageResponse {}
+        export interface IGetPOSTConversationSeenPayload extends MessagesModel.GetPOSTConversationSeenPayload {}
+        export interface IGetPOSTConversationSeenResponse extends MessagesModel.GetPOSTConversationSeenResponse {}
     }
 }
 

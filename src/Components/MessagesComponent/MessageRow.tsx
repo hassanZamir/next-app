@@ -10,6 +10,8 @@ import { MESSAGE_LIST_ITEM, USER_SESSION } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
 import { MessagesActions } from "@Actions";
 // #endregion Local Imports
+const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
+
 
 export const MessageRow: React.FunctionComponent<{ message: MESSAGE_LIST_ITEM, user: USER_SESSION }> 
     = ({ message, user }) => {
@@ -30,7 +32,7 @@ export const MessageRow: React.FunctionComponent<{ message: MESSAGE_LIST_ITEM, u
             <BackgroundImage 
                 paddingBottom="100%"
                 borderRadius="12px" 
-                src={[message.profileImageUrl ,'/images/profile_image_placeholder.jpg']} />
+                src={[ mediaBaseUrl + "/" + message.profileImageUrl ,'/images/profile_image_placeholder.jpg']} />
         </div>
         <div className="d-flex flex-column px-3 w-100">
             <div className="d-flex justify-content-between align-items-center">

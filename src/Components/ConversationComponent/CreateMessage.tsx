@@ -49,13 +49,13 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
                 <FontAwesomeIcon icon={faLink} color="white"></FontAwesomeIcon>
             </div>
         </div>
-        <img className="px-1" src="/images/price_tag@2x.png" height="45px" width="45px" />
+        <img className="px-1" src="/images/price_outlined@2x.png" height="45px" width="45px" />
         <Textarea 
             placeholder="Say Something..."
             name="message" 
             rows={2} 
             columns={10} 
-            className="border-grey500 rounded w-100 font-14px text-primary mx-2 text-area-box-shadow" 
+            className="border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow" 
             onChange={handleChange}
             value={message}/>
         <FontAwesomeIcon

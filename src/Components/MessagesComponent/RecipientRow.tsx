@@ -12,6 +12,8 @@ import { RadioInput } from "@Components";
 import { MessagesActions } from "@Actions";
 import Router from "next/router";
 // #endregion Local Imports
+const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
+
 
 export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIENT, user: USER_SESSION }> 
     = ({ recipient, user }) => {
@@ -43,7 +45,7 @@ export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIEN
                 <BackgroundImage 
                     paddingBottom="100%"
                     borderRadius="12px" 
-                    src={[recipient.profileImageUrl ,'/images/profile_image_placeholder.jpg']} />
+                    src={[mediaBaseUrl + "/" + recipient.profileImageUrl ,'/images/profile_image_placeholder.jpg']} />
             </div>
             <div className="d-flex flex-column w-100">
                 <div className="d-flex px-3 w-100 align-items-center justify-content-between w-100 h-100">

@@ -55,6 +55,23 @@ export const PersistReducer = (
                 })
             });
         }
+        case ActionConsts.Conversation.PusherMessageRecieved: {
+            const { conversationMessage } = action.payload! as any;
+            debugger;
+            if (!window.location.href.includes('conversation/' + conversationMessage.id)) {
+                return Object.assign({}, state, {
+                    notificationStats: { 
+                        conversation_unseen_counter: state.notificationStats.conversation_unseen_counter + 1 
+                    }
+                });
+            }
+        }
+        case ActionConsts.Conversation.ConversationSeenSuccess: {
+            debugger;
+            return Object.assign({}, state, {
+                notificationStats: { conversation_unseen_counter: 0 }
+            });
+        }
         case ActionConsts.Notifications.ViewNotificationsSuccess: {
             const { type } = action.payload!;
 

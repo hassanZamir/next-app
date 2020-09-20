@@ -24,16 +24,35 @@ const INITIAL_STATE: IMessagesPage.IStateProps = {
 export const MessagesReducer = (
         state = INITIAL_STATE,
         action: IAction<IMessagesPage.Actions.IMapAllMessages &
-            IMessagesPage.Actions.IMapMessageRecipients>
+            IMessagesPage.Actions.IMapMessageRecipients &
+            IMessagesPage.Actions.IMapNewConversationRecieved>
     ) => {
     switch (action.type) {
+        case ActionConsts.Messages.NewConversationRecieved: {
+            const { conversation } = action.payload!;
+
+            const existConversation = state.allMessages.values.filter((message, i) => {
+                return message.id === conversation.id
+            });
+
+            if (existConversation.length <= 0) {
+                return Object.assign({}, state, {
+                    allMessages: {
+                        values: [conversation, ...state.allMessages.values],
+                        emptyPaginationNo: state.allMessages.emptyPaginationNo,
+                        paginationNo: state.allMessages.paginationNo
+                    }
+                });
+            }
+            return state;
+        }
         case ActionConsts.Messages.GetAllMessagesSuccess: {
             const { allMessages, page } = action.payload!;
 
             if (!page) {
                 return Object.assign({}, state, {
                     allMessages: {
-                        values: [...allMessages],
+                        values: allMessages,
                         paginationNo: page + 1,
                         emptyPaginationNo: allMessages.length ? state.allMessages.emptyPaginationNo : page
                     }

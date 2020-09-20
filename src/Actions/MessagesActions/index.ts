@@ -8,7 +8,7 @@ import { MessagesService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IMessagesPage, IConversationPage, IPersistState, CONVERSATION_MESSAGE } from "@Interfaces";
+import { IMessagesPage, IConversationPage, IPersistState, CONVERSATION_MESSAGE, MESSAGE_LIST_ITEM } from "@Interfaces";
 // #endregion Interface Imports
 
 export const MessagesActions = {
@@ -86,9 +86,29 @@ export const MessagesActions = {
     MessageRecieved: (payload: CONVERSATION_MESSAGE) => async (
         dispatch: Dispatch
     ) => {
+        debugger;
         dispatch({
             payload: { conversationMessage: payload },
             type: ActionConsts.Conversation.PusherMessageRecieved
+        });
+    },
+    NewConversationRecieved: (payload: MESSAGE_LIST_ITEM) => async (
+        dispatch: Dispatch
+    ) => {
+        dispatch({
+            payload: { conversation: payload },
+            type: ActionConsts.Messages.NewConversationRecieved
+        });
+    },
+    ConversationSeen: (payload: IConversationPage.Actions.IGetPOSTConversationSeenPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await MessagesService.ConversationSeen(payload);
+
+        debugger;
+        dispatch({
+            payload: null,
+            type: ActionConsts.Conversation.ConversationSeenSuccess
         });
     }
 }

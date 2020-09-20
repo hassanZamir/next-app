@@ -24,7 +24,9 @@ export const MessagesComponent: React.FunctionComponent<{ user: USER_SESSION, sc
     return (<React.Fragment>
         <div className="mt-4 mb-2 d-flex justify-content-between no-gutters mx-4">
             <FontAwesomeIcon
-                onClick={() => Router.back()}
+                onClick={() => 
+                    showCreateMessage ? setShowCreateMessage(false) : Router.back()
+                }
                 className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
             <FontAwesomeIcon className="cursor-pointer" icon={faSearch} 
                 color={theme.colors.primary} size="lg" />

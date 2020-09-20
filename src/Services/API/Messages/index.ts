@@ -95,11 +95,11 @@ export const MessagesService = {
     ): Promise<MessagesModel.GetGETConversationResponse> => {
         let response: MessagesModel.GetGETConversationResponse;
         
-        const { conversationId } = payload;
+        const { conversationId, ...rest } = payload;
         try {
             response = await Http.Request<MessagesModel.GetGETConversationResponse>(
                 "GET",
-                "/conversation/" + conversationId,
+                "/conversation/" + conversationId + getQueryParams({ ...rest }),
                 undefined
             );
         } catch (error) {
@@ -143,6 +143,25 @@ export const MessagesService = {
                     sentAt: "2020-08-16T00:00:00",
                     type: 1
                 }
+            };
+        }
+        return response;
+    },
+    ConversationSeen: async (
+        payload: MessagesModel.GetPOSTConversationSeenPayload
+    ): Promise<MessagesModel.GetPOSTConversationSeenResponse> => {
+        let response: MessagesModel.GetPOSTConversationSeenResponse;
+        
+        try {
+            response = await Http.Request<MessagesModel.GetPOSTConversationSeenResponse>(
+                "POST",
+                "/conversation/seen",
+                undefined,
+                { ...payload }
+            );
+        } catch (error) {
+            response = {
+                status: false
             };
         }
         return response;

@@ -30,6 +30,9 @@ declare namespace IMessagesPage {
         export interface IMapCreateConversationThread {
             conversation: MESSAGE_LIST_ITEM[]
         }
+        export interface IMapNewConversationRecieved {
+            conversation: MESSAGE_LIST_ITEM
+        }
 
         export interface IGetGETAllMessagesPayload extends MessagesModel.GetGETAllMessagesPayload {}
         export interface IGetGETAllMessagesResponse extends MessagesModel.GetGETAllMessagesResponse {}

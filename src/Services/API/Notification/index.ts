@@ -25,7 +25,8 @@ export const NotificationService = {
                 response: {
                     notifications_unseen_counter: 0,
                     likes_unseen_counter: 1,
-                    comments_unseen_counter: 0
+                    comments_unseen_counter: 0,
+                    conversation_unseen_counter: 0
                 }
             };
         }

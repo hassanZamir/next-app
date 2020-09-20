@@ -12,7 +12,7 @@ import Router from "next/router";
 import { LoginActions, NotificationActions, MessagesActions } from "@Actions";
 import { useModal } from '../Hooks';
 import { NotificationPusher } from '@Services/Pusher';
-import { NOTIFICATION, CONVERSATION_MESSAGE } from "@Interfaces";
+import { NOTIFICATION, CONVERSATION_MESSAGE, MESSAGE_LIST_ITEM } from "@Interfaces";
 // #endregion Local Imports
 
 const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPaymentSettingsClick }): JSX.Element => {
@@ -32,8 +32,13 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     }
 
     const newMessageRecievedCallBack = (message: CONVERSATION_MESSAGE) => {
+        debugger;
         if (message.senderId !== user.id)
             dispatch(MessagesActions.MessageRecieved(message));
+    }
+
+    const newConversationRecievedCallBack = (conversation: MESSAGE_LIST_ITEM) => {
+        dispatch(MessagesActions.NewConversationRecieved(conversation));
     }
 
     useEffect(() => {
@@ -50,6 +55,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                     NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
                     NotificationPusher.subscribe('comment-like', channel, notificationSubscriptionCallback);
                     NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
+                    NotificationPusher.subscribe('new-conversation', channel, newConversationRecievedCallBack);
                 }).catch((err: any) => {
                     console.log("Error occured subscribing pusher : ", err);
                 });
@@ -84,6 +90,10 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                     { notificationStats && config.name === 'Notification' && notificationStats.notifications_unseen_counter > 0 && 
                         <span className="notification-counter">
                         { notificationStats.notifications_unseen_counter }
+                    </span>}
+                    { notificationStats && config.name === 'Messages' && notificationStats.conversation_unseen_counter > 0 && 
+                        <span className="notification-counter">
+                        { notificationStats.conversation_unseen_counter }
                     </span>}
                     <StaticImage 
                         src={selected === config.name ? config.imageSelected.src : config.image.src} 
