@@ -43,8 +43,22 @@ export const MessagesReducer = (
                         paginationNo: state.allMessages.paginationNo
                     }
                 });
+            } else {
+                const restMessages = state.allMessages.values.filter((message, i) => {
+                    return message.id !== conversation.id
+                });
+                const updatedConversation = Object.assign({}, conversation, {
+                    ...conversation,
+                    profileImageUrl: existConversation[0].profileImageUrl
+                });
+                return Object.assign({}, state, {
+                    allMessages: {
+                        values: [updatedConversation, ...restMessages],
+                        emptyPaginationNo: state.allMessages.emptyPaginationNo,
+                        paginationNo: state.allMessages.paginationNo
+                    }
+                });
             }
-            return state;
         }
         case ActionConsts.Messages.GetAllMessagesSuccess: {
             const { allMessages, page } = action.payload!;

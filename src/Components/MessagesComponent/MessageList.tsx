@@ -25,7 +25,6 @@ export const MessageList: React.FunctionComponent<{ user: USER_SESSION, scrolled
         (async () => {
             const param = { userId: user.id };
             setLoading(true);
-            debugger;
             await dispatch(MessagesActions.GetAllMessages(param));
             setLoading(false);
         })();
