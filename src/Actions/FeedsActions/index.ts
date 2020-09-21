@@ -58,7 +58,7 @@ export const FeedsActions = {
         return result;
     },
     PostContent: (payload: IFeedsPage.Actions.IGetUploadMediaFilesPayload) => async (dispatch: Dispatch) => {
-        const result = payload.media_url ? await FeedsService.UploadMediaOnStorage(payload) : null;
+        const result = payload.media_url ? await FeedsService.UploadMediaOnStorage({ media_url: payload.media_url }) : null;
         if (result && !result.status && payload.media_url) {
             dispatch({
                 payload: result.error || "Media upload failed",

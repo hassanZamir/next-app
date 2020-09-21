@@ -55,7 +55,11 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             title: title, 
             userId: user.id 
         }));
-        if (postContent && postContent.status) { setFiles([]); setTitle(""); setShowPostSelection(false); }
+        if (postContent && postContent.status) { 
+            setFiles([]); 
+            setTitle(""); 
+            setShowPostSelection(false); 
+        }
         setLoading(false);
         setShowWebcam(false);
     };

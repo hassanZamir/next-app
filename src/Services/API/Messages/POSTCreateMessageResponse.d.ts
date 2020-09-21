@@ -1,6 +1,6 @@
-import { CONVERSATION_MESSAGE } from "@Interfaces";
+import { CONVERSATION_RESPONSE } from "@Interfaces";
 
 export interface POSTCreateMessageResponse {
     status: boolean;
-    response: CONVERSATION_MESSAGE
+    response: CONVERSATION_RESPONSE
 }

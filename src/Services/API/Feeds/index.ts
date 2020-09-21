@@ -209,11 +209,12 @@ export const FeedsService = {
     ): Promise<UploadMediaFilesModel.GetUploadMediaFilesResponse> => {
         let response: UploadMediaFilesModel.GetUploadMediaFilesResponse;
         try {
+            const { media_url, ...rest } = payload;
             response = await Http.UploadFile<UploadMediaFilesModel.GetUploadMediaFilesResponse>(
                 "POST",
-                "/api/upload",
+                "/api/upload" + getQueryParams({ ...rest }),
                 undefined,
-                payload.media_url
+                media_url
             );
         } catch (error) {
             response = {
@@ -231,7 +232,7 @@ export const FeedsService = {
                 "POST",
                 "/users/" + payload.userId + "/content",
                 undefined,
-                { title: payload.title, media_url: payload.media_url }
+                { title: payload.title as string, media_url: payload.media_url }
             );
         } catch (error) {
             response = {

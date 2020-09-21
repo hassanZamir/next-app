@@ -1,4 +1,4 @@
-import { MessagesModel, CONVERSATION_MESSAGE } from "@Interfaces";
+import { MessagesModel, CONVERSATION_RESPONSE } from "@Interfaces";
 
 declare namespace IConversationPage {
     export interface IProps {}
@@ -6,7 +6,7 @@ declare namespace IConversationPage {
     export interface IStateProps {
         conversation: {
             emptyPaginationNo: number,
-            values: CONVERSATION_MESSAGE[],
+            values: CONVERSATION_RESPONSE[],
             paginationNo: number,
             errors: string[]
         }

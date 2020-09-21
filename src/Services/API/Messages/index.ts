@@ -122,26 +122,66 @@ export const MessagesService = {
         payload: MessagesModel.GetPOSTCreateMessagePayload
     ): Promise<MessagesModel.GetPOSTCreateMessageResponse> => {
         let response: MessagesModel.GetPOSTCreateMessageResponse;
-        
-        const { conversationId, ...rest } = payload;
+
+        const { conversationId, meta, senderId, type, message, sentAt } = payload;
+        let _payload = {};
+        if (type > 1 && type < 4) {
+            _payload = {
+                senderId: senderId,
+                type: type,
+                message: message,
+                sentAt: sentAt,
+                meta: meta
+            }
+        } else {
+            _payload = {
+                senderId: senderId,
+                type: type,
+                message: message,
+                sentAt: sentAt
+            }
+        }
         try {
             response = await Http.Request<MessagesModel.GetPOSTCreateMessageResponse>(
                 "POST",
-                "/conversation/" + conversationId,
+                "GG/conversation/" + conversationId,
                 undefined,
-                { ...rest }
+                _payload
             );
         } catch (error) {
             response = {
-                status: false,
+                status: true,
                 response: {
+                    id: 2,
+                    recipientId: 112,
                     conversationId: 14,
-                    id: 11,
-                    message: "ass",
-                    recipientId: 0,
-                    senderId: 112,
-                    sentAt: "2020-08-16T00:00:00",
-                    type: 1
+                    senderId: 117,
+                    type: 3,
+                    message: "hello",
+                    sentAt: "2020-08-21",
+                    meta: {
+                        amount: 12,
+                        tipMsg: "optional msg send by user",
+                        tipId: 11,
+                        userId: 135
+                    }
+                    // meta: {
+                    //     media_urls: [{
+                    //         url: "121212",
+                    //         thumbnailUrl: "sdasd",
+                    //         media_type: "1"
+                    //     }],
+                    //     purchase_status: false,
+                    //     amount: 12
+                    // }
+
+                    // conversationId: 14,
+                    // id: 11,
+                    // message: "ass",
+                    // recipientId: 0,
+                    // senderId: 112,
+                    // sentAt: "2020-08-16T00:00:00",
+                    // type: 1
                 }
             };
         }

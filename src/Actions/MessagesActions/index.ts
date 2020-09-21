@@ -4,11 +4,11 @@ import { Dispatch } from "redux";
 
 // #region Local Imports
 import { ActionConsts } from "@Definitions";
-import { MessagesService } from "@Services";
+import { MessagesService, FeedsService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IMessagesPage, IConversationPage, IPersistState, CONVERSATION_MESSAGE, MESSAGE_LIST_ITEM } from "@Interfaces";
+import { IMessagesPage, IConversationPage, IPersistState, CONVERSATION_RESPONSE, MESSAGE_LIST_ITEM } from "@Interfaces";
 // #endregion Interface Imports
 
 export const MessagesActions = {
@@ -72,7 +72,29 @@ export const MessagesActions = {
     CreateMessage: (payload: IConversationPage.Actions.IGetPOSTCreateMessagePayload) => async (
         dispatch: Dispatch
     ) => {
-        const result = await MessagesService.CreateMessage(payload);
+        let uploadResult = null;
+        uploadResult = payload.type === 2 ? await FeedsService.UploadMediaOnStorage({ media_url: payload.meta!.media_urls, blur: true }) : null;
+        
+        if (uploadResult && !uploadResult.status && payload.type === 2) {
+            dispatch({
+                payload: "Media upload failed",
+                type: ''
+            });
+            return;
+        }
+
+        let result: any = { status: false, response: null};
+        if (payload.type === 2) {
+            result = await MessagesService.CreateMessage(Object.assign({}, payload, {
+                meta: {
+                    media_urls: uploadResult!.uploadSuccess,
+                    purchase_status: payload.meta!.purchase_status,
+                    amount: payload.meta!.amount
+                }
+            }));
+        } else {
+            result = await MessagesService.CreateMessage(payload);
+        }
 
         dispatch({
             payload: { conversationMessage: result.status && result.response ? result.response : {} },
@@ -82,11 +104,20 @@ export const MessagesActions = {
         if (result.status && result.response) {
             payload.onSuccessScroll();
         }
+        // const postContent = await FeedsService.PostContent({ 
+        //     title: payload.title, 
+        //     media_url: result ? result.uploadSuccess : [],
+        //     userId: payload.userId
+        // });
+        // dispatch({
+        //     payload: postContent.status ? { feed: postContent.response }: null,
+        //     type: postContent.status ? ActionConsts.Feeds.PostContentSuccess : ActionConsts.Feeds.PostContentError
+        // });
+        // return postContent;
     },
-    MessageRecieved: (payload: CONVERSATION_MESSAGE) => async (
+    MessageRecieved: (payload: CONVERSATION_RESPONSE) => async (
         dispatch: Dispatch
     ) => {
-        debugger;
         dispatch({
             payload: { conversationMessage: payload },
             type: ActionConsts.Conversation.PusherMessageRecieved
@@ -105,7 +136,6 @@ export const MessagesActions = {
     ) => {
         const result = await MessagesService.ConversationSeen(payload);
 
-        debugger;
         dispatch({
             payload: null,
             type: ActionConsts.Conversation.ConversationSeenSuccess

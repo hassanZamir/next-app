@@ -20,6 +20,7 @@ const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
 export const MediaCarousel: React.RefForwardingComponent<HTMLDivElement, IMediaCarousel.IProps>
     = ({ media, isShowing, modalRef, toggle, startingIndex }) => {
     
+    console.log("media : ", media);
     const renderItem = (a: any) => {
       if (a.type === 1)
         return <div className="d-flex align-items-center justify-content-center">

@@ -12,7 +12,7 @@ import Router from "next/router";
 import { LoginActions, NotificationActions, MessagesActions } from "@Actions";
 import { useModal } from '../Hooks';
 import { NotificationPusher } from '@Services/Pusher';
-import { NOTIFICATION, CONVERSATION_MESSAGE, MESSAGE_LIST_ITEM } from "@Interfaces";
+import { NOTIFICATION, CONVERSATION_RESPONSE, MESSAGE_LIST_ITEM } from "@Interfaces";
 // #endregion Local Imports
 
 const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPaymentSettingsClick }): JSX.Element => {
@@ -31,7 +31,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
         dispatch(NotificationActions.PusherNotificationRecieved({}));
     }
 
-    const newMessageRecievedCallBack = (message: CONVERSATION_MESSAGE) => {
+    const newMessageRecievedCallBack = (message: CONVERSATION_RESPONSE) => {
         debugger;
         if (message.senderId !== user.id)
             dispatch(MessagesActions.MessageRecieved(message));

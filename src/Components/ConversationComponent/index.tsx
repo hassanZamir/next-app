@@ -10,9 +10,11 @@ import Router from 'next/router';
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
 import { theme } from "@Definitions/Styled";
-import { USER_SESSION, MESSAGE_LIST_ITEM, CONVERSATION_MESSAGE } from "@Interfaces";
+import { USER_SESSION, MESSAGE_LIST_ITEM, CONVERSATION_RESPONSE, CONVERSATION_MEDIA_MESSAGE, CONVERSATION_TIP_MESSAGE } from "@Interfaces";
 import { ParagraphText, LoadingSpinner } from "@Components";
-import { ConversationMessage } from "./ConversationMessage";
+import { ConversationTextMessage } from "./ConversationTextMessage";
+import { ConversationMediaMessage } from "./ConversationMediaMessage";
+import { ConversationTipMessage } from "./ConversationTipMessage";
 import { CreateMessage } from "./CreateMessage";
 import { MessagesActions } from "@Actions";
 import { NotificationPusher } from '@Services/Pusher';
@@ -105,10 +107,18 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                 }} className="d-flex align-items-center justify-content-center h-100 w-100 full-flex-scroll hide-scroller">
                 <LoadingSpinner size="3x" showLoading={loading}>
                     {conversation.values.length > 0 ? <div className="d-flex flex-column h-100 w-100 px-4">
-                        {conversation.values.map((conversationMessage: CONVERSATION_MESSAGE, i) => {
-                            return <ConversationMessage 
+                        {conversation.values.map((conversationMessage: CONVERSATION_RESPONSE, i) => {
+                            return conversationMessage.type === 1 ? <ConversationTextMessage 
                                 messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
                                 conversationMessage={conversationMessage} 
+                                isMessageRecieved={user.id !== conversationMessage.senderId} 
+                                key={i} /> : conversationMessage.type === 2 ? <ConversationMediaMessage 
+                                messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
+                                conversationMessage={conversationMessage as CONVERSATION_MEDIA_MESSAGE} 
+                                isMessageRecieved={user.id !== conversationMessage.senderId} 
+                                key={i} /> : <ConversationTipMessage 
+                                messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
+                                conversationMessage={conversationMessage as CONVERSATION_TIP_MESSAGE} 
                                 isMessageRecieved={user.id !== conversationMessage.senderId} 
                                 key={i} />
                         })}
