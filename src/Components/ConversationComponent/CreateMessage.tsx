@@ -127,7 +127,6 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
         };
         toggle();
         FeedsActions.TipFeed(param)().then((resp: any) => {
-            debugger;
             sendTipMessage(resp.response, message, amount, user.id );
         });
     }
@@ -167,7 +166,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
             </div>
             
             {/* NEED REVERT CHECK */}
-            {!user.isCreator && <img className="px-1 cursor-pointer" 
+            {user.isCreator && <img className="px-1 cursor-pointer" 
                 onClick={() => { 
                     if (files.length > 0) {
                         setShowPriceTagModal(true);
@@ -180,7 +179,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
                 height="45px" 
                 width="45px" />}
             
-            {user.isCreator && <img className="px-1 cursor-pointer" 
+            {!user.isCreator && <img className="px-1 cursor-pointer" 
                 onClick={() => { setShowTipModal(true); toggle(); }}
                 src="/images/tip.svg" 
                 height="45px" 

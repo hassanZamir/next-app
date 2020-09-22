@@ -144,13 +144,13 @@ export const MessagesService = {
         try {
             response = await Http.Request<MessagesModel.GetPOSTCreateMessageResponse>(
                 "POST",
-                "GG/conversation/" + conversationId,
+                "/conversation/" + conversationId,
                 undefined,
                 _payload
             );
         } catch (error) {
             response = {
-                status: true,
+                status: false,
                 response: {
                     id: 2,
                     recipientId: 112,
