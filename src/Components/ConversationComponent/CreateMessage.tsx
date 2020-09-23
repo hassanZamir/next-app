@@ -15,6 +15,7 @@ import { MessageMediaPreview } from "./MessageMediaPreview";
 import { TipSubmitModal } from "../Modals/TipSubmitModal";
 import { PriceTagModal } from "../Modals/PriceTagModal";
 import { ParagraphText } from "@Components/ParagraphText";
+import { LoadingSpinner } from "@Components";
 import { FeedsActions } from "@Actions";
 import { IFeed, FEED } from "@Interfaces";
 
@@ -89,6 +90,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
         await dispatch(MessagesActions.CreateMessage(params));
         setMessage('');
         setFiles([]);
+        setLoading(false);
     }
 
     const onSetPriceTagAmount = (amount: string) => {
@@ -114,8 +116,10 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
                 userId: userId
             }
         }
+        setLoading(true);
         await dispatch(MessagesActions.CreateMessage(params));
         setMessage('');
+        setLoading(false);
     }
 
     const onTipSubmit = async (feed: FEED, amount: string, message: string) => {
@@ -158,12 +162,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
                     multiple={true} 
                     style={{ display: "none" }} 
                     onChange={handleFileChange} />
-                <div className="bg-primary d-flex align-items-center justify-content-center" 
-                    style={{ height: "32px", width: "32px", borderRadius: "12px", transform: "rotate(45deg)" }}>
-                </div>
-                <div className="position-absolute" style={{ top: "4px", left: "7px" }}>
-                    <FontAwesomeIcon icon={faLink} color="white"></FontAwesomeIcon>
-                </div>
+                <img src="/images/message_attachment.svg" />
             </div>
             
             {/* NEED REVERT CHECK */}
@@ -176,13 +175,13 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
                         setError("Please upload files before setting price.");
                     }
                 }}
-                src="/images/price_outlined@2x.png" 
+                src={!priceTagAmount ? "/images/dollar_tag@2x.png" : "/images/dollar_tag_outlined@2x.png"}
                 height="45px" 
                 width="45px" />}
             
             {!user.isCreator && <img className="px-1 cursor-pointer" 
                 onClick={() => { setShowTipModal(true); toggle(); }}
-                src="/images/tip.svg" 
+                src={"/images/message_tip_dollar.svg"} 
                 height="45px" 
                 width="45px" />}
             
@@ -194,9 +193,13 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
                 className="border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow" 
                 onChange={handleMessageChange}
                 value={message}/>
-            <FontAwesomeIcon
-                    onClick={() => message && sendMessage() }
-                    className="cursor-pointer" icon={faArrowRight} color={theme.colors.primary} size="lg" />
+            {!loading && <FontAwesomeIcon
+                    onClick={() => { if(message || files.length > 0) {
+                        setLoading(true); 
+                        sendMessage();
+                    } }}
+                    className="cursor-pointer" icon={faArrowRight} color={theme.colors.primary} size="lg" />}
+            {loading && <LoadingSpinner size="1x" showLoading={loading} />}
         </div>
     </div>);
 }

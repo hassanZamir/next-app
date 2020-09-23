@@ -29,6 +29,8 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
         dispatch(MessagesActions.BuyMessage(params));
     }
 
+    const isMessagePaid = meta.purchase_status || !meta.amount;
+
     return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
         <div className="d-flex flex-column h-100" style={{ width: "35%" }}>
             <div className="position-relative d-flex flex-column align-items-center justify-content-center" 
@@ -49,12 +51,12 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                 <BackgroundImage src={[process.env.MEDIA_BASE_URL + "/" + meta.media_urls[0].thumbnailUrl, '/images/feed_placeholder.png']} 
                         paddingBottom="54.25%" />
                 <div className="position-absolute">
-                    {meta.purchase_status && <div className="py-1 px-2 cursor-pointer font-11px" 
+                    {isMessagePaid && <div className="py-1 px-2 cursor-pointer font-11px" 
                         onClick={() => { setShowMediaCarousel(0); toggle(); }}
                         style={{ border: "1px solid white", borderRadius: "4px" }}>
                             Click to Open
                     </div>}
-                    {!meta.purchase_status && 
+                    {!isMessagePaid && 
                         (isMessageRecieved ? <div onClick={()=>{ buyMedia(conversationMessage) }}>{'Pay $' + meta.amount}</div> : 
                         <div className="py-1 px-2 cursor-pointer font-11px" 
                             onClick={() => { setShowMediaCarousel(0); toggle(); }}
@@ -64,9 +66,9 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                     }
                 </div>
             </div>
-            <ParagraphText className="text-darkGrey font-11px">
+            {!isMessagePaid && <ParagraphText className="text-darkGrey font-11px">
                 {'$' + meta.amount + " " + (meta.purchase_status ? "Paid" : "Not paid yet")}
-            </ParagraphText>
+            </ParagraphText>}
         </div>
     </div>);
 }
