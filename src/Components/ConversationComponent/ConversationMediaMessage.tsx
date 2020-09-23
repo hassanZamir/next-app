@@ -1,26 +1,34 @@
 // #region Global Imports
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 // #endregion Global Imports
 
 // #region Local Imports
 import { BackgroundImage } from "@Components/Basic";
 import { theme } from "@Definitions/Styled";
-import { CONVERSATION_MEDIA_MESSAGE } from "@Interfaces";
+import { CONVERSATION_MEDIA_MESSAGE, USER_SESSION } from "@Interfaces";
 import { MediaCarousel } from "@Components";
 import { useModal } from '../Hooks';
 import { ParagraphText } from "@Components/ParagraphText";
+import { MessagesActions } from "@Actions";
 // #endregion Local Imports
 
-export const ConversationMediaMessage: React.FunctionComponent<{ conversationMessage: CONVERSATION_MEDIA_MESSAGE, isMessageRecieved: boolean, messageRef: any }> 
-    = ({ conversationMessage, isMessageRecieved, messageRef }) => {
+export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESSION, conversationMessage: CONVERSATION_MEDIA_MESSAGE, isMessageRecieved: boolean, messageRef: any }> 
+    = ({ user, conversationMessage, isMessageRecieved, messageRef }) => {
     
     const [showMediaCarousel, setShowMediaCarousel] = useState(-1);
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
-    if (!conversationMessage.meta)
-        return null;
-    
+    const dispatch = useDispatch();
+
+    if (!conversationMessage.meta) return null;
     const { meta } = conversationMessage;
+
+    const buyMedia = (message: CONVERSATION_MEDIA_MESSAGE) => {
+        const params = { messageId: message.id, userId: user.id }
+        dispatch(MessagesActions.BuyMessage(params));
+    }
+
     return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
         <div className="d-flex flex-column h-100" style={{ width: "35%" }}>
             <div className="position-relative d-flex flex-column align-items-center justify-content-center" 
@@ -47,7 +55,7 @@ export const ConversationMediaMessage: React.FunctionComponent<{ conversationMes
                             Click to Open
                     </div>}
                     {!meta.purchase_status && 
-                        (isMessageRecieved ? <div>{'Pay $' + meta.amount}</div> : 
+                        (isMessageRecieved ? <div onClick={()=>{ buyMedia(conversationMessage) }}>{'Pay $' + meta.amount}</div> : 
                         <div className="py-1 px-2 cursor-pointer font-11px" 
                             onClick={() => { setShowMediaCarousel(0); toggle(); }}
                             style={{ border: "1px solid white", borderRadius: "4px" }}>

@@ -112,6 +112,8 @@ export const ActionConsts = {
         GetConversationError: "GetConversationError",
         CreateMessageSuccess: "CreateMessageSuccess",
         CreateMessageError: "CreateMessageError",
-        ConversationSeenSuccess: "ConversationSeenSuccess"
+        ConversationSeenSuccess: "ConversationSeenSuccess",
+        BuyMessageSuccess: "BuyMessageSuccess",
+        BuyMessageError: "BuyMessageError",
     }
 };

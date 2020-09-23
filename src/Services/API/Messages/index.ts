@@ -165,23 +165,6 @@ export const MessagesService = {
                         tipId: 11,
                         userId: 135
                     }
-                    // meta: {
-                    //     media_urls: [{
-                    //         url: "121212",
-                    //         thumbnailUrl: "sdasd",
-                    //         media_type: "1"
-                    //     }],
-                    //     purchase_status: false,
-                    //     amount: 12
-                    // }
-
-                    // conversationId: 14,
-                    // id: 11,
-                    // message: "ass",
-                    // recipientId: 0,
-                    // senderId: 112,
-                    // sentAt: "2020-08-16T00:00:00",
-                    // type: 1
                 }
             };
         }
@@ -202,6 +185,41 @@ export const MessagesService = {
         } catch (error) {
             response = {
                 status: false
+            };
+        }
+        return response;
+    },
+    BuyMessage: async (
+        payload: MessagesModel.GetPOSTBuyMessagePayload
+    ): Promise<MessagesModel.GetPOSTBuyMessageResponse> => {
+        let response: MessagesModel.GetPOSTBuyMessageResponse;
+
+        const { messageId, ...rest } = payload;
+        try {
+            response = await Http.Request<MessagesModel.GetPOSTBuyMessageResponse>(
+                "POST",
+                "/conversation-message/" + messageId + "seen",
+                undefined,
+                { ...rest }
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: {
+                    id: 2,
+                    recipientId: 112,
+                    conversationId: 14,
+                    senderId: 117,
+                    type: 3,
+                    message: "hello",
+                    sentAt: "2020-08-21",
+                    meta: {
+                        amount: 12,
+                        tipMsg: "optional msg send by user",
+                        tipId: 11,
+                        userId: 135
+                    }
+                }
             };
         }
         return response;

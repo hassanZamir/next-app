@@ -19,7 +19,10 @@ export const FeedOptionsModal: React.RefForwardingComponent<HTMLDivElement, IFee
     const { isShowing, modalRef, onReportClick, onCopyClick, feed } = props;
 
     // return isShowing ? ReactDOM.createPortal(<PositionedModal borderRadius="11px">
-        return isShowing ? <PositionedModal borderRadius="11px"> 
+        return isShowing ? <PositionedModal 
+            borderRadius="11px" 
+            triangleProps={{ right: "-8px", top: "-30px" }}> 
+            
             <div className="w-100 h-100" ref={modalRef}>
                 <div className="modal-content d-flex flex-column justify-content-center align-items-center">
                     <div onClick={(e) => { e.preventDefault(); onCopyClick(feed) }}>

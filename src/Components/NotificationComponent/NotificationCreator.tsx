@@ -42,7 +42,6 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
     }, [scrolledToBottom]);
 
     const getNotifications = async (index: number) => {
-        // if (notifications[NotificationTabs[index].key] !== 'promotions') {
         if (index !== 5) {
             const params = { 
                 userId: user.id, 
@@ -52,7 +51,6 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
             };
             await dispatch(NotificationActions.GetNotification(params));
         }
-        // }
     }
 
     const changeTab = async (index: number) => {
@@ -66,7 +64,8 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
         } 
 
         if (notifications[NotificationTabs[index].key].emptyPaginationNo 
-            > notifications[NotificationTabs[index].key].paginationNo) {
+            > notifications[NotificationTabs[index].key].paginationNo
+            && notifications[NotificationTabs[index].key].values.length <= 0) {
             
             if (!notifications[NotificationTabs[index].key].values.length) setLoading(true);
             await getNotifications(index);
@@ -174,7 +173,7 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
                     </div>
                 </LoadingSpinner>
             </div> : <div className="px-2 text-darkGrey lato-simibold">
-                This feature is not availaible yet
+                This feature is not available yet
             </div>}
         </div>);
 }

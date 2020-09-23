@@ -4,7 +4,8 @@ import { GETAllMessagesPayload, GETAllMessagesResponse,
     POSTConversationCreateThreadPayload, POSTConversationCreateThreadResponse,
     GETConversationPayload, GETConversationResponse,
     POSTCreateMessagePayload, POSTCreateMessageResponse,
-    POSTConversationSeenPayload, POSTConversationSeenResponse } from "@Interfaces";
+    POSTConversationSeenPayload, POSTConversationSeenResponse,
+    POSTBuyMessagePayload, POSTBuyMessageResponse } from "@Interfaces";
 // #endregion Interface Imports
 
 declare namespace MessagesModel {
@@ -25,6 +26,9 @@ declare namespace MessagesModel {
 
     export interface GetPOSTConversationSeenPayload extends POSTConversationSeenPayload {}
     export interface GetPOSTConversationSeenResponse extends POSTConversationSeenResponse {}
+
+    export interface GetPOSTBuyMessagePayload extends POSTBuyMessagePayload {}
+    export interface GetPOSTBuyMessageResponse extends POSTBuyMessageResponse {}
 }
 
 export { MessagesModel };

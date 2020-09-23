@@ -1,5 +1,5 @@
 // #region Global Imports
-import React, { useState, useEffect, useRef, RefObject } from "react";
+import React, { useState, useEffect, useRef, RefObject, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
@@ -18,6 +18,8 @@ import { ConversationTipMessage } from "./ConversationTipMessage";
 import { CreateMessage } from "./CreateMessage";
 import { MessagesActions } from "@Actions";
 import { NotificationPusher } from '@Services/Pusher';
+import { useModal } from '../Hooks';
+import { MessageSettingsModal } from "../Modals/MessagSettingsModal";
 // #endregion Local Imports
 
 export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION, conversationId: number, messageListItem: MESSAGE_LIST_ITEM }> 
@@ -29,6 +31,8 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [scrolledTop, setScrolledTop] = useState(false);
+    const modalRef = useRef<HTMLDivElement>(null);
+    const { isShowing, toggle } = useModal(modalRef);
 
     const scrollToLastComment = () => {
         messagesListRef.current && messagesListRef.current!.scrollIntoView({behavior: "smooth"});
@@ -88,11 +92,17 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                 onClick={() => Router.back()}
                 className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
             <ParagraphText className="text-primary lato-bold">{ messageListItem.name || "Name not coming in api" }</ParagraphText>
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center position-relative">
                 <FontAwesomeIcon className="cursor-pointer" icon={faStar} 
                     color={theme.colors.primary} size="lg" />
                 <FontAwesomeIcon className="cursor-pointer ml-2" icon={faEllipsisH} 
-                    color={theme.colors.primary} size="lg" />
+                    onClick={()=>{ toggle(); }}
+                    color={theme.colors.primary} size="lg"/>
+                <MessageSettingsModal 
+                        isShowing={isShowing} 
+                        toggle={toggle}
+                        modalRef={modalRef} 
+                        user={user} />
             </div>
         </div>
         <div className="d-flex flex-column w-100 h-100" style={{ overflow: "hidden" }}>
@@ -116,6 +126,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                                 messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
                                 conversationMessage={conversationMessage as CONVERSATION_MEDIA_MESSAGE} 
                                 isMessageRecieved={user.id !== conversationMessage.senderId} 
+                                user={user}
                                 key={i} /> : <ConversationTipMessage 
                                 messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
                                 conversationMessage={conversationMessage as CONVERSATION_TIP_MESSAGE} 

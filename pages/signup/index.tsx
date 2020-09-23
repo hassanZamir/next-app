@@ -210,7 +210,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                                 inputWidth="25px"
                                 inputMargin="0px 10px 0px 0px"
                                 labelTextElem={<div className="text-darkGrey lato-regular font-11px">
-                                    By signing up you agree to our <span className="text-primary mx-1">
+                                    <span>By signing up you agree to our</span><span className="text-primary mx-1">
                                         <Link href="">Terms of Service</Link>
                                     </span> and <span className="text-primary mx-1">
                                         <Link href="">Privacy Policy</Link>

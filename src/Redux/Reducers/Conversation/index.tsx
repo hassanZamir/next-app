@@ -21,6 +21,37 @@ export const ConversationReducer = (
             & IConversationPage.Actions.IMapCreateMessage> 
 ) => {
     switch (action.type) {
+        case ActionConsts.Conversation.BuyMessageSuccess: {
+            const { conversationMessage } = action.payload!;
+
+            return Object.assign({}, state, {
+                conversation: {
+                    values: state.conversation.values.map((msg) => {
+                        if (msg.id === conversationMessage.id)
+                            return conversationMessage
+                        return msg;
+                    }),
+                    paginationNo: state.conversation.paginationNo,
+                    emptyPaginationNo: state.conversation.emptyPaginationNo
+                }
+                // conversation: {
+                //     values: [...state.conversation.values, conversationMessage],
+                //     paginationNo: state.conversation.paginationNo,
+                //     emptyPaginationNo: state.conversation.emptyPaginationNo
+                // }
+            });
+        }
+        case ActionConsts.Conversation.BuyMessageError: {
+            const { conversationMessage } = action.payload!;
+
+            return Object.assign({}, state, {
+                conversation: {
+                    values: state.conversation.values,
+                    paginationNo: state.conversation.paginationNo,
+                    emptyPaginationNo: state.conversation.emptyPaginationNo
+                }
+            });
+        }
         case ActionConsts.Conversation.PusherMessageRecieved: {
             const { conversationMessage } = action.payload!;
 

@@ -43,7 +43,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-    
+
     const handleMessageChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { value } = e.currentTarget;
         setMessage(value);
@@ -93,6 +93,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
 
     const onSetPriceTagAmount = (amount: string) => {
         setPriceTagAmount(amount);
+        toggle();
     }
 
     const sendTipMessage = async (tipId: number, message: string, amount: string, userId: number) => {
@@ -142,7 +143,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
             clickedFeed={{ username: '', profileImageUrl: ''}}
             />}
         {files.length > 0 && <MessageMediaPreview files={files} />}
-        {error && <ParagraphText className="text-danger font-12px">
+        {error && files.length <= 0 && <ParagraphText className="text-danger font-12px">
             {error}
         </ParagraphText>}
         <div className="d-flex align-items-center justify-content-between w-100 py-3">

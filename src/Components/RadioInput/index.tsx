@@ -27,7 +27,13 @@ export const RadioInput: React.FunctionComponent<IRadioInput.IProps>
             </div>
         )
     } else {
-        return <Container inputMargin={inputMargin} name={name} ref={register} type={type} value={value} {...props} />  
+        return <div className="d-flex align-items-center justify-content-start w-100">
+            <Container inputMargin={inputMargin} 
+                name={name} ref={register} 
+                type={type} value={value} {...props} >
+            </Container>
+            { labelTextElem }
+        </div> 
     }
     
 };

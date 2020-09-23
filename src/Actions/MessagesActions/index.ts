@@ -104,16 +104,6 @@ export const MessagesActions = {
         if (result.status && result.response) {
             payload.onSuccessScroll();
         }
-        // const postContent = await FeedsService.PostContent({ 
-        //     title: payload.title, 
-        //     media_url: result ? result.uploadSuccess : [],
-        //     userId: payload.userId
-        // });
-        // dispatch({
-        //     payload: postContent.status ? { feed: postContent.response }: null,
-        //     type: postContent.status ? ActionConsts.Feeds.PostContentSuccess : ActionConsts.Feeds.PostContentError
-        // });
-        // return postContent;
     },
     MessageRecieved: (payload: CONVERSATION_RESPONSE) => async (
         dispatch: Dispatch
@@ -135,6 +125,16 @@ export const MessagesActions = {
         dispatch: Dispatch
     ) => {
         const result = await MessagesService.ConversationSeen(payload);
+
+        dispatch({
+            payload: null,
+            type: ActionConsts.Conversation.ConversationSeenSuccess
+        });
+    },
+    BuyMessage: (payload: IConversationPage.Actions.IGetPOSTBuyMessagePayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await MessagesService.BuyMessage(payload);
 
         dispatch({
             payload: null,

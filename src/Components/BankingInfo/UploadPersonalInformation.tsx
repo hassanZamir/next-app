@@ -386,9 +386,12 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                                 setCheckedConsent(!checkedConsent) 
                             }}
                             type="radio"
+                            labelTextElem={<div className="text-darkGrey lato-regular font-11px">
+                                <span>Will you be posting explicit content?</span>
+                            </div>}
                             value={checkedConsent ? "1" : "0"} 
                             checked={checkedConsent}
-                            labelText="Will you be posting explicit content?"
+                            // labelText="Will you be posting explicit content?"
                             name="explicitContentRadio" 
                             wrapperClass="mt-3"
                             inputMargin="0px 5px 0px 0px"
