@@ -91,6 +91,8 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
         setMessage('');
         setFiles([]);
         setLoading(false);
+        setError('');
+        setPriceTagAmount("0");
     }
 
     const onSetPriceTagAmount = (amount: string) => {
@@ -119,16 +121,18 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
         setLoading(true);
         await dispatch(MessagesActions.CreateMessage(params));
         setMessage('');
+        setFiles([]);
         setLoading(false);
+        setError('');
     }
 
     const onTipSubmit = async (feed: FEED, amount: string, message: string) => {
         const param: IFeed.Actions.ITipFeedPayload = { 
-            contentId: feed.id, 
+            contentId: 0, 
             viewerId: user.id, 
             message: message, 
             amount: parseInt(amount),
-            creatorUserName: feed.username
+            creatorUserName: user.username
         };
         toggle();
         FeedsActions.TipFeed(param)().then((resp: any) => {

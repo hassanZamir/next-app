@@ -31,6 +31,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [scrolledTop, setScrolledTop] = useState(false);
+    const [fetchingPagination, setFetchingPagination] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
 
@@ -75,12 +76,14 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
         })()
     }, []);
     
-    const fetchPaginatedResponse = () => {
+    const fetchPaginatedResponse = async () => {
         if (conversation.paginationNo < conversation.emptyPaginationNo) {
-            dispatch(MessagesActions.GetConversation({ 
+            setFetchingPagination(true);
+            await dispatch(MessagesActions.GetConversation({ 
                 conversationId: conversationId,
                 page: conversation.paginationNo
             }));
+            setFetchingPagination(false);
         }
     }
 
@@ -106,10 +109,11 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             </div>
         </div>
         <div className="d-flex flex-column w-100 h-100" style={{ overflow: "hidden" }}>
+            {fetchingPagination && <div className="font-12px text-grey100 w-100 text-center">Loading...</div>}
             <div onScroll={(e: any)=> {
-                    if (e.target.scrollTop <= 0) {
+                    if (e.target.scrollTop <= 3 && !fetchingPagination) {
                         setScrolledTop(true);
-                        fetchPaginatedResponse();                        
+                        fetchPaginatedResponse();                      
                     }
                     if (e.target.scrollTop > 30) {
                         setScrolledTop(false);

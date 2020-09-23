@@ -51,11 +51,21 @@ function uploadToAzure(file: any, blurImage?: any) {
         concurrency: 20, // 20 concurrency
         // onProgress: (ev: any) => console.log(ev)
       });
+
+      if (blurImage && blobBlurName) {
+        const blurBlockBlobClient = containerClient.getBlockBlobClient(blobBlurName);
+        await blurBlockBlobClient.uploadFile(blurImage.path, {
+          blockSize: 4 * 1024 * 1024, // 4MB block size
+          concurrency: 20, // 20 concurrency
+          // onProgress: (ev: any) => console.log(ev)
+        });
+      }
       if (blobBlurName && blurImage) 
         resolve({ url: blobName, media_type: isVideo ? 2 : 1, thumbnailUrl: blobBlurName });
       else 
         resolve({ url: blobName, type: isVideo ? 2 : 1 });
     } catch (err) {
+      console.log("ERR : ", err);
       reject({ ex: { message: 'File not uploaded', file: file }});
     }
   });
@@ -88,7 +98,14 @@ const resizeImage = (file: any, width: any, height: any) => {
 
 const blurImage = (file: any) => {
   return new Promise((resolve, reject) => {
-    sharp(file.path)
+    sharp({
+      create: {
+        width: 48,
+        height: 48,
+        channels: 4,
+        background: { r: 0, g: 0, b: 0, alpha: 0.3 }
+      }
+    })
     .jpeg({
       quality: 1
     })
@@ -97,13 +114,14 @@ const blurImage = (file: any) => {
     .then((data: any) =>  {
       const newFilePath = 'uploads/resize/' + file.path.split('uploads/')[1];
       fs.writeFile(newFilePath, data, function (err: any) {
-        if (err) reject('Resize Failed .. ' + err);
+        if (err) reject('Blur Failed .. ' + err);
 
+        console.log("Blur Success");
         const updatedFile = Object.assign({}, file, { path: newFilePath });
         resolve(updatedFile);
       });
     }).catch((err: any) => {
-      console.log(err, 'exception in resizings');
+      console.log(err, 'exception in bluring');
       reject('Resize Failed .. ' + err);
       if (fs.exists(file)) {
         fs.unlink(file);

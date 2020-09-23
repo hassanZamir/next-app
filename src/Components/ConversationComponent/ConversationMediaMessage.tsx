@@ -51,14 +51,15 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                 <BackgroundImage src={[process.env.MEDIA_BASE_URL + "/" + meta.media_urls[0].thumbnailUrl, '/images/feed_placeholder.png']} 
                         paddingBottom="54.25%" />
                 <div className="position-absolute">
-                    {isMessagePaid && <div className="py-1 px-2 cursor-pointer font-11px" 
+                    {isMessagePaid && <div className="py-1 px-2 cursor-pointer font-11px text-white" 
                         onClick={() => { setShowMediaCarousel(0); toggle(); }}
                         style={{ border: "1px solid white", borderRadius: "4px" }}>
                             Click to Open
                     </div>}
                     {!isMessagePaid && 
-                        (isMessageRecieved ? <div onClick={()=>{ buyMedia(conversationMessage) }}>{'Pay $' + meta.amount}</div> : 
-                        <div className="py-1 px-2 cursor-pointer font-11px" 
+                        (isMessageRecieved ? <div style={{ border: "1px solid white", borderRadius: "4px" }}
+                            className="py-1 px-2 cursor-pointer font-11px text-white" onClick={()=>{ buyMedia(conversationMessage) }}>{'Pay $' + meta.amount}</div> : 
+                        <div className="py-1 px-2 cursor-pointer font-11px text-white" 
                             onClick={() => { setShowMediaCarousel(0); toggle(); }}
                             style={{ border: "1px solid white", borderRadius: "4px" }}>
                             Click to Open
