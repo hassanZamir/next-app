@@ -84,7 +84,12 @@ export const MessagesService = {
                     participantSeenStatus: true,
                     profileImageUrl: "",
                     userId: 130,
-                    userName: "sohaib1"
+                    userName: "sohaib1",
+                    conversationSettings: {
+                        favourite: true,
+                        isBlocked: false,
+                        isRestricted: false
+                    }
                 }
             };
         }
@@ -95,11 +100,11 @@ export const MessagesService = {
     ): Promise<MessagesModel.GetGETConversationResponse> => {
         let response: MessagesModel.GetGETConversationResponse;
         
-        const { userId, conversationId, ...rest } = payload;
+        const { userName, conversationId, ...rest } = payload;
         try {
             response = await Http.Request<MessagesModel.GetGETConversationResponse>(
                 "GET",
-                "/users/" + userId + "/conversation/" + conversationId + getQueryParams({ ...rest }),
+                "/users/" + userName + "/conversation/" + conversationId + getQueryParams({ ...rest }),
                 undefined
             );
         } catch (error) {
@@ -221,6 +226,24 @@ export const MessagesService = {
                     }
                 }
             };
+        }
+        return response;
+    },
+    UpdateMessageSetting: async (
+        payload: MessagesModel.GetPOSTMessageSettingPayload
+    ): Promise<MessagesModel.GetPOSTMessageSettingResponse> => {
+        let response: MessagesModel.GetPOSTMessageSettingResponse;
+
+        const { userName, apiRouteKey, ...recipientUsername } = payload;
+        try {
+            response = await Http.Request<MessagesModel.GetPOSTMessageSettingResponse>(
+                "POST",
+                "/users/" + userName + "/" + apiRouteKey,
+                undefined,
+                { ...recipientUsername }
+            );
+        } catch (error) {
+            response = { status: false };
         }
         return response;
     }

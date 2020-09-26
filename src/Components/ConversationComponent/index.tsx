@@ -10,7 +10,7 @@ import Router from 'next/router';
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
 import { theme } from "@Definitions/Styled";
-import { USER_SESSION, MESSAGE_LIST_ITEM, CONVERSATION_RESPONSE, CONVERSATION_MEDIA_MESSAGE, CONVERSATION_TIP_MESSAGE } from "@Interfaces";
+import { USER_SESSION, MESSAGE_LIST_ITEM, CONVERSATION_RESPONSE, CONVERSATION_MEDIA_MESSAGE, CONVERSATION_TIP_MESSAGE, CONVERSATION_THREAD } from "@Interfaces";
 import { ParagraphText, LoadingSpinner } from "@Components";
 import { ConversationTextMessage } from "./ConversationTextMessage";
 import { ConversationMediaMessage } from "./ConversationMediaMessage";
@@ -22,8 +22,8 @@ import { useModal } from '../Hooks';
 import { MessageSettingsModal } from "../Modals/MessagSettingsModal";
 // #endregion Local Imports
 
-export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION, conversationId: number, messageListItem: MESSAGE_LIST_ITEM }> 
-    = ({ user, messageListItem, conversationId }) => {
+export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION, conversationId: number, conversationThread: CONVERSATION_THREAD }> 
+    = ({ user, conversationThread, conversationId }) => {
 
     const conversationState = useSelector((state: IStore) => state.conversationState);
     const { conversation } = conversationState;
@@ -60,7 +60,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
     }
 
     useEffect(() => {
-        if (messageListItem.id !== conversationId) {
+        if (conversationThread.id !== conversationId) {
             Router.push("/messages", "/messages");
             return;
         }
@@ -70,7 +70,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             subscribePresenceChannel();
             await dispatch(MessagesActions.GetConversation({ 
                 conversationId: conversationId,
-                userId: user.id
+                userName: user.username
             }));
             setLoading(false);
             scrollToLastComment();
@@ -83,7 +83,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             await dispatch(MessagesActions.GetConversation({ 
                 conversationId: conversationId,
                 page: conversation.paginationNo,
-                userId: user.id
+                userName: user.username
             }));
             setFetchingPagination(false);
         }
@@ -119,7 +119,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             <FontAwesomeIcon
                 onClick={() => Router.back()}
                 className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
-            <ParagraphText className="text-primary lato-bold">{ messageListItem.name || "Name not coming in api" }</ParagraphText>
+            <ParagraphText className="text-primary lato-bold">{ conversationThread.name || "" }</ParagraphText>
             <div className="d-flex align-items-center position-relative">
                 <FontAwesomeIcon className="cursor-pointer" icon={faStar} 
                     color={theme.colors.primary} size="lg" />
@@ -130,7 +130,8 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                         isShowing={isShowing} 
                         toggle={toggle}
                         modalRef={modalRef} 
-                        user={user} />
+                        user={user} 
+                        conversationThread={conversationThread} />
             </div>
         </div>
         <div className="d-flex flex-column w-100 h-100" style={{ overflow: "hidden" }}>
@@ -175,7 +176,8 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             <CreateMessage 
                 user={user} 
                 conversationId={conversationId} 
-                onSuccess={scrollToLastComment} />
+                onSuccess={scrollToLastComment} 
+                conversationThread={conversationThread} />
         </div>        
     </div>);
 }

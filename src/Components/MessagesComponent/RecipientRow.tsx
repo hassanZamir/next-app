@@ -23,15 +23,10 @@ export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIEN
     
     const onRecipientClick = async (recipient: MESSAGE_RECIPIENT) => {
         setLoading(true);
-        await dispatch(MessagesActions.CreateConversation({ userId: user.id, recipientId: recipient.id}));
-
-        // if (result.status && result.response) {
-        //     const conversation = result.response;
-        //     Router.push("/message/" + conversation.id, "/message/" + conversation.id);
-        // } else {
-        //     setError("Error getting conversation");
-        //     setLoading(false);
-        // }
+        await dispatch(MessagesActions.CreateConversation({ 
+            userId: user.id, 
+            recipientId: recipient.id
+        }));
     }
 
     return (<div onClick={() => { !loading && onRecipientClick(recipient); }} 

@@ -1,6 +1,6 @@
 export interface GETConversationPayload {    
     conversationId: number,
-    userId: number,
+    userName: string,
     page?: number,
     offset?: number
 }

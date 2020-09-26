@@ -4,14 +4,14 @@ import Router from "next/router";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, IPersistState, USER_SESSION, FEED, NOTIFICATION_STATS, MESSAGE_LIST_ITEM } from "@Interfaces";
+import { IAction, IPersistState, USER_SESSION, FEED, NOTIFICATION_STATS, CONVERSATION_THREAD } from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IPersistState.IStateProps = {
     session: <USER_SESSION>{},
     feed: <FEED>{},
     notificationStats: <NOTIFICATION_STATS>{},
-    activeConversation: <MESSAGE_LIST_ITEM>{}
+    activeConversation: <CONVERSATION_THREAD>{}
 };
 
 export const PersistReducer = (
@@ -21,9 +21,22 @@ export const PersistReducer = (
     & IPersistState.Actions.ISetNotificationStats
     & IPersistState.Actions.IUpdatePaymentInfoInSession
     & IPersistState.Actions.IViewNotificationType
-    & IPersistState.Actions.ISetActiveConversation>
+    & IPersistState.Actions.ISetActiveConversation
+    & IPersistState.Actions.IUpdateActiveConversation>
 ) => {
     switch (action.type) {
+        case ActionConsts.Conversation.UpdateMessageSettingSuccess: {
+            const { apiReducerKey } = action.payload!;
+            const existing = state.activeConversation.conversationSettings[apiReducerKey === "isBlocked" ? "isBlocked" : "isRestricted"]
+            return Object.assign({}, state, {
+                activeConversation: Object.assign({}, state.activeConversation, {
+                    conversationSettings: {
+                        ...state.activeConversation.conversationSettings,
+                        [apiReducerKey]: !existing
+                    }
+                })
+            });
+        }
         case ActionConsts.Messages.SetActiveConversationSuccess: {
             const { conversation } = action.payload!;
             Router.push("/message/" + conversation.id, "/message/" + conversation.id);

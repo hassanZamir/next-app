@@ -32,6 +32,9 @@ declare namespace IConversationPage {
 
         export interface IGetPOSTBuyMessagePayload extends MessagesModel.GetPOSTBuyMessagePayload {}
         export interface IGetPOSTBuyMessageResponse extends MessagesModel.GetPOSTBuyMessageResponse {}
+
+        export interface IGetPOSTMessageSettingPayload extends MessagesModel.GetPOSTMessageSettingPayload {}
+        export interface IGetPOSTMessageSettingResponse extends MessagesModel.GetPOSTMessageSettingResponse {}
     }
 }
 

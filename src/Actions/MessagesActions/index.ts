@@ -140,5 +140,15 @@ export const MessagesActions = {
             payload: null,
             type: ActionConsts.Conversation.ConversationSeenSuccess
         });
+    },
+    UpdateMessageSettings: (payload: IConversationPage.Actions.IGetPOSTMessageSettingPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await MessagesService.UpdateMessageSetting(payload);
+
+        dispatch({
+            payload: payload,
+            type: result ? ActionConsts.Conversation.UpdateMessageSettingSuccess : ActionConsts.Conversation.UpdateMessageSettingError
+        });
     }
 }

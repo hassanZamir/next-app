@@ -9,7 +9,7 @@ import { faLink, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 // #region Local Imports
 import { Textarea } from "@Components/Basic";
 import { MessagesActions } from "@Actions";
-import { USER_SESSION } from "@Interfaces";
+import { USER_SESSION, CONVERSATION_THREAD } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
 import { MessageMediaPreview } from "./MessageMediaPreview"; 
 import { TipSubmitModal } from "../Modals/TipSubmitModal";
@@ -31,8 +31,8 @@ interface IUploadImage {
     }
 }
 
-export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conversationId: number, onSuccess: ()=>void }> 
-    = ({ user, conversationId, onSuccess }) => {
+export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVERSATION_THREAD, user: USER_SESSION, conversationId: number, onSuccess: ()=>void }> 
+    = ({ conversationThread, user, conversationId, onSuccess }) => {
 
     const [message, setMessage] = useState("");
     const [priceTagAmount, setPriceTagAmount] = useState("");
@@ -64,6 +64,9 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
     };
 
     const sendMessage = async () => {
+        if (conversationThread.conversationSettings.isBlocked || conversationThread.conversationSettings.isRestricted)
+            return false;
+            
         const messageType = files.length > 0 ? 2 : 1;
         const date = new Date();
         const params: any = {

@@ -18,8 +18,13 @@ export const MessageRow: React.FunctionComponent<{ message: MESSAGE_LIST_ITEM, u
     
     const dispatch = useDispatch();
 
-    const goToConversation = () => {
-        dispatch(MessagesActions.SetConversation({ conversation: message } ));
+    
+    const goToConversation = async () => {
+        await dispatch(MessagesActions.CreateConversation({ 
+            userId: user.id, 
+            recipientId: message.userId
+        }));
+        // dispatch(MessagesActions.SetConversation({ conversation: message } ));
     }
 
     return (<div onClick={()=>{ goToConversation() }} 

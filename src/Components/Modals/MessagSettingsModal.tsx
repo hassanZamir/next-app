@@ -1,8 +1,10 @@
 import React, { RefObject, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { useDispatch } from "react-redux";
+import { MessagesActions } from "@Actions";
+
 
 import { PositionedModal } from "@Components/Basic";
-import { USER_SESSION } from '@Interfaces';
+import { USER_SESSION, CONVERSATION_THREAD } from '@Interfaces';
 
 declare namespace IMessageSettingsModal {
     export interface IProps {
@@ -10,38 +12,60 @@ declare namespace IMessageSettingsModal {
         modalRef?: RefObject<HTMLDivElement>;
         toggle: ()=>void;
         user: USER_SESSION;
+        conversationThread: CONVERSATION_THREAD;
     }
 }
 
 export const MessageSettingsModal: React.RefForwardingComponent<HTMLDivElement, IMessageSettingsModal.IProps> = ((props) => {
-    const { isShowing, modalRef, toggle, user } = props;
+    const { isShowing, modalRef, toggle, user, conversationThread } = props;
 
-    const onSettingClick = (index: number) => {}
+    const { conversationSettings } = conversationThread;
+    const dispatch = useDispatch();
 
-    useEffect(() => {
+    const getApiRouteKey = (index: number) => {
+        switch (index) {
+            case 0: return ""
+            case 1: return ""
+            case 2: return ""
+            case 3: return conversationSettings.isRestricted ? "unrestrict" : "restrict"
+            case 4:return conversationSettings.isBlocked ? "unblock" : "block"
+            case 5: return ""
+            default: return ""
+        }
+    }
 
-    }, []);
+    const onSettingClick = (index: number) => {
+        const apiRouteKey = getApiRouteKey(index);
+        if (apiRouteKey) {
+            dispatch(MessagesActions.UpdateMessageSettings({
+                userName: user.username,
+                recipientUsername: conversationThread.userName,
+                apiRouteKey: getApiRouteKey(index),
+                apiReducerKey: index === 3 ? 'isRestricted' : 'isBlocked'
+            }));
+        }
+    }
 
     return isShowing ? <PositionedModal 
-            borderRadius="11px" 
-            triangleProps={{ right: "-4px", top: "15px" }} 
-            containerProps={{ right: "-4px", top: "20px" }}
-            triangleUp={true}>
-            
-            <div className="modal-header">
-                {/* <button type="button" className="modal-close-button" 
-                    data-dismiss="modal" aria-label="Close" > */}
-                    <span className="cursor-pointer" aria-hidden="true" onClick={toggle}>&times;</span>
-                {/* </button> */}
+        borderRadius="11px" 
+        triangleProps={{ right: "-4px", top: "15px" }} 
+        containerProps={{ right: "-4px", top: "20px" }}
+        triangleUp={true}>
+        
+        <div className="modal-header">
+            <span className="cursor-pointer" aria-hidden="true" onClick={toggle}>&times;</span>
+        </div>
+        <div className="d-flex flex-column" style={{ width: "200px" }} ref={modalRef}>
+            <div onClick={()=>{ onSettingClick(0) }} className="text-grey100 cursor-pointer">Copy Profile Link</div>
+            <div onClick={()=>{ onSettingClick(1) }} className="text-grey100 cursor-pointer">Hide Chat</div>
+            <div onClick={()=>{ onSettingClick(2) }} className="text-grey100 cursor-pointer">Turn Off Notifications</div>
+            <div onClick={()=>{ onSettingClick(3) }} className="text-primary cursor-pointer">
+                { conversationSettings.isRestricted ? "Un Restrict Messages" : "Restrict Messages" }
             </div>
-            <div className="d-flex flex-column" style={{ width: "200px" }} ref={modalRef}>
-                <div onClick={()=>{ onSettingClick(0) }} className="text-grey100 cursor-pointer">Copy Profile Link</div>
-                <div onClick={()=>{ onSettingClick(1) }} className="text-grey100 cursor-pointer">Hide Chat</div>
-                <div onClick={()=>{ onSettingClick(2) }} className="text-grey100 cursor-pointer">Turn Off Notifications</div>
-                <div onClick={()=>{ onSettingClick(3) }} className="text-primary cursor-pointer">Restrict Messages</div>
-                <div onClick={()=>{ onSettingClick(4) }} className="text-primary cursor-pointer">Block</div>
-                <div onClick={()=>{ onSettingClick(5) }} className="text-primary cursor-pointer">Report</div>
+            <div onClick={()=>{ onSettingClick(4) }} className="text-primary cursor-pointer">
+                { conversationSettings.isBlocked ? "UnBlock" : "Block" }
             </div>
-        </PositionedModal> : null
-    // ) : null;
+            <div onClick={()=>{ onSettingClick(5) }} className="text-primary cursor-pointer">Report</div>
+        </div>
+    </PositionedModal> : null
 });
