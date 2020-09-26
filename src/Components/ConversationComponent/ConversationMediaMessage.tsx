@@ -33,7 +33,7 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
     const isMessagePaid = meta.purchase_status || !meta.amount || (meta.amount.toString() === "0");
 
     return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
-        <div className="d-flex flex-column h-100" style={{ width: "35%" }}>
+        <div className="d-flex flex-column h-100" style={{ width: "40%" }}>
             <div className="position-relative d-flex flex-column align-items-center justify-content-center" 
                 style={{ border: "1px solid " + theme.colors.primary, borderRadius: "12px" }}>
                 
@@ -60,13 +60,13 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                             <span>Click to Open</span>
                     </div>}
                     {!isMessagePaid && 
-                        (isMessageRecieved ? <div style={{ border: "1px solid white", borderRadius: "4px" }}
-                            className="py-1 px-2 cursor-pointer font-11px text-white d-flex flex-column" 
-                            onClick={()=>{ buyMedia(conversationMessage) }}>
-                                
-                                <img src="/images/lock.svg"/>                                
-                                {'Pay $' + meta.amount}
-                        </div> : 
+                        (isMessageRecieved ? <div className="d-flex flex-column">
+                                <div style={{ border: "1px solid white", borderRadius: "4px" }}
+                                    className="py-1 px-2 cursor-pointer font-11px text-white d-flex flex-column" 
+                                    onClick={()=>{ buyMedia(conversationMessage) }}>
+                                        {'Pay $' + meta.amount}
+                                </div>
+                        </div>: 
                         <div className="py-1 px-2 cursor-pointer font-11px text-white" 
                             onClick={() => { setShowMediaCarousel(0); toggle(); }}
                             style={{ border: "1px solid white", borderRadius: "4px" }}>

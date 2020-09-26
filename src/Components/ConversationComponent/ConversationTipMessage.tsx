@@ -22,12 +22,12 @@ export const ConversationTipMessage: React.FunctionComponent<{ user: USER_SESSIO
             <TextMessageContainer isMessageRecieved={isMessageRecieved}>
                 <div className="d-flex flex-column">
                     <div className="text-center">
-                        <ParagraphText className="font-16px text-center">
+                        <div className="font-16px text-center">
                             { messageString[0] + ' Tipped '}
-                        </ParagraphText>
-                        <ParagraphText>
+                        </div>
+                        <div className="font-16px text-center">
                             { messageString[1] }
-                        </ParagraphText>
+                        </div>
                     </div>
                     
                     <div className="font-28px lato-bold text-center"
