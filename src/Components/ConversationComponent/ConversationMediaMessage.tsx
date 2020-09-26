@@ -53,19 +53,23 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                         paddingBottom="65.25%" 
                         borderRadius="12px" />
                 <div className="position-absolute">
-                    {isMessagePaid && <div className="py-1 px-2 cursor-pointer font-11px text-white d-flex flex-column" 
+                    {isMessagePaid && <div className="py-1 px-2 cursor-pointer font-11px text-white" 
                         onClick={() => { setShowMediaCarousel(0); toggle(); }}
                         style={{ border: "1px solid white", borderRadius: "4px" }}>
-                            <img src="/images/lock.svg"/>
+                            {/* <img src="/images/lock.svg"/> */}
                             <span>Click to Open</span>
                     </div>}
                     {!isMessagePaid && 
                         (isMessageRecieved ? <div style={{ border: "1px solid white", borderRadius: "4px" }}
-                            className="py-1 px-2 cursor-pointer font-11px text-white" onClick={()=>{ buyMedia(conversationMessage) }}>{'Pay $' + meta.amount}</div> : 
-                        <div className="py-1 px-2 cursor-pointer font-11px text-white d-flex flex-column" 
+                            className="py-1 px-2 cursor-pointer font-11px text-white d-flex flex-column" 
+                            onClick={()=>{ buyMedia(conversationMessage) }}>
+                                
+                                <img src="/images/lock.svg"/>                                
+                                {'Pay $' + meta.amount}
+                        </div> : 
+                        <div className="py-1 px-2 cursor-pointer font-11px text-white" 
                             onClick={() => { setShowMediaCarousel(0); toggle(); }}
                             style={{ border: "1px solid white", borderRadius: "4px" }}>
-                                <img src="/images/lock.svg"/>
                                 <span>Click to Open</span>
                         </div>)
                     }
