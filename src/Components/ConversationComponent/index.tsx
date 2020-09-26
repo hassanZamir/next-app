@@ -121,8 +121,17 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                 className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
             <ParagraphText className="text-primary lato-bold">{ conversationThread.name || "" }</ParagraphText>
             <div className="d-flex align-items-center position-relative">
-                <FontAwesomeIcon className="cursor-pointer" icon={faStar} 
-                    color={theme.colors.primary} size="lg" />
+                <img className="cursor-pointer" 
+                    onClick={() => { 
+                        dispatch(MessagesActions.UpdateMessageSettings({
+                            userName: user.username,
+                            recipientUsername: conversationThread.userName,
+                            apiRouteKey: conversationThread.conversationSettings.favourite ? 'unfavourite' : 'favourite',
+                            apiReducerKey: 'favourite'
+                        }));
+                    }}
+                    src={conversationThread.conversationSettings.favourite ? '/images/favourite_star_filled.svg' : '/images/favourite_star.svg'} />
+                
                 <FontAwesomeIcon className="cursor-pointer ml-2" icon={faEllipsisH} 
                     onClick={()=>{ toggle(); }}
                     color={theme.colors.primary} size="lg"/>
