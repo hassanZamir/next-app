@@ -5,12 +5,11 @@ import { ITextMessageContainer } from "./TextMessageContainer";
 
 // import { TriangleDown } from "@Components/Basic/PositionedModal";
 const TextContainer = styled.div<ITextMessageContainer.IProps>`
-   padding: 8px 16px;
-   color: white;
-   border-radius: 20px;
-   position: relative;
-   background: ${({ isMessageRecieved, theme }) => (isMessageRecieved ? theme.colors.grey400 : theme.colors.primary)};
-
+        padding: 8px 16px;
+        color: white;
+        border-radius: 12px;
+        position: relative;
+        background: ${({ isMessageRecieved, theme }) => (isMessageRecieved ? theme.colors.grey400 : theme.colors.primary)};
 `;
 const TriangleDown = styled.div<ITextMessageContainer.IProps>`
         width: 0;

@@ -15,7 +15,7 @@ export const ConversationTipMessage: React.FunctionComponent<{ conversationMessa
         return null;
     
     const { meta } = conversationMessage;
-    return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
+    return (<div ref={messageRef} className={"pb-3 d-flex flex-column align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
         <TextMessageContainer isMessageRecieved={isMessageRecieved}>
             <div className="d-flex flex-column">
                 <ParagraphText className="font-16px text-center">{ conversationMessage.message }</ParagraphText>

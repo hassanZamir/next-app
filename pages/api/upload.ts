@@ -103,7 +103,7 @@ const blurImage = (file: any) => {
         width: 48,
         height: 48,
         channels: 4,
-        background: { r: 0, g: 0, b: 0, alpha: 0.1 }
+        background: { r: 105, g: 105, b: 105, alpha: 0.1 }
       }
     })
     .jpeg({
