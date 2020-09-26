@@ -4,7 +4,8 @@ export interface  CONVERSATION_THREAD extends MESSAGE_LIST_ITEM {
     conversationSettings: {
         favourite: boolean,
         isBlocked: boolean,
-        isRestricted: boolean
+        isRestricted: boolean,
+        [key: string]: boolean
     }
 }
 

@@ -27,15 +27,20 @@ export const PersistReducer = (
     switch (action.type) {
         case ActionConsts.Conversation.UpdateMessageSettingSuccess: {
             const { apiReducerKey } = action.payload!;
-            const existing = state.activeConversation.conversationSettings[apiReducerKey === "isBlocked" ? "isBlocked" : "isRestricted"]
-            return Object.assign({}, state, {
-                activeConversation: Object.assign({}, state.activeConversation, {
-                    conversationSettings: {
-                        ...state.activeConversation.conversationSettings,
-                        [apiReducerKey]: !existing
-                    }
-                })
-            });
+
+            if (apiReducerKey) {
+                const existing = state.activeConversation.conversationSettings[apiReducerKey];
+                return Object.assign({}, state, {
+                    activeConversation: Object.assign({}, state.activeConversation, {
+                        conversationSettings: {
+                            ...state.activeConversation.conversationSettings,
+                            [apiReducerKey]: !existing
+                        }
+                    })
+                });
+            } else {
+                return state;
+            }
         }
         case ActionConsts.Messages.SetActiveConversationSuccess: {
             const { conversation } = action.payload!;

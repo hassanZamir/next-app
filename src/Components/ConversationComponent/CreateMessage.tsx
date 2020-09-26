@@ -45,6 +45,14 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if (conversationThread.conversationSettings.isBlocked)
+            setError("You can no longer reply to this conversation.");
+        else
+            setError("");
+
+    }, [conversationThread.conversationSettings]);
+
     const handleMessageChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { value } = e.currentTarget;
         setMessage(value);
@@ -64,9 +72,6 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
     };
 
     const sendMessage = async () => {
-        if (conversationThread.conversationSettings.isBlocked || conversationThread.conversationSettings.isRestricted)
-            return false;
-            
         const messageType = files.length > 0 ? 2 : 1;
         const date = new Date();
         const params: any = {
@@ -196,12 +201,16 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
                 placeholder="Say Something..."
                 name="message" 
                 rows={1} 
+                disabled={conversationThread.conversationSettings.isBlocked}
                 columns={10} 
                 className="px-3 py-3 border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow" 
                 onChange={handleMessageChange}
                 value={message}/>
             {!loading && <FontAwesomeIcon
                     onClick={() => { if(message || files.length > 0) {
+                        if (conversationThread.conversationSettings.isBlocked 
+                        || conversationThread.conversationSettings.isRestricted) return false;
+                         
                         setLoading(true); 
                         sendMessage();
                     } }}

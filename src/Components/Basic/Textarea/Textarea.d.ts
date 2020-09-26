@@ -8,6 +8,7 @@ declare namespace ITextarea {
         value?: string;
         placeholder?: string;
         maxLength?: number;
+        disabled?: boolean;
     }
 }
 

@@ -56,16 +56,16 @@ export const MessageSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
             <span className="cursor-pointer" aria-hidden="true" onClick={toggle}>&times;</span>
         </div>
         <div className="d-flex flex-column" style={{ width: "200px" }} ref={modalRef}>
-            <div onClick={()=>{ onSettingClick(0) }} className="text-grey100 cursor-pointer">Copy Profile Link</div>
+            {/* <div onClick={()=>{ onSettingClick(0) }} className="text-grey100 cursor-pointer">Copy Profile Link</div>
             <div onClick={()=>{ onSettingClick(1) }} className="text-grey100 cursor-pointer">Hide Chat</div>
-            <div onClick={()=>{ onSettingClick(2) }} className="text-grey100 cursor-pointer">Turn Off Notifications</div>
+            <div onClick={()=>{ onSettingClick(2) }} className="text-grey100 cursor-pointer">Turn Off Notifications</div> */}
             <div onClick={()=>{ onSettingClick(3) }} className="text-primary cursor-pointer">
                 { conversationSettings.isRestricted ? "Un Restrict Messages" : "Restrict Messages" }
             </div>
             <div onClick={()=>{ onSettingClick(4) }} className="text-primary cursor-pointer">
                 { conversationSettings.isBlocked ? "UnBlock" : "Block" }
             </div>
-            <div onClick={()=>{ onSettingClick(5) }} className="text-primary cursor-pointer">Report</div>
+            {/* <div onClick={()=>{ onSettingClick(5) }} className="text-primary cursor-pointer">Report</div> */}
         </div>
     </PositionedModal> : null
 });
