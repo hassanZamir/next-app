@@ -61,6 +61,7 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                     </div>}
                     {!isMessagePaid && 
                         (isMessageRecieved ? <div className="d-flex flex-column">
+                                <img src="/images/lock.svg"/>
                                 <div style={{ border: "1px solid white", borderRadius: "4px" }}
                                     className="py-1 px-2 cursor-pointer font-11px text-white d-flex flex-column" 
                                     onClick={()=>{ buyMedia(conversationMessage) }}>
@@ -75,9 +76,6 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                     }
                 </div>
             </div>
-            {/* <div className="quotes text-primary">
-                { conversationMessage.message }
-            </div> */}
             {!isMessagePaid && <ParagraphText className="text-darkGrey font-11px">
                 {'$' + meta.amount + " " + (isMessagePaid ? "Paid" : "Not paid yet")}
             </ParagraphText>}

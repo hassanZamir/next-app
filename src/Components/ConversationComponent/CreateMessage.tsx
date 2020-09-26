@@ -211,8 +211,7 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
                 value={message}/>
             {!loading && <FontAwesomeIcon
                     onClick={() => { if(message || files.length > 0) {
-                        if (conversationSettings && conversationSettings.isBlocked 
-                        || conversationSettings && conversationSettings.isRestricted) return false;
+                        if (conversationSettings && conversationSettings.isBlocked) return false;
                          
                         setLoading(true); 
                         sendMessage();

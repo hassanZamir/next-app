@@ -61,7 +61,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
 
     useEffect(() => {
         if (conversationThread.id !== conversationId) {
-            Router.push("/messages", "/messages");
+            Router.push("/message", "/message");
             return;
         }
         (async () => {
@@ -113,6 +113,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
     }
 
     const { conversationSettings } = conversationThread;
+
     return (<div className="d-flex flex-column" 
         style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>
 
@@ -162,17 +163,17 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                                 <div className="text-center text-primary py-3">{ conversationGroupedByDate.date }</div>
                                 {conversationGroupedByDate.messages.map((conversationMessage: CONVERSATION_RESPONSE, i: number) => {
                                     return conversationMessage.type === 1 ? <ConversationTextMessage 
-                                        messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
+                                        messageRef={conversationMessage.id === conversation.values[conversation.values.length - 1].id ? messagesListRef : null}
                                         conversationMessage={conversationMessage} 
                                         isMessageRecieved={user.id !== conversationMessage.senderId} 
                                         key={i} /> : conversationMessage.type === 2 ? <ConversationMediaMessage 
-                                        messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
+                                        messageRef={conversationMessage.id === conversation.values[conversation.values.length - 1].id ? messagesListRef : null}
                                         conversationMessage={conversationMessage as CONVERSATION_MEDIA_MESSAGE} 
                                         isMessageRecieved={user.id !== conversationMessage.senderId} 
                                         user={user}
                                         key={i} /> : <ConversationTipMessage 
                                         user={user}
-                                        messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
+                                        messageRef={conversationMessage.id === conversation.values[conversation.values.length - 1].id ? messagesListRef : null}
                                         conversationMessage={conversationMessage as CONVERSATION_TIP_MESSAGE} 
                                         isMessageRecieved={user.id !== conversationMessage.senderId} 
                                         key={i} />
