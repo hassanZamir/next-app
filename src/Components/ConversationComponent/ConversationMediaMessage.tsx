@@ -10,6 +10,7 @@ import { CONVERSATION_MEDIA_MESSAGE, USER_SESSION } from "@Interfaces";
 import { MediaCarousel } from "@Components";
 import { useModal } from '../Hooks';
 import { ParagraphText } from "@Components/ParagraphText";
+import { TextMessageContainer } from "@Components/Basic";
 import { MessagesActions } from "@Actions";
 // #endregion Local Imports
 
@@ -29,7 +30,7 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
         dispatch(MessagesActions.BuyMessage(params));
     }
 
-    const isMessagePaid = meta.purchase_status || !meta.amount;
+    const isMessagePaid = meta.purchase_status || !meta.amount || (meta.amount.toString() === "0");
 
     return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
         <div className="d-flex flex-column h-100" style={{ width: "35%" }}>
@@ -67,12 +68,16 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                     }
                 </div>
             </div>
-            <div className="quotes text-primary">
+            {/* <div className="quotes text-primary">
                 { conversationMessage.message }
-            </div>
+            </div> */}
             {!isMessagePaid && <ParagraphText className="text-darkGrey font-11px">
                 {'$' + meta.amount + " " + (isMessagePaid ? "Paid" : "Not paid yet")}
             </ParagraphText>}
+            {conversationMessage.message && <div className="mt-1"></div>}
+            {conversationMessage.message && <TextMessageContainer isMessageRecieved={isMessageRecieved}>
+                { conversationMessage.message }
+            </TextMessageContainer>}
         </div>
     </div>);
 }

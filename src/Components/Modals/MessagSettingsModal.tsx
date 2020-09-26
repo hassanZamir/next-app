@@ -65,7 +65,7 @@ export const MessageSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
             <div onClick={()=>{ onSettingClick(4) }} className="text-primary cursor-pointer">
                 { conversationSettings.isBlocked ? "UnBlock" : "Block" }
             </div>
-            {/* <div onClick={()=>{ onSettingClick(5) }} className="text-primary cursor-pointer">Report</div> */}
+            {!user.isCreator && <div onClick={()=>{ onSettingClick(5) }} className="text-primary cursor-pointer">Report</div>}
         </div>
     </PositionedModal> : null
 });

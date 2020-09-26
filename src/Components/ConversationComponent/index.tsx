@@ -158,7 +158,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                     {conversation.values.length > 0 ? <div className="d-flex flex-column h-100 w-100 px-4">
                         {getMappedWithDate(conversation.values).map((conversationGroupedByDate, j) => {
                             return <div className="d-flex flex-column w-100" key={j}>
-                                <div className="text-center text-headingBlue py-3">{ conversationGroupedByDate.date }</div>
+                                <div className="text-center text-primary py-3">{ conversationGroupedByDate.date }</div>
                                 {conversationGroupedByDate.messages.map((conversationMessage: CONVERSATION_RESPONSE, i: number) => {
                                     return conversationMessage.type === 1 ? <ConversationTextMessage 
                                         messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
