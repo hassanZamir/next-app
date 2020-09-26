@@ -30,7 +30,15 @@ export const ConversationTipMessage: React.FunctionComponent<{ user: USER_SESSIO
                         </ParagraphText>
                     </div>
                     
-                    <ParagraphText className="font-28px lato-bold text-center">{ "$ " + meta.amount }</ParagraphText>
+                    <div className="font-28px lato-bold text-center"
+                        style={{ width: "200px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipses" }}>
+                        
+                        { "$ " + meta.amount }
+                    </div>
+                    {/* <ParagraphText style={{}}
+                        className="font-28px lato-bold text-center">
+                        { "$ " + meta.amount }
+                    </ParagraphText> */}
                 </div>
             </TextMessageContainer>
             {meta.tipMsg && <div className="mt-1"></div>}

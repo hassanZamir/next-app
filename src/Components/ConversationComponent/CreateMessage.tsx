@@ -181,7 +181,7 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
             </div>
             
             {/* NEED REVERT CHECK */}
-            {!user.isCreator && <img className="px-1 cursor-pointer" 
+            {user.isCreator && <img className="px-1 cursor-pointer" 
                 onClick={() => { 
                     if (files.length > 0) {
                         setShowPriceTagModal(true);
@@ -194,7 +194,7 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
                 height="45px" 
                 width="45px" />}
             
-            {user.isCreator && <img className="px-1 cursor-pointer" 
+            {!user.isCreator && <img className="px-1 cursor-pointer" 
                 onClick={() => { setShowTipModal(true); toggle(); }}
                 src={"/images/message_tip_dollar.svg"} 
                 height="45px" 
