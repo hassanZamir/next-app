@@ -203,7 +203,7 @@ export const MessagesService = {
         try {
             response = await Http.Request<MessagesModel.GetPOSTBuyMessageResponse>(
                 "POST",
-                "/conversation-message/" + messageId + "seen",
+                "/conversation-message/" + messageId + "/buy",
                 undefined,
                 { ...rest }
             );
