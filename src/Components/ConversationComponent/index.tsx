@@ -69,7 +69,8 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             dispatch(MessagesActions.ConversationSeen({ userId: user.id, conversationId: conversationId }));
             subscribePresenceChannel();
             await dispatch(MessagesActions.GetConversation({ 
-                conversationId: conversationId 
+                conversationId: conversationId,
+                userId: user.id
             }));
             setLoading(false);
             scrollToLastComment();
@@ -81,10 +82,34 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             setFetchingPagination(true);
             await dispatch(MessagesActions.GetConversation({ 
                 conversationId: conversationId,
-                page: conversation.paginationNo
+                page: conversation.paginationNo,
+                userId: user.id
             }));
             setFetchingPagination(false);
         }
+    }
+
+    const getMappedWithDate = (messages: any) => {
+        const today = new Date().toDateString();        
+        const groups = messages.reduce((groups: any, message: any) => {
+            const date = new Date(message.timestamp).toDateString();
+            if (date === today) {
+                if (!groups['Today']) groups['Today'] = [];
+                groups['Today'].push(message);
+            } else {
+                if (!groups[date]) groups[date] = [];
+                groups[date].push(message);
+            }
+            return groups;
+        }, {});
+        
+        const groupArrays = Object.keys(groups).map((date) => {
+            return {
+                date,
+                messages: groups[date]
+            };
+        });
+        return groupArrays;
     }
 
     return (<div className="d-flex flex-column" 
@@ -111,7 +136,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
         <div className="d-flex flex-column w-100 h-100" style={{ overflow: "hidden" }}>
             {fetchingPagination && <div className="font-12px text-grey100 w-100 text-center">Loading...</div>}
             <div onScroll={(e: any)=> {
-                    if (e.target.scrollTop <= 3 && !fetchingPagination) {
+                    if (e.target.scrollTop <= 0 && !fetchingPagination) {
                         setScrolledTop(true);
                         fetchPaginatedResponse();                      
                     }
@@ -121,21 +146,26 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                 }} className="d-flex align-items-center justify-content-center h-100 w-100 full-flex-scroll hide-scroller">
                 <LoadingSpinner size="3x" showLoading={loading}>
                     {conversation.values.length > 0 ? <div className="d-flex flex-column h-100 w-100 px-4">
-                        {conversation.values.map((conversationMessage: CONVERSATION_RESPONSE, i) => {
-                            return conversationMessage.type === 1 ? <ConversationTextMessage 
-                                messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
-                                conversationMessage={conversationMessage} 
-                                isMessageRecieved={user.id !== conversationMessage.senderId} 
-                                key={i} /> : conversationMessage.type === 2 ? <ConversationMediaMessage 
-                                messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
-                                conversationMessage={conversationMessage as CONVERSATION_MEDIA_MESSAGE} 
-                                isMessageRecieved={user.id !== conversationMessage.senderId} 
-                                user={user}
-                                key={i} /> : <ConversationTipMessage 
-                                messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
-                                conversationMessage={conversationMessage as CONVERSATION_TIP_MESSAGE} 
-                                isMessageRecieved={user.id !== conversationMessage.senderId} 
-                                key={i} />
+                        {getMappedWithDate(conversation.values).map((conversationGroupedByDate, j) => {
+                            return <div className="d-flex flex-column w-100" key={j}>
+                                <div className="text-center text-headingBlue py-3">{ conversationGroupedByDate.date }</div>
+                                {conversationGroupedByDate.messages.map((conversationMessage: CONVERSATION_RESPONSE, i: number) => {
+                                    return conversationMessage.type === 1 ? <ConversationTextMessage 
+                                        messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
+                                        conversationMessage={conversationMessage} 
+                                        isMessageRecieved={user.id !== conversationMessage.senderId} 
+                                        key={i} /> : conversationMessage.type === 2 ? <ConversationMediaMessage 
+                                        messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
+                                        conversationMessage={conversationMessage as CONVERSATION_MEDIA_MESSAGE} 
+                                        isMessageRecieved={user.id !== conversationMessage.senderId} 
+                                        user={user}
+                                        key={i} /> : <ConversationTipMessage 
+                                        messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
+                                        conversationMessage={conversationMessage as CONVERSATION_TIP_MESSAGE} 
+                                        isMessageRecieved={user.id !== conversationMessage.senderId} 
+                                        key={i} />
+                                })}
+                            </div>
                         })}
                     </div> : <ParagraphText className="text-primary font-20px lato-bold">
                         No Messages

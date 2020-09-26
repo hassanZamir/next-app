@@ -63,7 +63,7 @@ export const TipSubmitModal: React.RefForwardingComponent<HTMLDivElement, ITipSu
                             <PrimaryButton borderRadius="6px" 
                                 isActive={amount ? true : false} 
                                 className="mt-2" 
-                                onClick={() => amount && onSubmit(clickedFeed, amount, message)}>
+                                onClick={() => amount && onSubmit(clickedFeed, amount, message) && setInputs({ message: '', amount: '' })}>
                                 SEND TIP
                             </PrimaryButton>
                         </div>

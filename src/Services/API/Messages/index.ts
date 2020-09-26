@@ -95,11 +95,11 @@ export const MessagesService = {
     ): Promise<MessagesModel.GetGETConversationResponse> => {
         let response: MessagesModel.GetGETConversationResponse;
         
-        const { conversationId, ...rest } = payload;
+        const { userId, conversationId, ...rest } = payload;
         try {
             response = await Http.Request<MessagesModel.GetGETConversationResponse>(
                 "GET",
-                "/conversation/" + conversationId + getQueryParams({ ...rest }),
+                "/users/" + userId + "/conversation/" + conversationId + getQueryParams({ ...rest }),
                 undefined
             );
         } catch (error) {

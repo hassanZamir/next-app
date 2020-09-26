@@ -49,7 +49,7 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                     toggle={toggle} 
                     startingIndex={showMediaCarousel} />}
                 <BackgroundImage src={[process.env.MEDIA_BASE_URL + "/" + meta.media_urls[0].thumbnailUrl, '/images/feed_placeholder.png']} 
-                        paddingBottom="54.25%" />
+                        paddingBottom="65.25%" />
                 <div className="position-absolute">
                     {isMessagePaid && <div className="py-1 px-2 cursor-pointer font-11px text-white" 
                         onClick={() => { setShowMediaCarousel(0); toggle(); }}
@@ -67,8 +67,11 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                     }
                 </div>
             </div>
+            <div className="quotes text-primary">
+                { conversationMessage.message }
+            </div>
             {!isMessagePaid && <ParagraphText className="text-darkGrey font-11px">
-                {'$' + meta.amount + " " + (meta.purchase_status ? "Paid" : "Not paid yet")}
+                {'$' + meta.amount + " " + (isMessagePaid ? "Paid" : "Not paid yet")}
             </ParagraphText>}
         </div>
     </div>);

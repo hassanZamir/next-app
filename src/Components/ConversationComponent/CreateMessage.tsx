@@ -92,7 +92,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
         setFiles([]);
         setLoading(false);
         setError('');
-        setPriceTagAmount("0");
+        setPriceTagAmount("");
     }
 
     const onSetPriceTagAmount = (amount: string) => {
@@ -192,9 +192,9 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, conver
             <Textarea 
                 placeholder="Say Something..."
                 name="message" 
-                rows={2} 
+                rows={1} 
                 columns={10} 
-                className="border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow" 
+                className="px-3 py-3 border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow" 
                 onChange={handleMessageChange}
                 value={message}/>
             {!loading && <FontAwesomeIcon

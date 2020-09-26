@@ -5,7 +5,7 @@ import { ITextMessageContainer } from "./TextMessageContainer";
 
 // import { TriangleDown } from "@Components/Basic/PositionedModal";
 const TextContainer = styled.div<ITextMessageContainer.IProps>`
-   padding: 24px 16px;
+   padding: 8px 16px;
    color: white;
    border-radius: 20px;
    position: relative;
@@ -15,12 +15,12 @@ const TextContainer = styled.div<ITextMessageContainer.IProps>`
 const TriangleDown = styled.div<ITextMessageContainer.IProps>`
         width: 0;
         height: 0;
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-top: ${({ isMessageRecieved, theme }) => ("25px solid " + (isMessageRecieved ? theme.colors.grey400 : theme.colors.primary))};
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: ${({ isMessageRecieved, theme }) => ((isMessageRecieved ? "14px solid " : "10px solid ") + (isMessageRecieved ? theme.colors.grey400 : theme.colors.primary))};
         position: absolute;
-        left: ${({ isMessageRecieved }) => (isMessageRecieved ? "-15px" : "initial")};
-        right: ${({ isMessageRecieved }) => (isMessageRecieved ? "initial" : "-6px")};
+        left: ${({ isMessageRecieved }) => (isMessageRecieved ? "-6px" : "initial")};
+        right: ${({ isMessageRecieved }) => (isMessageRecieved ? "initial" : "0px")};
         bottom: 0px;
         transform: rotate(65deg);
 `;

@@ -103,20 +103,18 @@ const blurImage = (file: any) => {
         width: 48,
         height: 48,
         channels: 4,
-        background: { r: 0, g: 0, b: 0, alpha: 0.3 }
+        background: { r: 0, g: 0, b: 0, alpha: 0.1 }
       }
     })
     .jpeg({
       quality: 1
     })
-    .rotate()
     .toBuffer()
     .then((data: any) =>  {
-      const newFilePath = 'uploads/resize/' + file.path.split('uploads/')[1];
+      const newFilePath = 'uploads/blur/' + file.path.split('uploads/')[1];
       fs.writeFile(newFilePath, data, function (err: any) {
         if (err) reject('Blur Failed .. ' + err);
 
-        console.log("Blur Success");
         const updatedFile = Object.assign({}, file, { path: newFilePath });
         resolve(updatedFile);
       });

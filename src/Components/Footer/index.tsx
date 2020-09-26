@@ -32,11 +32,13 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     }
 
     const newMessageRecievedCallBack = (message: CONVERSATION_RESPONSE) => {
+        debugger;
         if (message.senderId !== user.id)
             dispatch(MessagesActions.MessageRecieved(message));
     }
 
     const newConversationRecievedCallBack = (conversation: MESSAGE_LIST_ITEM) => {
+        debugger;
         dispatch(MessagesActions.NewConversationRecieved(conversation));
     }
 
@@ -54,7 +56,8 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                     NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
                     NotificationPusher.subscribe('comment-like', channel, notificationSubscriptionCallback);
                     NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
-                    NotificationPusher.subscribe('new-conversation', channel, newConversationRecievedCallBack);
+                    // NotificationPusher.subscribe('new-conversation', channel, newConversationRecievedCallBack);
+                    NotificationPusher.subscribe('conversation-update', channel, newConversationRecievedCallBack);
                 }).catch((err: any) => {
                     console.log("Error occured subscribing pusher : ", err);
                 });
