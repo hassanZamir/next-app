@@ -112,6 +112,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
         return groupArrays;
     }
 
+    const { conversationSettings } = conversationThread;
     return (<div className="d-flex flex-column" 
         style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>
 
@@ -126,11 +127,11 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                         dispatch(MessagesActions.UpdateMessageSettings({
                             userName: user.username,
                             recipientUsername: conversationThread.userName,
-                            apiRouteKey: conversationThread.conversationSettings.favourite ? 'unfavourite' : 'favourite',
+                            apiRouteKey: conversationSettings && conversationSettings.favourite ? 'unfavourite' : 'favourite',
                             apiReducerKey: 'favourite'
                         }));
                     }}
-                    src={conversationThread.conversationSettings.favourite ? '/images/favourite_star_filled.svg' : '/images/favourite_star.svg'} />
+                    src={conversationSettings && conversationSettings.favourite ? '/images/favourite_star_filled.svg' : '/images/favourite_star.svg'} />
                 
                 <FontAwesomeIcon className="cursor-pointer ml-2" icon={faEllipsisH} 
                     onClick={()=>{ toggle(); }}
@@ -158,7 +159,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                     {conversation.values.length > 0 ? <div className="d-flex flex-column h-100 w-100 px-4">
                         {getMappedWithDate(conversation.values).map((conversationGroupedByDate, j) => {
                             return <div className="d-flex flex-column w-100" key={j}>
-                                <div className="text-center text-primary py-3">{ conversationGroupedByDate.date }</div>
+                                <div className="text-center text-headingBlue py-3">{ conversationGroupedByDate.date }</div>
                                 {conversationGroupedByDate.messages.map((conversationMessage: CONVERSATION_RESPONSE, i: number) => {
                                     return conversationMessage.type === 1 ? <ConversationTextMessage 
                                         messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}

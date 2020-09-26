@@ -44,14 +44,16 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
+    const { conversationSettings } = conversationThread;
+
 
     useEffect(() => {
-        if (conversationThread.conversationSettings.isBlocked)
+        if (conversationSettings && conversationSettings.isBlocked)
             setError("You can no longer reply to this conversation.");
         else
             setError("");
 
-    }, [conversationThread.conversationSettings]);
+    }, [conversationSettings]);
 
     const handleMessageChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { value } = e.currentTarget;
@@ -148,6 +150,7 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
         });
     }
 
+
     return (<div className="d-flex flex-column pl-4 pr-3">
         {showPriceTagModal && <PriceTagModal isShowing={isShowing} 
             modalRef={modalRef} 
@@ -201,15 +204,15 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
                 placeholder="Say Something..."
                 name="message" 
                 rows={1} 
-                disabled={conversationThread.conversationSettings.isBlocked}
+                disabled={conversationSettings && conversationSettings.isBlocked}
                 columns={10} 
                 className="px-3 py-3 border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow" 
                 onChange={handleMessageChange}
                 value={message}/>
             {!loading && <FontAwesomeIcon
                     onClick={() => { if(message || files.length > 0) {
-                        if (conversationThread.conversationSettings.isBlocked 
-                        || conversationThread.conversationSettings.isRestricted) return false;
+                        if (conversationSettings && conversationSettings.isBlocked 
+                        || conversationSettings && conversationSettings.isRestricted) return false;
                          
                         setLoading(true); 
                         sendMessage();

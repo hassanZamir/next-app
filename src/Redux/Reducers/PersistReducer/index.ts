@@ -46,6 +46,7 @@ export const PersistReducer = (
             const { conversation } = action.payload!;
             Router.push("/message/" + conversation.id, "/message/" + conversation.id);
 
+            console.log("activeConversation : ", conversation);
             return Object.assign({}, state, {
                 activeConversation: conversation
             });
