@@ -171,6 +171,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                                         isMessageRecieved={user.id !== conversationMessage.senderId} 
                                         user={user}
                                         key={i} /> : <ConversationTipMessage 
+                                        user={user}
                                         messageRef={i >= conversation.values.length - 1 ? messagesListRef : null}
                                         conversationMessage={conversationMessage as CONVERSATION_TIP_MESSAGE} 
                                         isMessageRecieved={user.id !== conversationMessage.senderId} 

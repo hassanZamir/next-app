@@ -4,27 +4,39 @@ import React from "react";
 
 // #region Local Imports
 import { TextMessageContainer } from "@Components/Basic";
-import { CONVERSATION_TIP_MESSAGE } from "@Interfaces";
+import { CONVERSATION_TIP_MESSAGE, USER_SESSION } from "@Interfaces";
 import { ParagraphText } from "@Components/ParagraphText";
 // #endregion Local Imports
 
-export const ConversationTipMessage: React.FunctionComponent<{ conversationMessage: CONVERSATION_TIP_MESSAGE, isMessageRecieved: boolean, messageRef: any }> 
-    = ({ conversationMessage, isMessageRecieved, messageRef }) => {
+export const ConversationTipMessage: React.FunctionComponent<{ user: USER_SESSION, conversationMessage: CONVERSATION_TIP_MESSAGE, isMessageRecieved: boolean, messageRef: any }> 
+    = ({ user, conversationMessage, isMessageRecieved, messageRef }) => {
 
     if (!conversationMessage.meta)
         return null;
     
     const { meta } = conversationMessage;
-    return (<div ref={messageRef} className={"pb-3 d-flex flex-column align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
-        <TextMessageContainer isMessageRecieved={isMessageRecieved}>
-            <div className="d-flex flex-column">
-                <ParagraphText className="font-16px text-center">{ conversationMessage.message }</ParagraphText>
-                <ParagraphText className="font-28px lato-bold text-center">{ "$ " + meta.amount }</ParagraphText>
-            </div>
-        </TextMessageContainer>
-        {meta.tipMsg && <div className="mt-1"></div>}
-        {meta.tipMsg && <TextMessageContainer isMessageRecieved={isMessageRecieved}>
-            { meta.tipMsg }
-        </TextMessageContainer>}
+
+    const messageString = conversationMessage.message.split('Tipped');
+    return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
+        <div className="d-flex flex-column">
+            <TextMessageContainer isMessageRecieved={isMessageRecieved}>
+                <div className="d-flex flex-column">
+                    <div className="text-center">
+                        <ParagraphText className="font-16px text-center">
+                            { messageString[0] + ' Tipped '}
+                        </ParagraphText>
+                        <ParagraphText>
+                            { messageString[1] }
+                        </ParagraphText>
+                    </div>
+                    
+                    <ParagraphText className="font-28px lato-bold text-center">{ "$ " + meta.amount }</ParagraphText>
+                </div>
+            </TextMessageContainer>
+            {meta.tipMsg && <div className="mt-1"></div>}
+            {meta.tipMsg && <TextMessageContainer isMessageRecieved={isMessageRecieved}>
+                { meta.tipMsg }
+            </TextMessageContainer>}
+        </div>
     </div>);
 }
