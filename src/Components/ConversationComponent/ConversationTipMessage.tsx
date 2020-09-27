@@ -18,9 +18,9 @@ export const ConversationTipMessage: React.FunctionComponent<{ user: USER_SESSIO
 
     const messageString = conversationMessage.message.split('Tipped');
     return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
-        <div className="d-flex flex-column align-items-center">
+        <div className="d-flex flex-column">
             <TextMessageContainer isMessageRecieved={isMessageRecieved}>
-                <div className="d-flex flex-column">
+                <div className="d-flex flex-column align-items-center">
                     <div className="text-center">
                         <div className="font-16px text-center">
                             { messageString[0] + ' Tipped '}
