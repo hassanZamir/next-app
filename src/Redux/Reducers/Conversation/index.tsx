@@ -24,6 +24,7 @@ export const ConversationReducer = (
         case ActionConsts.Conversation.BuyMessageSuccess: {
             const { conversationMessage } = action.payload!;
 
+            console.log("conversationMessage : ", conversationMessage);
             return Object.assign({}, state, {
                 conversation: {
                     values: state.conversation.values.map((msg) => {

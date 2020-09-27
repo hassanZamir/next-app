@@ -136,9 +136,10 @@ export const MessagesActions = {
     ) => {
         const result = await MessagesService.BuyMessage(payload);
 
+        debugger;
         dispatch({
-            payload: null,
-            type: ActionConsts.Conversation.ConversationSeenSuccess
+            payload: { conversationMessage: result.status && result.response ? result.response : {} },
+            type: result.status && result.response ? ActionConsts.Conversation.BuyMessageSuccess : ActionConsts.Conversation.BuyMessageError
         });
     },
     UpdateMessageSettings: (payload: IConversationPage.Actions.IGetPOSTMessageSettingPayload) => async (

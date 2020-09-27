@@ -79,6 +79,9 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
             {!isMessagePaid && <ParagraphText className="text-darkGrey font-11px">
                 {'$' + meta.amount + " " + (isMessagePaid ? "Paid" : "Not paid yet")}
             </ParagraphText>}
+            {meta.purchase_status && meta.amount && <ParagraphText className="text-darkGrey font-11px">
+                {'$' + meta.amount + " Paid"}
+            </ParagraphText>}
             {conversationMessage.message && <div className="mt-1"></div>}
             {conversationMessage.message && <TextMessageContainer isMessageRecieved={isMessageRecieved}>
                 { conversationMessage.message }
