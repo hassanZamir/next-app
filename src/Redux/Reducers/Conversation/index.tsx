@@ -55,13 +55,18 @@ export const ConversationReducer = (
         case ActionConsts.Conversation.PusherMessageRecieved: {
             const { conversationMessage } = action.payload!;
 
-            return Object.assign({}, state, {
-                conversation: {
-                    values: [...state.conversation.values, conversationMessage],
-                    paginationNo: state.conversation.paginationNo,
-                    emptyPaginationNo: state.conversation.emptyPaginationNo
-                }
-            });
+            console.log("conversationMessage : " + window.location.href.includes('message/' + conversationMessage.conversationId));
+            if (window.location.href.includes('message/' + conversationMessage.conversationId)) {
+                return Object.assign({}, state, {
+                    conversation: {
+                        values: [...state.conversation.values, conversationMessage],
+                        paginationNo: state.conversation.paginationNo,
+                        emptyPaginationNo: state.conversation.emptyPaginationNo
+                    }
+                });
+            } else {
+                return state.conversation;
+            }
         }
         case ActionConsts.Conversation.CreateMessageSuccess: {
             const { conversationMessage } = action.payload!;

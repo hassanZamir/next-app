@@ -76,7 +76,8 @@ export const PersistReducer = (
         }
         case ActionConsts.Conversation.PusherMessageRecieved: {
             const { conversationMessage } = action.payload! as any;
-            if (!window.location.href.includes('conversation/' + conversationMessage.id)) {
+            debugger;
+            if (!window.location.href.includes('message/')) {
                 return Object.assign({}, state, {
                     notificationStats: { 
                         conversation_unseen_counter: state.notificationStats.conversation_unseen_counter + 1 
