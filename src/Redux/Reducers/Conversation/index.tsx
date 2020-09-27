@@ -34,11 +34,6 @@ export const ConversationReducer = (
                     paginationNo: state.conversation.paginationNo,
                     emptyPaginationNo: state.conversation.emptyPaginationNo
                 }
-                // conversation: {
-                //     values: [...state.conversation.values, conversationMessage],
-                //     paginationNo: state.conversation.paginationNo,
-                //     emptyPaginationNo: state.conversation.emptyPaginationNo
-                // }
             });
         }
         case ActionConsts.Conversation.BuyMessageError: {
@@ -55,7 +50,6 @@ export const ConversationReducer = (
         case ActionConsts.Conversation.PusherMessageRecieved: {
             const { conversationMessage } = action.payload!;
 
-            console.log("conversationMessage : " + window.location.href.includes('message/' + conversationMessage.conversationId));
             if (window.location.href.includes('message/' + conversationMessage.conversationId)) {
                 return Object.assign({}, state, {
                     conversation: {
@@ -65,7 +59,7 @@ export const ConversationReducer = (
                     }
                 });
             } else {
-                return state.conversation;
+                return state;
             }
         }
         case ActionConsts.Conversation.CreateMessageSuccess: {

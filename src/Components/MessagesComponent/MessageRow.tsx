@@ -30,7 +30,8 @@ export const MessageRow: React.FunctionComponent<{ message: MESSAGE_LIST_ITEM, u
     return (<div onClick={()=>{ goToConversation() }} 
         style={{ 
             marginBottom: "1px",
-            borderBottom: "1px solid " + theme.colors.grey300
+            borderBottom: "1px solid " + theme.colors.grey300,
+            minHeight: "110px"
         }}
         className="hover-bg cursor-pointer d-flex mx-4 py-4">
         <div style={{ minHeight: "62px", minWidth: "62px" }}>
