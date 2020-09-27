@@ -38,10 +38,11 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
 
     const newConversationRecievedCallBack = (conversation: MESSAGE_LIST_ITEM) => {
         dispatch(MessagesActions.NewConversationRecieved(conversation));
+        dispatch(NotificationActions.GetNotificationStats({ userId: user.id }));
     }
 
     useEffect(() => {
-        dispatch(NotificationActions.GetNotificationStats({ userId: user.id }))
+        dispatch(NotificationActions.GetNotificationStats({ userId: user.id }));
 
         if (typeof window !== "undefined" && !(window as any).Pusher) {
             const channelName = 'creators-' + user.id;

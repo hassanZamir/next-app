@@ -74,16 +74,16 @@ export const PersistReducer = (
                 })
             });
         }
-        case ActionConsts.Messages.NewConversationRecieved: {
-            if (!window.location.href.includes('message/')) {
-                return Object.assign({}, state, {
-                    notificationStats: { 
-                        conversation_unseen_counter: state.notificationStats.conversation_unseen_counter + 1 
-                    }
-                });
-            }
-            return state;
-        }
+        // case ActionConsts.Messages.NewConversationRecieved: {
+        //     if (!window.location.href.includes('message/')) {
+        //         return Object.assign({}, state, {
+        //             notificationStats: { 
+        //                 conversation_unseen_counter: state.notificationStats.conversation_unseen_counter + 1 
+        //             }
+        //         });
+        //     }
+        //     return state;
+        // }
         // case ActionConsts.Conversation.PusherMessageRecieved: {
         //     const { conversationMessage } = action.payload! as any;
         //     debugger;
