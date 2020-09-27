@@ -37,7 +37,6 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     }
 
     const newConversationRecievedCallBack = (conversation: MESSAGE_LIST_ITEM) => {
-        debugger;
         dispatch(MessagesActions.NewConversationRecieved(conversation));
     }
 
@@ -54,8 +53,8 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                     NotificationPusher.subscribe('tip', channel, notificationSubscriptionCallback);
                     NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
                     NotificationPusher.subscribe('comment-like', channel, notificationSubscriptionCallback);
-                    NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
                     NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
+                    NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
                     // NotificationPusher.subscribe('new-conversation', channel, newConversationRecievedCallBack);
                     NotificationPusher.subscribe('conversation-update', channel, newConversationRecievedCallBack);
                 }).catch((err: any) => {
