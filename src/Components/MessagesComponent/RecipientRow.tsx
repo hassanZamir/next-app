@@ -47,7 +47,7 @@ export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIEN
                     <div className="gibson-semibold font-16px text-primary">
                         { recipient.name }
                     </div>
-                    {!loading ? <RadioInput 
+                    {/* {!loading ? <RadioInput 
                         onChange={() => {}}
                         inputHeight="28px"
                         inputWidth="28px"
@@ -58,6 +58,9 @@ export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIEN
                         checked={false}
                         inputMargin="0px 5px 0px 0px"
                     /> : <div className="mr-2">
+                        <LoadingSpinner size="1x" showLoading={loading}></LoadingSpinner>
+                    </div>} */}
+                    {loading && <div className="mr-2">
                         <LoadingSpinner size="1x" showLoading={loading}></LoadingSpinner>
                     </div>}
                 </div>
