@@ -37,7 +37,7 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
     }
 
     const isMessagePaid = meta.purchase_status || !meta.amount || (meta.amount.toString() === "0");
-    const thumbnailUrl = meta.view_status ? meta.media_urls[0].url : meta.media_urls[0].thumbnailUrl;
+    const thumbnailUrl = meta.view_status || user.id === conversationMessage.senderId ? meta.media_urls[0].url : meta.media_urls[0].thumbnailUrl;
     
     return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
         <div className="d-flex flex-column h-100" style={{ width: "40%" }}>
