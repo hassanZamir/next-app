@@ -41,7 +41,8 @@ export const Notification: React.FunctionComponent<{ notification: NOTIFICATION,
         style={{ 
             marginBottom: "1px", 
             marginLeft: "-1.5rem",
-            marginRight: "-1.5rem"
+            marginRight: "-1.5rem",
+            minHeight: "85px", minWidth: "50px"
         }}
         className={"hover-bg cursor-pointer d-flex px-4 py-3 " + (notification.seen ? "" : "bg-primary")}>
             <div style={{ minHeight: "50px", minWidth: "50px" }}>

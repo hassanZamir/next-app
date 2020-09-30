@@ -114,8 +114,8 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
 
     const { conversationSettings } = conversationThread;
 
-    return (<div className="d-flex flex-column" 
-        style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>
+    return (<div className="d-flex flex-column h-100" 
+        style={{ flex: "1 1 auto" }}>
 
         <div className="pt-4 pb-3 d-flex justify-content-between align-items-center no-gutters mx-4">
             <FontAwesomeIcon
@@ -145,7 +145,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                         conversationThread={conversationThread} />
             </div>
         </div>
-        <div className="d-flex flex-column w-100 h-100" style={{ overflow: "hidden" }}>
+        <div className="d-flex flex-column w-100 h-100 full-flex-scroll">
             {fetchingPagination && <div className="font-12px text-grey100 w-100 text-center">Loading...</div>}
             <div onScroll={(e: any)=> {
                     if (e.target.scrollTop <= 0 && !fetchingPagination) {
@@ -185,11 +185,11 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                     </ParagraphText>}
                 </LoadingSpinner>
             </div>
-            <CreateMessage 
+        </div>
+        <CreateMessage 
                 user={user} 
                 conversationId={conversationId} 
                 onSuccess={scrollToLastComment} 
-                conversationThread={conversationThread} />
-        </div>        
+                conversationThread={conversationThread} />        
     </div>);
 }
