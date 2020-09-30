@@ -13,7 +13,8 @@ export interface POSTCreateMessagePayload {
             media_type: string
         }],
         purchase_status: boolean,
-        amount: number
+        amount: number,
+        view_status: boolean
     } & TIP_MESSAGE;
     onSuccessScroll: ()=>void;
 }

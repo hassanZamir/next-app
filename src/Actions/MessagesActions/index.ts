@@ -136,7 +136,6 @@ export const MessagesActions = {
     ) => {
         const result = await MessagesService.BuyMessage(payload);
 
-        debugger;
         dispatch({
             payload: { conversationMessage: result.status && result.response ? result.response : {} },
             type: result.status && result.response ? ActionConsts.Conversation.BuyMessageSuccess : ActionConsts.Conversation.BuyMessageError
@@ -150,6 +149,16 @@ export const MessagesActions = {
         dispatch({
             payload: payload,
             type: result ? ActionConsts.Conversation.UpdateMessageSettingSuccess : ActionConsts.Conversation.UpdateMessageSettingError
+        });
+    },
+    UpdateViewStatus: (payload: IConversationPage.Actions.IGetPOSTUpdateViewStatusPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await MessagesService.UpdateViewStatus(payload);
+
+        dispatch({
+            payload: null,
+            type: result.status && result.response ? ActionConsts.Conversation.UpdateViewStatusSuccess : ActionConsts.Conversation.UpdateViewStatusError
         });
     }
 }

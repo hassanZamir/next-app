@@ -34,7 +34,8 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> =
         </div>
         <Link href={"/profile/" + feed.username + "/status/" + feed.id}>
         <div className="d-flex align-items-center cursor-pointer" onClick={(e) => {onCommentClick(e, index)}}>
-            <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" />
+            <img src="/images/comments.svg" />
+            {/* <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" /> */}
             <div className="text-darkGrey font-10px ml-1">{ commentsCount || 0 }</div>
         </div>
         </Link>

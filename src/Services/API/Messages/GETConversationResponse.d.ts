@@ -17,7 +17,8 @@ export interface CONVERSATION_MEDIA_MESSAGE extends CONVERSATION_TEXT_MESSAGE {
     meta: {
         media_urls: MEDIA_MESSAGE[],
         purchase_status: boolean,
-        amount: number
+        amount: number,
+        view_status: boolean
     }
 }
 

@@ -20,6 +20,9 @@ declare namespace IConversationPage {
         export interface IMapCreateMessage {
             conversationMessage: CONVERSATION_MESSAGE,
         }
+        export interface IMapUpdateViewStatus {
+            messageId: number
+        }
         
         export interface IGetGETConversationPayload extends MessagesModel.GetGETConversationPayload {}
         export interface IGetGETConversationResponse extends MessagesModel.GetGETConversationResponse {}
@@ -35,6 +38,9 @@ declare namespace IConversationPage {
 
         export interface IGetPOSTMessageSettingPayload extends MessagesModel.GetPOSTMessageSettingPayload {}
         export interface IGetPOSTMessageSettingResponse extends MessagesModel.GetPOSTMessageSettingResponse {}
+
+        export interface IGetPOSTUpdateViewStatusPayload extends MessagesModel.GetPOSTUpdateViewStatusPayload {}
+        export interface IGetPOSTUpdateViewStatusResponse extends MessagesModel.GetPOSTUpdateViewStatusResponse {}
     }
 }
 

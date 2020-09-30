@@ -94,7 +94,8 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
             params.meta = {
                 media_urls: formData,
                 purchase_status: false,
-                amount: user.isCreator ? priceTagAmount : 0
+                amount: user.isCreator ? priceTagAmount : 0,
+                view_status: true
             }
         }
         await dispatch(MessagesActions.CreateMessage(params));

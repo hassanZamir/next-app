@@ -246,5 +246,25 @@ export const MessagesService = {
             response = { status: false };
         }
         return response;
+    },
+    UpdateViewStatus: async (
+        payload: MessagesModel.GetPOSTUpdateViewStatusPayload
+    ): Promise<MessagesModel.GetPOSTUpdateViewStatusResponse> => {
+        let response: MessagesModel.GetPOSTUpdateViewStatusResponse;
+
+        const { messageId } = payload;
+        try {
+            response = await Http.Request<MessagesModel.GetPOSTUpdateViewStatusResponse>(
+                "POST",
+                "/conversation-messages/" + messageId + "/view",
+                undefined
+            );
+        } catch (error) {
+            response = { 
+                status: false,
+                response: false
+            };
+        }
+        return response;
     }
 }

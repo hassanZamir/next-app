@@ -123,7 +123,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                 className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
             <ParagraphText className="text-primary lato-bold">{ conversationThread.name || "" }</ParagraphText>
             <div className="d-flex align-items-center position-relative">
-                <img className="cursor-pointer" 
+                {user.isCreator && <img className="cursor-pointer" 
                     onClick={() => { 
                         dispatch(MessagesActions.UpdateMessageSettings({
                             userName: user.username,
@@ -132,7 +132,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                             apiReducerKey: 'favourite'
                         }));
                     }}
-                    src={conversationSettings && conversationSettings.favourite ? '/images/favourite_star_filled.svg' : '/images/favourite_star.svg'} />
+                    src={conversationSettings && conversationSettings.favourite ? '/images/favourite_star_filled.svg' : '/images/favourite_star.svg'} />}
                 
                 <FontAwesomeIcon className="cursor-pointer ml-2" icon={faEllipsisH} 
                     onClick={()=>{ toggle(); }}

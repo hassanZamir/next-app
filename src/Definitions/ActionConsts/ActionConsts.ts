@@ -117,5 +117,7 @@ export const ActionConsts = {
         BuyMessageError: "BuyMessageError",
         UpdateMessageSettingSuccess: "UpdateMessageSettingSuccess",
         UpdateMessageSettingError: "UpdateMessageSettingError",
+        UpdateViewStatusSuccess: "UpdateViewStatusSuccess",
+        UpdateViewStatusError: "UpdateViewStatusError",
     }
 };

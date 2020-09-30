@@ -30,8 +30,15 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
         dispatch(MessagesActions.BuyMessage(params));
     }
 
-    const isMessagePaid = meta.purchase_status || !meta.amount || (meta.amount.toString() === "0");
+    const updateViewStatus = (message: CONVERSATION_MEDIA_MESSAGE) => {
+        if (!message.meta.view_status) {
+            dispatch(MessagesActions.UpdateViewStatus({ messageId: message.id }));
+        }
+    }
 
+    const isMessagePaid = meta.purchase_status || !meta.amount || (meta.amount.toString() === "0");
+    const thumbnailUrl = meta.view_status ? meta.media_urls[0].url : meta.media_urls[0].thumbnailUrl;
+    
     return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end" )}>
         <div className="d-flex flex-column h-100" style={{ width: "40%" }}>
             <div className="position-relative d-flex flex-column align-items-center justify-content-center" 
@@ -49,15 +56,15 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                     modalRef={modalRef} 
                     toggle={toggle} 
                     startingIndex={showMediaCarousel} />}
-                <BackgroundImage src={[process.env.MEDIA_BASE_URL + "/" + meta.media_urls[0].thumbnailUrl, '/images/feed_placeholder.png']} 
+                <BackgroundImage src={[process.env.MEDIA_BASE_URL + "/" + thumbnailUrl, '/images/feed_placeholder.png']} 
                         paddingBottom="65.25%" 
                         borderRadius="12px" />
                 <div className="position-absolute">
                     {isMessagePaid && <div className="py-1 px-2 cursor-pointer font-11px text-white" 
-                        onClick={() => { setShowMediaCarousel(0); toggle(); }}
+                        onClick={() => { updateViewStatus(conversationMessage); setShowMediaCarousel(0); toggle(); }}
                         style={{ border: "1px solid white", borderRadius: "4px" }}>
                             {/* <img src="/images/lock.svg"/> */}
-                            <span>Click to Open</span>
+                            <span>Tap to Open</span>
                     </div>}
                     {!isMessagePaid && 
                         (isMessageRecieved ? <div className="d-flex flex-column">
@@ -69,9 +76,9 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                                 </div>
                         </div>: 
                         <div className="py-1 px-2 cursor-pointer font-11px text-white" 
-                            onClick={() => { setShowMediaCarousel(0); toggle(); }}
+                            onClick={() => { updateViewStatus(conversationMessage); setShowMediaCarousel(0); toggle(); }}
                             style={{ border: "1px solid white", borderRadius: "4px" }}>
-                                <span>Click to Open</span>
+                                <span>Tap to Open</span>
                         </div>)
                     }
                 </div>
