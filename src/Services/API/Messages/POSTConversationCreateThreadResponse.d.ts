@@ -5,6 +5,7 @@ export interface  CONVERSATION_THREAD extends MESSAGE_LIST_ITEM {
         favourite: boolean,
         isBlocked: boolean,
         isRestricted: boolean,
+        isFollower: boolean,
         [key: string]: boolean
     }
 }

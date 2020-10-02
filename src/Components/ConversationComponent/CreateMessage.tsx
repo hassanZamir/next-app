@@ -50,6 +50,8 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
     useEffect(() => {
         if (conversationSettings && conversationSettings.isBlocked)
             setError("You can no longer reply to this conversation.");
+        else if (conversationSettings && !conversationSettings.isFollower)
+            setError("You are no longer following this creator.");
         else
             setError("");
 
@@ -212,7 +214,8 @@ export const CreateMessage: React.FunctionComponent<{ conversationThread: CONVER
                 value={message}/>
             {!loading && <FontAwesomeIcon
                     onClick={() => { if(message || files.length > 0) {
-                        if (conversationSettings && conversationSettings.isBlocked) return false;
+                        if (conversationSettings && (conversationSettings.isBlocked || !conversationSettings.isFollower)) 
+                            return false;
                          
                         setLoading(true); 
                         sendMessage();
