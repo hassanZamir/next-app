@@ -46,7 +46,7 @@ export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creat
                 </div>}
             </div>
             <div className="d-flex justify-content-end" style={{ width: "50%" }}>
-                <div>
+                {creatorProfile.name && <div>
                     {!isFollower && <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-12px">Follow for ${creatorProfile.followingFee} a month</PrimaryButton>}
                     {isFollower && <div className="d-flex flex-column">
                         <PrimaryButton borderRadius="10px" isActive={true} 
@@ -60,7 +60,7 @@ export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creat
                             <FontAwesomeIcon icon={faEnvelope} color="white" />
                         </PrimaryButton>
                     </div>}
-                </div>
+                </div>}
             </div>
         </div>
     </React.Fragment>

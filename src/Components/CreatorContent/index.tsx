@@ -131,9 +131,12 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
 
 const CreatorContentPrivacy: React.FunctionComponent<{ followingFee: number, name: string, onFollow: (followOrUnfolow: boolean)=>void }> 
     = ({ name, onFollow, followingFee }) => {
-    return <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
+    return name ? <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
         <StaticImage src="/images/lock@2x.png" height="50px" width="50px" />
         <h4 className="text-primary text-center mt-3 gibson-semibold">Follow { name } to unlock content</h4>
         <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-12px">Follow for ${ followingFee } a month</PrimaryButton>
+    </div> : <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
+        <div className="text-primary text-center mt-3 gibson-semibold font-20px">404</div>
+        <div className="text-primary text-center mt-3 gibson-semibold font-20px">Nothing Exist</div>
     </div>
 }
