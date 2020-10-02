@@ -84,13 +84,13 @@ export const Notification: React.FunctionComponent<{ notification: NOTIFICATION,
                         notification.type === NotificationTabs[4].type 
                             && <span>Paid you a tip of ${notification.tipAmount}</span>
                     }
-                    {/* {
-                        notification.type === NotificationTabs[5].type 
+                    {
+                        notification.type === NotificationTabs[6].type 
                             && <span>has purchased your <span className={(notification.seen ? "text-primary" : "text-darkGrey" )}>
                                 message
-                            </span> for $ {notification.tipAmount}!
+                            </span> for $ {notification.msgAmount}!
                         </span>
-                    } */}
+                    }
                     {
                         notification.type === 6 
                             &&  <div className="d-flex flex-column">

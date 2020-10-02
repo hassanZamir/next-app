@@ -9,7 +9,8 @@ export type NOTIFICATION = {
     tipAmount: number,
     profileImageUrl: string,
     seen: boolean,
-    timeStamp: string
+    timeStamp: string,
+    msgAmount: number
 }
 export interface GETNotificationResponse {
     status: boolean,

@@ -25,6 +25,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     const onLogout = () => { dispatch(LoginActions.UserLogout()); };
 
     const notificationSubscriptionCallback = (param: NOTIFICATION) => {
+        debugger;
         if (window.location.href.includes("notifications"))
             dispatch(NotificationActions.AddPusherNotificationToList(param));
 

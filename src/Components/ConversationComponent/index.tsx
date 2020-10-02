@@ -157,7 +157,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                     }
                 }} className="d-flex align-items-center justify-content-center h-100 w-100 full-flex-scroll hide-scroller">
                 <LoadingSpinner size="3x" showLoading={loading}>
-                    {conversation.values.length > 0 ? <div className="d-flex flex-column h-100 w-100 px-4">
+                    {conversation.values.length > 0 ? <div className="h-100 w-100 px-4">
                         {getMappedWithDate(conversation.values).map((conversationGroupedByDate, j) => {
                             return <div className="d-flex flex-column w-100" key={j}>
                                 <div className="text-center text-primary py-3">{ conversationGroupedByDate.date }</div>
