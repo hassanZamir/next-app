@@ -88,7 +88,8 @@ export const MessagesService = {
                     conversationSettings: {
                         favourite: true,
                         isBlocked: false,
-                        isRestricted: false
+                        isRestricted: false,
+                        isFollower: false
                     }
                 }
             };
@@ -263,6 +264,31 @@ export const MessagesService = {
             response = { 
                 status: false,
                 response: false
+            };
+        }
+        return response;
+    },
+    Search: async (
+        payload: MessagesModel.GetGETSearchMessagesPayload
+    ): Promise<MessagesModel.GetGETSearchMessagesResponse> => {
+        let response: MessagesModel.GetGETSearchMessagesResponse;
+
+        const { username, ...rest } = payload;
+        try {
+            response = await Http.Request<MessagesModel.GetGETSearchMessagesResponse>(
+                "GET",
+                "/users/" + username + "/" + getQueryParams({ ...rest }),
+                undefined
+            );
+        } catch (error) {
+            response = { 
+                status: true,
+                response: [{
+                    id: 118,
+                    name: "venotest2",
+                    userName: "venotest2",
+                    profileImageUrl: "images/c106f040-e959-11ea-8146-29d65498973d.17?sv=2018-03-28&sr=b&sig=srPW3Ku6gvkPy9jNX5oGezLs9AEHTfGQ5O0w%2BhP4eEc%3D&st=2020-09-14T17%3A15%3A07Z&se=2020-09-14T17%3A20%3A07Z&sp=r"
+                }]
             };
         }
         return response;

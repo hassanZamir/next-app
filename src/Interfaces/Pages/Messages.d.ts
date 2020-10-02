@@ -7,12 +7,14 @@ declare namespace IMessagesPage {
         allMessages: {
             emptyPaginationNo: number,
             values: MESSAGE_LIST_ITEM[],
+            searchValues: MESSAGE_LIST_ITEM[],
             paginationNo: number,
             errors: string[]
         },
         messageRecipients: {
             emptyPaginationNo: number,
             values: MESSAGE_RECIPIENT[],
+            searchValues: MESSAGE_RECIPIENT[],
             paginationNo: number,
             errors: string[]
         }
@@ -32,6 +34,10 @@ declare namespace IMessagesPage {
         }
         export interface IMapNewConversationRecieved {
             conversation: MESSAGE_LIST_ITEM
+        }
+        export interface IMapSearchMessages {
+            searchResult: MESSAGE_LIST_ITEM[] | MESSAGE_RECIPIENT[],
+            type: number
         }
 
         export interface IGetGETAllMessagesPayload extends MessagesModel.GetGETAllMessagesPayload {}

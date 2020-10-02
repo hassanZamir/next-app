@@ -421,3 +421,20 @@ input:checked + .slider:before {
 .quotes {
     quotes: "„" "“" "‚" "‘";
 }
+
+.search-input {
+    border-radius: 12px;
+    width: 200px;
+    border: 1px solid;
+    outline: none;
+    padding: 5px 20px;
+    height: 25px;
+}
+.search-close {
+    background: transparent;
+    position: absolute;
+    right: 8px;
+    bottom: 4px;
+    outline: none;
+    padding: 0px;
+}

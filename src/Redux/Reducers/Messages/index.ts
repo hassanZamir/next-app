@@ -10,12 +10,14 @@ const INITIAL_STATE: IMessagesPage.IStateProps = {
     messageRecipients: {
         emptyPaginationNo: 9999,
         values: [],
+        searchValues: [],
         paginationNo: 0,
         errors: ['']
     },
     allMessages: {
         emptyPaginationNo: 9999,
         values: [],
+        searchValues: [],
         paginationNo: 0,
         errors: ['']
     }
@@ -25,9 +27,48 @@ export const MessagesReducer = (
         state = INITIAL_STATE,
         action: IAction<IMessagesPage.Actions.IMapAllMessages &
             IMessagesPage.Actions.IMapMessageRecipients &
-            IMessagesPage.Actions.IMapNewConversationRecieved>
+            IMessagesPage.Actions.IMapNewConversationRecieved &
+            IMessagesPage.Actions.IMapSearchMessages>
     ) => {
     switch (action.type) {
+        case ActionConsts.Messages.SerachMessagesSuccess: {
+            const { searchResult, type } = action.payload!;
+
+            if (searchResult.length > 0) {
+                if (type === 1) {
+                    return Object.assign({}, state, {
+                        allMessages: {
+                            ...state.allMessages,
+                            searchValues: searchResult
+                        }
+                    });
+                } else {
+                    return Object.assign({}, state, {
+                        messageRecipients: {
+                            ...state.messageRecipients,
+                            searchValues: searchResult
+                        }
+                    });
+                }
+            } else {
+                return state;
+            }
+        }
+        case ActionConsts.Messages.SerachMessagesError: {
+            return state;
+        }
+        case ActionConsts.Messages.ClearSearch: {
+            return Object.assign({}, state, {
+                allMessages: {
+                    ...state.allMessages,
+                    searchValues: []
+                },
+                messageRecipients: {
+                    ...state.messageRecipients,
+                    searchValues: []
+                }
+            });
+        }
         case ActionConsts.Messages.NewConversationRecieved: {
             const { conversation } = action.payload!;
 
@@ -40,7 +81,8 @@ export const MessagesReducer = (
                     allMessages: {
                         values: [conversation, ...state.allMessages.values],
                         emptyPaginationNo: state.allMessages.emptyPaginationNo,
-                        paginationNo: state.allMessages.paginationNo
+                        paginationNo: state.allMessages.paginationNo,
+                        ...state.allMessages
                     }
                 });
             } else {
@@ -55,7 +97,8 @@ export const MessagesReducer = (
                     allMessages: {
                         values: [updatedConversation, ...restMessages],
                         emptyPaginationNo: state.allMessages.emptyPaginationNo,
-                        paginationNo: state.allMessages.paginationNo
+                        paginationNo: state.allMessages.paginationNo,
+                        ...state.allMessages
                     }
                 });
             }
@@ -66,6 +109,7 @@ export const MessagesReducer = (
             if (!page) {
                 return Object.assign({}, state, {
                     allMessages: {
+                        ...state.allMessages,
                         values: allMessages,
                         paginationNo: page + 1,
                         emptyPaginationNo: allMessages.length ? state.allMessages.emptyPaginationNo : page
@@ -76,6 +120,7 @@ export const MessagesReducer = (
             if (allMessages.length) {
                 return Object.assign({}, state, {
                     allMessages: {
+                        ...state.allMessages,
                         values: [...state.allMessages.values, ...allMessages],
                         paginationNo: page + 1,
                         emptyPaginationNo: state.allMessages.emptyPaginationNo
@@ -84,6 +129,7 @@ export const MessagesReducer = (
             } else {
                 return Object.assign({}, state, {
                     allMessages: {
+                        ...state.allMessages,
                         emptyPaginationNo: page,
                         values: state.allMessages.values,
                         paginationNo: page
@@ -105,6 +151,7 @@ export const MessagesReducer = (
             if (!page) {
                 return Object.assign({}, state, {
                     messageRecipients: {
+                        ...state.messageRecipients,
                         values: [...messageRecipients],
                         paginationNo: page + 1,
                         emptyPaginationNo: messageRecipients.length ? state.allMessages.emptyPaginationNo : page
@@ -115,6 +162,7 @@ export const MessagesReducer = (
             if (messageRecipients.length) {
                 return Object.assign({}, state, {
                     messageRecipients: {
+                        ...state.messageRecipients,
                         values: [...state.messageRecipients.values, ...messageRecipients],
                         paginationNo: page + 1,
                         emptyPaginationNo: state.messageRecipients.emptyPaginationNo
@@ -123,6 +171,7 @@ export const MessagesReducer = (
             } else {
                 return Object.assign({}, state, {
                     messageRecipients: {
+                        ...state.messageRecipients,
                         emptyPaginationNo: page,
                         values: state.messageRecipients.values,
                         paginationNo: page
@@ -133,7 +182,7 @@ export const MessagesReducer = (
         case ActionConsts.Messages.GetMessagesRecipientsError: {
             return Object.assign({}, state, {
                 messageRecipients: {
-                    ...state.allMessages,
+                    ...state.messageRecipients,
                     errors: ['Error getting message recipients']
                 }
             });   

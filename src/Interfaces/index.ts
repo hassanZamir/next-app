@@ -25,6 +25,8 @@ export * from "@Services/API/Messages/GETMessageRecipientsResponse";
 export * from "@Services/API/Messages/GETAllMessagesResponse";
 export * from "@Services/API/Messages/GETAllMessagesPayload";
 export * from "@Services/API/Messages/GETAllMessagesResponse";
+export * from "@Services/API/Messages/GETSearchMessagesPayload";
+export * from "@Services/API/Messages/GETSearchMessagesResponse";
 export * from "@Services/API/Messages/Messages";
 
 

@@ -160,5 +160,23 @@ export const MessagesActions = {
             payload: null,
             type: result.status && result.response ? ActionConsts.Conversation.UpdateViewStatusSuccess : ActionConsts.Conversation.UpdateViewStatusError
         });
+    },
+    Search: (payload: IConversationPage.Actions.IGetGETSearchMessagesPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await MessagesService.Search(payload);
+
+        dispatch({
+            payload: { searchResult: result.status && result.response ? result.response : [], type: payload.type },
+            type: result.status && result.response ? ActionConsts.Messages.SerachMessagesSuccess : ActionConsts.Messages.SerachMessagesError
+        });
+    },
+    ClearSearch: () => async (
+        dispatch: Dispatch
+    ) => {
+        dispatch({
+            payload: null,
+            type: ActionConsts.Messages.ClearSearch
+        });
     }
 }

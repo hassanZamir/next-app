@@ -14,8 +14,8 @@ import { MessageRow } from "./MessageRow";
 import { ParagraphText } from "@Components/ParagraphText";
 // #endregion Local Imports
 
-export const MessageList: React.FunctionComponent<{ user: USER_SESSION, scrolledToBottom: boolean, onCreateMessageClick: ()=>void }> 
-    = ({ user, scrolledToBottom, onCreateMessageClick }) => {
+export const MessageList: React.FunctionComponent<{ user: USER_SESSION, scrolledToBottom: boolean, onCreateMessageClick: ()=>void, searchActive: boolean }> 
+    = ({ user, scrolledToBottom, onCreateMessageClick, searchActive }) => {
     const messagesState = useSelector((state: IStore) => state.messages);
     const { allMessages } = messagesState;
     const [loading, setLoading] = useState(false);
@@ -41,17 +41,18 @@ export const MessageList: React.FunctionComponent<{ user: USER_SESSION, scrolled
         }
     }
 
+    const _messageList = searchActive ? allMessages.searchValues : allMessages.values;
     return (<div className="d-flex flex-column" 
             style={{ flex: 1 }}>
             
             <div className="d-flex align-items-center justify-content-center h-100 w-100">
                 <LoadingSpinner size="3x" showLoading={loading}>
-                    {allMessages.values.length > 0 && <div className="d-flex flex-column h-100 w-100">
-                        {allMessages.values.map((message, i) => {
+                    {_messageList.length > 0 && <div className="d-flex flex-column h-100 w-100">
+                        {_messageList.map((message, i) => {
                             return <MessageRow message={message} key={i} user={user} />
                         })}
                     </div>}
-                    {allMessages.values.length <=0 && <ParagraphText 
+                    {!searchActive && allMessages.values.length <=0 && <ParagraphText 
                         className="text-primary font-20px lato-bold">
                             No Messages in your inbox
                     </ParagraphText>}

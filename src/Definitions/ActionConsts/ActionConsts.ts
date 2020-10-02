@@ -104,7 +104,10 @@ export const ActionConsts = {
         GetMessagesRecipientsError: "GetMessagesRecipientsError",
         SetActiveConversationSuccess: "SetActiveConversationSuccess",
         SetActiveConversationError: "SetActiveConversationError",
-        NewConversationRecieved: "NewConversationRecieved"
+        NewConversationRecieved: "NewConversationRecieved",
+        SerachMessagesSuccess: "SerachMessagesSuccess",
+        SerachMessagesError: "SerachMessagesError",
+        ClearSearch: "ClearSearch"
     },
     Conversation: {
         PusherMessageRecieved: "PusherMessageRecieved",
