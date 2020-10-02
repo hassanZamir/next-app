@@ -58,7 +58,8 @@ export const NotificationService = {
                     tipAmount: 0.0,
                     profileImageUrl: "images/db046e30-ddf8-11ea-b6ce-dbe4ded239bd.png",
                     seen: true,
-                    timeStamp: "2020-08-26T16:52:10.5433333"
+                    timeStamp: "2020-08-26T16:52:10.5433333",
+                    msgAmount: 0
                 }]
             };
         }

@@ -82,7 +82,7 @@ export const MessagesReducer = (
                         values: [conversation, ...state.allMessages.values],
                         emptyPaginationNo: state.allMessages.emptyPaginationNo,
                         paginationNo: state.allMessages.paginationNo,
-                        ...state.allMessages
+                        searchValues: state.allMessages.searchValues
                     }
                 });
             } else {
@@ -98,7 +98,7 @@ export const MessagesReducer = (
                         values: [updatedConversation, ...restMessages],
                         emptyPaginationNo: state.allMessages.emptyPaginationNo,
                         paginationNo: state.allMessages.paginationNo,
-                        ...state.allMessages
+                        searchValues: state.allMessages.searchValues
                     }
                 });
             }
@@ -109,7 +109,7 @@ export const MessagesReducer = (
             if (!page) {
                 return Object.assign({}, state, {
                     allMessages: {
-                        ...state.allMessages,
+                        searchValues: state.allMessages.searchValues,
                         values: allMessages,
                         paginationNo: page + 1,
                         emptyPaginationNo: allMessages.length ? state.allMessages.emptyPaginationNo : page
@@ -120,7 +120,7 @@ export const MessagesReducer = (
             if (allMessages.length) {
                 return Object.assign({}, state, {
                     allMessages: {
-                        ...state.allMessages,
+                        searchValues: state.allMessages.searchValues,
                         values: [...state.allMessages.values, ...allMessages],
                         paginationNo: page + 1,
                         emptyPaginationNo: state.allMessages.emptyPaginationNo
@@ -129,7 +129,7 @@ export const MessagesReducer = (
             } else {
                 return Object.assign({}, state, {
                     allMessages: {
-                        ...state.allMessages,
+                        searchValues: state.allMessages.searchValues,
                         emptyPaginationNo: page,
                         values: state.allMessages.values,
                         paginationNo: page
@@ -151,7 +151,7 @@ export const MessagesReducer = (
             if (!page) {
                 return Object.assign({}, state, {
                     messageRecipients: {
-                        ...state.messageRecipients,
+                        searchValues: state.messageRecipients.searchValues,
                         values: [...messageRecipients],
                         paginationNo: page + 1,
                         emptyPaginationNo: messageRecipients.length ? state.allMessages.emptyPaginationNo : page
@@ -162,7 +162,7 @@ export const MessagesReducer = (
             if (messageRecipients.length) {
                 return Object.assign({}, state, {
                     messageRecipients: {
-                        ...state.messageRecipients,
+                        searchValues: state.messageRecipients.searchValues,
                         values: [...state.messageRecipients.values, ...messageRecipients],
                         paginationNo: page + 1,
                         emptyPaginationNo: state.messageRecipients.emptyPaginationNo
@@ -171,7 +171,7 @@ export const MessagesReducer = (
             } else {
                 return Object.assign({}, state, {
                     messageRecipients: {
-                        ...state.messageRecipients,
+                        searchValues: state.messageRecipients.searchValues,
                         emptyPaginationNo: page,
                         values: state.messageRecipients.values,
                         paginationNo: page
