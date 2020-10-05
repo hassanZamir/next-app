@@ -21,6 +21,7 @@ export const MessagesComponent: React.FunctionComponent<{ user: USER_SESSION, sc
     const [showCreateMessage, setShowCreateMessage] = useState(false);
     const [showSearchInput, setShowSearchInput] = useState(false);
     const [searchActive, setSearchActive] = useState(false);
+    const [loadingSearch, setLoadingSearch] = useState(false);
     const dispatch = useDispatch();
 
     const onCreateMessageClick = () => {
@@ -34,8 +35,10 @@ export const MessagesComponent: React.FunctionComponent<{ user: USER_SESSION, sc
                 type: showCreateMessage ? 2 : 1,
                 text: e.target.value
             };
-            dispatch(MessagesActions.Search(param));
+            setLoadingSearch(true);
             setSearchActive(true);
+            await dispatch(MessagesActions.Search(param));
+            setLoadingSearch(false);
         } else {
             setSearchActive(false);
             dispatch(MessagesActions.ClearSearch());
@@ -76,10 +79,12 @@ export const MessagesComponent: React.FunctionComponent<{ user: USER_SESSION, sc
             searchActive={searchActive}
             user={user} 
             scrolledToBottom={scrolledToBottom} 
-            onCreateMessageClick={onCreateMessageClick} />}
+            onCreateMessageClick={onCreateMessageClick} 
+            loadingSearch={loadingSearch} />}
         {showCreateMessage && <CreateMessage 
             user={user} 
             searchActive={searchActive}
-            scrolledToBottom={scrolledToBottom} />}
+            scrolledToBottom={scrolledToBottom} 
+            loadingSearch={loadingSearch} />}
     </React.Fragment>);
 }

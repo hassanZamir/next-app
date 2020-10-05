@@ -12,8 +12,8 @@ import { RecipientRow } from "./RecipientRow";
 import { ParagraphText } from "@Components/ParagraphText";
 // #endregion Local Imports
 
-export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, scrolledToBottom: boolean, searchActive: boolean }> 
-    = ({ user, scrolledToBottom, searchActive }) => {
+export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, user: USER_SESSION, scrolledToBottom: boolean, searchActive: boolean }> 
+    = ({ loadingSearch, user, scrolledToBottom, searchActive }) => {
     const messagesState = useSelector((state: IStore) => state.messages);
     const { messageRecipients } = messagesState;
     const [loading, setLoading] = useState(false);
@@ -46,7 +46,7 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, scroll
             style={{ flex: 1 }}>
             
             <div className="d-flex align-items-center justify-content-center h-100 w-100">
-                <LoadingSpinner size="3x" showLoading={loading}>
+                <LoadingSpinner size="3x" showLoading={loading || loadingSearch}>
                     {_recipients.length > 0 && <div className="d-flex flex-column h-100 w-100">
                         {_recipients.map((recipient, i) => {
                             return <RecipientRow recipient={recipient} 
@@ -54,9 +54,9 @@ export const CreateMessage: React.FunctionComponent<{ user: USER_SESSION, scroll
                                 key={i} />
                         })}
                     </div>}
-                    {!searchActive && messageRecipients.values.length <= 0 && <ParagraphText 
+                    {_recipients.length <= 0 && <ParagraphText 
                         className="text-primary font-20px lato-bold">
-                            You don't have any contacts
+                            {!searchActive ? "You don't have any contacts" : "No Content"}
                     </ParagraphText>}
                 </LoadingSpinner>
             </div>

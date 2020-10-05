@@ -277,7 +277,7 @@ export const MessagesService = {
         try {
             response = await Http.Request<MessagesModel.GetGETSearchMessagesResponse>(
                 "GET",
-                "/users/" + username + "/" + getQueryParams({ ...rest }),
+                "/users/" + username + "/conversation/search" + getQueryParams({ ...rest }),
                 undefined
             );
         } catch (error) {
