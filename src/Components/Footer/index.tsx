@@ -25,7 +25,6 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
     const onLogout = () => { dispatch(LoginActions.UserLogout()); };
 
     const notificationSubscriptionCallback = (param: NOTIFICATION) => {
-        debugger;
         if (window.location.href.includes("notifications"))
             dispatch(NotificationActions.AddPusherNotificationToList(param));
 
@@ -81,6 +80,9 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                         return;
                     } else if (config.name === 'Messages') {
                         Router.push('/message');
+                        return;
+                    } else if (config.name === 'App Middle Icon') {
+                        Router.push('/profile/' + user.username);
                         return;
                     } else {
                         return null

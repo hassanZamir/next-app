@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { BackgroundImage } from "@Components/Basic";
 import { CircularImage, ParagraphText, PrimaryButton } from "@Components";
-import { CREATOR_PROFILE } from "@Interfaces";
+import { CREATOR_PROFILE, USER_SESSION } from "@Interfaces";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faEnvelope, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
 
-export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creatorProfile: CREATOR_PROFILE, onFollow: (followOrUnfolow: boolean)=>void}> 
-    = ({ creatorProfile, onFollow, isFollower }) => {
+export const CreatorProfile: React.FunctionComponent<{user: USER_SESSION, isFollower: boolean; creatorProfile: CREATOR_PROFILE, onFollow: (followOrUnfolow: boolean)=>void}> 
+    = ({ user, creatorProfile, onFollow, isFollower }) => {
     
     const [bioToggle, setBioToggle] = useState(false);
     return <React.Fragment>
@@ -46,7 +46,7 @@ export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creat
                 </div>}
             </div>
             <div className="d-flex justify-content-end" style={{ width: "50%" }}>
-                {creatorProfile.name && <div>
+                {creatorProfile.name && creatorProfile.name !== user.name && <div>
                     {!isFollower && <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-12px">Follow for ${creatorProfile.followingFee} a month</PrimaryButton>}
                     {isFollower && <div className="d-flex flex-column">
                         <PrimaryButton borderRadius="10px" isActive={true} 
@@ -60,6 +60,13 @@ export const CreatorProfile: React.FunctionComponent<{isFollower: boolean; creat
                             <FontAwesomeIcon icon={faEnvelope} color="white" />
                         </PrimaryButton>
                     </div>}
+                </div>}
+                {creatorProfile.name && creatorProfile.name === user.name && <div>
+                    <div className="d-flex flex-column">
+                        <PrimaryButton borderRadius="10px" isActive={true} className="gibson-regular font-15px mt-2">
+                            <span className="mr-2">Edit Profile</span>
+                        </PrimaryButton>
+                    </div>
                 </div>}
             </div>
         </div>
