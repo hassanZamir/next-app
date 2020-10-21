@@ -175,7 +175,7 @@ export const ProfileComponent: React.FunctionComponent<{
                 </div>
             </div>
             <Footer
-                selected="Home"
+                selected="App Middle Icon"
                 user={user}
                 onPaymentSettingsClick={onPaymentSettingsClick}
             />

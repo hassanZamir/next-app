@@ -148,7 +148,7 @@ const FooterConfig = [{
         width: '24px'
     },
     imageSelected: {
-        src: '',
+        src: '/images/app_middle_icon_navbar@2x.png',
         height: '18px',
         width: '18px'
     }
