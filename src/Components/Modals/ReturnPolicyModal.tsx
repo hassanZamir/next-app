@@ -77,7 +77,7 @@ export const ReturnPolicyModal: React.ForwardRefRenderFunction<
                               adjusted.
                           </p>
 
-                          <ol start="2">
+                          <ol start={2}>
                               <li>
                                   <strong>Unsubscribing to a creator.</strong>
                               </li>
@@ -93,7 +93,7 @@ export const ReturnPolicyModal: React.ForwardRefRenderFunction<
                                   unsubscribing to a user.{" "}
                               </strong>
                           </p>
-                          <ol start="3">
+                          <ol start={3}>
                               <li>
                                   <strong>Deletion of creators account.</strong>
                               </li>
@@ -125,7 +125,7 @@ export const ReturnPolicyModal: React.ForwardRefRenderFunction<
                               days may not be entertained.
                           </p>
 
-                          <ol start="4">
+                          <ol start={4}>
                               <li>
                                   <strong>Deletion of users account.</strong>
                               </li>
@@ -135,7 +135,7 @@ export const ReturnPolicyModal: React.ForwardRefRenderFunction<
                               will not be entitled to claim any refund for your
                               subscription(s).
                           </p>
-                          <ol start="5">
+                          <ol start={5}>
                               <li>
                                   <strong>
                                       Timeframe for users &amp; creators.
