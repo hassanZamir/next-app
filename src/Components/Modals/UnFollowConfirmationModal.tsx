@@ -48,7 +48,7 @@ export const UnFollowConfirmationModal: React.ForwardRefRenderFunction<
                         returnPolicyModalToggle();
                     }}>
                     View our
-                        <span className="text-primary">
+                        <span className="text-primary cursor-pointer">
                             {" "}
                             Return Policy
                         </span>
