@@ -62,8 +62,9 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                 <Modal border={theme.colors.primary} borderRadius="18px"
                     width="initial">
                     <div className="w-100 h-100 d-flex flex-column" ref={modalRef}>
-                        <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Enter your card details</ParagraphText>
-                        <div style={{ width: "275px" }}>
+                        <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Redirecting to payment gateway ...</ParagraphText>
+                        {/* <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Enter your card details</ParagraphText> */}
+                        {/* <div style={{ width: "275px" }}>
                             <FormComponent 
                                 onSubmit={handleSubmit} 
                                 defaultValues={{}} 
@@ -112,26 +113,6 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                             } 
                                         }]}
                                     />
-                                    {/* <MultiLabelInput 
-                                        type={["text", "text"]}
-                                        labelText="Expiry" 
-                                        name={["expiry.month", "expiry.year"]} 
-                                        wrapperClass="mt-2"
-                                        placeholder={["MM", "YYYY"]}
-                                        validationRules={[{ 
-                                            required: "Expiry is required",
-                                            validate: (value: string) => {
-                                                const regex = new RegExp("^[0-9]{2}$");
-                                                return regex.test(value) ? true : "MM be a 2 digit number";
-                                            }
-                                        }, { 
-                                            required: "Expiry is required",
-                                            validate: (value: string) => {
-                                                const regex = new RegExp("^[0-9]{4}$");
-                                                return regex.test(value) ? true : "YYYY be a 4 digit number";
-                                            }
-                                        }]}
-                                    /> */}
                                     <LabelInput 
                                         type="text"
                                         labelText="CVC" 
@@ -146,26 +127,17 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                         }}
                                     />  
                                 </div>
-                                {/* <div className="d-flex justify-content-center">
-                                    <div className="d-flex flex-column" style={{ width: "145px" }}> */}
-                                        <PrimaryButton 
-                                            type="submit"
-                                            name="add-card"
-                                            borderRadius="6px" 
-                                            className="mt-5"
-                                            showLoader={loading}>
-                                            Add Card
-                                        </PrimaryButton>
-                                        <span className="mb-5 text-danger font-12px">{ addCardError }</span>
-                                        {/* <div className="d-flex mt-2 lato-medium font-8px">
-                                            <div className="text-primary text-underline">Terms of Service</div>
-                                            <div className="mx-1">and</div>
-                                            <div className="text-primary text-underline">Privacy Policy</div>
-                                        </div> */}
-                                    {/* </div>
-                                </div> */}
+                                <PrimaryButton 
+                                    type="submit"
+                                    name="add-card"
+                                    borderRadius="6px" 
+                                    className="mt-5"
+                                    showLoader={loading}>
+                                    Add Card
+                                </PrimaryButton>
+                                <span className="mb-5 text-danger font-12px">{ addCardError }</span>
                             </FormComponent>
-                        </div>
+                        </div> */}
                     </div>
                 </Modal>, document.body
         ) : null;
