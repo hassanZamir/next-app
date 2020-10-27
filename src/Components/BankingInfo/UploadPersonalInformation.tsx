@@ -65,8 +65,8 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                 docType: DOC_TYPES.indexOf(data.documentType) + 1,
                 docPhoto: "",
                 docUserPhoto: "",
-                docNumber: data.docNumber,
-                docExpiry: data.docExpiry.year + "-" + DobConst.months.indexOf(data.docExpiry.month)  + "-" + data.docExpiry.date,
+                docNumber: "312341233214",//data.docNumber,
+                docExpiry: "2022-03-04",//data.docExpiry.year + "-" + DobConst.months.indexOf(data.docExpiry.month)  + "-" + data.docExpiry.date,
                 explicitContent: checkedConsent,
                 media_url: filesPayload,
                 userId: user.id
@@ -324,7 +324,7 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                             wrapperClass="mt-3"
                             validationRules={{ required: {value: true, message: "Card Number is required" } }} 
                         /> */}
-                        <LabelInput 
+                        {/* <LabelInput 
                             type="text"
                             labelText="Card Number" 
                             name="docNumber" 
@@ -336,9 +336,9 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                                     return regex.test(value) ? true : "Should be 16 digit valid visa card number";
                                 }
                             }}
-                        />
+                        /> */}
                         
-                        <SelectInput
+                        {/* <SelectInput
                             type={["number", "number", "number"]}
                             labelText="Expiry" 
                             name={["docExpiry.date", "docExpiry.month", "docExpiry.year"]}
@@ -359,21 +359,6 @@ export const UploadPersonalInformation: React.FunctionComponent<{ user: USER_SES
                                 validate: (value: string) => {
                                     return value !== "YYYY" ? true : "Please select Year of Birth"
                                 } 
-                            }]}
-                        />
-
-                        {/* <MultiLabelInput 
-                            type={["text", "text", "text"]}
-                            labelText="Expiry" 
-                            name={["docExpiry.date", "docExpiry.month", "docExpiry.year"]} 
-                            wrapperClass="mt-2"
-                            placeholder={["DD", "MM", "YYYY"]}
-                            validationRules={[{ 
-                                required: "Expiry is required"
-                            }, { 
-                                required: "Expiry is required"
-                            }, { 
-                                required: "Expiry is required"
                             }]}
                         /> */}
 
