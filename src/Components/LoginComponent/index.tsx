@@ -17,9 +17,10 @@ import {
     SocialLogin
 } from "@Components";
 import { CheckYourEmailModal } from "../Modals/CheckYourEmailModal";
-import { EmailVerifiedModal }from "../Modals/EmailVerifiedModal";
-import { ResetPasswordModal }from "../Modals/ResetPasswordModal";
-import { ChangePasswordModal }from "../Modals/ChangePasswordModal";
+import { EmailVerifiedModal } from "../Modals/EmailVerifiedModal";
+import { ResetPasswordModal } from "../Modals/ResetPasswordModal";
+import { ChangePasswordModal } from "../Modals/ChangePasswordModal";
+import { ReturnPolicyModal } from "@Components/Modals";
 import { LinkText } from "@Components/Basic";
 import { useModal } from '../Hooks';
 import { IStore } from "@Redux/IStore";
@@ -40,6 +41,8 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
     const [userVerificationEmail, setUserVerificationEmail] = useState('');
     const [userVerificationToken, setUserVerificationToken] = useState('');
     const [resetPasswordModal, setResetPasswordModal] = useState(false);
+    const returnPolicyModalRef = useModal(useRef<HTMLDivElement>(null));
+
     const [changePasswordToken, setChangePasswordToken] = useState('');
 
     const router = useRouter();
@@ -149,7 +152,7 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
 
 
             {!profile && <div className="mt-5 row justify-content-center no-gutters">
-                <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
+                <StaticImage src="/images/veno_tv_logo_main@2x.png" height="100%" width="164px" />
             </div>}
             {profile && <div className="mt-3 border-primary d-flex align-items-center justify-content-center" 
                 style={{ minHeight: "300px", width: "300px", border: "2px solid", borderRadius: "18px" }}>
@@ -199,16 +202,28 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                         onChange={handleCaptchaChange}
                     />
                 </div>
+                <div className="p-4">
+                    {errors && <ParagraphText className="text-danger text-center font-12px">{ errors }</ParagraphText>}
+                </div>
                 <PrimaryButton  
                     type="submit"
                     className="font-20px" 
                     isActive={enableLogin}>
                         LOGIN
                 </PrimaryButton>
-                <div style={{ height: "30px" }}>
-                    {errors && <ParagraphText className="text-danger text-center font-12px">{ errors }</ParagraphText>}
-                </div>
             </form>
+            {/* { add footer links here} */}
+            <div
+                className="text-grey100 font-12px text-center my-2"
+                onClick={() => {
+                    returnPolicyModalRef.toggle();
+                }}>
+                Return Policy
+            </div>
+            <ReturnPolicyModal
+                isShowing={returnPolicyModalRef.isShowing}
+                toggle={returnPolicyModalRef.toggle}
+            />
             <Link href="/signup" passHref>
                 <LinkText style={{ height: "40px" }} className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white">
                     Don't have an account? Sign up Now!

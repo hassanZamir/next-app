@@ -78,7 +78,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     return (
             <div className="w-100 d-flex flex-column justify-content-between align-items-center">
                 <div className="mt-4 row justify-content-center no-gutters">
-                    <StaticImage src="/images/veno_tv_logo.png" height="100px" width="100px" />
+                    <StaticImage src="/images/veno_tv_logo_main@2x.png" height="100%" width="164px" />
                 </div>
                 <div className="row no-gutters justify-content-center mt-3">
                     <div style={{ width: "320px" }}>
@@ -222,7 +222,10 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                                     required: {value: true, message: "Check privacy policy is required" } 
                                 }}
                             />
-
+                            {!successMessage && <ParagraphText className="py-4 text-danger text-center">
+                                {errors.message}
+                            </ParagraphText>
+                            }
                             <PrimaryButton  
                                 type="submit"
                                 className="mt-2 mb-3 font-20px"
@@ -230,7 +233,6 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                                 showLoader={!enableSignUp}>
                                     Sign Up
                             </PrimaryButton>
-                            {!successMessage && <ParagraphText className="py-4 text-danger text-center">{ errors.message }</ParagraphText>}
                         </FormComponent>
                     </div>
                     <Link href="/login" passHref>
