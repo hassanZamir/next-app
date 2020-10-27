@@ -18,7 +18,7 @@ export const UnFollowConfirmationModal: React.ForwardRefRenderFunction<
                 width="330px"
             >
                 <ParagraphText className="text-primary font-25px text-center">
-                    UnFollow
+                    Unfollow
                 </ParagraphText>
                 <React.Fragment>
                     <div className="text-grey100 font-12px text-center my-2">
