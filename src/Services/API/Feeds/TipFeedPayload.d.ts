@@ -4,4 +4,5 @@ export interface TipFeedPayload {
     viewerId: number;
     message: string;
     amount: number;
+    authtoken: string;
 }

@@ -13,20 +13,21 @@ export const CreatorProfileService = {
         let response: CreatorProfileModel.GetCreatorFeedsResponse;
 
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 CreatorProfileModel.GetCreatorFeedsResponse
             >(
                 "GET",
                 "/profiles/" +
-                    payload.username +
-                    "/content?type=" +
-                    payload.type +
-                    "&page=" +
-                    payload.page +
-                    "&offset=" +
-                    payload.offset +
-                    "&viewer=" +
-                    payload.viewer,
+                payload.username +
+                "/content?type=" +
+                payload.type +
+                "&page=" +
+                payload.page +
+                "&offset=" +
+                payload.offset +
+                "&viewer=" +
+                payload.viewer,
+                payload.authtoken,
                 undefined
             );
         } catch (error) {
@@ -183,14 +184,12 @@ export const CreatorProfileService = {
         let response: ProfileFollowersModel.GetProfileFollowersResponse;
 
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 ProfileFollowersModel.GetProfileFollowersResponse
             >(
                 "GET",
-                "/profiles/" +
-                    payload.username +
-                    "/followers?userId=" +
-                    payload.userId,
+                "/profiles/" + payload.username + "/followers?userId=" + payload.userId,
+                payload.authtoken,
                 undefined
             );
         } catch (error) {
@@ -211,9 +210,9 @@ export const CreatorProfileService = {
         let response: CreatorProfileModel.GetFollowProfileResponse;
 
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 CreatorProfileModel.GetFollowProfileResponse
-            >("POST", "/profiles/" + payload.username + "/follow", undefined, {
+            >("POST", "/profiles/" + payload.username + "/follow", payload.authtoken, undefined, {
                 userId: payload.userId,
             });
         } catch (error) {
@@ -230,11 +229,12 @@ export const CreatorProfileService = {
         let response: CreatorProfileModel.GetFollowProfileResponse;
 
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 CreatorProfileModel.GetFollowProfileResponse
             >(
                 "DELETE",
                 "/profiles/" + payload.username + "/follow",
+                payload.authtoken,
                 undefined,
                 { userId: payload.userId }
             );
@@ -254,9 +254,9 @@ export const CreatorProfileService = {
         const { username, ...restPayload } = payload;
         console.log(
             "/profiles/" +
-                username +
-                "/gallery" +
-                getQueryParams({ ...restPayload })
+            username +
+            "/gallery" +
+            getQueryParams({ ...restPayload })
         );
         try {
             response = await Http.Request<
@@ -264,9 +264,9 @@ export const CreatorProfileService = {
             >(
                 "GET",
                 "/profiles/" +
-                    username +
-                    "/gallery" +
-                    getQueryParams({ ...restPayload }),
+                username +
+                "/gallery" +
+                getQueryParams({ ...restPayload }),
                 undefined
             );
         } catch (error) {

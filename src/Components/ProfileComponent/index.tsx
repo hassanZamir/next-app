@@ -11,10 +11,11 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { IStore } from "@Redux/IStore";
 import { USER_SESSION } from "@Interfaces";
 import { Footer, CreatorProfile, CreatorContent, PaymentSettings, PaymentSettingsContainer } from '@Components';
-import { CreatorProfileActions } from "@Actions";
+import { CreatorProfileActions, FollowingInfoAction, LoginActions } from "@Actions";
 import { AnimatePopup } from "@Components/Basic";
 import { PaymentConfirmationModal, UnFollowConfirmationModal, ReturnPolicyModal } from "@Components/Modals";
 import { useModal } from "@Components/Hooks";
+import { TYPE_ALL_FOLLOWING } from "config/FollowingConfigrator";
 // #endregion Local Imports
 
 export const ProfileComponent: React.FunctionComponent<{
@@ -26,7 +27,10 @@ export const ProfileComponent: React.FunctionComponent<{
     );
     const { creatorProfile, followers } = creatorProfileState;
     const { contentCount, imagesCount, videosCount, name } = creatorProfile;
-
+    const userFollowings = useSelector(
+        (state: IStore) => state.followingInfo.defaultFollowingInformation
+    );
+    const [isAlreadyFollowing, setIsAlreadyFollowing] = useState(false);
     const [showPaymentSettingsPopup, setShowPaymentSettingsPopup] = useState(
         false
     );
@@ -43,22 +47,33 @@ export const ProfileComponent: React.FunctionComponent<{
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // check if profile exists already in user folllowing
+        if (userFollowings.length)
+            userFollowings.filter((element: any) => {
+                if (element.username == profileUserName)
+                    setIsAlreadyFollowing(true);
+            })
+    }, [userFollowings]);
+
+    useEffect(() => {
+        // TODO: combine the creator profile and follow check
         const params = { username: profileUserName };
         dispatch(CreatorProfileActions.GetCreatorProfile(params));
 
         if (user && user.id) {
-            const followersParams = {
+            const params = {
+                authtoken: user.token,
                 userId: user.id,
-                username: profileUserName,
+                username: user.username,
+                type: TYPE_ALL_FOLLOWING,
             };
-            dispatch(
-                CreatorProfileActions.GetProfileFollowers(followersParams)
-            );
+            dispatch(FollowingInfoAction.GetFollowingInformation(params));
         }
-    }, [dispatch, profileUserName, user]);
+    }, [followers]);
 
     const sendFollowRequest = () => {
         const followParams = {
+            authtoken: user.token,
             username: profileUserName,
             userId: user.id,
             shouldFollow: true,
@@ -67,11 +82,13 @@ export const ProfileComponent: React.FunctionComponent<{
     };
     const sendUnFollowRequest = () => {
         const unFollowParams = {
+            authtoken: user.token,
             username: profileUserName,
             userId: user.id,
             shouldFollow: false,
         };
         dispatch(CreatorProfileActions.UnFollowProfile(unFollowParams));
+        setIsAlreadyFollowing(false);
     };
 
     const onFollow = (wantToFollow: boolean) => {
@@ -150,11 +167,7 @@ export const ProfileComponent: React.FunctionComponent<{
                     <CreatorProfile
                         creatorProfile={creatorProfile}
                         onFollow={onFollow}
-                        isFollower={
-                            followers &&
-                            followers[0] &&
-                            followers[0].userId === user.id
-                        }
+                        isFollower={isAlreadyFollowing}
                         user={user}
                     />
 
@@ -168,9 +181,7 @@ export const ProfileComponent: React.FunctionComponent<{
                         profileUserName={profileUserName}
                         name={name}
                         onFollow={onFollow}
-                        isFollower={
-                            followers[0] && followers[0].userId === user.id
-                        }
+                        isFollower={isAlreadyFollowing}
                     />
                 </div>
             </div>

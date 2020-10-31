@@ -16,7 +16,6 @@ export const FollowingInfoAction = {
         payload: IFollowingInfoPage.Actions.IGetGETFollowingInformationPayload
     ) => async (dispatch: Dispatch) => {
         const result = await LoginService.GetFollowingInformation(payload);
-        // result.response = result.response == null ? [] : result.response;
         dispatch({
             payload: {
                 followingInformation:

@@ -296,6 +296,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
             message: message,
             amount: parseInt(amount),
             creatorUserName: feed.username,
+            authtoken: user.token,
         };
         toggle();
         FeedsActions.TipFeed(param)().then(resp => {

@@ -128,9 +128,10 @@ export const FeedsService = {
         let response: FeedsModel.GetTipFeedResponse
 
         try {
-            response = await Http.Request<FeedsModel.GetTipFeedResponse>(
+            response = await Http.UserAuthRequest<FeedsModel.GetTipFeedResponse>(
                 "POST",
                 "/profiles/" + payload.creatorUserName + "/tip",
+                payload.authtoken,
                 undefined,
                 {
                     viewerId: payload.viewerId,

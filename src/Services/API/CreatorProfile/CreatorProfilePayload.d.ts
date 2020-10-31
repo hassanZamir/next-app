@@ -4,6 +4,7 @@ export interface CreatorProfilePayload {
 }
 
 export interface CreatorFeedsPayload {
+    authtoken: string;
     [key: string]: string | number;
     username: string;
     type: number;

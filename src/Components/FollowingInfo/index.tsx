@@ -115,6 +115,7 @@ const FollowerCard: React.FunctionComponent<{
             message: message,
             amount: parseInt(amount),
             creatorUserName: feed.username,
+            authtoken: user.token,
         };
         toggle();
         FeedsActions.TipFeed(param)().then(resp => {
