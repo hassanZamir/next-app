@@ -134,6 +134,7 @@ const FollowerCard: React.FunctionComponent<{
 
     const restrictedFollower = (username: string) => {
         const restrictParams = {
+            authtoken: user.token,
             recipientUsername: username,
             username: user.username,
         };
@@ -142,30 +143,50 @@ const FollowerCard: React.FunctionComponent<{
     };
 
     const unRestrictedFollower = (username: string) => {
-        const params = { recipientUsername: username, username: user.username };
+        const params = {
+            authtoken: user.token,
+            recipientUsername: username,
+            username: user.username
+        };
         dispatch(FollowersInfoAction.PostUnRestrictFollower(params));
         setFetchUpdatedData(true);
     };
 
     const blockedFollower = (username: string) => {
-        const params = { recipientUsername: username, username: user.username };
+        const params = {
+            authtoken: user.token,
+            recipientUsername: username,
+            username: user.username
+        };
         dispatch(FollowersInfoAction.PostBlockedFollower(params));
         setFetchUpdatedData(true);
     };
 
     const unBlockedFollower = (username: string) => {
-        const params = { recipientUsername: username, username: user.username };
+        const params = {
+            authtoken: user.token,
+            recipientUsername: username,
+            username: user.username
+        };
         dispatch(FollowersInfoAction.PostUnBlockedFollower(params));
         setFetchUpdatedData(true);
     };
 
     const favourite = (username: string) => {
-        const params = { recipientUsername: username, username: user.username };
+        const params = {
+            authtoken: user.token,
+            recipientUsername: username,
+            username: user.username
+        };
         dispatch(FollowersInfoAction.PostFavouriteFollower(params));
     };
 
     const unFavourite = (username: string) => {
-        const params = { recipientUsername: username, username: user.username };
+        const params = {
+            authtoken: user.token,
+            recipientUsername: username,
+            username: user.username
+        };
         dispatch(FollowersInfoAction.PostUnFavouriteFollower(params));
     };
 

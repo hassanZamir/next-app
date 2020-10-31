@@ -291,9 +291,9 @@ export const LoginService = {
     ): Promise<PostRestrictFollowersModel.GetPostRestrictFollowersResponse> => {
         let response: PostRestrictFollowersModel.GetPostRestrictFollowersResponse;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 PostRestrictFollowersModel.GetPostRestrictFollowersResponse
-            >("POST", `/users/${payload.username}/restrict`, undefined, {
+            >("POST", `/users/${payload.username}/restrict`, payload.authtoken, undefined, {
                 ...payload,
             });
         } catch (error) {
@@ -315,9 +315,9 @@ export const LoginService = {
     > => {
         let response: PostUnRestrictFollowersModel.GetPostUnRestrictFollowersResponse;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 PostUnRestrictFollowersModel.GetPostUnRestrictFollowersResponse
-            >("POST", `/users/${payload.username}/unrestrict`, undefined, {
+            >("POST", `/users/${payload.username}/unrestrict`, payload.authtoken, undefined, {
                 ...payload,
             });
         } catch (error) {
@@ -337,9 +337,9 @@ export const LoginService = {
     ): Promise<PostBlockedFollowersModel.GetPostBlockedFollowersResponse> => {
         let response: PostBlockedFollowersModel.GetPostBlockedFollowersResponse;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 PostBlockedFollowersModel.GetPostBlockedFollowersResponse
-            >("POST", `/users/${payload.username}/block`, undefined, {
+            >("POST", `/users/${payload.username}/block`, payload.authtoken, undefined, {
                 ...payload,
             });
         } catch (error) {
@@ -361,9 +361,9 @@ export const LoginService = {
     > => {
         let response: PostUnBlockedFollowersModel.GetPostUnBlockedFollowersResponse;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 PostUnBlockedFollowersModel.GetPostUnBlockedFollowersResponse
-            >("POST", `/users/${payload.username}/unblock`, undefined, {
+            >("POST", `/users/${payload.username}/unblock`, payload.authtoken, undefined, {
                 ...payload,
             });
         } catch (error) {
@@ -385,9 +385,9 @@ export const LoginService = {
     > => {
         let response: PostFavouriteFollowersModel.GetPostFavouriteFollowersResponse;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 PostFavouriteFollowersModel.GetPostFavouriteFollowersResponse
-            >("POST", `/users/${payload.username}/favourite`, undefined, {
+            >("POST", `/users/${payload.username}/favourite`, payload.authtoken, undefined, {
                 ...payload,
             });
         } catch (error) {
@@ -409,9 +409,9 @@ export const LoginService = {
     > => {
         let response: PostUnFavouriteFollowersModel.GetPostUnFavouriteFollowersResponse;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 PostUnFavouriteFollowersModel.GetPostUnFavouriteFollowersResponse
-            >("POST", `/users/${payload.username}/unfavourite`, undefined, {
+            >("POST", `/users/${payload.username}/unfavourite`, payload.authtoken, undefined, {
                 ...payload,
             });
         } catch (error) {
