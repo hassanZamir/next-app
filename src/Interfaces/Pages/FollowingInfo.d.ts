@@ -1,0 +1,39 @@
+import {
+    USER_SESSION,
+    CREATOR_PROFILE,
+    GETFollowingInformationModel,
+    PUTRecurringFollowingModel,
+} from "@Interfaces";
+
+declare namespace IFollowingInfoPage {
+    export interface IProps {
+        user: USER_SESSION;
+    }
+
+    export interface IStateProps {
+        showPersonalInformation: boolean;
+        defaultFollowingInformation: any;
+        followingType: number;
+        creatorProfile: CREATOR_PROFILE;
+        errors: string[];
+        success: string[];
+    }
+
+    namespace Actions {
+        export interface IMapGetFollowingInformation {
+            FollowingInformation: GETFollowingInformationModel.GetGETFollowingInformationResponse;
+        }
+
+        export interface IGetGETFollowingInformationPayload
+            extends GETFollowingInformationModel.GetGETFollowingInformationPayload { }
+        export interface IGetGETFollowingInformationResponse
+            extends GETFollowingInformationModel.GetGETFollowingInformationResponse { }
+
+        export interface IGetPUTRecurringFollowingPayload
+            extends PUTRecurringFollowingModel.GetPUTRecurringFollowingPayload { }
+        export interface IGetPUTRecurringFollowerPayload
+            extends PUTRecurringFollowingModel.GetPUTRecurringFollowingResponse { }
+    }
+}
+
+export { IFollowingInfoPage };

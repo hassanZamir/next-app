@@ -11,12 +11,13 @@ export const NotificationService = {
         payload: NotificationModel.GetGETNotificationStatsPayload
     ): Promise<NotificationModel.GetGETNotificationStatsResponse> => {
         let response: NotificationModel.GetGETNotificationStatsResponse;
-        
-        const { userId } = payload;
+
+        const { userId, authtoken } = payload;
         try {
-            response = await Http.Request<NotificationModel.GetGETNotificationStatsResponse>(
+            response = await Http.UserAuthRequest<NotificationModel.GetGETNotificationStatsResponse>(
                 "GET",
                 "/users/" + userId + "/notifications/stats",
+                authtoken,
                 undefined
             );
         } catch (error) {
@@ -36,7 +37,7 @@ export const NotificationService = {
         payload: NotificationModel.GetGETNotificationPayload
     ): Promise<NotificationModel.GetGETNotificationResponse> => {
         let response: NotificationModel.GetGETNotificationResponse;
-        
+
         const { userId, ...restPayload } = payload;
         try {
             response = await Http.Request<NotificationModel.GetGETNotificationResponse>(
@@ -69,7 +70,7 @@ export const NotificationService = {
         payload: NotificationModel.GetSeenNotificationPayload
     ): Promise<NotificationModel.GetSeenNotificationResponse> => {
         let response: NotificationModel.GetSeenNotificationResponse;
-        
+
         try {
             response = await Http.Request<NotificationModel.GetSeenNotificationResponse>(
                 "POST",
@@ -88,7 +89,7 @@ export const NotificationService = {
         payload: NotificationModel.GetViewNotificationsPayload
     ): Promise<NotificationModel.GetViewNotificationsResponse> => {
         let response: NotificationModel.GetViewNotificationsResponse;
-        
+
         try {
             response = await Http.Request<NotificationModel.GetViewNotificationsResponse>(
                 "POST",

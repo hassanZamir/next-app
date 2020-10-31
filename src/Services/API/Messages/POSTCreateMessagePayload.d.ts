@@ -16,5 +16,5 @@ export interface POSTCreateMessagePayload {
         amount: number,
         view_status: boolean
     } & TIP_MESSAGE;
-    onSuccessScroll: ()=>void;
+    onSuccessScroll: () => void;
 }

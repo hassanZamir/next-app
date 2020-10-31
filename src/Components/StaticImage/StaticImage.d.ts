@@ -5,6 +5,10 @@ declare namespace IStaticImg {
         className?: string;
         height?: string;
         width?: string;
+        top?: string;
+        left?: string;
+        name?: string;
+        onClick?: (e: any) => void;
     }
 }
 

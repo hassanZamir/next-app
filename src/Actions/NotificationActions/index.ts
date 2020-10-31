@@ -16,7 +16,7 @@ export const NotificationActions = {
         dispatch: Dispatch
     ) => {
         dispatch({
-            payload: {notification: payload},
+            payload: { notification: payload },
             type: ActionConsts.Notifications.AddPusherNotificationToList
         });
     },
@@ -26,7 +26,7 @@ export const NotificationActions = {
         const result = await NotificationService.GetNotificationStats(payload);
 
         dispatch({
-            payload: {notificationStats: result.status && result.response ? result.response : {}},
+            payload: { notificationStats: result.status && result.response ? result.response : {} },
             type: result.status && result.response ? ActionConsts.Notifications.GetNotifiactionStatsSuccess : ActionConsts.Notifications.GetNotifiactionStatsError
         });
     },
@@ -45,9 +45,9 @@ export const NotificationActions = {
         const result = await NotificationService.GetNotifications({ ...rest });
 
         dispatch({
-            payload: { 
-                notifications: result.status && result.response ? result.response : [], 
-                key: key, 
+            payload: {
+                notifications: result.status && result.response ? result.response : [],
+                key: key,
                 page: payload.page
             },
             type: result.status && result.response ? ActionConsts.Notifications.GetNotifiactionsSuccess : ActionConsts.Notifications.GetNotifiactionsError
@@ -69,7 +69,7 @@ export const NotificationActions = {
         const result = await NotificationService.ViewNotifications(payload);
 
         dispatch({
-            payload: {type: result.status ? payload.type : -1},
+            payload: { type: result.status ? payload.type : -1 },
             type: result.status ? ActionConsts.Notifications.ViewNotificationsSuccess : ActionConsts.Notifications.ViewNotificationsError
         });
     }

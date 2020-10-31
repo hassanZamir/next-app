@@ -5,7 +5,11 @@ export { Heading } from "@Components/Heading";
 export { LocaleButton } from "@Components/LocaleButton";
 export { StaticImage } from "@Components/StaticImage";
 export { ThemedInput, ThemedInputWithLabel } from "@Components/ThemedInput";
-export { LabelInput, SelectInput, MultiLabelInput } from "@Components/LabelInput";
+export {
+    LabelInput,
+    SelectInput,
+    MultiLabelInput,
+} from "@Components/LabelInput";
 export { PrimaryButton } from "@Components/PrimaryButton";
 export { ParagraphText } from "@Components/ParagraphText";
 export { FormComponent } from "@Components/FormComponent";
@@ -38,5 +42,7 @@ export { MediaCarousel } from "@Components/MediaCarousel";
 export { SocialLogin } from "@Components/SocialLogin";
 export { PaymentSettingsContainer } from "@Components/PaymentSettingsContainer";
 export { NotificationComponent } from "@Components/NotificationComponent";
+export { FollowersInfo } from "@Components/FollowersInfo";
+export { FollowingInfo } from "@Components/FollowingInfo";
 export { MessagesComponent } from "@Components/MessagesComponent";
 export { ConversationComponent } from "@Components/ConversationComponent";

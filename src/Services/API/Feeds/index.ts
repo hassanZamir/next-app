@@ -11,12 +11,12 @@ export const FeedsService = {
         payload: ProfilesSuggestionModel.GetProfilesSuggestionPayload
     ): Promise<ProfilesSuggestionModel.GetProfilesSuggestionResponse> => {
         let response: ProfilesSuggestionModel.GetProfilesSuggestionResponse
-
+        const { authtoken, ...rest } = payload;
         try {
-            response = await Http.Request<ProfilesSuggestionModel.GetProfilesSuggestionResponse>(
+            response = await Http.UserAuthRequest<ProfilesSuggestionModel.GetProfilesSuggestionResponse>(
                 "GET",
-                "/profiles/suggestion" + getQueryParams(payload),
-                undefined
+                "/profiles/suggestion" + getQueryParams({ ...rest }),
+                authtoken
             );
         } catch (error) {
             response = {
@@ -43,12 +43,12 @@ export const FeedsService = {
     ): Promise<FeedsModel.GetAllFeedsResponse> => {
         let response: FeedsModel.GetAllFeedsResponse
 
-        const { userId, ...rest } = payload;
+        const { userId, authtoken, ...rest } = payload;
         try {
-            response = await Http.Request<FeedsModel.GetAllFeedsResponse>(
+            response = await Http.UserAuthRequest<FeedsModel.GetAllFeedsResponse>(
                 "GET",
-                "/users/" + userId + "/feed" + getQueryParams({...rest}),
-                undefined
+                "/users/" + userId + "/feed" + getQueryParams({ ...rest }),
+                authtoken
             );
         } catch (error) {
             response = {
@@ -133,10 +133,10 @@ export const FeedsService = {
                 "/profiles/" + payload.creatorUserName + "/tip",
                 undefined,
                 {
-                    viewerId: payload.viewerId, 
-                    amount: payload.amount, 
-                    message: payload.message, 
-                    contentId: payload.contentId ? payload.contentId : 0 
+                    viewerId: payload.viewerId,
+                    amount: payload.amount,
+                    message: payload.message,
+                    contentId: payload.contentId ? payload.contentId : 0
                 }
             );
         } catch (error) {
@@ -157,7 +157,7 @@ export const FeedsService = {
                 "POST",
                 "/content/" + payload.contentId + "/like",
                 undefined,
-                {userId: payload.userId}
+                { userId: payload.userId }
             );
         } catch (error) {
             response = {
@@ -176,7 +176,7 @@ export const FeedsService = {
                 "DELETE",
                 "/content/" + payload.contentId + "/like",
                 undefined,
-                {userId: payload.userId}
+                { userId: payload.userId }
             );
         } catch (error) {
             response = {
@@ -195,7 +195,7 @@ export const FeedsService = {
                 "GET",
                 "/content/" + payload.contentId + "/report",
                 undefined,
-                { userId: payload.userId, reasonId: payload.reason, contentId: payload.contentId}
+                { userId: payload.userId, reasonId: payload.reason, contentId: payload.contentId }
             );
         } catch (error) {
             response = {

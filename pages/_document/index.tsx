@@ -41,7 +41,10 @@ class WebAppDocument extends Document {
         return (
             <Html>
                 <Head>
-                    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover" />
+                    <meta
+                        name="viewport"
+                        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover"
+                    />
                     <link rel="shortcut icon" href="/images/veno.ico" />
                 </Head>
                 <body>

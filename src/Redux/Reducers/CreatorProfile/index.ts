@@ -3,7 +3,13 @@ import { ActionConsts } from "@Definitions";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, IProfilePage, FEED, CREATOR_PROFILE, mediaUrl } from "@Interfaces";
+import {
+    IAction,
+    IProfilePage,
+    FEED,
+    CREATOR_PROFILE,
+    mediaUrl,
+} from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IProfilePage.IStateProps = {
@@ -11,18 +17,20 @@ const INITIAL_STATE: IProfilePage.IStateProps = {
     emptyPageNoImage: 9999,
     emptyPageNoVideo: 9999,
     mediaGallary: new Array<mediaUrl>(),
-    errors: '',
+    errors: "",
     creatorProfile: <CREATOR_PROFILE>{},
     creatorFeeds: new Array<FEED>(),
-    followers: []
+    followers: [],
 };
 
 export const CreatorProfileReducer = (
     state = INITIAL_STATE,
-    action: IAction<IProfilePage.Actions.IMapCreatorFeedsResponse & 
-        IProfilePage.Actions.IMapCreatorProfileResponse & 
-        IProfilePage.Actions.IMapProfileFollowersResponse &
-        IProfilePage.Actions.IMapMediaGallaryResponse>
+    action: IAction<
+        IProfilePage.Actions.IMapCreatorFeedsResponse &
+            IProfilePage.Actions.IMapCreatorProfileResponse &
+            IProfilePage.Actions.IMapProfileFollowersResponse &
+            IProfilePage.Actions.IMapMediaGallaryResponse
+    >
 ) => {
     switch (action.type) {
         // case ActionConsts.CreatorProfile.TabChanged: {
@@ -38,16 +46,18 @@ export const CreatorProfileReducer = (
             if (mediaGallary.length) {
                 return Object.assign({}, state, {
                     mediaGallary: [...state.mediaGallary, ...mediaGallary],
-                    errors: ""
+                    errors: "",
                 });
             } else {
-                if (type === 1) return Object.assign({}, state, { emptyPageNoImage: page });
-                if (type === 2) return Object.assign({}, state, { emptyPageNoVideo: page });
+                if (type === 1)
+                    return Object.assign({}, state, { emptyPageNoImage: page });
+                if (type === 2)
+                    return Object.assign({}, state, { emptyPageNoVideo: page });
             }
         }
         case ActionConsts.CreatorProfile.GetMediaGallaryError: {
             return Object.assign({}, state, {
-                errors: "Error getting media gallary."
+                errors: "Error getting media gallary.",
             });
         }
         case ActionConsts.CreatorProfile.GetProfileFollowersSuccess: {
@@ -56,29 +66,31 @@ export const CreatorProfileReducer = (
             return Object.assign({}, state, {
                 followers: followers,
                 creatorProfile: Object.assign({}, state.creatorProfile, {
-                    followersCount: hasFollowed ? state.creatorProfile.followersCount + 1 
-                    : hasUnFollowed ? state.creatorProfile.followersCount - 1 
-                    : state.creatorProfile.followersCount
-                })
+                    followersCount: hasFollowed
+                        ? state.creatorProfile.followersCount + 1
+                        : hasUnFollowed
+                        ? state.creatorProfile.followersCount - 1
+                        : state.creatorProfile.followersCount,
+                }),
             });
         }
         case ActionConsts.CreatorProfile.GetProfileFollowersError: {
             return Object.assign({}, state, {
                 errors: "Something went wrong.",
-                followers: []
+                followers: [],
             });
         }
         case ActionConsts.CreatorProfile.GetCreatorProfileSuccess: {
             let { profile } = action.payload!;
 
             return Object.assign({}, state, {
-                creatorProfile: profile
+                creatorProfile: profile,
             });
         }
         case ActionConsts.CreatorProfile.GetCreatorProfileError: {
             return Object.assign({}, state, {
                 errors: "Something went wrong.",
-                creatorProfile: {}
+                creatorProfile: {},
             });
         }
         case ActionConsts.CreatorProfile.GetCreatorFeedsSuccess: {
@@ -86,16 +98,16 @@ export const CreatorProfileReducer = (
 
             if (feeds.length) {
                 return Object.assign({}, state, {
-                    creatorFeeds: [...state.creatorFeeds, ...feeds]
+                    creatorFeeds: [...state.creatorFeeds, ...feeds],
                 });
             } else {
                 return Object.assign({}, state, { emptyPageNoFeeds: page });
-            }   
+            }
         }
         case ActionConsts.CreatorProfile.GetCreatorFeedsError: {
             return Object.assign({}, state, {
                 errors: "Something went wrong.",
-                creatorFeeds: []
+                creatorFeeds: [],
             });
         }
         default:

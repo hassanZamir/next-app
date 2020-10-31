@@ -5,7 +5,7 @@ import { stringify } from "query-string";
 // #endregion Global Imports
 
 // #region Interface Imports
-import { HttpModel } from "@Interfaces";
+import { HttpModel, IStore } from "@Interfaces";
 // #endregion Interface Imports
 
 // const {
@@ -14,6 +14,38 @@ import { HttpModel } from "@Interfaces";
 const BaseUrl = `${process.env.API_URL}/api`;
 
 export const Http = {
+    UserAuthRequest: async <A>(
+        methodType: string,
+        url: string,
+        authtoken: string,
+        params?: HttpModel.IRequestQueryPayload,
+        payload?: HttpModel.IRequestPayload,
+    ): Promise<A> => {
+        return new Promise((resolve, reject) => {
+            const query = params
+                ? `?${stringify({ ...params })}`
+                : "";
+
+            fetch(`${BaseUrl}${url}${query}`, {
+                body: JSON.stringify(payload),
+                cache: "no-cache",
+                headers: {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${authtoken}`
+                },
+                method: `${methodType}`,
+            })
+                .then(async response => {
+                    if (response.status === 200) {
+                        return response.json().then(resolve);
+                    }
+                    return reject(response);
+                })
+                .catch(e => {
+                    reject(e);
+                });
+        });
+    },
     Request: async <A>(
         methodType: string,
         url: string,
@@ -33,15 +65,15 @@ export const Http = {
                 },
                 method: `${methodType}`,
             })
-            .then(async response => {
-                if (response.status === 200) {
-                    return response.json().then(resolve);
-                }
-                return reject(response);
-            })
-            .catch(e => {
-                reject(e);
-            });
+                .then(async response => {
+                    if (response.status === 200) {
+                        return response.json().then(resolve);
+                    }
+                    return reject(response);
+                })
+                .catch(e => {
+                    reject(e);
+                });
         });
     },
     UploadFile: async <A>(
@@ -64,15 +96,15 @@ export const Http = {
                 // },
                 method: `${methodType}`
             } as any)
-            .then(async response => {
-                if (response.status === 200) {
-                    return response.json().then(resolve);
-                }
-                return reject(response);
-            })
-            .catch(e => {
-                reject(e);
-            });
+                .then(async response => {
+                    if (response.status === 200) {
+                        return response.json().then(resolve);
+                    }
+                    return reject(response);
+                })
+                .catch(e => {
+                    reject(e);
+                });
         });
 
     }

@@ -2,8 +2,8 @@
 import React from "react";
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 // #endregion Global Imports
 
 // #region Local Imports
@@ -16,7 +16,15 @@ import { ProfileComponent } from "@Components";
 // #endregion Interface Imports
 
 const DynamicProfile: any = dynamic(
-    () => import('@Components/ProfileComponent').then((mod) => mod.ProfileComponent) as Promise<React.FunctionComponent<{user: USER_SESSION, profileUserName: string}>>,
+    () =>
+        import("@Components/ProfileComponent").then(
+            mod => mod.ProfileComponent
+        ) as Promise<
+            React.FunctionComponent<{
+                user: USER_SESSION;
+                profileUserName: string;
+            }>
+        >,
     { ssr: false }
 );
 
@@ -25,7 +33,7 @@ const UserProfile: NextPage<IProfilePage.IProps> = () => {
     const router = useRouter();
     const profileUserName = router.query["username"] as string;
 
-    return <DynamicProfile user={session} profileUserName={profileUserName} />
+    return <DynamicProfile user={session} profileUserName={profileUserName} />;
     // return <Authenticated session={login.session} name="Profile">
     //     <ProfileComponent user={login.session} profileUserName={profileUserName} />
     // </Authenticated>;

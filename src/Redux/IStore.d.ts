@@ -1,16 +1,18 @@
 // #region Interface Imports
-import { 
-    IHomePage, 
-    ILoginPage, 
+import {
+    IHomePage,
+    ILoginPage,
     ISignUpPage,
-    IFeedsPage, 
-    IProfilePage, 
-    IAccountVerifyPage, 
+    IFeedsPage,
+    IProfilePage,
+    IAccountVerifyPage,
     IPersistState,
     IStatusPage,
     IPayment,
     IBankingInfoPage,
     INotificationsPage,
+    IFollowersInfoPage,
+    IFollowingInfoPage,
     IMessagesPage,
     IConversationPage
 } from "@Interfaces";
@@ -30,4 +32,6 @@ export interface IStore {
     notification: INotificationsPage.IStateProps,
     messages: IMessagesPage.IStateProps,
     conversationState: IConversationPage.IStateProps
+    followersInfo: IFollowersInfoPage.IStateProps;
+    followingInfo: IFollowingInfoPage.IStateProps;
 }

@@ -1,4 +1,5 @@
 export interface GetFeedPayload {
     viewerId: number,
-    contentId: number
+    contentId: number,
+    authtoken: string
 }

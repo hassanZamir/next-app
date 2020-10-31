@@ -12,12 +12,11 @@ import { ILoginPage } from "@Interfaces";
 // #endregion Interface Imports
 
 const Login: NextPage<ILoginPage.IProps> = () => {
-    return (<LoginComponent />);
+    return <LoginComponent />;
 };
 
 // export const getStaticProps = (...params: any) => {
 //     return { props: {} };
 // };
-
 
 export default Login;

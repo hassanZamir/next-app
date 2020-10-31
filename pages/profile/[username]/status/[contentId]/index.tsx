@@ -16,27 +16,37 @@ import { ContentComponent } from "@Components";
 // #endregion Interface Imports
 
 const Authenticated: any = dynamic(
-    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{session: USER_SESSION, name: string}>>,
+    () =>
+        import("@Components/Authenticated").then(
+            mod => mod.Authenticated
+        ) as Promise<
+            React.FunctionComponent<{ session: USER_SESSION; name: string }>
+        >,
     { ssr: false }
 );
 
 const UserStatus: NextPage<IProfilePage.IProps> = () => {
-    const { session, feed } = useSelector((state: IStore) => state.persistState);
+    const { session, feed } = useSelector(
+        (state: IStore) => state.persistState
+    );
     const router = useRouter();
     const userName = router.query["username"] as string,
-    contentId = parseInt(router.query["contentId"] as string);
+        contentId = parseInt(router.query["contentId"] as string);
 
-    return <Authenticated session={session} name="Home">
-        <ContentComponent 
-            userName={userName} 
-            contentId={contentId} 
-            user={session} 
-            feed={feed} />
-    </Authenticated>;
+    return (
+        <Authenticated session={session} name="Home">
+            <ContentComponent
+                userName={userName}
+                contentId={contentId}
+                user={session}
+                feed={feed}
+            />
+        </Authenticated>
+    );
 };
 
 export async function getServerSideProps(context: any) {
-    return { props: {} }
+    return { props: {} };
 }
 
 // export async function getStaticPaths() {

@@ -13,18 +13,18 @@ export const ActionConsts = {
         ChangePasswordSuccess: "ChangePasswordSuccess",
         ChangePasswordError: "ChangePasswordError",
         DoLogout: "DoLogout",
-        onCloseResetPasswordModal: "onCloseResetPasswordModal"
+        onCloseResetPasswordModal: "onCloseResetPasswordModal",
     },
     SignUp: {
         SignUpSuccess: "SignUpSuccess",
         SignUpError: "SignUpError",
         SignUpFieldAvailaible: "SignUpFieldAvailaible",
-        SignUpFieldNotAvailaible: "SignUpFieldNotAvailaible"
+        SignUpFieldNotAvailaible: "SignUpFieldNotAvailaible",
     },
     AccountVerify: {
         AccountVerifySuccess: "AccountVerifySuccess",
         AccountVerifyError: "AccountVerifyError",
-        SetLoading: "SetLoading"
+        SetLoading: "SetLoading",
     },
     Feeds: {
         GetAllFeedsSuccess: "GetAllFeedsSuccess",
@@ -38,7 +38,7 @@ export const ActionConsts = {
         ProfilesSuggestionError: "ProfilesSuggestionError",
         PostContentSuccess: "PostContentSuccess",
         PostContentError: "PostContentError",
-        UploadMediaError: "UploadMediaError"
+        UploadMediaError: "UploadMediaError",
     },
     CreatorProfile: {
         GetCreatorProfileSuccess: "GetCreatorProfileSuccess",
@@ -49,7 +49,7 @@ export const ActionConsts = {
         GetProfileFollowersError: "GetProfileFollowersError",
         GetMediaGallarySuccess: "GetMediaGallarySuccess",
         GetMediaGallaryError: "GetMediaGallaryError",
-        TabChanged: "TabChanged"
+        TabChanged: "TabChanged",
     },
     Status: {
         GetAllCommentsSuccess: "GetAllCommentsSuccess",
@@ -58,7 +58,7 @@ export const ActionConsts = {
         PostCommentError: "PostCommentError",
         LikeCommentSuccess: "LikeCommentSuccess",
         LikeCommentError: "LikeCommentError",
-        UpdatePersistFeedCommentCount: "UpdatePersistFeedCommentCount"
+        UpdatePersistFeedCommentCount: "UpdatePersistFeedCommentCount",
     },
     Payment: {
         GetPaymentSettingsSuccess: "GetPaymentSettingsSuccess",
@@ -83,7 +83,27 @@ export const ActionConsts = {
         PostBankingInfoSuccess: "PostBankingInfoSuccess",
         PostBankingInfoError: "PostBankingInfoError",
         GetBankingInfoSuccess: "GetBankingInfoSuccess",
-        GetBankingInfoError: "GetBankingInfoError"
+        GetBankingInfoError: "GetBankingInfoError",
+    },
+    FollowersInfo: {
+        GetFollowersInfoSuccess: "GetFollowersInfoSuccess",
+        GetFollowersInfoError: "GetFollowersInfoError",
+        RestrictFollowerSuccess: "RestrictFollowerSuccess",
+        RestrictFollowerError: "RestrictFollowerError",
+        UnRestrictFollowerSuccess: "UnRestrictFollowerSuccess",
+        UnRestrictFollowerError: "UnRestrictFollowerError",
+        BlockedFollowerSuccess: "BlockedFollowerSuccess",
+        BlockedFollowerError: "BlockedFollowerError",
+        UnBlockedFollowerSuccess: "UnBlockedFollowerSuccess",
+        UnBlockedFollowerError: "UnBlockedFollowerError",
+        FavouriteFollowerSuccess: "FavouriteFollowerSuccess",
+        FavouriteFollowerError: "FavouriteFollowerError",
+    },
+    FollowingInfo: {
+        GetFollowingInfoSuccess: "GetFollowingInfoSuccess",
+        GetFollowingInfoError: "GetFollowingInfoError",
+        PutRecurringSuccess: "PutRecurringSuccess",
+        PutRecurringError: "PutRecurringError",
     },
     Notifications: {
         AddPusherNotificationToList: "AddPusherNotificationToList",

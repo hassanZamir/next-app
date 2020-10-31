@@ -1,4 +1,4 @@
-const getChannel = (name: string, config: { cluster: string, encrypted: boolean, authTransport?: string, authEndpoint?: string, auth?: any}) => {
+const getChannel = (name: string, config: { cluster: string, encrypted: boolean, authTransport?: string, authEndpoint?: string, auth?: any }) => {
     return new Promise(async (resolve, reject) => {
         const pusherKey = process.env.PUSHER_KEY;
         const pusherId = typeof window !== "undefined" && pusherKey;

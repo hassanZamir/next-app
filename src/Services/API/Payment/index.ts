@@ -13,10 +13,10 @@ export const PaymentService = {
         let response: PaymentSettingsModel.GetPaymentSettingsResponse;
 
         try {
-            response = await Http.Request<PaymentSettingsModel.GetPaymentSettingsResponse>(
+            response = await Http.UserAuthRequest<PaymentSettingsModel.GetPaymentSettingsResponse>(
                 "GET",
                 "/user-payment/" + payload.userId,
-                undefined
+                payload.authtoken
             );
         } catch (error) {
             response = {
@@ -54,8 +54,10 @@ export const PaymentService = {
                 "POST",
                 "/user-payment/" + payload.userId + "/cards",
                 undefined,
-                { cardTitle: payload.cardTitle, cardNumber: payload.cardNumber, expMonth: payload.expMonth, 
-                expYear: payload.expYear, cvc: payload.cvc}
+                {
+                    cardTitle: payload.cardTitle, cardNumber: payload.cardNumber, expMonth: payload.expMonth,
+                    expYear: payload.expYear, cvc: payload.cvc
+                }
             );
         } catch (error) {
             response = {
@@ -79,7 +81,7 @@ export const PaymentService = {
         payload: UpdatePaymentSettingsModel.GetUpdatePaymentSettingsPayload
     ): Promise<UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse> => {
         let response: UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse;
-        let params = <{paymentMode: number, defaultCard: number }>{};
+        let params = <{ paymentMode: number, defaultCard: number }>{};
 
         payload.paymentMode && (params.paymentMode = payload.paymentMode);
         payload.defaultCard && (params.defaultCard = payload.defaultCard);
@@ -112,7 +114,7 @@ export const PaymentService = {
         payload: AddFundsToWalletModel.GetAddFundsToWalletPayload
     ): Promise<AddFundsToWalletModel.GetAddFundsToWalletResponse> => {
         let response: AddFundsToWalletModel.GetAddFundsToWalletResponse;
-        
+
         try {
             response = await Http.Request<AddFundsToWalletModel.GetAddFundsToWalletResponse>(
                 "POST",
@@ -132,7 +134,7 @@ export const PaymentService = {
         payload: OnBecomeCreatorModel.GetOnBecomeCreatorPayload
     ): Promise<OnBecomeCreatorModel.GetOnBecomeCreatorResponse> => {
         let response: OnBecomeCreatorModel.GetOnBecomeCreatorResponse;
-        
+
         try {
             response = await Http.Request<OnBecomeCreatorModel.GetOnBecomeCreatorResponse>(
                 "POST",

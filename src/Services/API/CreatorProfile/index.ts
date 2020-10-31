@@ -13,80 +13,107 @@ export const CreatorProfileService = {
         let response: CreatorProfileModel.GetCreatorFeedsResponse;
 
         try {
-            response = await Http.Request<CreatorProfileModel.GetCreatorFeedsResponse>(
+            response = await Http.Request<
+                CreatorProfileModel.GetCreatorFeedsResponse
+            >(
                 "GET",
-                "/profiles/" + payload.username + "/content?type=" + payload.type + 
-                '&page=' + payload.page + '&offset=' + payload.offset + '&viewer=' + payload.viewer,
+                "/profiles/" +
+                    payload.username +
+                    "/content?type=" +
+                    payload.type +
+                    "&page=" +
+                    payload.page +
+                    "&offset=" +
+                    payload.offset +
+                    "&viewer=" +
+                    payload.viewer,
                 undefined
             );
         } catch (error) {
             response = {
                 status: false,
-                response: [{
-                    name: "sohaib",
-                    username: "venotv1234",
-                    profileImageUrl: "/images/Capture@2x.png",
-                    content_viewer_like: false,
-                    id: 7,
-                    title: "My First Post",
-                    media_url: [{
-                        url: "72227.jpg",
-                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
-                        type: 1
-                    }],
-                    likesCount: 0,
-                    commentsCount: 0,
-                    tipsCount: 0,
-                    timeStamp: "2020-07-09T09:03:28.8766667"
-                }, {
-                    name: "sohaib",
-                    username: "venotv1234",
-                    profileImageUrl: "/images/Capture@2x.png",
-                    content_viewer_like: false,
-                    id: 7,
-                    title: "My First Post",
-                    media_url: [{
-                        url: "72227.jpg",
-                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
-                        type: 1
-                    }],
-                    likesCount: 0,
-                    commentsCount: 0,
-                    tipsCount: 0,
-                    timeStamp: "2020-07-09T09:03:28.8766667"
-                }, {
-                    name: "sohaib",
-                    username: "venotv1234",
-                    profileImageUrl: "/images/Capture@2x.png",
-                    content_viewer_like: false,
-                    id: 7,
-                    title: "My First Post",
-                    media_url: [{
-                        url: "72227.jpg",
-                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
-                        type: 1
-                    }],
-                    likesCount: 0,
-                    commentsCount: 0,
-                    tipsCount: 0,
-                    timeStamp: "2020-07-09T09:03:28.8766667"
-                }, {
-                    name: "sohaib",
-                    username: "venotv1234",
-                    profileImageUrl: "/images/Capture@2x.png",
-                    content_viewer_like: false,
-                    id: 7,
-                    title: "My First Post",
-                    media_url: [{
-                        url: "72227.jpg",
-                        token: "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
-                        type: 1
-                    }],
-                    likesCount: 0,
-                    commentsCount: 0,
-                    tipsCount: 0,
-                    timeStamp: "2020-07-09T09:03:28.8766667"
-                }]
+                response: [
+                    {
+                        name: "sohaib",
+                        username: "venotv1234",
+                        profileImageUrl: "/images/Capture@2x.png",
+                        content_viewer_like: false,
+                        id: 7,
+                        title: "My First Post",
+                        media_url: [
+                            {
+                                url: "72227.jpg",
+                                token:
+                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                                type: 1,
+                            },
+                        ],
+                        likesCount: 0,
+                        commentsCount: 0,
+                        tipsCount: 0,
+                        timeStamp: "2020-07-09T09:03:28.8766667",
+                    },
+                    {
+                        name: "sohaib",
+                        username: "venotv1234",
+                        profileImageUrl: "/images/Capture@2x.png",
+                        content_viewer_like: false,
+                        id: 7,
+                        title: "My First Post",
+                        media_url: [
+                            {
+                                url: "72227.jpg",
+                                token:
+                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                                type: 1,
+                            },
+                        ],
+                        likesCount: 0,
+                        commentsCount: 0,
+                        tipsCount: 0,
+                        timeStamp: "2020-07-09T09:03:28.8766667",
+                    },
+                    {
+                        name: "sohaib",
+                        username: "venotv1234",
+                        profileImageUrl: "/images/Capture@2x.png",
+                        content_viewer_like: false,
+                        id: 7,
+                        title: "My First Post",
+                        media_url: [
+                            {
+                                url: "72227.jpg",
+                                token:
+                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                                type: 1,
+                            },
+                        ],
+                        likesCount: 0,
+                        commentsCount: 0,
+                        tipsCount: 0,
+                        timeStamp: "2020-07-09T09:03:28.8766667",
+                    },
+                    {
+                        name: "sohaib",
+                        username: "venotv1234",
+                        profileImageUrl: "/images/Capture@2x.png",
+                        content_viewer_like: false,
+                        id: 7,
+                        title: "My First Post",
+                        media_url: [
+                            {
+                                url: "72227.jpg",
+                                token:
+                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                                type: 1,
+                            },
+                        ],
+                        likesCount: 0,
+                        commentsCount: 0,
+                        tipsCount: 0,
+                        timeStamp: "2020-07-09T09:03:28.8766667",
+                    },
+                ],
             };
         }
         return response;
@@ -97,11 +124,9 @@ export const CreatorProfileService = {
         let response: CreatorProfileModel.GetCreatorProfileResponse;
 
         try {
-            response = await Http.Request<CreatorProfileModel.GetCreatorProfileResponse>(
-                "GET",
-                "/profiles/" + payload.username,
-                undefined
-            );
+            response = await Http.Request<
+                CreatorProfileModel.GetCreatorProfileResponse
+            >("GET", "/profiles/" + payload.username, undefined);
         } catch (error) {
             response = {
                 status: false,
@@ -116,8 +141,8 @@ export const CreatorProfileService = {
                     imagesCount: 0,
                     videosCount: 0,
                     followingFee: 0.0,
-                    userName: "sohaibminhas789"
-                }
+                    userName: "sohaibminhas789",
+                },
             };
         }
         return response;
@@ -129,12 +154,9 @@ export const CreatorProfileService = {
 
         const { username, ...rest } = payload;
         try {
-            response = await Http.Request<CreatorProfileModel.GetPostCreatorProfileResponse>(
-                "POST",
-                "/profiles/" + username,
-                undefined,
-                {...rest}
-            );
+            response = await Http.Request<
+                CreatorProfileModel.GetPostCreatorProfileResponse
+            >("POST", "/profiles/" + username, undefined, { ...rest });
         } catch (error) {
             response = {
                 status: false,
@@ -149,8 +171,8 @@ export const CreatorProfileService = {
                     imagesCount: 0,
                     videosCount: 0,
                     followingFee: 0.0,
-                    userName: "sohaibminhas789"
-                }
+                    userName: "sohaibminhas789",
+                },
             };
         }
         return response;
@@ -161,17 +183,24 @@ export const CreatorProfileService = {
         let response: ProfileFollowersModel.GetProfileFollowersResponse;
 
         try {
-            response = await Http.Request<ProfileFollowersModel.GetProfileFollowersResponse>(
+            response = await Http.Request<
+                ProfileFollowersModel.GetProfileFollowersResponse
+            >(
                 "GET",
-                "/profiles/" + payload.username + "/followers?userId=" + payload.userId,
+                "/profiles/" +
+                    payload.username +
+                    "/followers?userId=" +
+                    payload.userId,
                 undefined
             );
         } catch (error) {
             response = {
                 status: false,
-                response: [{
-                    userId: 10
-                }]
+                response: [
+                    {
+                        userId: 10,
+                    },
+                ],
             };
         }
         return response;
@@ -182,16 +211,15 @@ export const CreatorProfileService = {
         let response: CreatorProfileModel.GetFollowProfileResponse;
 
         try {
-            response = await Http.Request<CreatorProfileModel.GetFollowProfileResponse>(
-                "POST",
-                "/profiles/" + payload.username + '/follow',
-                undefined,
-                {userId: payload.userId}
-            );
+            response = await Http.Request<
+                CreatorProfileModel.GetFollowProfileResponse
+            >("POST", "/profiles/" + payload.username + "/follow", undefined, {
+                userId: payload.userId,
+            });
         } catch (error) {
             response = {
                 status: false,
-                response: []
+                response: [],
             };
         }
         return response;
@@ -202,16 +230,18 @@ export const CreatorProfileService = {
         let response: CreatorProfileModel.GetFollowProfileResponse;
 
         try {
-            response = await Http.Request<CreatorProfileModel.GetFollowProfileResponse>(
+            response = await Http.Request<
+                CreatorProfileModel.GetFollowProfileResponse
+            >(
                 "DELETE",
-                "/profiles/" + payload.username + '/follow',
+                "/profiles/" + payload.username + "/follow",
                 undefined,
-                {userId: payload.userId}
+                { userId: payload.userId }
             );
         } catch (error) {
             response = {
                 status: false,
-                response: []
+                response: [],
             };
         }
         return response;
@@ -222,19 +252,29 @@ export const CreatorProfileService = {
         let response: CreatorProfileModel.GetGETMediaGallaryResponse;
 
         const { username, ...restPayload } = payload;
-        console.log("/profiles/" + username + '/gallery' + getQueryParams({ ...restPayload }));
+        console.log(
+            "/profiles/" +
+                username +
+                "/gallery" +
+                getQueryParams({ ...restPayload })
+        );
         try {
-            response = await Http.Request<CreatorProfileModel.GetGETMediaGallaryResponse>(
+            response = await Http.Request<
+                CreatorProfileModel.GetGETMediaGallaryResponse
+            >(
                 "GET",
-                "/profiles/" + username + '/gallery' + getQueryParams({ ...restPayload }),
+                "/profiles/" +
+                    username +
+                    "/gallery" +
+                    getQueryParams({ ...restPayload }),
                 undefined
             );
         } catch (error) {
             response = {
                 status: false,
-                response: []
+                response: [],
             };
         }
         return response;
-    }
+    },
 };

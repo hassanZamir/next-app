@@ -12,15 +12,23 @@ import { IStore } from "@Redux/IStore";
 
 // #region Interface Imports
 import { IFeedsPage, USER_SESSION } from "@Interfaces";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 // #endregion Interface Imports
 
 const DynamicFeeds: any = dynamic(
-    () => import('@Components/FeedsComponent').then((mod) => mod.FeedsComponent) as Promise<React.FunctionComponent<IFeedsPage.IProps>>,
+    () =>
+        import("@Components/FeedsComponent").then(
+            mod => mod.FeedsComponent
+        ) as Promise<React.FunctionComponent<IFeedsPage.IProps>>,
     { ssr: false }
 );
 const Authenticated: any = dynamic(
-    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{session: USER_SESSION, name: string}>>,
+    () =>
+        import("@Components/Authenticated").then(
+            mod => mod.Authenticated
+        ) as Promise<
+            React.FunctionComponent<{ session: USER_SESSION; name: string }>
+        >,
     { ssr: false }
 );
 
@@ -29,14 +37,16 @@ const Home: NextPage = () => {
     // const { scrollY, scrollX, scrollDirection } = useScroll();
     const { session } = persistState;
     const [scrolledToBottom, setScrolledToBottom] = useState(false);
-    
+
     const onScroll = (bottom: boolean) => {
         bottom ? setScrolledToBottom(true) : setScrolledToBottom(false);
-    }
+    };
 
-    return <Authenticated session={session} name="Home" onScroll={onScroll}>
-        <DynamicFeeds user={session} scrolledToBottom={scrolledToBottom}/>
-    </Authenticated>
+    return (
+        <Authenticated session={session} name="Home" onScroll={onScroll}>
+            <DynamicFeeds user={session} scrolledToBottom={scrolledToBottom} />
+        </Authenticated>
+    );
 };
 
 export const getStaticProps = (...params: any) => {

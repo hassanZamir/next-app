@@ -1,3 +1,4 @@
 export interface GETNotificationStatsPayload {
-    userId: number
+    userId: number,
+    authtoken: string
 }

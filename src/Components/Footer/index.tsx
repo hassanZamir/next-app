@@ -13,39 +13,46 @@ import { LoginActions, NotificationActions, MessagesActions } from "@Actions";
 import { useModal } from '../Hooks';
 import { NotificationPusher } from '@Services/Pusher';
 import { NOTIFICATION, CONVERSATION_RESPONSE, MESSAGE_LIST_ITEM } from "@Interfaces";
+import { Menu } from "@Components/Menu";
+
 // #endregion Local Imports
 
-const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPaymentSettingsClick }): JSX.Element => {
+const Footer: React.FunctionComponent<IFooter.IProps> = ({
+    selected,
+    session,
+    onPaymentSettingsClick,
+}): JSX.Element => {
     const dispatch = useDispatch();
     const persistState = useSelector((state: IStore) => state.persistState);
     const { notificationStats } = persistState;
-    const modalRef = useRef<HTMLDivElement>(null);
-    const { isShowing, toggle } = useModal(modalRef);
+    const menuModalRef = useModal(useRef<HTMLDivElement>(null));
 
-    const onLogout = () => { dispatch(LoginActions.UserLogout()); };
+    const onLogout = () => {
+        dispatch(LoginActions.UserLogout());
+    };
 
     const notificationSubscriptionCallback = (param: NOTIFICATION) => {
         if (window.location.href.includes("notifications"))
             dispatch(NotificationActions.AddPusherNotificationToList(param));
 
         dispatch(NotificationActions.PusherNotificationRecieved({}));
-    }
+    };
 
     const newMessageRecievedCallBack = (message: CONVERSATION_RESPONSE) => {
-        if (message.senderId !== user.id)
+        if (message.senderId !== session.id)
             dispatch(MessagesActions.MessageRecieved(message));
     }
 
     const newConversationRecievedCallBack = (conversation: MESSAGE_LIST_ITEM) => {
         dispatch(MessagesActions.NewConversationRecieved(conversation));
-        dispatch(NotificationActions.GetNotificationStats({ userId: user.id }));
+        dispatch(NotificationActions.GetNotificationStats({ userId: session.id, authtoken: session.token }));
     }
 
     useEffect(() => {
-        dispatch(NotificationActions.GetNotificationStats({ userId: user.id }));
+        dispatch(NotificationActions.GetNotificationStats({ userId: session.id, authtoken: session.token }));
 
         if (typeof window !== "undefined" && !(window as any).Pusher) {
-            const channelName = 'creators-' + user.id;
+            const channelName = 'creators-' + session.id;
             NotificationPusher.getChannel(channelName, { cluster: 'ap4', encrypted: true })
                 .then((channel: any) => {
                     NotificationPusher.subscribe('like', channel, notificationSubscriptionCallback);
@@ -64,13 +71,13 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
         }
     }, []);
 
-    return <div style={{ height: "40px" }} 
+    return <div style={{ height: "40px" }}
         className={"footer-navigation d-flex align-items-center justify-content-between text-white bg-primary"}>
         {FooterConfig.map((config, index) => {
-            return <div key={index} 
-                onClick={() => { 
+            return <div key={index}
+                onClick={() => {
                     if (config.name === 'Account') {
-                        toggle();
+                        menuModalRef.toggle();
                         return;
                     } else if (config.name === 'Home') {
                         Router.push('/');
@@ -82,7 +89,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                         Router.push('/message');
                         return;
                     } else if (config.name === 'App Middle Icon') {
-                        Router.push('/profile/' + user.username);
+                        Router.push('/profile/' + session.username);
                         return;
                     } else {
                         return null
@@ -90,92 +97,98 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({ selected, user, onPay
                 }}
                 className="cursor-pointer d-flex align-items-center justify-content-center h-100"
                 style={{ width: "20%", position: 'relative' }}>
-                
+
                 <div className={"d-flex align-items-center justify-content-center " + (selected === config.name ? "highlight-footer-option" : "")}>
-                    { notificationStats && config.name === 'Notification' && notificationStats.notifications_unseen_counter > 0 && 
+                    {notificationStats && config.name === 'Notification' && notificationStats.notifications_unseen_counter > 0 &&
                         <span className="notification-counter">
-                        { notificationStats.notifications_unseen_counter }
-                    </span>}
-                    { notificationStats && config.name === 'Messages' && notificationStats.conversation_unseen_counter > 0 && 
+                            {notificationStats.notifications_unseen_counter}
+                        </span>}
+                    {notificationStats && config.name === 'Messages' && notificationStats.conversation_unseen_counter > 0 &&
                         <span className="notification-counter">
-                        { notificationStats.conversation_unseen_counter }
-                    </span>}
-                    <StaticImage 
-                        src={selected === config.name ? config.imageSelected.src : config.image.src} 
-                        height={selected === config.name ? config.imageSelected.height : config.image.height} 
+                            {notificationStats.conversation_unseen_counter}
+                        </span>}
+                    <StaticImage
+                        src={selected === config.name ? config.imageSelected.src : config.image.src}
+                        height={selected === config.name ? config.imageSelected.height : config.image.height}
                         width={selected === config.name ? config.imageSelected.width : config.image.width} />
                 </div>
-                {config.name === 'Account' && 'id' in user &&  <AccountOptionsModal 
-                    isShowing={isShowing} 
-                    modalRef={modalRef}
-                    onLogout={onLogout} 
-                    onPaymentSettings={onPaymentSettingsClick} />}
+                {session && <Menu
+                    isShowing={menuModalRef.isShowing}
+                    toggle={menuModalRef.toggle}
+                    session={session}
+                    onLogout={onLogout}
+                />}
             </div>
         })}
     </div>;
 };
 
-
-const FooterConfig = [{
-    name: 'Home',
-    image: {
-        src: '/images/home_run_white@2x.png',
-        height: '18px',
-        width: '18px'
+const FooterConfig = [
+    {
+        name: "Home",
+        image: {
+            src: "/images/home_run_white@2x.png",
+            height: "18px",
+            width: "18px",
+        },
+        imageSelected: {
+            src: "/images/home_filled_icon@2x.png",
+            height: "18px",
+            width: "18px",
+        },
     },
-    imageSelected: {
-        src: '/images/home_filled_icon@2x.png',
-        height: '18px',
-        width: '18px'
-    }
-}, {
-    name: 'Notification',
-    image: {
-        src: '/images/bell_white@2x.png',
-        height: '20px',
-        width: '20px'
+    {
+        name: "Notification",
+        image: {
+            src: "/images/bell_white@2x.png",
+            height: "20px",
+            width: "20px",
+        },
+        imageSelected: {
+            src: "/images/notification_filled@3x.png",
+            height: "18px",
+            width: "18px",
+        },
     },
-    imageSelected: {
-        src: '/images/notification_filled@3x.png',
-        height: '18px',
-        width: '18px'
-    }
-}, {
-    name: 'App Middle Icon',
-    image: {
-        src: '/images/app_middle_icon_navbar_white@2x.png',
-        height: '24px',
-        width: '24px'
+    {
+        name: "App Middle Icon",
+        image: {
+            src: "/images/app_middle_icon_navbar_white@2x.png",
+            height: "24px",
+            width: "24px",
+        },
+        imageSelected: {
+            src: '/images/app_middle_icon_navbar@2x.png',
+            height: '18px',
+            width: '18px'
+        }
     },
-    imageSelected: {
-        src: '/images/app_middle_icon_navbar@2x.png',
-        height: '18px',
-        width: '18px'
-    }
-}, {
-    name: 'Messages',
-    image: {
-        src: '/images/comment_white@2x.png',
-        height: '20px',
-        width: '20px'
+    {
+        name: 'Messages',
+        image: {
+            src: '/images/comment_white@2x.png',
+            height: '20px',
+            width: '20px'
+        },
+        imageSelected: {
+            src: '/images/messages_filled@2x.png',
+            height: '18px',
+            width: '18px'
+        }
     },
-    imageSelected: {
-        src: '/images/messages_filled@2x.png',
-        height: '18px',
-        width: '18px'
-    }
-}, {
-    name: 'Account',
-    image: {
-        src: '/images/profile_white@2x.png',
-        height: '20px',
-        width: '20px'
+    {
+        name: "Account",
+        image: {
+            src: "/images/profile_white@2x.png",
+            height: "20px",
+            width: "20px",
+        },
+        imageSelected: {
+            src: "/images/profile_filled@2x.png",
+            height: "18px",
+            width: "18px",
+        },
     },
-    imageSelected: {
-        src: '/images/profile_filled@2x.png',
-        height: '18px',
-        width: '18px'
-    }
-}];
+];
 
 export { Footer };

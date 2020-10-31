@@ -1,4 +1,4 @@
-export type USER_SESSION  = {
+export type USER_SESSION = {
     id: number;
     name: string;
     username: string;
@@ -12,11 +12,13 @@ export type USER_SESSION  = {
     cardNumber: string;
     cardTitle: string;
     notificationCount: number;
-}
+    followersCount: number;
+    token: string;
+};
 
 export interface LoginResponse {
     authenticated: boolean;
     status: string;
-    session: USER_SESSION,
+    session: USER_SESSION;
     errors: string;
 }

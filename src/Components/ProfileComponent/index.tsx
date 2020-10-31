@@ -10,7 +10,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
 import { USER_SESSION } from "@Interfaces";
-import { Footer , CreatorProfile, CreatorContent, PaymentSettings , PaymentSettingsContainer } from '@Components';
+import { Footer, CreatorProfile, CreatorContent, PaymentSettings, PaymentSettingsContainer } from '@Components';
 import { CreatorProfileActions } from "@Actions";
 import { AnimatePopup } from "@Components/Basic";
 import { PaymentConfirmationModal, UnFollowConfirmationModal, ReturnPolicyModal } from "@Components/Modals";
@@ -26,7 +26,7 @@ export const ProfileComponent: React.FunctionComponent<{
     );
     const { creatorProfile, followers } = creatorProfileState;
     const { contentCount, imagesCount, videosCount, name } = creatorProfile;
-    
+
     const [showPaymentSettingsPopup, setShowPaymentSettingsPopup] = useState(
         false
     );
@@ -34,14 +34,14 @@ export const ProfileComponent: React.FunctionComponent<{
         false
     );
     const [scrolledToBottom, setScrolledToBottom] = useState(false);
-    
+
     // Modals Setup
     const followConfirmationModalRef = useModal(useRef<HTMLDivElement>(null));
     const unFollowConfirmationModalRef = useModal(useRef<HTMLDivElement>(null));
     const cancellationPolicyModalRef = useModal(useRef<HTMLDivElement>(null));
 
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         const params = { username: profileUserName };
         dispatch(CreatorProfileActions.GetCreatorProfile(params));
@@ -176,7 +176,7 @@ export const ProfileComponent: React.FunctionComponent<{
             </div>
             <Footer
                 selected="App Middle Icon"
-                user={user}
+                session={user}
                 onPaymentSettingsClick={onPaymentSettingsClick}
             />
 

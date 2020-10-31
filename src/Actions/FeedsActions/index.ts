@@ -17,7 +17,7 @@ export const FeedsActions = {
     ) => {
         const result = await FeedsService.GetProfilesSuggestion(payload);
         dispatch({
-            payload: {profiles: result.status ? result.response : []},
+            payload: { profiles: result.status ? result.response : [] },
             type: result.status ? ActionConsts.Feeds.ProfilesSuggestionSuccess : ActionConsts.Feeds.ProfilesSuggestionError
         });
     },
@@ -25,15 +25,15 @@ export const FeedsActions = {
         dispatch: Dispatch
     ) => {
         const result = await FeedsService.GetAllFeeds(payload);
-        
+
         dispatch({
-            payload: {feeds: result.status && result.response ? result.response : [], page: payload.page},
+            payload: { feeds: result.status && result.response ? result.response : [], page: payload.page },
             type: result.status && result.response ? ActionConsts.Feeds.GetAllFeedsSuccess : ActionConsts.Feeds.GetAllFeedsError
         });
     },
     TipFeed: (payload: IFeed.Actions.ITipFeedPayload) => async () => {
         const result = await FeedsService.TipFeed(payload);
-        
+
         return result;
     },
     LikeFeed: (payload: IFeed.Actions.ILikeFeedPayload) => async () => {
@@ -54,7 +54,7 @@ export const FeedsActions = {
     },
     ReportFeed: (payload: IFeed.Actions.IGetReportFeedPayload) => async () => {
         const result = await FeedsService.ReportFeed(payload);
-        
+
         return result;
     },
     PostContent: (payload: IFeedsPage.Actions.IGetUploadMediaFilesPayload) => async (dispatch: Dispatch) => {
@@ -66,13 +66,13 @@ export const FeedsActions = {
             });
             return;
         }
-        const postContent = await FeedsService.PostContent({ 
-            title: payload.title, 
+        const postContent = await FeedsService.PostContent({
+            title: payload.title,
             media_url: result ? result.uploadSuccess : [],
-            userId: payload.userId
+            userId: payload.userId,
         });
         dispatch({
-            payload: postContent.status ? { feed: postContent.response }: null,
+            payload: postContent.status ? { feed: postContent.response } : null,
             type: postContent.status ? ActionConsts.Feeds.PostContentSuccess : ActionConsts.Feeds.PostContentError
         });
         return postContent;

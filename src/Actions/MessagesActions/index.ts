@@ -18,8 +18,8 @@ export const MessagesActions = {
         const result = await MessagesService.GetAllMessages(payload);
 
         dispatch({
-            payload: { 
-                allMessages: result.status && result.response ? result.response : [], 
+            payload: {
+                allMessages: result.status && result.response ? result.response : [],
                 page: payload.page ? payload.page : 0
             },
             type: result.status && result.response ? ActionConsts.Messages.GetAllMessagesSuccess : ActionConsts.Messages.GetAllMessagesError
@@ -31,8 +31,8 @@ export const MessagesActions = {
         const result = await MessagesService.GetMessageRecipients(payload);
 
         dispatch({
-            payload: { 
-                messageRecipients: result.status && result.response ? result.response : [], 
+            payload: {
+                messageRecipients: result.status && result.response ? result.response : [],
                 page: payload.page ? payload.page : 0
             },
             type: result.status && result.response ? ActionConsts.Messages.GetMessagesRecipientsSuccess : ActionConsts.Messages.GetMessagesRecipientsError
@@ -42,7 +42,7 @@ export const MessagesActions = {
         dispatch: Dispatch
     ) => {
         const result = await MessagesService.CreateConversation(payload);
-        
+
         dispatch({
             payload: { conversation: result.status && result.response ? result.response : {} },
             type: result.status && result.response ? ActionConsts.Messages.SetActiveConversationSuccess : ActionConsts.Messages.SetActiveConversationError
@@ -60,10 +60,10 @@ export const MessagesActions = {
         dispatch: Dispatch
     ) => {
         const result = await MessagesService.GetConversation(payload);
-        
+
         dispatch({
-            payload: { 
-                conversation: result.status && result.response ? result.response : [], 
+            payload: {
+                conversation: result.status && result.response ? result.response : [],
                 page: payload.page ? payload.page : 0
             },
             type: result.status && result.response ? ActionConsts.Conversation.GetConversationSuccess : ActionConsts.Conversation.GetConversationError
@@ -74,7 +74,7 @@ export const MessagesActions = {
     ) => {
         let uploadResult = null;
         uploadResult = payload.type === 2 ? await FeedsService.UploadMediaOnStorage({ media_url: payload.meta!.media_urls, blur: true }) : null;
-        
+
         if (uploadResult && !uploadResult.status && payload.type === 2) {
             dispatch({
                 payload: "Media upload failed",
@@ -83,7 +83,7 @@ export const MessagesActions = {
             return;
         }
 
-        let result: any = { status: false, response: null};
+        let result: any = { status: false, response: null };
         if (payload.type === 2) {
             result = await MessagesService.CreateMessage(Object.assign({}, payload, {
                 meta: {
@@ -100,7 +100,7 @@ export const MessagesActions = {
             payload: { conversationMessage: result.status && result.response ? result.response : {} },
             type: result.status && result.response ? ActionConsts.Conversation.CreateMessageSuccess : ActionConsts.Conversation.CreateMessageError
         });
-        
+
         if (result.status && result.response) {
             payload.onSuccessScroll();
         }

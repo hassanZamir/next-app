@@ -11,27 +11,27 @@ export type CREATOR_PROFILE = {
     location: string;
     followingFee: number;
     userName: string;
-}
+};
 export interface CreatorProfileResponse {
     status: boolean;
-    response: CREATOR_PROFILE
+    response: CREATOR_PROFILE;
 }
 
-export type mediaUrl = {type: number, url: string, token: string};
+export type mediaUrl = { type: number; url: string; token: string };
 
 export type FEED = {
-    name: string,
-    username: string,
-    profileImageUrl: string,
-    content_viewer_like: boolean,
-    id: number,
-    title: string,
-    media_url: mediaUrl[],
-    likesCount: number,
-    commentsCount: number,
-    tipsCount: number,
-    timeStamp: string
-}
+    name: string;
+    username: string;
+    profileImageUrl: string;
+    content_viewer_like: boolean;
+    id: number;
+    title: string;
+    media_url: mediaUrl[];
+    likesCount: number;
+    commentsCount: number;
+    tipsCount: number;
+    timeStamp: string;
+};
 export interface CreatorFeedsResponse {
     status: boolean;
     response: FEED[];
