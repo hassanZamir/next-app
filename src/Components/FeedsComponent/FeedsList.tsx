@@ -38,38 +38,72 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({
     const modalRef = useRef<HTMLDivElement>(null);
     const { isShowing, toggle } = useModal(modalRef);
 
-    return (<div className="d-flex justify-content-between my-2 pl-2">
-        <div className="d-flex align-items-center cursor-pointer" onClick={(e) => { likeContent(e, index) }}>
-            <FontAwesomeIcon icon={faHeart} color={content_viewer_like ? "#F57B52" : "#A0A0A0"} size="lg" />
-            <div className="text-darkGrey font-10px ml-1">{likesCount}</div>
-        </div>
-        <Link href={"/profile/" + feed.username + "/status/" + feed.id}>
-            <div className="d-flex align-items-center cursor-pointer" onClick={(e) => { onCommentClick(e, index) }}>
-                <img src="/images/comments.svg" />
-                {/* <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" /> */}
-                <div className="text-darkGrey font-10px ml-1">{commentsCount || 0}</div>
+    return (
+        <div className="d-flex justify-content-between my-2 pl-2">
+            <div
+                className="d-flex align-items-center cursor-pointer"
+                onClick={e => {
+                    likeContent(e, index);
+                }}
+            >
+                <FontAwesomeIcon
+                    icon={faHeart}
+                    color={content_viewer_like ? "#F57B52" : "#A0A0A0"}
+                    size="lg"
+                />
+                <div className="text-darkGrey font-10px ml-1">{likesCount}</div>
             </div>
-        </Link>
-        <div className="d-flex align-items-center cursor-pointer" onClick={(e) => { toggleTipModal(e, index) }}>
-            <FontAwesomeIcon icon={faDollarSign} color="#707070" size="lg" />
-            <div className="text-darkGrey font-10px ml-1">Tip</div>
-        </div>
-        <div className="d-flex align-items-center cursor-pointer">
-            <FontAwesomeIcon icon={faClock} color="#F57B52" size="lg" />
-            <div className="text-darkGrey font-10px ml-1">{CurrentTimeDifference(timeStamp)}</div>
-        </div>
-        <div className="d-flex align-items-center cursor-pointer position-relative"
-            onClick={(e) => { e.preventDefault(); toggle(); }}>
-            <FeedOptionsModal
-                isShowing={isShowing}
-                modalRef={modalRef}
-                onReportClick={onReportClick}
-                onCopyClick={onCopyClick}
-                feed={feed} />
+            <Link href={"/profile/" + feed.username + "/status/" + feed.id}>
+                <div
+                    className="d-flex align-items-center cursor-pointer"
+                    onClick={e => {
+                        onCommentClick(e, index);
+                    }}
+                >
+                    <img src="/images/comments.svg" />
+                    {/* <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" /> */}
+                    <div className="text-darkGrey font-10px ml-1">
+                        {commentsCount || 0}
+                    </div>
+                </div>
+            </Link>
+            <div
+                className="d-flex align-items-center cursor-pointer"
+                onClick={e => {
+                    toggleTipModal(e, index);
+                }}
+            >
+                <FontAwesomeIcon
+                    icon={faDollarSign}
+                    color="#707070"
+                    size="lg"
+                />
+                <div className="text-darkGrey font-10px ml-1">Tip</div>
+            </div>
+            <div className="d-flex align-items-center cursor-pointer">
+                <FontAwesomeIcon icon={faClock} color="#F57B52" size="lg" />
+                <div className="text-darkGrey font-10px ml-1">
+                    {CurrentTimeDifference(timeStamp)}
+                </div>
+            </div>
+            <div
+                className="d-flex align-items-center cursor-pointer position-relative"
+                onClick={e => {
+                    e.preventDefault();
+                    toggle();
+                }}
+            >
+                <FeedOptionsModal
+                    isShowing={isShowing}
+                    modalRef={modalRef}
+                    onReportClick={onReportClick}
+                    onCopyClick={onCopyClick}
+                    feed={feed}
+                />
 
-            <FontAwesomeIcon icon={faEllipsisV} color="#F57B52" />
+                <FontAwesomeIcon icon={faEllipsisV} color="#F57B52" />
+            </div>
         </div>
-    </div>
     );
 };
 
@@ -199,9 +233,9 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                                         paddingBottom="54.25%"
                                         src={[
                                             mediaBaseUrl +
-                                            "/" +
-                                            media.url +
-                                            media.token,
+                                                "/" +
+                                                media.url +
+                                                media.token,
                                             "/images/feed_placeholder.png",
                                         ]}
                                     />

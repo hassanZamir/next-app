@@ -12,13 +12,15 @@ import { IFeedsPage, IFeed, UploadMediaFilesModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const FeedsActions = {
-    GetProfileSuggestion: (payload: IFeedsPage.Actions.IGetProfilesSuggestionPayload) => async (
-        dispatch: Dispatch
-    ) => {
+    GetProfileSuggestion: (
+        payload: IFeedsPage.Actions.IGetProfilesSuggestionPayload
+    ) => async (dispatch: Dispatch) => {
         const result = await FeedsService.GetProfilesSuggestion(payload);
         dispatch({
             payload: { profiles: result.status ? result.response : [] },
-            type: result.status ? ActionConsts.Feeds.ProfilesSuggestionSuccess : ActionConsts.Feeds.ProfilesSuggestionError
+            type: result.status
+                ? ActionConsts.Feeds.ProfilesSuggestionSuccess
+                : ActionConsts.Feeds.ProfilesSuggestionError,
         });
     },
     GetAllFeeds: (payload: IFeedsPage.Actions.IGetAllFeedsPayload) => async (
@@ -27,8 +29,14 @@ export const FeedsActions = {
         const result = await FeedsService.GetAllFeeds(payload);
 
         dispatch({
-            payload: { feeds: result.status && result.response ? result.response : [], page: payload.page },
-            type: result.status && result.response ? ActionConsts.Feeds.GetAllFeedsSuccess : ActionConsts.Feeds.GetAllFeedsError
+            payload: {
+                feeds: result.status && result.response ? result.response : [],
+                page: payload.page,
+            },
+            type:
+                result.status && result.response
+                    ? ActionConsts.Feeds.GetAllFeedsSuccess
+                    : ActionConsts.Feeds.GetAllFeedsError,
         });
     },
     TipFeed: (payload: IFeed.Actions.ITipFeedPayload) => async () => {
@@ -57,12 +65,18 @@ export const FeedsActions = {
 
         return result;
     },
-    PostContent: (payload: IFeedsPage.Actions.IGetUploadMediaFilesPayload) => async (dispatch: Dispatch) => {
-        const result = payload.media_url ? await FeedsService.UploadMediaOnStorage({ media_url: payload.media_url }) : null;
+    PostContent: (
+        payload: IFeedsPage.Actions.IGetUploadMediaFilesPayload
+    ) => async (dispatch: Dispatch) => {
+        const result = payload.media_url
+            ? await FeedsService.UploadMediaOnStorage({
+                  media_url: payload.media_url,
+              })
+            : null;
         if (result && !result.status && payload.media_url) {
             dispatch({
                 payload: result.error || "Media upload failed",
-                type: ActionConsts.Feeds.PostContentError
+                type: ActionConsts.Feeds.PostContentError,
             });
             return;
         }
@@ -73,8 +87,10 @@ export const FeedsActions = {
         });
         dispatch({
             payload: postContent.status ? { feed: postContent.response } : null,
-            type: postContent.status ? ActionConsts.Feeds.PostContentSuccess : ActionConsts.Feeds.PostContentError
+            type: postContent.status
+                ? ActionConsts.Feeds.PostContentSuccess
+                : ActionConsts.Feeds.PostContentError,
         });
         return postContent;
-    }
+    },
 };

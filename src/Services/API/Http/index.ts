@@ -19,19 +19,17 @@ export const Http = {
         url: string,
         authtoken: string,
         params?: HttpModel.IRequestQueryPayload,
-        payload?: HttpModel.IRequestPayload,
+        payload?: HttpModel.IRequestPayload
     ): Promise<A> => {
         return new Promise((resolve, reject) => {
-            const query = params
-                ? `?${stringify({ ...params })}`
-                : "";
+            const query = params ? `?${stringify({ ...params })}` : "";
 
             fetch(`${BaseUrl}${url}${query}`, {
                 body: JSON.stringify(payload),
                 cache: "no-cache",
                 headers: {
                     "content-type": "application/json",
-                    "Authorization": `Bearer ${authtoken}`
+                    Authorization: `Bearer ${authtoken}`,
                 },
                 method: `${methodType}`,
             })
@@ -53,9 +51,7 @@ export const Http = {
         payload?: HttpModel.IRequestPayload
     ): Promise<A> => {
         return new Promise((resolve, reject) => {
-            const query = params
-                ? `?${stringify({ ...params })}`
-                : "";
+            const query = params ? `?${stringify({ ...params })}` : "";
 
             fetch(`${BaseUrl}${url}${query}`, {
                 body: JSON.stringify(payload),
@@ -83,9 +79,7 @@ export const Http = {
         payload?: HttpModel.IRequestPayload
     ): Promise<A> => {
         return new Promise((resolve, reject) => {
-            const query = params
-                ? `?${stringify({ ...params })}`
-                : "";
+            const query = params ? `?${stringify({ ...params })}` : "";
 
             fetch(`${url}${query}`, {
                 body: payload,
@@ -94,7 +88,7 @@ export const Http = {
                 // headers: {
                 //    "Content-Type": "multipart/form-data"
                 // },
-                method: `${methodType}`
+                method: `${methodType}`,
             } as any)
                 .then(async response => {
                     if (response.status === 200) {
@@ -106,6 +100,5 @@ export const Http = {
                     reject(e);
                 });
         });
-
-    }
+    },
 };

@@ -7,7 +7,7 @@ import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import { faUniversity } from "@fortawesome/free-solid-svg-icons";
 import { USER_SESSION } from "@Interfaces";
 import Link from "next/link";
-import { CircularImage } from "@Components"
+import { CircularImage } from "@Components";
 
 const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media";
 
@@ -17,6 +17,7 @@ export const Menu: React.FunctionComponent<{
     session: USER_SESSION;
     onLogout: () => void;
 }> = ({ isShowing, toggle, session, onLogout }) => {
+    console.log(session);
     return (
         <React.Fragment>
             <div
@@ -42,7 +43,9 @@ export const Menu: React.FunctionComponent<{
 
                             <CircularImage
                                 src={[
-                                    mediaBaseUrl + "/" + session.profileImageUrl,
+                                    mediaBaseUrl +
+                                        "/" +
+                                        session.profileImageUrl,
                                     "/images/profile_image_placeholder.jpg",
                                 ]}
                                 height="52px"
@@ -62,7 +65,7 @@ export const Menu: React.FunctionComponent<{
                 <Link href={`/profile/${session.username}`}>
                     <div className="link-anchor">
                         <FontAwesomeIcon
-                            className="menu-icon-color"
+                            // className="menu-icon-color"
                             icon={faUserCircle}
                         />
                         <span className="ml-2">Profile</span>
@@ -71,7 +74,7 @@ export const Menu: React.FunctionComponent<{
                 <Link href="/followersinfo">
                     <div className="link-anchor">
                         <FontAwesomeIcon
-                            className="menu-icon-color"
+                            // className="menu-icon-color"
                             icon={faUserPlus}
                         />
                         <span className="ml-2">Followers</span>
@@ -83,7 +86,7 @@ export const Menu: React.FunctionComponent<{
                 <Link href="/followinginfo">
                     <div className="link-anchor">
                         <FontAwesomeIcon
-                            className="menu-icon-color"
+                            // className="menu-icon-color"
                             icon={faUserCheck}
                         />
                         <span className="ml-2">Following</span>
@@ -131,7 +134,7 @@ export const Menu: React.FunctionComponent<{
                 <Link href="#">
                     <div className="link-anchor">
                         <FontAwesomeIcon
-                            className="menu-icon-color"
+                            // className="menu-icon-color"
                             icon={faCreditCard}
                         />
                         <span className="ml-2">
@@ -142,20 +145,32 @@ export const Menu: React.FunctionComponent<{
                         </span>
                     </div>
                 </Link>
-                <Link href="#">
-                    <div className="link-anchor">
-                        <FontAwesomeIcon
-                            className="menu-icon-color"
-                            icon={faUniversity}
-                        />
-                        <span className="ml-2">
-                            Add Bank{" "}
-                            <span className="menu-icon-color">
-                                ( Become a creator )
+                {!session.isCreator ? (
+                    <Link href="/bankinginfo">
+                        <div className="link-anchor">
+                            <FontAwesomeIcon
+                                // className="menu-icon-color"
+                                icon={faUniversity}
+                            />
+                            <span className="ml-2">
+                                Add Bank{" "}
+                                <span className="menu-icon-color">
+                                    ( Become a creator )
+                                </span>
                             </span>
-                        </span>
-                    </div>
-                </Link>
+                        </div>
+                    </Link>
+                ) : (
+                    <Link href="bankinginfo">
+                        <div className="link-anchor">
+                            <FontAwesomeIcon
+                                // className="menu-icon-color"
+                                icon={faUniversity}
+                            />
+                            <span className="ml-2">Bank Info</span>
+                        </div>
+                    </Link>
+                )}
                 <hr />
                 {/* <Link href="#">
                     <FontAwesomeIcon
@@ -175,7 +190,7 @@ export const Menu: React.FunctionComponent<{
                     <div className="link-anchor" onClick={() => onLogout()}>
                         {" "}
                         <FontAwesomeIcon
-                            className="menu-icon-color"
+                            // className="menu-icon-color"
                             icon={faPowerOff}
                         />
                         <span className="ml-2">Logout </span>

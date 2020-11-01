@@ -217,7 +217,9 @@ button {
     width: 50%;
     height: 50%;
 }
-.circle { border-radius: 50%; }
+.circle {
+    border-radius: 50%;
+}
 .scroll-y::-webkit-scrollbar {
     width: 5px;
 }
@@ -233,7 +235,7 @@ button {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 .text-area-box-shadow {
-    box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
 }
 .full-flex-scroll {
     overflow: auto;
@@ -771,13 +773,13 @@ input:checked + .slider:before {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 12px;
-    color: #000000;
+    color: #78849e;
     display: block;
     transition: 0.3s;
 }
 
 .sidenav .link-anchor:hover {
-    color: #f1f1f1;
+    color: #f57b52;
 }
 
 .sidenav .closebtn {
@@ -804,6 +806,10 @@ input:checked + .slider:before {
 
 .menu-icon-color {
     color: #78849e !important;
+}
+
+.menu-icon-color:hover {
+    color: #f57b52 !important;
 }
 
 $badge-text-color: #ffffff;
