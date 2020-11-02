@@ -233,9 +233,9 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                                         paddingBottom="54.25%"
                                         src={[
                                             mediaBaseUrl +
-                                                "/" +
-                                                media.url +
-                                                media.token,
+                                            "/" +
+                                            media.url +
+                                            media.token,
                                             "/images/feed_placeholder.png",
                                         ]}
                                     />
@@ -416,7 +416,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
 
     if (feeds && feeds.length <= 0)
         return (
-            <div className="d-flex flex-column w-100 px-4">
+            <div className="d-flex flex-column w-100 px-0">
                 <ParagraphText className="font-20px text-primary">
                     No Content To Show
                 </ParagraphText>
@@ -424,7 +424,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
         );
 
     return (
-        <div className="d-flex flex-column w-100 px-4">
+        <div className="d-flex flex-column w-100 px-0">
             {"id" in clickedTipFeed && (
                 <TipSubmitModal
                     isShowing={isShowing}
