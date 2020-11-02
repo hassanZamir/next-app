@@ -17,7 +17,6 @@ export const Menu: React.FunctionComponent<{
     session: USER_SESSION;
     onLogout: () => void;
 }> = ({ isShowing, toggle, session, onLogout }) => {
-    console.log(session);
     return (
         <React.Fragment>
             <div
@@ -43,6 +42,9 @@ export const Menu: React.FunctionComponent<{
                                 }
                                 alt="Avatar"
                             />
+                            <span className="menu-profile-badge">
+                                <img src={session.isCreator ? "images/baseline-check_circle-24px@2x.png" : "images/baseline-check_circle_outline-24px@2x.png"}></img>
+                            </span>
                         </div>
                         <div className="p-2 bd-highlight align-self-center">
                             <span className="ml-2 menu-profile-picture-details">

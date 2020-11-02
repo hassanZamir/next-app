@@ -848,6 +848,17 @@ $badge-success-bg: #f57b52;
     padding: 0.05rem 0.6rem 0.15rem;
 }
 
+.menu-profile-badge {
+    position: absolute;
+    margin-left: -10px;
+    margin-top: 15px;
+}
+
+.menu-profile-badge img {
+    width: 23px;
+    height: 18px;
+}
+
 .menu-profile-picture {
     width: 52px;
     height: 52px;
