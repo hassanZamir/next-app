@@ -88,22 +88,6 @@ export const Menu: React.FunctionComponent<{
                     </div>
                 </Link>
                 <hr />
-                {/* <a href="#">
-                    {" "}
-                    <FontAwesomeIcon
-                        className={"menu-icon-color"}
-                        icon={faHandshake}
-                    />
-                    <span className="ml-2">Referrals</span>
-                </a> */}
-                {/* <a href="#">
-                    {" "}
-                    <FontAwesomeIcon
-                        className={"menu-icon-color"}
-                        icon={faListUl}
-                    />
-                    <span className="ml-2">Lists</span>
-                </a> */}
                 <Link href="#">
                     <div className="link-anchor">
                         <FontAwesomeIcon
@@ -122,14 +106,6 @@ export const Menu: React.FunctionComponent<{
                         <span className="ml-2">Statements</span>
                     </div>
                 </Link>
-                {/* <a href="#">
-                    {" "}
-                    <FontAwesomeIcon
-                        className={"menu-icon-color"}
-                        icon={faBullhorn}
-                    />
-                    <span className="ml-2">Campaigns</span>
-                </a> */}
                 <hr />
                 <Link href="#">
                     <div className="link-anchor">
@@ -138,10 +114,10 @@ export const Menu: React.FunctionComponent<{
                             icon={faCreditCard}
                         />
                         <span className="ml-2">
-                            Your Cards{" "}
-                            <span className="menu-icon-color">
-                                {!session.cardNumber && `( Become a subscriber )`}
-                            </span>
+                            {session.cardNumber ? `Your Cards` : `Add Card`}
+                            {!session.cardNumber && <span className="menu-icon-color">
+                                {" "}( Become a subscriber )
+                            </span>}
                         </span>
                     </div>
                 </Link>
@@ -150,12 +126,11 @@ export const Menu: React.FunctionComponent<{
                     {/* <a href="/identity-verification"> */}
                     <div className="link-anchor">
                         <FontAwesomeIcon
-                            // className="menu-icon-color"
                             icon={faUniversity}
                         />
                         <span className="ml-2">
-                            {session.isCreator ? `Add Bank` : `Bank Account Info`}
-                            {session.isCreator && <span className="menu-icon-color">
+                            {session.isCreator ? `Bank Account Info` : `Add Bank`}
+                            {!session.isCreator && <span className="menu-icon-color">
                                 {' '}( Become a creator )
                             </span>}
                         </span>
@@ -166,7 +141,6 @@ export const Menu: React.FunctionComponent<{
                 <Link href="/login">
                     <div className="link-anchor" onClick={() => onLogout()}>
                         <FontAwesomeIcon
-                            // className="menu-icon-color"
                             icon={faQuestionCircle}
                         />
                         <span className="ml-2">Help & Support</span>
@@ -175,7 +149,6 @@ export const Menu: React.FunctionComponent<{
                 <Link href="/login">
                     <div className="link-anchor" onClick={() => onLogout()}>
                         <FontAwesomeIcon
-                            // className="menu-icon-color"
                             icon={faPowerOff}
                         />
                         <span className="ml-2">Logout </span>
