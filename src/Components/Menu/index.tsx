@@ -58,10 +58,7 @@ export const Menu: React.FunctionComponent<{
                 </Link>
                 <Link href={`/profile/${session.username}`}>
                     <div className="link-anchor">
-                        <FontAwesomeIcon
-                            // className="menu-icon-color"
-                            icon={faUserCircle}
-                        />
+                        <img src="images/profile.svg" alt="Profile Icon"></img>
                         <span className="ml-2">Profile</span>
                     </div>
                 </Link>
@@ -124,7 +121,7 @@ export const Menu: React.FunctionComponent<{
                     </div>
                 </Link>
 
-                <Link href="/bankinginfo">
+                <Link href="/account-upgrade">
                     {/* <a href="/identity-verification"> */}
                     <div className="link-anchor">
                         <FontAwesomeIcon
@@ -140,8 +137,8 @@ export const Menu: React.FunctionComponent<{
                     {/* </a> */}
                 </Link>
                 <hr />
-                <Link href="/login">
-                    <div className="link-anchor" onClick={() => onLogout()}>
+                <Link href="/support">
+                    <div className="link-anchor">
                         <FontAwesomeIcon
                             icon={faQuestionCircle}
                         />

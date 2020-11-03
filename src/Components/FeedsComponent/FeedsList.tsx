@@ -46,11 +46,7 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({
                     likeContent(e, index);
                 }}
             >
-                <FontAwesomeIcon
-                    icon={faHeart}
-                    color={content_viewer_like ? "#F57B52" : "#A0A0A0"}
-                    size="lg"
-                />
+                <img src={content_viewer_like ? "images/like_filled.svg" : "images/like.svg"} alt="Like" />
                 <div className="text-darkGrey font-10px ml-1">{likesCount}</div>
             </div>
             <Link href={"/profile/" + feed.username + "/status/" + feed.id}>
@@ -61,7 +57,6 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({
                     }}
                 >
                     <img src="/images/comments.svg" />
-                    {/* <FontAwesomeIcon icon={faComments} color="#F57B52" size="lg" /> */}
                     <div className="text-darkGrey font-10px ml-1">
                         {commentsCount || 0}
                     </div>
@@ -73,15 +68,11 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({
                     toggleTipModal(e, index);
                 }}
             >
-                <FontAwesomeIcon
-                    icon={faDollarSign}
-                    color="#707070"
-                    size="lg"
-                />
+                <img src="/images/tip_grey.svg" />
                 <div className="text-darkGrey font-10px ml-1">Tip</div>
             </div>
             <div className="d-flex align-items-center cursor-pointer">
-                <FontAwesomeIcon icon={faClock} color="#F57B52" size="lg" />
+                <img src="images/clock.svg"></img>
                 <div className="text-darkGrey font-10px ml-1">
                     {CurrentTimeDifference(timeStamp)}
                 </div>
@@ -230,7 +221,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                                             setShowMediaCarousel(i);
                                             toggle();
                                         }}
-                                        paddingBottom="54.25%"
+                                        paddingBottom="73.335%"
                                         src={[
                                             mediaBaseUrl +
                                             "/" +
@@ -272,8 +263,8 @@ const Feed: React.FunctionComponent<IFeed.IProps> = ({
             style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}
         >
             <MediaContainer mediaUrl={feed.media_url} />
-            <div className="d-flex flex-column w-100 px-2">
-                <ParagraphText className="text-primary lato-semibold font-12px">
+            <div className="d-flex flex-column w-100 px-3">
+                <ParagraphText className="text-black lato-semibold font-12px">
                     {feed.title}
                 </ParagraphText>
                 <Link
@@ -282,10 +273,10 @@ const Feed: React.FunctionComponent<IFeed.IProps> = ({
                     passHref
                 >
                     <span
-                        style={{ textDecoration: "underline" }}
-                        className="text-lightGrey lato-semibold font-10px my-0 cursor-pointer"
+                        //style={{ textDecoration: "underline" }}
+                        className="text-primary lato-semibold font-10px my-0 cursor-pointer"
                     >
-                        {feed.username}
+                        {feed.name}
                     </span>
                 </Link>
                 <FeedOptions

@@ -1,6 +1,6 @@
 const timeFormats = [{
     key: 'default',
-    values: ['just now', ' seconds ago', ' minutes ago', ' hours ago', ' days ago', ' months ago', ' years ago']
+    values: ['Just now', 's ago', 'm ago', 'h ago', 'd ago', 'm ago', 'y ago']
 }, {
     key: 'short',
     values: ['now', ' sec', ' min', 'h', 'd', 'm', 'y']
@@ -11,7 +11,7 @@ export const CurrentTimeDifference = (time: string, stringFormat?: string) => {
     const msPerDay = msPerHour * 24;
     const msPerMonth = msPerDay * 30;
     const msPerYear = msPerDay * 365;
-    
+
     const utcOffset = new Date().getTimezoneOffset();
     let postTime = null;
 
@@ -30,30 +30,30 @@ export const CurrentTimeDifference = (time: string, stringFormat?: string) => {
         postTime = new Date(time).valueOf() - (utcOffset * 60 * 1000);
     }
     let elapsed = new Date().valueOf() - postTime;
-    
+
     if (elapsed < 0) return formatArr[0]
-    
+
     if (elapsed < msPerMinute) {
-        return Math.round(elapsed/1000) + formatArr[1];   
+        return Math.round(elapsed / 1000) + formatArr[1];
     }
 
     else if (elapsed < msPerHour) {
-         return Math.round(elapsed/msPerMinute) + formatArr[2];   
+        return Math.round(elapsed / msPerMinute) + formatArr[2];
     }
 
-    else if (elapsed < msPerDay ) {
-         return Math.round(elapsed/msPerHour ) + formatArr[3];   
+    else if (elapsed < msPerDay) {
+        return Math.round(elapsed / msPerHour) + formatArr[3];
     }
 
     else if (elapsed < msPerMonth) {
-        return Math.round(elapsed/msPerDay) + formatArr[4];   
+        return Math.round(elapsed / msPerDay) + formatArr[4];
     }
 
     else if (elapsed < msPerYear) {
-        return Math.round(elapsed/msPerMonth) + formatArr[5];   
+        return Math.round(elapsed / msPerMonth) + formatArr[5];
     }
 
     else {
-        return Math.round(elapsed/msPerYear ) + formatArr[6];   
+        return Math.round(elapsed / msPerYear) + formatArr[6];
     }
 }
