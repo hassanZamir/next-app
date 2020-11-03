@@ -53,7 +53,7 @@ export const FeedsComponent: React.FunctionComponent<{
         (async () => {
             const params = { userId: user.id, page: paginationNo, authtoken: user.token };
             await getUserFeeds(params);
-            await getProfilesFollowers({ authtoken: user.token });
+            await getProfilesFollowers({ viewerId: user.id, authtoken: user.token });
             setLoading(false);
         })();
     }, []);

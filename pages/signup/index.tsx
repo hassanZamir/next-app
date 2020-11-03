@@ -26,6 +26,7 @@ import DobConst from "./dob-constants.json";
 
 // #region Interface Imports
 import { ISignUpPage } from "@Interfaces";
+import moment from "moment";
 // #endregion Interface Imports
 
 const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
@@ -250,11 +251,11 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             inputMargin="0px 10px 0px 0px"
                             labelTextElem={<div className="text-darkGrey lato-regular font-11px">
                                 <span>By signing up you agree to our</span><span className="text-primary mx-1">
-                                    <Link href="">Terms of Service</Link>
+                                    <Link href="/terms-and-conditions"><a>Terms of Service</a></Link>
                                 </span>{" "}
                                 and{" "}
                                 <span className="text-primary mx-1">
-                                    <Link href="">Privacy Policy</Link>
+                                    <Link href="/privacy-policy"><a>Privacy Policy</a></Link>
                                 </span>
                             </div>}
                             name="termsOfService"
