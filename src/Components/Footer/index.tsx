@@ -89,7 +89,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
                         Router.push('/message');
                         return;
                     } else if (config.name === 'App Middle Icon') {
-                        Router.push('/profile/' + session.username);
+                        Router.push('/suggestions');
                         return;
                     } else {
                         return null

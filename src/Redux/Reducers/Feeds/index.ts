@@ -14,12 +14,13 @@ const INITIAL_STATE: IFeedsPage.IStateProps = {
         emptyPageNo: 9999,
         value: []
     },
-    profilesSuggestion: []
+    profilesSuggestion: [],
+    profilesSuggestionEnd: false,
 };
 
 export const FeedsReducer = (
     state = INITIAL_STATE,
-    action: IAction<IFeedsPage.Actions.IMapAllFeedsResponse 
+    action: IAction<IFeedsPage.Actions.IMapAllFeedsResponse
         & IFeed.Actions.IMapLikefeed
         & IFeedsPage.Actions.IMapProfilesSuggestionResponse
         & IFeedsPage.Actions.IMapPostContentResponse>
@@ -29,19 +30,19 @@ export const FeedsReducer = (
             let { feed } = action.payload!;
 
             if (!feed) return Object.assign({}, state, {
-                feeds: { 
+                feeds: {
                     value: [feed[0], ...state.feeds.value],
                     emptyPaginationNo: state.feeds.emptyPageNo,
-                    paginationNo: state.feeds.paginationNo 
+                    paginationNo: state.feeds.paginationNo
                 },
                 errors: 'Post content failed',
                 postContentStatus: 'error'
             });
             return Object.assign({}, state, {
-                feeds: { 
+                feeds: {
                     value: [feed[0], ...state.feeds.value],
                     emptyPaginationNo: state.feeds.emptyPageNo,
-                    paginationNo: state.feeds.paginationNo 
+                    paginationNo: state.feeds.paginationNo
                 },
                 errors: '',
                 postContentStatus: 'success'
@@ -63,6 +64,7 @@ export const FeedsReducer = (
 
             return Object.assign({}, state, {
                 profilesSuggestion: [...state.profilesSuggestion, ...profiles],
+                profilesSuggestionEnd: profiles.length === 0 ? true : false,
                 errors: ''
             });
         }
