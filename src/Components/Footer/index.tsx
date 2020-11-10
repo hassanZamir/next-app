@@ -7,29 +7,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "@Redux/IStore";
 import { IFooter } from "./Footer";
 import { StaticImage } from "@Components";
-import { AccountOptionsModal } from "@Components/AccountOptionsModal";
 import Router from "next/router";
 import { LoginActions, NotificationActions, MessagesActions } from "@Actions";
-import { useModal } from '../Hooks';
 import { NotificationPusher } from '@Services/Pusher';
 import { NOTIFICATION, CONVERSATION_RESPONSE, MESSAGE_LIST_ITEM } from "@Interfaces";
-import { Menu } from "@Components/Menu";
 
 // #endregion Local Imports
 
 const Footer: React.FunctionComponent<IFooter.IProps> = ({
     selected,
     session,
-    onPaymentSettingsClick,
+    onMenuClick,
 }): JSX.Element => {
     const dispatch = useDispatch();
     const persistState = useSelector((state: IStore) => state.persistState);
     const { notificationStats } = persistState;
-    const menuModalRef = useModal(useRef<HTMLDivElement>(null));
 
-    const onLogout = () => {
-        dispatch(LoginActions.UserLogout());
-    };
 
     const notificationSubscriptionCallback = (param: NOTIFICATION) => {
         if (window.location.href.includes("notifications"))
@@ -77,7 +70,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
             return <div key={index}
                 onClick={() => {
                     if (config.name === 'Account') {
-                        menuModalRef.toggle();
+                        onMenuClick();
                         return;
                     } else if (config.name === 'Home') {
                         Router.push('/');
@@ -112,12 +105,6 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
                         height={selected === config.name ? config.imageSelected.height : config.image.height}
                         width={selected === config.name ? config.imageSelected.width : config.image.width} />
                 </div>
-                {session && <Menu
-                    isShowing={menuModalRef.isShowing}
-                    toggle={menuModalRef.toggle}
-                    session={session}
-                    onLogout={onLogout}
-                />}
             </div>
         })}
     </div>;

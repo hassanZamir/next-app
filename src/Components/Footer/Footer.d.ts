@@ -4,7 +4,7 @@ declare namespace IFooter {
     export interface IProps {
         selected: string;
         session: USER_SESSION;
-        onPaymentSettingsClick: (a: boolean) => void;
+        onMenuClick: () => void;
     }
 }
 

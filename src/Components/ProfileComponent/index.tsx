@@ -188,7 +188,7 @@ export const ProfileComponent: React.FunctionComponent<{
             <Footer
                 selected="None"
                 session={user}
-                onPaymentSettingsClick={onPaymentSettingsClick}
+                onMenuClick={() => { }} // TODO: Fix this
             />
 
             <PaymentSettingsContainer
