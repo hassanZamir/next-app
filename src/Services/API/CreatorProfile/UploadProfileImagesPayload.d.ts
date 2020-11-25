@@ -1,4 +1,4 @@
 export interface UploadProfileImagesPayload {
-    media_url: any,
-    username: string
+    media_url: any;
+    username: string;
 }

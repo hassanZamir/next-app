@@ -20,6 +20,7 @@ import {
     PostUnFavouriteFollowersModel,
     GETFollowingInformationModel,
     PUTRecurringFollowingModel,
+    DeleteAccountModel,
 } from "@Interfaces";
 // #endregion Interface Imports
 
@@ -143,6 +144,40 @@ export const LoginService = {
         }
         return response;
     },
+    // ChangePasswordFromSettings: async (
+    //     payload: ChangePasswordModel.PutPasswordPayload
+    // ): Promise<ChangePasswordModel.PutPasswordResponse> => {
+    //     let response: ChangePasswordModel.PutPasswordResponse;
+    //     try {
+    //         response = await Http.Request<
+    //             ChangePasswordModel.PutPasswordResponse
+    //         >("PUT", "api/accounts/password", undefined, { ...payload });
+    //     } catch (error) {
+    //         response = {
+    //             status: false,
+    //             error: "Something went wrong",
+    //         };
+    //     }
+    //     return response;
+    // },
+
+    DeleteAccount: async (
+        payload: DeleteAccountModel.DeleteAccountPayload
+    ): Promise<DeleteAccountModel.DeleteAccountResponse> => {
+        let response: DeleteAccountModel.DeleteAccountResponse;
+        try {
+            response = await Http.Request<
+                DeleteAccountModel.DeleteAccountResponse
+            >("DELETE", "api/accounts", undefined, { ...payload });
+        } catch (error) {
+            response = {
+                status: false,
+                error: "Something went wrong",
+            };
+        }
+        return response;
+    },
+
     PutRecurringFollower: async (
         payload: PUTRecurringFollowingModel.GetPUTRecurringFollowingPayload
     ): Promise<PUTRecurringFollowingModel.PUTRecurringFollowingResponse> => {
@@ -267,7 +302,7 @@ export const LoginService = {
             >(
                 "GET",
                 `/users/${payload.username}/followings?type=` + payload.type,
-                payload.authtoken,
+                payload.authtoken
             );
         } catch (error) {
             response = {
@@ -293,9 +328,15 @@ export const LoginService = {
         try {
             response = await Http.UserAuthRequest<
                 PostRestrictFollowersModel.GetPostRestrictFollowersResponse
-            >("POST", `/users/${payload.username}/restrict`, payload.authtoken, undefined, {
-                ...payload,
-            });
+            >(
+                "POST",
+                `/users/${payload.username}/restrict`,
+                payload.authtoken,
+                undefined,
+                {
+                    ...payload,
+                }
+            );
         } catch (error) {
             response = {
                 response: {
@@ -317,9 +358,15 @@ export const LoginService = {
         try {
             response = await Http.UserAuthRequest<
                 PostUnRestrictFollowersModel.GetPostUnRestrictFollowersResponse
-            >("POST", `/users/${payload.username}/unrestrict`, payload.authtoken, undefined, {
-                ...payload,
-            });
+            >(
+                "POST",
+                `/users/${payload.username}/unrestrict`,
+                payload.authtoken,
+                undefined,
+                {
+                    ...payload,
+                }
+            );
         } catch (error) {
             response = {
                 response: {
@@ -339,9 +386,15 @@ export const LoginService = {
         try {
             response = await Http.UserAuthRequest<
                 PostBlockedFollowersModel.GetPostBlockedFollowersResponse
-            >("POST", `/users/${payload.username}/block`, payload.authtoken, undefined, {
-                ...payload,
-            });
+            >(
+                "POST",
+                `/users/${payload.username}/block`,
+                payload.authtoken,
+                undefined,
+                {
+                    ...payload,
+                }
+            );
         } catch (error) {
             response = {
                 response: {
@@ -363,9 +416,15 @@ export const LoginService = {
         try {
             response = await Http.UserAuthRequest<
                 PostUnBlockedFollowersModel.GetPostUnBlockedFollowersResponse
-            >("POST", `/users/${payload.username}/unblock`, payload.authtoken, undefined, {
-                ...payload,
-            });
+            >(
+                "POST",
+                `/users/${payload.username}/unblock`,
+                payload.authtoken,
+                undefined,
+                {
+                    ...payload,
+                }
+            );
         } catch (error) {
             response = {
                 response: {
@@ -387,9 +446,15 @@ export const LoginService = {
         try {
             response = await Http.UserAuthRequest<
                 PostFavouriteFollowersModel.GetPostFavouriteFollowersResponse
-            >("POST", `/users/${payload.username}/favourite`, payload.authtoken, undefined, {
-                ...payload,
-            });
+            >(
+                "POST",
+                `/users/${payload.username}/favourite`,
+                payload.authtoken,
+                undefined,
+                {
+                    ...payload,
+                }
+            );
         } catch (error) {
             response = {
                 response: {
@@ -411,9 +476,15 @@ export const LoginService = {
         try {
             response = await Http.UserAuthRequest<
                 PostUnFavouriteFollowersModel.GetPostUnFavouriteFollowersResponse
-            >("POST", `/users/${payload.username}/unfavourite`, payload.authtoken, undefined, {
-                ...payload,
-            });
+            >(
+                "POST",
+                `/users/${payload.username}/unfavourite`,
+                payload.authtoken,
+                undefined,
+                {
+                    ...payload,
+                }
+            );
         } catch (error) {
             response = {
                 response: {

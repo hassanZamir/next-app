@@ -1,4 +1,10 @@
-import { USER_SESSION, CREATOR_PROFILE, LoginModel, SendResetPasswordEmailModel, ChangePasswordModel } from "@Interfaces";
+import {
+    USER_SESSION,
+    CREATOR_PROFILE,
+    LoginModel,
+    SendResetPasswordEmailModel,
+    ChangePasswordModel,
+} from "@Interfaces";
 
 declare namespace ILoginPage {
     export interface IProps {}
@@ -16,14 +22,25 @@ declare namespace ILoginPage {
 
         export interface IMapResponse {}
 
-        export interface IGetLoginPayload extends LoginModel.GetLoginPayload { params: {}; }
-        export interface IGetLoginResponse extends LoginModel.GetLoginResponse {}
+        export interface IGetLoginPayload extends LoginModel.GetLoginPayload {
+            params: {};
+        }
+        export interface IGetLoginResponse
+            extends LoginModel.GetLoginResponse {}
 
-        export interface IGetSendResetPasswordEmailPayload extends SendResetPasswordEmailModel.GetSendResetPasswordEmailPayload {}
-        export interface IGetSendResetPasswordEmailResponse extends SendResetPasswordEmailModel.GetSendResetPasswordEmailResponse {}
+        export interface IGetSendResetPasswordEmailPayload
+            extends SendResetPasswordEmailModel.GetSendResetPasswordEmailPayload {}
+        export interface IGetSendResetPasswordEmailResponse
+            extends SendResetPasswordEmailModel.GetSendResetPasswordEmailResponse {}
 
-        export interface IGetChangePasswordPayload extends ChangePasswordModel.GetChangePasswordPayload {}
-        export interface IGetChangePasswordResponse extends ChangePasswordModel.GetChangePasswordResponse {}
+        export interface IGetChangePasswordPayload
+            extends ChangePasswordModel.GetChangePasswordPayload {}
+        export interface IGetChangePasswordResponse
+            extends ChangePasswordModel.GetChangePasswordResponse {}
+        export interface IPutPasswordPayload
+            extends ChangePasswordModel.PutPasswordPayload {}
+        export interface IPutPasswordResponse
+            extends ChangePasswordModel.PutPasswordResponse {}
     }
 }
 

@@ -3,9 +3,9 @@ declare namespace ILabelInput {
         type: string;
         name: string;
         labelText: string;
-        register?: ()=>void;
+        register?: () => void;
         validationRules?: {};
-        formErrors?: { [key: string]: {message: string;}; };
+        formErrors?: { [key: string]: { message: string } };
         wrapperClass?: string;
     }
 }
@@ -15,10 +15,10 @@ declare namespace ISelectInput {
         type: string[];
         name: string[];
         options: string[][];
-        register?: (rule: {})=>void;
+        register?: (rule: {}) => void;
         labelText: string;
         validationRules: {}[];
-        formErrors?: { [key: string]: {message: string;}; };
+        formErrors?: { [key: string]: { message: string } };
         wrapperClass?: string;
     }
 }
@@ -27,10 +27,10 @@ declare namespace IMultiLabelInput {
     export interface IProps {
         type: string[];
         name: string[];
-        register?: (rule: {})=>void;
+        register?: (rule: {}) => void;
         labelText: string;
         validationRules: {}[];
-        formErrors?: { [key: string]: {message: string;}; } | any;
+        formErrors?: { [key: string]: { message: string } } | any;
         wrapperClass?: string;
         placeholder?: string[];
     }

@@ -1,4 +1,4 @@
-export interface UploadProfileImagesResponse {
+export interface UploadSettingsProfileImagesResponse {
     status: boolean;
     uploadSuccess?: any[];
     uploadError?: any[];

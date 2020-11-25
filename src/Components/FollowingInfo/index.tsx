@@ -324,7 +324,7 @@ const FollowerCard: React.FunctionComponent<{
                                                 <TransparentButton
                                                     borderRadius="4px"
                                                     padding="0px 15px !important"
-                                                    className="mr-2 lato-semibold font-13px border-primary bg-primary text-white"
+                                                    className="mr-2 lato-semibold font-13px border-primary bg-primary"
                                                     onClick={e => {
                                                         toggleTipModal(e);
                                                     }}

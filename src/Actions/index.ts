@@ -4,6 +4,7 @@ export * from "./CreatorProfileActions";
 export * from "./StatusActions";
 export * from "./PaymentActions";
 export * from "./BankingInfo";
+export * from "./SettingsActions";
 export * from "./NotificationActions";
 export * from "./FollowersInfo";
 export * from "./FollowingInfo";

@@ -45,7 +45,7 @@ const UploadProfileImages: React.FunctionComponent<{
                 uploadedFiles.push({
                     key: key,
                     preview: URL.createObjectURL(e.target.files[i]),
-                    raw: e.target.files[i]
+                    raw: e.target.files[i],
                 } as IUploadImage);
             }
             const filteredFiles = files.filter(f => {
@@ -209,6 +209,8 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     const dispatch = useDispatch();
     const bankingInfo = useSelector((state: IStore) => state.bankingInfo);
 
+    console.log(bankingInfo);
+
     const {
         creatorProfile,
         errors,
@@ -217,17 +219,17 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         defaultPersonalInformation,
     } = bankingInfo;
 
-    useEffect(() => {
-        if (showPersonalInformation) {
-            const params = { userId: user.id };
-            dispatch(BankingInfoActions.GetPersonalInformation(params));
-        }
-    }, [showPersonalInformation]);
+    // useEffect(() => {
+    //     if (showPersonalInformation) {
+    //         const params = { userId: user.id };
+    //         dispatch(BankingInfoActions.GetPersonalInformation(params));
+    //     }
+    // }, [showPersonalInformation]);
 
-    useEffect(() => {
-        const params = { username: user.username };
-        dispatch(BankingInfoActions.GetCreatorProfile(params));
-    }, []);
+    // useEffect(() => {
+    //     const params = { username: user.username };
+    //     dispatch(BankingInfoActions.GetCreatorProfile(params));
+    // }, []);
 
     // const mapStateToProps = state => {
     //     return {
@@ -245,14 +247,14 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
             <ParagraphText className="text-primary font-25px">
                 Banking
             </ParagraphText>
-            {!creatorProfile.name && errors.length <= 0 && (
+            {/* {!creatorProfile.name && errors.length <= 0 && (
                 <div
                     style={{ flex: 1 }}
                     className="w-100 h-100 d-flex align-items-center justify-content-center"
                 >
                     <LoadingSpinner size="3x" />
                 </div>
-            )}
+            )} */}
             {creatorProfile.name && (
                 <React.Fragment>
                     {!showPersonalInformation ? (
@@ -262,13 +264,13 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
                             user={user}
                         />
                     ) : (
-                            <UploadPersonalInformation
-                                user={user}
-                                defaultPersonalInformation={
-                                    defaultPersonalInformation
-                                }
-                            />
-                        )}
+                        <UploadPersonalInformation
+                            user={user}
+                            defaultPersonalInformation={
+                                defaultPersonalInformation
+                            }
+                        />
+                    )}
                 </React.Fragment>
             )}
             {success.length > 0 && (

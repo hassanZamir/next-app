@@ -18,6 +18,7 @@ import { FollowersInfoReducer } from "./FollowersInfo";
 import { FollowingInfoReducer } from "./FollowingInfo";
 import { MessagesReducer } from "./Messages";
 import { ConversationReducer } from "./Conversation";
+import { SettingsReducer } from "./Settings";
 // #endregion Local Imports
 
 export default combineReducers({
@@ -34,5 +35,6 @@ export default combineReducers({
     followersInfo: FollowersInfoReducer,
     followingInfo: FollowingInfoReducer,
     messages: MessagesReducer,
-    conversationState: ConversationReducer
+    conversationState: ConversationReducer,
+    settings: SettingsReducer,
 });

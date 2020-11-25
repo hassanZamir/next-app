@@ -944,3 +944,200 @@ $badge-success-bg: #f57b52;
     outline: none;
     padding: 0px;
 }
+
+.text-area {
+    // height: 29px;
+    width: 100%;
+    border: none;
+    border: 1px solid #b4b4b4;
+    // color: #78849e;
+    border-radius: 6px;
+    padding-left: 5px;
+    margin-top: 5px;
+    outline: none;
+}
+
+.text-area-label {
+    float: left !important;
+}
+
+.bio-text-area {
+    border-color: #b4b4b4 !important;
+}
+
+// Account Settings
+.change-username-btn {
+    margin-left: 9em !important;
+}
+
+.delete-account-btn {
+    color: #ff6666;
+}
+
+// Captca
+.captca-ui {
+    top: 362px;
+    left: 65px;
+    width: 100px;
+    height: 28px;
+}
+
+.captca-properties {
+    border: 1px solid var(--veno-theme-color);
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #f57b52;
+    opacity: 1;
+    margin-bottom: 0px;
+}
+
+.capcta-field-ui {
+    top: 390px;
+    left: 203px;
+    width: 95px;
+    height: 0px;
+}
+
+.capcta-field-ui-properties {
+    border: 1px solid var(--veno-theme-color);
+    border: 1px solid #f57b52;
+    opacity: 1;
+}
+
+.cancel-btn-ui {
+    top: 441px;
+    left: 180px;
+    width: 70px;
+    height: 26px;
+}
+
+.cancel-btn-ui-properties {
+    border: 0.5px solid var(--light-gray-elements-shade);
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 0.5px solid #a0a0a0;
+    border-radius: 10px;
+    opacity: 1;
+}
+
+.delete-btn-ui {
+    top: 441px;
+    left: 260px;
+    width: 70px;
+    height: 26px;
+}
+
+.delete-btn-ui-properties {
+    border: 0.5px solid var(--light-gray-elements-shade);
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 0.5px solid #a0a0a0;
+    border-radius: 10px;
+    opacity: 1;
+}
+
+.captca-field {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-color: #f57b52;
+    background-color: #ffffff;
+}
+
+.alignleft {
+    float: left !important;
+}
+
+.alignright {
+    float: right !important;
+}
+
+// Delete Modal
+.delete-modal-btn {
+    margin-left: 30%;
+}
+
+// Notification Settings
+.switch-label-padding-bottom {
+    margin-bottom: 0px !important;
+}
+.heading-styles {
+    font-size: 0.8rem;
+    color: #707070;
+}
+
+// Circle Checkbox
+
+body {
+    background-color: #f1f2f3;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.container {
+    margin: 0 auto;
+}
+
+.round {
+    position: relative;
+}
+
+.round label {
+    background-color: #707070;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 13px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 13px;
+}
+
+.round label:after {
+    border: 2px solid #707070;
+    border-top: none;
+    border-right: none;
+    content: "";
+    height: 6px;
+    left: 7px;
+    opacity: 0;
+    position: absolute;
+    top: 8px;
+    transform: rotate(-45deg);
+    width: 12px;
+}
+
+.round input[type="checkbox"] {
+    visibility: hidden;
+}
+
+.round input[type="checkbox"]:checked + label {
+    background-color: #f57c52;
+    border-color: #f57c52;
+}
+
+.round input[type="checkbox"]:checked + label:after {
+    opacity: 0;
+}
+
+// Sacurity and Privacy Settings
+.switch-settings {
+    width: 159px;
+}
+
+hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 96%;
+    background-color: #dee2e6;
+    height: 1px;
+}
+
+#line {
+    float: left;
+    width: 731px;
+    height: 20px;
+}

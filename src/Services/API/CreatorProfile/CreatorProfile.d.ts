@@ -1,8 +1,8 @@
 // #region Interface Imports
-import { 
-    CreatorProfilePayload, 
-    CreatorProfileResponse, 
-    CreatorFeedsPayload, 
+import {
+    CreatorProfilePayload,
+    CreatorProfileResponse,
+    CreatorFeedsPayload,
     CreatorFeedsResponse,
     FollowProfilePayload,
     FollowProfileResponse,
@@ -10,10 +10,11 @@ import {
     PostCreatorProfileResponse,
     UploadProfileImagesPayload,
     UploadProfileImagesResponse,
+    UploadSettingsProfileImagesPayload,
+    UploadSettingsProfileImagesResponse,
     GETMediaGallaryPayload,
-    GETMediaGallaryResponse
-
-} from "@Interfaces"; 
+    GETMediaGallaryResponse,
+} from "@Interfaces";
 // #endregion Interface Imports
 
 declare namespace CreatorProfileModel {
@@ -26,14 +27,24 @@ declare namespace CreatorProfileModel {
     export interface GetFollowProfilePayload extends FollowProfilePayload {}
     export interface GetFollowProfileResponse extends FollowProfileResponse {}
 
-    export interface GetPostCreatorProfilePayload extends PostCreatorProfilePayload {}
-    export interface GetPostCreatorProfileResponse extends PostCreatorProfileResponse {}
+    export interface GetPostCreatorProfilePayload
+        extends PostCreatorProfilePayload {}
+    export interface GetPostCreatorProfileResponse
+        extends PostCreatorProfileResponse {}
 
-    export interface GetUploadProfileImagesPayload extends UploadProfileImagesPayload {}
-    export interface GetUploadProfileImagesResponse extends UploadProfileImagesResponse {}
+    export interface GetUploadProfileImagesPayload
+        extends UploadProfileImagesPayload {}
+    export interface GetUploadProfileImagesResponse
+        extends UploadProfileImagesResponse {}
+
+    export interface GetUploadSettingsProfileImagesPayload
+        extends UploadSettingsProfileImagesPayload {}
+    export interface GetUploadSettingsProfileImagesResponse
+        extends UploadSettingsProfileImagesResponse {}
 
     export interface GetGETMediaGallaryPayload extends GETMediaGallaryPayload {}
-    export interface GetGETMediaGallaryResponse extends GETMediaGallaryResponse {}
+    export interface GetGETMediaGallaryResponse
+        extends GETMediaGallaryResponse {}
 }
 
 export { CreatorProfileModel };

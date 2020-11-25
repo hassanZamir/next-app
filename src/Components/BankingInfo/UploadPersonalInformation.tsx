@@ -80,8 +80,8 @@ export const UploadPersonalInformation: React.FunctionComponent<{
                 docType: DOC_TYPES.indexOf(data.documentType) + 1,
                 docPhoto: "",
                 docUserPhoto: "",
-                docNumber: "312341233214",//data.docNumber,
-                docExpiry: "2022-03-04",//data.docExpiry.year + "-" + DobConst.months.indexOf(data.docExpiry.month)  + "-" + data.docExpiry.date,
+                docNumber: "312341233214", //data.docNumber,
+                docExpiry: "2022-03-04", //data.docExpiry.year + "-" + DobConst.months.indexOf(data.docExpiry.month)  + "-" + data.docExpiry.date,
                 explicitContent: checkedConsent,
                 media_url: filesPayload,
                 userId: user.id,
@@ -332,10 +332,10 @@ export const UploadPersonalInformation: React.FunctionComponent<{
                                     <img
                                         src={
                                             defaultPersonalInformation &&
-                                                defaultPersonalInformation.docPhoto
+                                            defaultPersonalInformation.docPhoto
                                                 ? mediaBaseUrl +
-                                                "/" +
-                                                defaultPersonalInformation.docPhoto
+                                                  "/" +
+                                                  defaultPersonalInformation.docPhoto
                                                 : "/images/card_copy@2x.png"
                                         }
                                         height="69"
@@ -389,10 +389,10 @@ export const UploadPersonalInformation: React.FunctionComponent<{
                                     <img
                                         src={
                                             defaultPersonalInformation &&
-                                                defaultPersonalInformation.docUserPhoto
+                                            defaultPersonalInformation.docUserPhoto
                                                 ? mediaBaseUrl +
-                                                "/" +
-                                                defaultPersonalInformation.docUserPhoto
+                                                  "/" +
+                                                  defaultPersonalInformation.docUserPhoto
                                                 : "/images/doc_holding_image@2x.png"
                                         }
                                         height="69"
@@ -513,9 +513,13 @@ export const UploadPersonalInformation: React.FunctionComponent<{
                                 setCheckedConsent(!checkedConsent);
                             }}
                             type="radio"
-                            labelTextElem={<div className="text-darkGrey lato-regular font-11px">
-                                <span>Will you be posting explicit content?</span>
-                            </div>}
+                            labelTextElem={
+                                <div className="text-darkGrey lato-regular font-11px">
+                                    <span>
+                                        Will you be posting explicit content?
+                                    </span>
+                                </div>
+                            }
                             value={checkedConsent ? "1" : "0"}
                             checked={checkedConsent}
                             // labelText="Will you be posting explicit content?"

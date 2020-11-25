@@ -26,7 +26,6 @@ import DobConst from "./dob-constants.json";
 
 // #region Interface Imports
 import { ISignUpPage } from "@Interfaces";
-import moment from "moment";
 // #endregion Interface Imports
 
 const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {

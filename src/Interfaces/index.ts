@@ -29,7 +29,6 @@ export * from "@Services/API/Messages/GETSearchMessagesPayload";
 export * from "@Services/API/Messages/GETSearchMessagesResponse";
 export * from "@Services/API/Messages/Messages";
 
-
 export * from "@Services/API/Notification/GETNotificationStatsResponse";
 export * from "@Services/API/Notification/GETNotificationStatsPayload";
 export * from "@Services/API/Notification/ViewNotificationsPayload";
@@ -51,6 +50,8 @@ export * from "@Services/API/Login/SendResetPasswordEmail";
 export * from "@Services/API/Login/ChangePasswordPayload";
 export * from "@Services/API/Login/ChangePasswordResponse";
 export * from "@Services/API/Login/ChangePassword";
+
+export * from "@Services/API/Login/DeleteAccount";
 
 export * from "@Services/API/Login/AccountVerifyPayload";
 export * from "@Services/API/Login/AccountVerifyResponse";
@@ -132,6 +133,8 @@ export * from "@Services/API/CreatorProfile/GETMediaGallaryPayload";
 export * from "@Services/API/CreatorProfile/GETMediaGallaryResponse";
 export * from "@Services/API/CreatorProfile/UploadProfileImagesPayload";
 export * from "@Services/API/CreatorProfile/UploadProfileImagesResponse";
+export * from "@Services/API/CreatorProfile/UploadSettingsProfileImagesPayload";
+export * from "@Services/API/CreatorProfile/UploadSettingsProfileImagesResponse";
 export * from "@Services/API/CreatorProfile/PostCreatorProfilePayload";
 export * from "@Services/API/CreatorProfile/PostCreatorProfileResponse";
 export * from "@Services/API/CreatorProfile/CreatorProfilePayload";
@@ -178,6 +181,7 @@ export * from "@Interfaces/Pages/Status";
 export * from "@Interfaces/Pages/Profile";
 export * from "@Interfaces/Pages/FollowersInfo";
 export * from "@Interfaces/Pages/FollowingInfo";
+export * from "@Interfaces/Pages/Settings";
 export * from "@Interfaces/Pages/Feeds";
 export * from "@Interfaces/Pages/App";
 export * from "@Interfaces/PersistState";

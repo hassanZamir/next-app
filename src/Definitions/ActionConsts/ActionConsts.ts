@@ -85,6 +85,19 @@ export const ActionConsts = {
         GetBankingInfoSuccess: "GetBankingInfoSuccess",
         GetBankingInfoError: "GetBankingInfoError",
     },
+    Settings: {
+        GetUserProfileSuccess: "GetUserProfileSuccess",
+        GetUserProfileError: "GetUserProfileError",
+        UploadProfileImagesError: "UploadProfileImagesError",
+        UpdateUserProfileSuccess: "UpdateUserProfileSuccess",
+        UpdateUserProfileError: "UpdateUserProfileError",
+        PostBankingInfoSuccess: "PostBankingInfoSuccess",
+        PostBankingInfoError: "PostBankingInfoError",
+        GetBankingInfoSuccess: "GetBankingInfoSuccess",
+        GetBankingInfoError: "GetBankingInfoError",
+        DeleteAccountSuccess: "DeleteAccountSuccess",
+        DeleteAccountError: "DeleteAccountError",
+    },
     FollowersInfo: {
         GetFollowersInfoSuccess: "GetFollowersInfoSuccess",
         GetFollowersInfoError: "GetFollowersInfoError",
@@ -115,7 +128,7 @@ export const ActionConsts = {
         SeenNotifiactionSuccess: "SeenNotifiactionSuccess",
         SeenNotifiactionError: "SeenNotifiactionError",
         ViewNotificationsSuccess: "ViewNotificationsSuccess",
-        ViewNotificationsError: "ViewNotificationsError"
+        ViewNotificationsError: "ViewNotificationsError",
     },
     Messages: {
         GetAllMessagesSuccess: "GetAllMessagesSuccess",
@@ -127,7 +140,7 @@ export const ActionConsts = {
         NewConversationRecieved: "NewConversationRecieved",
         SerachMessagesSuccess: "SerachMessagesSuccess",
         SerachMessagesError: "SerachMessagesError",
-        ClearSearch: "ClearSearch"
+        ClearSearch: "ClearSearch",
     },
     Conversation: {
         PusherMessageRecieved: "PusherMessageRecieved",
@@ -142,5 +155,5 @@ export const ActionConsts = {
         UpdateMessageSettingError: "UpdateMessageSettingError",
         UpdateViewStatusSuccess: "UpdateViewStatusSuccess",
         UpdateViewStatusError: "UpdateViewStatusError",
-    }
+    },
 };
