@@ -18,6 +18,17 @@ import {
 // #endregion Interface Imports
 
 export const LoginActions = {
+    TokenVerify: (payload: ILoginPage.Actions.ITokenVerifyPayload) => async (dispatch: Dispatch) => {
+        let response: ILoginPage.Actions.ITokenVerifyResponse;
+        response = await LoginService.TokenVerify(payload);
+
+        dispatch({
+            payload: response,
+            type: response.authenticated
+                ? ActionConsts.Login.UpdateSession
+                : ActionConsts.Login.ClearSession,
+        });
+    },
     UserLogin: (payload: ILoginPage.Actions.IGetLoginPayload) => async (
         dispatch: Dispatch
     ) => {

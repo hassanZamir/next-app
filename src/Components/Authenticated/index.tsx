@@ -29,7 +29,13 @@ export const Authenticated: React.FunctionComponent<{
     useEffect(() => {
         if (!session || !("id" in session))
             Router.push("/login", "/login", { shallow: true });
-    }, [session]);
+        else if (session && session.token) {
+            // call the token verify api to check validity
+            dispatch(LoginActions.TokenVerify({
+                session: session
+            }));
+        }
+    }, []);
 
     const onPaymentSettingsClick = () => {
         setShowPaymentSettings(true);

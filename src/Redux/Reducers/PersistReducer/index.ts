@@ -16,13 +16,13 @@ const INITIAL_STATE: IPersistState.IStateProps = {
 
 export const PersistReducer = (
     state = INITIAL_STATE,
-    action: IAction<IPersistState.Actions.ISetStatusFeed 
-    & IPersistState.Actions.ISetSession 
-    & IPersistState.Actions.ISetNotificationStats
-    & IPersistState.Actions.IUpdatePaymentInfoInSession
-    & IPersistState.Actions.IViewNotificationType
-    & IPersistState.Actions.ISetActiveConversation
-    & IPersistState.Actions.IUpdateActiveConversation>
+    action: IAction<IPersistState.Actions.ISetStatusFeed
+        & IPersistState.Actions.ISetSession
+        & IPersistState.Actions.ISetNotificationStats
+        & IPersistState.Actions.IUpdatePaymentInfoInSession
+        & IPersistState.Actions.IViewNotificationType
+        & IPersistState.Actions.ISetActiveConversation
+        & IPersistState.Actions.IUpdateActiveConversation>
 ) => {
     switch (action.type) {
         case ActionConsts.Conversation.UpdateMessageSettingSuccess: {
@@ -114,7 +114,7 @@ export const PersistReducer = (
         }
         case ActionConsts.Feeds.SetPolledPersistFeed: {
             let { feed } = action.payload!;
-            
+
             if ('id' in state.feed && state.feed.id === feed.id) {
                 return Object.assign({}, state, {
                     feed: Object.assign({}, feed, {
@@ -141,7 +141,7 @@ export const PersistReducer = (
             const updatedFeed = Object.assign({}, state.feed, {
                 commentsCount: state.feed.commentsCount ? state.feed.commentsCount + 1 : 1
             });
-            
+
             return Object.assign({}, state, {
                 feed: updatedFeed
             });
@@ -154,10 +154,20 @@ export const PersistReducer = (
                 session: session
             });
         }
+        case ActionConsts.Login.UpdateSession: {
+            let { session } = action.payload!;
+
+            return Object.assign({}, state, {
+                session: session
+            });
+        }
+        case ActionConsts.Login.ClearSession: {
+            return INITIAL_STATE;
+        }
         case ActionConsts.Payment.UpdatePaymentInfoInSession: {
             let { paymentSettings } = action.payload!;
             const defaultCard = paymentSettings.userCard.find((card) => {
-                return  paymentSettings.userSettings && card.id === paymentSettings.userSettings.defaultCard
+                return paymentSettings.userSettings && card.id === paymentSettings.userSettings.defaultCard
             });
             return Object.assign({}, state, {
                 session: Object.assign({}, state.session, {
@@ -169,7 +179,7 @@ export const PersistReducer = (
         }
         case ActionConsts.Payment.OnBecomeCreatorSuccess: {
             Router.push("/");
-            
+
             return Object.assign({}, state, {
                 session: Object.assign({}, state.session, {
                     isCreator: true

@@ -17,12 +17,11 @@ const INITIAL_STATE: ILoginPage.IStateProps = {
 
 export const LoginErrorReducer = (
     state = INITIAL_STATE,
-    action: IAction<ILoginPage.Actions.IGetLoginResponse & 
-        IProfilePage.Actions.IGetCreatorProfileResponse & 
+    action: IAction<ILoginPage.Actions.IGetLoginResponse &
+        IProfilePage.Actions.IGetCreatorProfileResponse &
         ILoginPage.Actions.IGetSendResetPasswordEmailResponse &
         ILoginPage.Actions.IGetChangePasswordResponse &
-        IProfilePage.Actions.IMapCreatorProfileResponse>
-    ) => {
+        IProfilePage.Actions.IMapCreatorProfileResponse>) => {
     switch (action.type) {
         case ActionConsts.Login.ChangePasswordSuccess: {
             return Object.assign({}, state, {

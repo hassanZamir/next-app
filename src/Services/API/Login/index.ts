@@ -21,10 +21,61 @@ import {
     GETFollowingInformationModel,
     PUTRecurringFollowingModel,
     DeleteAccountModel,
+    USER_SESSION,
 } from "@Interfaces";
 // #endregion Interface Imports
 
 export const LoginService = {
+    TokenVerify: async (payload: LoginModel.VerifyTokenPayload): Promise<LoginModel.VerifyTokenResponse> => {
+        let result: LoginModel.VerifyTokenResponse;
+        const session: USER_SESSION = payload.session;
+
+        try {
+            result = await Http.UserAuthRequest<LoginModel.VerifyTokenResponse>(
+                "POST",
+                `/accounts/${session.id}/auth/verify`,
+                session.token,
+                undefined,
+                session
+            )
+        }
+        catch (error) {
+            if (error.status == 401) {
+                console.info("Session Expired, Trying Token Refresh...");
+                try {
+                    //refresh the token
+                    result = await Http.UserAuthRequest<LoginModel.VerifyTokenResponse>(
+                        "POST",
+                        `/accounts/${session.id}/auth/refresh`,
+                        session.token,
+                        undefined,
+                        {
+                            token: session.token,
+                            refreshToken: session.token
+                        }
+                    )
+                } catch (error) {
+                    console.info("Token refresh failed. Please log in again.");
+                    result = {
+                        status: false,
+                        authenticated: false,
+                        error: error,
+                        session: null
+                    }
+                }
+            }
+            else {
+                result = {
+                    status: false,
+                    authenticated: false,
+                    error: error,
+                    session: null
+                }
+                return result;
+            }
+        }
+        return result;
+    },
     Login: async (
         payload: LoginModel.GetLoginPayload
     ): Promise<LoginModel.GetLoginResponse> => {

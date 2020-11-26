@@ -7,7 +7,7 @@ import {
 } from "@Interfaces";
 
 declare namespace ILoginPage {
-    export interface IProps {}
+    export interface IProps { }
 
     export interface IStateProps {
         errors: string;
@@ -18,29 +18,32 @@ declare namespace ILoginPage {
     }
 
     namespace Actions {
-        export interface IMapPayload {}
+        export interface IMapPayload { }
 
-        export interface IMapResponse {}
+        export interface IMapResponse { }
+
+        export interface ITokenVerifyPayload extends LoginModel.VerifyTokenPayload { }
+        export interface ITokenVerifyResponse extends LoginModel.VerifyTokenResponse { }
 
         export interface IGetLoginPayload extends LoginModel.GetLoginPayload {
             params: {};
         }
         export interface IGetLoginResponse
-            extends LoginModel.GetLoginResponse {}
+            extends LoginModel.GetLoginResponse { }
 
         export interface IGetSendResetPasswordEmailPayload
-            extends SendResetPasswordEmailModel.GetSendResetPasswordEmailPayload {}
+            extends SendResetPasswordEmailModel.GetSendResetPasswordEmailPayload { }
         export interface IGetSendResetPasswordEmailResponse
-            extends SendResetPasswordEmailModel.GetSendResetPasswordEmailResponse {}
+            extends SendResetPasswordEmailModel.GetSendResetPasswordEmailResponse { }
 
         export interface IGetChangePasswordPayload
-            extends ChangePasswordModel.GetChangePasswordPayload {}
+            extends ChangePasswordModel.GetChangePasswordPayload { }
         export interface IGetChangePasswordResponse
-            extends ChangePasswordModel.GetChangePasswordResponse {}
+            extends ChangePasswordModel.GetChangePasswordResponse { }
         export interface IPutPasswordPayload
-            extends ChangePasswordModel.PutPasswordPayload {}
+            extends ChangePasswordModel.PutPasswordPayload { }
         export interface IPutPasswordResponse
-            extends ChangePasswordModel.PutPasswordResponse {}
+            extends ChangePasswordModel.PutPasswordResponse { }
     }
 }
 
