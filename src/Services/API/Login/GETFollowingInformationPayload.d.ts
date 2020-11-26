@@ -3,4 +3,5 @@ export interface GETFollowingInformationPayload {
     userId: number;
     username: string;
     type: number;
+    filterUsername?: string
 }

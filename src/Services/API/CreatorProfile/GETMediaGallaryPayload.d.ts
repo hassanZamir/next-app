@@ -3,4 +3,5 @@ export interface GETMediaGallaryPayload {
     type: number;
     page?: number;
     offset?: number;
+    authtoken: string;
 }

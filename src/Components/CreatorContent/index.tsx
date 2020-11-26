@@ -12,7 +12,7 @@ import { CONTENT_TYPE } from "src/Constants";
 export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
     = ({ user, scrolledToBottom, followingFee, contentCount, imagesCount,
         videosCount, name, profileUserName, isFollower, onFollow }) => {
-
+        isFollower = isFollower || user.username == profileUserName; // user is considered to be a follower of his own profile
         const creatorProfileState = useSelector((state: IStore) => state.creatorProfile);
         const { creatorFeeds, mediaGallary, errors,
             emptyPageNoFeeds, emptyPageNoImage, emptyPageNoVideo } = creatorProfileState;
@@ -78,7 +78,8 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
                     username: profileUserName,
                     type: selectedTab,
                     page: isImageGallary ? paginationPageNoImage : paginationPageNoVideo,
-                    offset: 10
+                    offset: 10,
+                    authtoken: user.token,
                 };
                 await dispatch(CreatorProfileActions.GetMediaGallary(params));
 

@@ -50,6 +50,9 @@ export const ActionConsts = {
         GetMediaGallarySuccess: "GetMediaGallarySuccess",
         GetMediaGallaryError: "GetMediaGallaryError",
         TabChanged: "TabChanged",
+        CheckUserFollowingPending: "CheckUserFollowingPending",
+        CheckUserFollowingSuccess: "CheckUserFollowingSuccess",
+        CheckUserFollowingError: "CheckUserFollowingError",
     },
     Status: {
         GetAllCommentsSuccess: "GetAllCommentsSuccess",

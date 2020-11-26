@@ -22,7 +22,8 @@ const INITIAL_STATE: IFollowingInfoPage.IStateProps = {
 
 export const FollowingInfoReducer = (
     state = INITIAL_STATE,
-    action: IAction<IFollowingInfoPage.Actions.IMapGetFollowingInformation & any>
+    action: IAction<IFollowingInfoPage.Actions.IMapGetFollowingInformation &
+        any>
 ) => {
     switch (action.type) {
         case ActionConsts.FollowingInfo.GetFollowingInfoSuccess: {

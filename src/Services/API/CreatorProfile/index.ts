@@ -3,10 +3,32 @@ import { Http, getQueryParams } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { CreatorProfileModel, ProfileFollowersModel } from "@Interfaces";
+import { CreatorProfileModel, ProfileFollowersModel, CheckUserProfileFollowingModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const CreatorProfileService = {
+    CheckUserProfileFollowing: async (
+        payload: CheckUserProfileFollowingModel.CheckUserProfileFollowingPayload
+    ): Promise<CheckUserProfileFollowingModel.CheckUserProfileFollowingResponse> => {
+        let response: CheckUserProfileFollowingModel.CheckUserProfileFollowingResponse;
+        var { authtoken, ...params } = payload;
+        try {
+            response = await Http.UserAuthRequest<CheckUserProfileFollowingModel.CheckUserProfileFollowingResponse>(
+                "GET",
+                `/users/${payload.userId}/followings/${payload.creatorUsername}/active`,
+                authtoken,
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                errors: "Something went wrong",
+                response: {
+                    isFollower: null
+                },
+            };
+        }
+        return response;
+    },
     GetCreatorFeeds: async (
         payload: CreatorProfileModel.GetCreatorFeedsPayload
     ): Promise<CreatorProfileModel.GetCreatorFeedsResponse> => {
@@ -119,6 +141,9 @@ export const CreatorProfileService = {
         }
         return response;
     },
+    /**
+    * @deprecated Use GetActiveCreatorProfile instead
+    */
     GetCreatorProfile: async (
         payload: CreatorProfileModel.GetCreatorProfilePayload
     ): Promise<CreatorProfileModel.GetCreatorProfileResponse> => {
@@ -143,6 +168,35 @@ export const CreatorProfileService = {
                     videosCount: 0,
                     followingFee: 0.0,
                     userName: "sohaibminhas789",
+                },
+            };
+        }
+        return response;
+    },
+    GetActiveCreatorProfile: async (
+        payload: CreatorProfileModel.GetCreatorProfilePayload
+    ): Promise<CreatorProfileModel.GetCreatorProfileResponse> => {
+        let response: CreatorProfileModel.GetCreatorProfileResponse;
+
+        try {
+            response = await Http.Request<
+                CreatorProfileModel.GetCreatorProfileResponse
+            >("GET", `/creators/${payload.username}/profile`, undefined);
+        } catch (error) {
+            response = {
+                status: false,
+                response: {
+                    name: "",
+                    coverImageUrl: "",
+                    profileImageUrl: "",
+                    location: "",
+                    bio: "",
+                    followersCount: 0,
+                    contentCount: 0,
+                    imagesCount: 0,
+                    videosCount: 0,
+                    followingFee: 0.0,
+                    userName: "",
                 },
             };
         }
@@ -251,15 +305,9 @@ export const CreatorProfileService = {
     ): Promise<CreatorProfileModel.GetGETMediaGallaryResponse> => {
         let response: CreatorProfileModel.GetGETMediaGallaryResponse;
 
-        const { username, ...restPayload } = payload;
-        console.log(
-            "/profiles/" +
-            username +
-            "/gallery" +
-            getQueryParams({ ...restPayload })
-        );
+        const { authtoken, username, ...restPayload } = payload;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 CreatorProfileModel.GetGETMediaGallaryResponse
             >(
                 "GET",
@@ -267,7 +315,7 @@ export const CreatorProfileService = {
                 username +
                 "/gallery" +
                 getQueryParams({ ...restPayload }),
-                undefined
+                authtoken
             );
         } catch (error) {
             response = {

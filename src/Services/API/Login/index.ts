@@ -295,13 +295,14 @@ export const LoginService = {
     ): Promise<
         GETFollowingInformationModel.GetGETFollowingInformationResponse
     > => {
+        const filter = payload.filterUsername ? `&filterUsername=${payload.filterUsername}` : "";
         let response: GETFollowingInformationModel.GetGETFollowingInformationResponse;
         try {
             response = await Http.UserAuthRequest<
                 GETFollowingInformationModel.GetGETFollowingInformationResponse
             >(
                 "GET",
-                `/users/${payload.username}/followings?type=` + payload.type,
+                `/users/${payload.username}/followings?type=${payload.type}${filter}`,
                 payload.authtoken
             );
         } catch (error) {

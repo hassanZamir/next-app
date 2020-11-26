@@ -12,13 +12,26 @@ import { IProfilePage } from "@Interfaces";
 // #endregion Interface Imports
 
 export const CreatorProfileActions = {
+    /**
+    * @deprecated Use GetActiveCreatorProfile instead
+    */
     GetCreatorProfile: (payload: IProfilePage.Actions.IGetCreatorProfilePayload) => async (
         dispatch: Dispatch
     ) => {
         const result = await CreatorProfileService.GetCreatorProfile(payload);
-        
+
         dispatch({
-            payload: { profile: result.status && result.response ? result.response : {}},
+            payload: { profile: result.status && result.response ? result.response : {} },
+            type: result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
+        });
+    },
+    GetActiveCreatorProfile: (payload: IProfilePage.Actions.IGetCreatorProfilePayload) => async (
+        dispatch: Dispatch
+    ) => {
+        const result = await CreatorProfileService.GetActiveCreatorProfile(payload);
+
+        dispatch({
+            payload: { profile: result.status && result.response ? result.response : {} },
             type: result.status ? ActionConsts.CreatorProfile.GetCreatorProfileSuccess : ActionConsts.CreatorProfile.GetCreatorProfileError
         });
     },
@@ -26,9 +39,9 @@ export const CreatorProfileActions = {
         dispatch: Dispatch
     ) => {
         const result = await CreatorProfileService.GetCreatorFeeds(payload);
-        
+
         dispatch({
-            payload: { 
+            payload: {
                 feeds: result.status && result.response ? result.response : [],
                 page: payload.page
             },
@@ -39,7 +52,7 @@ export const CreatorProfileActions = {
         dispatch: Dispatch
     ) => {
         const result = await CreatorProfileService.FollowProfile(payload);
-        
+
         dispatch({
             payload: { followers: result.status && result.response ? result.response : result, hasFollowed: result.status && result.response ? true : false },
             type: result.status && result.response ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
@@ -49,10 +62,27 @@ export const CreatorProfileActions = {
         dispatch: Dispatch
     ) => {
         const result = await CreatorProfileService.UnFollowProfile(payload);
-        
+
         dispatch({
             payload: { followers: result.status && result.response ? result.response : result, hasUnFollowed: result.status && result.response ? true : false },
             type: result.status && result.response ? ActionConsts.CreatorProfile.GetProfileFollowersSuccess : ActionConsts.CreatorProfile.GetProfileFollowersError
+        });
+    },
+    CheckUserProfileFollowing: (
+        payload: IProfilePage.Actions.ICheckUserProfileFollowingPayload
+    ) => async (dispatch: Dispatch) => {
+        // to setup loaders on UI, update the api fetching status
+        dispatch({
+            payload: "pending",
+            type: ActionConsts.CreatorProfile.CheckUserFollowingPending,
+        });
+        const result = await CreatorProfileService.CheckUserProfileFollowing(payload);
+        dispatch({
+            payload: result,
+            type:
+                result.status && result.response
+                    ? ActionConsts.CreatorProfile.CheckUserFollowingSuccess
+                    : ActionConsts.CreatorProfile.CheckUserFollowingError,
         });
     },
     GetProfileFollowers: (payload: IProfilePage.Actions.IGetProfileFollowersPayload) => async (
@@ -69,8 +99,8 @@ export const CreatorProfileActions = {
     ) => {
         const result = await CreatorProfileService.GetMediaGallary(payload);
         dispatch({
-            payload: { 
-                mediaGallary: result.response && result.status ? result.response : [], 
+            payload: {
+                mediaGallary: result.response && result.status ? result.response : [],
                 type: payload.type,
                 page: payload.page
             },
@@ -81,7 +111,7 @@ export const CreatorProfileActions = {
         dispatch: Dispatch
     ) => {
         dispatch({
-            payload: {tabIndex: payload},
+            payload: { tabIndex: payload },
             type: ActionConsts.CreatorProfile.TabChanged
         });
     }

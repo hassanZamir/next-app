@@ -21,15 +21,18 @@ const INITIAL_STATE: IProfilePage.IStateProps = {
     creatorProfile: <CREATOR_PROFILE>{},
     creatorFeeds: new Array<FEED>(),
     followers: [],
+    isUserFollowingStatus: "pending",
+    isUserFollowing: null,
 };
 
 export const CreatorProfileReducer = (
     state = INITIAL_STATE,
     action: IAction<
         IProfilePage.Actions.IMapCreatorFeedsResponse &
-            IProfilePage.Actions.IMapCreatorProfileResponse &
-            IProfilePage.Actions.IMapProfileFollowersResponse &
-            IProfilePage.Actions.IMapMediaGallaryResponse
+        IProfilePage.Actions.IMapCreatorProfileResponse &
+        IProfilePage.Actions.IMapProfileFollowersResponse &
+        IProfilePage.Actions.IMapMediaGallaryResponse &
+        IProfilePage.Actions.ICheckUserProfileFollowingResponse
     >
 ) => {
     switch (action.type) {
@@ -69,8 +72,8 @@ export const CreatorProfileReducer = (
                     followersCount: hasFollowed
                         ? state.creatorProfile.followersCount + 1
                         : hasUnFollowed
-                        ? state.creatorProfile.followersCount - 1
-                        : state.creatorProfile.followersCount,
+                            ? state.creatorProfile.followersCount - 1
+                            : state.creatorProfile.followersCount,
                 }),
             });
         }
@@ -109,6 +112,24 @@ export const CreatorProfileReducer = (
                 errors: "Something went wrong.",
                 creatorFeeds: [],
             });
+        }
+        case ActionConsts.CreatorProfile.CheckUserFollowingPending: {
+            return Object.assign({}, state, {
+                isUserFollowingStatus: "pending",
+                isUserFollowing: null
+            })
+        }
+        case ActionConsts.CreatorProfile.CheckUserFollowingSuccess: {
+            return Object.assign({}, state, {
+                isUserFollowingStatus: "success",
+                isUserFollowing: action.payload?.response.isFollower ? true : false
+            })
+        }
+        case ActionConsts.CreatorProfile.CheckUserFollowingError: {
+            return Object.assign({}, state, {
+                isUserFollowingStatus: "error",
+                isUserFollowing: null
+            })
         }
         default:
             return state;

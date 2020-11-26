@@ -25,11 +25,11 @@ export const ProfileComponent: React.FunctionComponent<{
     const creatorProfileState = useSelector(
         (state: IStore) => state.creatorProfile
     );
-    const { creatorProfile, followers } = creatorProfileState;
+    const { creatorProfile, followers, isUserFollowingStatus, isUserFollowing } = creatorProfileState;
     const { contentCount, imagesCount, videosCount, name } = creatorProfile;
-    const userFollowings = useSelector(
-        (state: IStore) => state.followingInfo.defaultFollowingInformation
-    );
+    // const userFollowings = useSelector(
+    //     (state: IStore) => state.followingInfo.defaultFollowingInformation
+    // );
     const [isAlreadyFollowing, setIsAlreadyFollowing] = useState(false);
     const [showPaymentSettingsPopup, setShowPaymentSettingsPopup] = useState(
         false
@@ -48,28 +48,25 @@ export const ProfileComponent: React.FunctionComponent<{
 
     useEffect(() => {
         // check if profile exists already in user folllowing
-        if (userFollowings.length)
-            userFollowings.filter((element: any) => {
-                if (element.username == profileUserName)
-                    setIsAlreadyFollowing(true);
-            })
-    }, [userFollowings]);
+        if (isUserFollowingStatus == "success")
+            setIsAlreadyFollowing(isUserFollowing);
+
+    }, [isUserFollowing]);
 
     useEffect(() => {
         // TODO: combine the creator profile and follow check
         const params = { username: profileUserName };
-        dispatch(CreatorProfileActions.GetCreatorProfile(params));
+        dispatch(CreatorProfileActions.GetActiveCreatorProfile(params));
 
-        if (user && user.id) {
-            const params = {
+        // if its not user's own profile then check profile following status
+        if (user && user.username && user.username != profileUserName) {
+            dispatch(CreatorProfileActions.CheckUserProfileFollowing({
                 authtoken: user.token,
                 userId: user.id,
-                username: user.username,
-                type: TYPE_ALL_FOLLOWING,
-            };
-            dispatch(FollowingInfoAction.GetFollowingInformation(params));
+                creatorUsername: profileUserName,
+            }))
         }
-    }, [followers]);
+    }, [followers, isAlreadyFollowing]);
 
     const sendFollowRequest = () => {
         const followParams = {
@@ -88,7 +85,6 @@ export const ProfileComponent: React.FunctionComponent<{
             shouldFollow: false,
         };
         dispatch(CreatorProfileActions.UnFollowProfile(unFollowParams));
-        setIsAlreadyFollowing(false);
     };
 
     const onFollow = (wantToFollow: boolean) => {
