@@ -56,6 +56,8 @@ export const ActionConsts = {
         CheckUserFollowingPending: "CheckUserFollowingPending",
         CheckUserFollowingSuccess: "CheckUserFollowingSuccess",
         CheckUserFollowingError: "CheckUserFollowingError",
+        GetUserCreatorProfileSuccess: "GetUserCreatorProfileSuccess",
+        GetUserCreatorProfileError: "GetUserCreatorProfileError",
     },
     Status: {
         GetAllCommentsSuccess: "GetAllCommentsSuccess",

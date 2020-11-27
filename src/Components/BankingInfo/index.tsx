@@ -1,5 +1,5 @@
 import { USER_SESSION } from "@Interfaces";
-import { BankingInfoActions } from "@Actions";
+import { BankingInfoActions, CreatorProfileActions } from "@Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "@Redux/IStore";
 import {
@@ -76,7 +76,7 @@ const UploadProfileImages: React.FunctionComponent<{
         setLoading(true);
         await dispatch(
             BankingInfoActions.UploadProfileImages({
-                media_url: payload,
+                media_url: {},
                 username: user.username,
             })
         );
@@ -207,70 +207,57 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     user,
 }) => {
     const dispatch = useDispatch();
+    const { userCreatorProfile } = useSelector((state: IStore) => state.creatorProfile)
     const bankingInfo = useSelector((state: IStore) => state.bankingInfo);
-
-    console.log(bankingInfo);
-
     const {
-        creatorProfile,
         errors,
         showPersonalInformation,
         success,
         defaultPersonalInformation,
     } = bankingInfo;
+    const [loading, setLoading] = useState(true);
 
-    // useEffect(() => {
-    //     if (showPersonalInformation) {
-    //         const params = { userId: user.id };
-    //         dispatch(BankingInfoActions.GetPersonalInformation(params));
-    //     }
-    // }, [showPersonalInformation]);
+    const truliooServiceUrl = process.env.TRULIOO_MS_URL;
+    const truliooFeKey = process.env.TRULIOO_FE_KEY;
+    const apiUrl = `${process.env.API_URL}/api/accounts/${user.id}/upgrade`;
+    const [trulioo, setTrulioo] = useState(false);
 
-    // useEffect(() => {
-    //     const params = { username: user.username };
-    //     dispatch(BankingInfoActions.GetCreatorProfile(params));
-    // }, []);
-
-    // const mapStateToProps = state => {
-    //     return {
-    //         entries: state.entries,
-    //         isFetching: state.isFetching,
-    //         providers: state.providersList,
-    //         offersFiltered: state.offersFiltered,
-    //         currentPage: state.currentPage,
-    //         hasNextPage: state.hasNextPage,
-    //     };
-    // };
+    useEffect(() => {
+        if (userCreatorProfile && defaultPersonalInformation)
+            setLoading(false);
+    }, [userCreatorProfile, defaultPersonalInformation]);
+    useEffect(() => {
+        const params = {
+            userid: user.id,
+            authtoken: user.token,
+        };
+        dispatch(CreatorProfileActions.GetUserCreatorProfile(params));
+        dispatch(BankingInfoActions.GetPersonalInformation(params));
+    }, []);
 
     return (
         <div className="d-flex flex-column align-items-center flex-fill body-background">
             <ParagraphText className="text-primary font-25px">
-                Banking
+                Account Upgrade
             </ParagraphText>
-            {/* {!creatorProfile.name && errors.length <= 0 && (
+            {loading && (
                 <div
                     style={{ flex: 1 }}
                     className="w-100 h-100 d-flex align-items-center justify-content-center"
                 >
                     <LoadingSpinner size="3x" />
                 </div>
-            )} */}
-            {creatorProfile.name && (
+            )}
+            {!loading && (
                 <React.Fragment>
-                    {!showPersonalInformation ? (
-                        <UploadProfileImages
-                            coverImageUrl={creatorProfile.coverImageUrl}
-                            profileImageUrl={creatorProfile.profileImageUrl}
-                            user={user}
-                        />
-                    ) : (
-                        <UploadPersonalInformation
-                            user={user}
-                            defaultPersonalInformation={
-                                defaultPersonalInformation
-                            }
-                        />
-                    )}
+                    {console.info("loading trulioo iframe")}
+                    {!userCreatorProfile.creatorProfileVerified && <iframe
+                        name={`${user.token}#${apiUrl}#${truliooFeKey}`}
+                        frameBorder="0px"
+                        width="90%"
+                        height="100%"
+                        src={truliooServiceUrl}>
+                    </iframe>}
                 </React.Fragment>
             )}
             {success.length > 0 && (

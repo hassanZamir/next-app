@@ -9,6 +9,7 @@ import {
     FEED,
     CREATOR_PROFILE,
     mediaUrl,
+    USER_CREATOR_PROFILE
 } from "@Interfaces";
 // #endregion Interface Imports
 
@@ -23,26 +24,34 @@ const INITIAL_STATE: IProfilePage.IStateProps = {
     followers: [],
     isUserFollowingStatus: "pending",
     isUserFollowing: null,
+
+    //  user creator profile  //
+    userCreatorProfile: <USER_CREATOR_PROFILE>{} // this will hold user's own creator profile
+    // --------------------- //
 };
 
 export const CreatorProfileReducer = (
     state = INITIAL_STATE,
     action: IAction<
-        IProfilePage.Actions.IMapCreatorFeedsResponse &
-        IProfilePage.Actions.IMapCreatorProfileResponse &
-        IProfilePage.Actions.IMapProfileFollowersResponse &
-        IProfilePage.Actions.IMapMediaGallaryResponse &
-        IProfilePage.Actions.ICheckUserProfileFollowingResponse
+        IProfilePage.Actions.IMapCreatorFeedsResponse
+        & IProfilePage.Actions.IMapCreatorProfileResponse
+        & IProfilePage.Actions.IMapProfileFollowersResponse
+        & IProfilePage.Actions.IMapMediaGallaryResponse
+        & IProfilePage.Actions.ICheckUserProfileFollowingResponse
+        & IProfilePage.Actions.IGetUserCreatorProfileResponse
     >
 ) => {
     switch (action.type) {
-        // case ActionConsts.CreatorProfile.TabChanged: {
-        //     return Object.assign({}, state, {
-        //         mediaGallary: [],
-        //         creatorFeeds: [],
-        //         errors: ""
-        //     });
-        // }
+        case ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess: {
+            return Object.assign({}, state, {
+                userCreatorProfile: action.payload!
+            });
+        }
+        case ActionConsts.CreatorProfile.GetUserCreatorProfileError: {
+            return Object.assign({}, state, {
+                userCreatorProfile: {}
+            });
+        }
         case ActionConsts.CreatorProfile.GetMediaGallarySuccess: {
             let { mediaGallary, type, page } = action.payload!;
 

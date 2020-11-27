@@ -12,6 +12,22 @@ import { IProfilePage } from "@Interfaces";
 // #endregion Interface Imports
 
 export const CreatorProfileActions = {
+    GetUserCreatorProfile: (
+        payload: IProfilePage.Actions.IGetUserCreatorProfilePayload
+    ) => async (dispatch: Dispatch) => {
+        const result = await CreatorProfileService.GetUserCreatorProfile(payload);
+
+        dispatch({
+            payload: {
+                profile:
+                    result.status && result.response ? result.response : {},
+            },
+            type:
+                result.status && result.response
+                    ? ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess
+                    : ActionConsts.CreatorProfile.GetUserCreatorProfileError,
+        });
+    },
     /**
     * @deprecated Use GetActiveCreatorProfile instead
     */

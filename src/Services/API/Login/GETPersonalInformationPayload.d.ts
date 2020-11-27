@@ -1,3 +1,4 @@
 export interface GETPersonalInformationPayload {
-    userId: number;
+    userid: number;
+    authtoken: string;
 }

@@ -3,7 +3,7 @@ import { Http, getQueryParams } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { CreatorProfileModel, ProfileFollowersModel, CheckUserProfileFollowingModel } from "@Interfaces";
+import { CreatorProfileModel, ProfileFollowersModel, CheckUserProfileFollowingModel, UserCreatorProfileModel } from "@Interfaces";
 // #endregion Interface Imports
 
 export const CreatorProfileService = {
@@ -201,6 +201,24 @@ export const CreatorProfileService = {
             };
         }
         return response;
+    },
+    GetUserCreatorProfile: async (payload: UserCreatorProfileModel.GetUserCreatorProfilePayload): Promise<UserCreatorProfileModel.GetUserCreatorProfileResponse> => {
+        let result: UserCreatorProfileModel.GetUserCreatorProfileResponse;
+        try {
+            result = await Http.UserAuthRequest<UserCreatorProfileModel.GetUserCreatorProfileResponse>(
+                "GET",
+                `/users/${payload.userid}/profile`,
+                payload.authtoken
+            );
+        } catch (error) {
+            result = {
+                status: false,
+                response: {},
+                errors: error,
+            }
+        }
+
+        return result;
     },
     PostCreatorProfile: async (
         payload: CreatorProfileModel.GetPostCreatorProfilePayload

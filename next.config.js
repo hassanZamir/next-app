@@ -4,7 +4,7 @@ const withSass = require("@zeit/next-sass");
 const withBundleAnalyzer = require("@next/bundle-analyzer");
 const nextRuntimeDotenv = require("next-runtime-dotenv");
 
-const withConfig = nextRuntimeDotenv({ public: ["API_URL", "API_KEY", "PUSHER_KEY", "MEDIA_BASE_URL"] });
+const withConfig = nextRuntimeDotenv({ public: ["TRULIOO_FE_KEY", "API_URL", "API_KEY", "PUSHER_KEY", "MEDIA_BASE_URL"] });
 
 const nextConfig = {
     analyzeServer: ["server", "both"].includes(process.env.BUNDLE_ANALYZE),
@@ -25,12 +25,17 @@ const nextConfig = {
         API_KEY: process.env.API_KEY,
         STATIC_PATH: process.env.STATIC_PATH,
         PUSHER_KEY: process.env.PUSHER_KEY,
-        MEDIA_BASE_URL: process.env.MEDIA_BASE_URL
+        MEDIA_BASE_URL: process.env.MEDIA_BASE_URL,
+        TRULIOO_FE_KEY: process.env.TRULIOO_FE_KEY,
+
     },
     env: {
         PUSHER_KEY: process.env.PUSHER_KEY,
         API_URL: process.env.API_URL,
-        MEDIA_BASE_URL: process.env.MEDIA_BASE_URL
+        MEDIA_BASE_URL: process.env.MEDIA_BASE_URL,
+        TRULIOO_FE_KEY: process.env.TRULIOO_FE_KEY,
+        TRULIOO_MS_URL: process.env.TRULIOO_MS_URL,
+
     }
 };
 

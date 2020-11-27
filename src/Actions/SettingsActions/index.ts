@@ -83,8 +83,8 @@ export const SettingsActions = {
     PostPersonalInformation: (
         payload: ISettingsPage.Actions.IGetPostPersonalInformationPayload
     ) => async (dispatch: Dispatch) => {
-        const { media_url, ...rest } = payload;
-        let updatedPayload = { ...rest };
+        // const { media_url, ...rest } = payload;
+        // let updatedPayload = { ...rest };
 
         const checkIsCreator = (
             result: ISettingsPage.Actions.IGetPostPersonalInformationResponse
@@ -99,55 +99,55 @@ export const SettingsActions = {
             }
         };
 
-        if (!media_url.length) {
-            const postResult = await LoginService.PostPersonalInformation({
-                ...updatedPayload,
-            } as any);
+        // if (!media_url.length) {
+        //     const postResult = await LoginService.PostPersonalInformation({
+        //         ...updatedPayload,
+        //     } as any);
 
-            checkIsCreator(postResult);
-            dispatch({
-                payload:
-                    postResult.status && !postResult.error
-                        ? "Success"
-                        : postResult.error,
-                type: postResult.status
-                    ? ActionConsts.BankingInfo.PostBankingInfoSuccess
-                    : ActionConsts.BankingInfo.PostBankingInfoError,
-            });
-        } else {
-            for (let i = 0; i < media_url.length; i++) {
-                const result = await FeedsService.UploadMediaOnStorage({
-                    media_url: media_url[i].url,
-                } as any);
-                if (result && result.status) {
-                    if (media_url[i].key === "docPhoto")
-                        updatedPayload.docPhoto = result.uploadSuccess![0].url;
-                    if (media_url[i].key === "docUserPhoto")
-                        updatedPayload.docUserPhoto = result.uploadSuccess![0].url;
-                } else {
-                    dispatch({
-                        type: ActionConsts.BankingInfo.UploadProfileImagesError,
-                        payload: null,
-                    });
-                    return;
-                }
-                if (i === media_url.length - 1) {
-                    const postResult = await LoginService.PostPersonalInformation(
-                        { ...updatedPayload } as any
-                    );
-                    checkIsCreator(postResult);
-                    dispatch({
-                        payload:
-                            postResult.status && !postResult.error
-                                ? "Success"
-                                : postResult.error,
-                        type: postResult.status
-                            ? ActionConsts.BankingInfo.PostBankingInfoSuccess
-                            : ActionConsts.BankingInfo.PostBankingInfoError,
-                    });
-                }
-            }
-        }
+        //     checkIsCreator(postResult);
+        //     dispatch({
+        //         payload:
+        //             postResult.status && !postResult.error
+        //                 ? "Success"
+        //                 : postResult.error,
+        //         type: postResult.status
+        //             ? ActionConsts.BankingInfo.PostBankingInfoSuccess
+        //             : ActionConsts.BankingInfo.PostBankingInfoError,
+        //     });
+        // } else {
+        //     for (let i = 0; i < media_url.length; i++) {
+        //         const result = await FeedsService.UploadMediaOnStorage({
+        //             media_url: media_url[i].url,
+        //         } as any);
+        //         if (result && result.status) {
+        //             if (media_url[i].key === "docPhoto")
+        //                 updatedPayload.docPhoto = result.uploadSuccess![0].url;
+        //             if (media_url[i].key === "docUserPhoto")
+        //                 updatedPayload.docUserPhoto = result.uploadSuccess![0].url;
+        //         } else {
+        //             dispatch({
+        //                 type: ActionConsts.BankingInfo.UploadProfileImagesError,
+        //                 payload: null,
+        //             });
+        //             return;
+        //         }
+        //         if (i === media_url.length - 1) {
+        //             const postResult = await LoginService.PostPersonalInformation(
+        //                 { ...updatedPayload } as any
+        //             );
+        //             checkIsCreator(postResult);
+        //             dispatch({
+        //                 payload:
+        //                     postResult.status && !postResult.error
+        //                         ? "Success"
+        //                         : postResult.error,
+        //                 type: postResult.status
+        //                     ? ActionConsts.BankingInfo.PostBankingInfoSuccess
+        //                     : ActionConsts.BankingInfo.PostBankingInfoError,
+        //             });
+        //         }
+        //     }
+        // }
     },
     GetPersonalInformation: (
         payload: ISettingsPage.Actions.IGetGETPersonalInformationPayload

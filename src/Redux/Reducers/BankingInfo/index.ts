@@ -23,7 +23,7 @@ export const BankingInfoReducer = (
     state = INITIAL_STATE,
     action: IAction<
         IProfilePage.Actions.IMapCreatorProfileResponse &
-            IBankingInfoPage.Actions.IMapGetPersonalInformation
+        IBankingInfoPage.Actions.IMapGetPersonalInformation
     >
 ) => {
     switch (action.type) {
@@ -38,20 +38,20 @@ export const BankingInfoReducer = (
                 errors: ["Error getting personal information"],
             });
         }
-        case ActionConsts.BankingInfo.GetUserProfileSuccess: {
-            let { profile } = action.payload!;
-            return Object.assign({}, state, {
-                creatorProfile: profile,
-                showPersonalInformation:
-                    profile.coverImageUrl && profile.profileImageUrl,
-            });
-        }
-        case ActionConsts.BankingInfo.GetUserProfileError: {
-            return Object.assign({}, state, {
-                creatorProfile: {},
-                errors: ["Error getting profile"],
-            });
-        }
+        // case ActionConsts.BankingInfo.GetUserProfileSuccess: {
+        //     let { profile } = action.payload!;
+        //     return Object.assign({}, state, {
+        //         creatorProfile: profile,
+        //         showPersonalInformation:
+        //             profile.coverImageUrl && profile.profileImageUrl,
+        //     });
+        // }
+        // case ActionConsts.BankingInfo.GetUserProfileError: {
+        //     return Object.assign({}, state, {
+        //         creatorProfile: {},
+        //         errors: ["Error getting profile"],
+        //     });
+        // }
         case ActionConsts.BankingInfo.UploadProfileImagesError: {
             return Object.assign({}, state, {
                 errors: ["Error uploading profile images"],

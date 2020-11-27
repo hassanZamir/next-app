@@ -64,6 +64,7 @@
     "react-dom": "^16.13.1",
     "react-google-login": "^5.1.21",
     "react-google-recaptcha": "^2.1.0",
+    "react-helmet": "^6.1.0",
     "react-hook-form": "^6.0.1",
     "react-image-gallery": "^1.0.8",
     "react-input-switch": "^2.2.2",

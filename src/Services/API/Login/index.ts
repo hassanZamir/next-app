@@ -257,11 +257,13 @@ export const LoginService = {
         PostPersonalInformationModel.GetPostPersonalInformationResponse
     > => {
         let response: PostPersonalInformationModel.GetPostPersonalInformationResponse;
+        const { authtoken, ...rest } = payload;
+        let restPayload = { ...rest };
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 PostPersonalInformationModel.GetPostPersonalInformationResponse
-            >("POST", "/accounts/" + payload.userId + "/banking", undefined, {
-                ...payload,
+            >("POST", "/accounts/" + payload.userId + "/banking", payload.authtoken, undefined, {
+                restPayload
             });
         } catch (error) {
             response = {
@@ -278,9 +280,9 @@ export const LoginService = {
     > => {
         let response: GETPersonalInformationModel.GetGETPersonalInformationResponse;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 GETPersonalInformationModel.GetGETPersonalInformationResponse
-            >("GET", "/accounts/" + payload.userId + "/banking");
+            >("GET", "/accounts/" + payload.userid + "/banking", payload.authtoken);
         } catch (error) {
             response = {
                 status: false,
@@ -290,8 +292,8 @@ export const LoginService = {
                     street: "",
                     city: "",
                     state: "",
-                    postCode: 11111,
-                    country: "pakistan",
+                    postCode: 10000,
+                    country: "",
                     dob: "",
                     docType: 1,
                     docPhoto: "",

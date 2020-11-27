@@ -25,20 +25,15 @@ const Authenticated: any = dynamic(
     { ssr: false }
 );
 
-const Home: NextPage = () => {
+const AccountUpgrade: NextPage = () => {
     const persistState = useSelector((state: IStore) => state.persistState);
     const { session } = persistState;
 
     return (
         <Authenticated session={session} name="Account">
             <BankingInfo user={session} />
-            {/* <DynamicFeeds user={session} /> */}
         </Authenticated>
     );
 };
 
-export const getStaticProps = (...params: any) => {
-    return { props: {} };
-};
-
-export default Home;
+export default AccountUpgrade;

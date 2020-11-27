@@ -1,4 +1,13 @@
-import { FEED, CREATOR_PROFILE, CreatorProfileModel, ProfileFollowersModel, mediaUrl, CheckUserProfileFollowingModel } from "@Interfaces";
+import {
+    FEED,
+    CREATOR_PROFILE,
+    CreatorProfileModel,
+    ProfileFollowersModel,
+    mediaUrl,
+    CheckUserProfileFollowingModel,
+    UserCreatorProfileModel
+} from "@Interfaces";
+import { USER_CREATOR_PROFILE } from "@Services/API/CreatorProfile/UserCreatorProfile";
 
 declare namespace IProfilePage {
     export interface IProps { }
@@ -13,7 +22,11 @@ declare namespace IProfilePage {
         emptyPageNoVideo: number,
         followers: { userId: number }[],
         isUserFollowingStatus: string, // tracking API request status
-        isUserFollowing: bool
+        isUserFollowing: bool,
+
+        //  user creator profile  //
+        userCreatorProfile: USER_CREATOR_PROFILE,
+        // --------------------- //
     }
 
     namespace Actions {
@@ -40,6 +53,9 @@ declare namespace IProfilePage {
 
         export interface IGetCreatorProfilePayload extends CreatorProfileModel.GetCreatorProfilePayload { }
         export interface IGetCreatorProfileResponse extends CreatorProfileModel.GetCreatorProfileResponse { }
+
+        export interface IGetUserCreatorProfilePayload extends UserCreatorProfileModel.GetUserCreatorProfilePayload { }
+        export interface IGetUserCreatorProfileResponse extends UserCreatorProfileModel.GetUserCreatorProfileResponse { }
 
         export interface IGetCreatorFeedsPayload extends CreatorProfileModel.GetCreatorFeedsPayload { }
         export interface IGetCreatorFeedsResponse extends CreatorProfileModel.GetCreatorFeedsResponse { }
