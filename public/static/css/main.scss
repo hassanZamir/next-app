@@ -1065,15 +1065,16 @@ $badge-success-bg: #f57b52;
 
 // Circle Checkbox
 
-body {
-    background-color: #f1f2f3;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-}
+// TODO: fix this, as this was changing the whole applicaiton;s background
+// body {
+//     background-color: #f1f2f3;
+//     -webkit-box-align: center;
+//     -ms-flex-align: center;
+//     align-items: center;
+//     display: -webkit-box;
+//     display: -ms-flexbox;
+//     display: flex;
+// }
 
 .container {
     margin: 0 auto;
