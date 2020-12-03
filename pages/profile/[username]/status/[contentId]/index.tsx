@@ -35,13 +35,16 @@ const UserStatus: NextPage<IProfilePage.IProps> = () => {
     const userName = router.query["username"] as string,
         contentId = parseInt(router.query["contentId"] as string);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         // console.log("UserStatus-contentid: ", contentId);
         // redirect to creator profile if status Id is not valid
         if (!(contentId > 0))
             router.push(`/profile/${userName}?c=${btoa(contentId.toString())}&e=${btoa("status id not valid")}`);
+
+        // console.log("UserStatus-feed: ", feed);
+
         // load the feed object if the existing is not the same
-        if ("id" in feed && feed.id != contentId) {
+        if (!feed.id || feed.id != contentId) {
             // console.log("Fetching status feed content");
             var params: IStatusPage.Actions.IGetGetFeedPayload = {
                 viewerId: session.id,
