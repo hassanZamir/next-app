@@ -4,7 +4,7 @@ import { BackgroundImage } from "@Components/Basic";
 import { VideoPlayer, MediaCarousel } from "@Components";
 import { useModal } from '../Hooks';
 
-const mediaBaseUrl = process.env.MEDIA_BASE_URL;
+const mediaBaseUrl = process.env.MEDIA_BASE_URL + "/";
 
 export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: mediaUrl[], errors: string }>
     = ({ mediaGallary, errors }) => {
