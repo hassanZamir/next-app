@@ -3,5 +3,6 @@ export interface GETNotificationPayload {
     type: number,
     userId: number,
     page?: number,
-    offset?: number
+    offset?: number,
+    authtoken: string,
 }

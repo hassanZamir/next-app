@@ -47,7 +47,8 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
                 userId: user.id, 
                 type: NotificationTabs[index].type, 
                 key: NotificationTabs[index].key,
-                page: notifications[NotificationTabs[index].key].paginationNo
+                page: notifications[NotificationTabs[index].key].paginationNo,
+                authtoken: user.token,
             };
             await dispatch(NotificationActions.GetNotification(params));
         }
@@ -59,7 +60,8 @@ export const NotificationCreator: React.FunctionComponent<{ user: USER_SESSION, 
         if (index >= 1 && index <= 2) {
             dispatch(NotificationActions.ViewNotifications({ 
                 userId: user.id, 
-                type: index === 1 ? 2 : 3
+                type: index === 1 ? 2 : 3,
+                authtoken: user.token,
             }));
         } 
 

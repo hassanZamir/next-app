@@ -38,11 +38,13 @@ export const NotificationService = {
     ): Promise<NotificationModel.GetGETNotificationResponse> => {
         let response: NotificationModel.GetGETNotificationResponse;
 
-        const { userId, ...restPayload } = payload;
+        const { userId, authtoken, ...restPayload } = payload;
+
         try {
-            response = await Http.Request<NotificationModel.GetGETNotificationResponse>(
+            response = await Http.UserAuthRequest<NotificationModel.GetGETNotificationResponse>(
                 "GET",
                 "/users/" + userId + "/notifications" + getQueryParams({ ...restPayload }),
+                authtoken,
                 undefined
             );
         } catch (error) {
@@ -91,9 +93,10 @@ export const NotificationService = {
         let response: NotificationModel.GetViewNotificationsResponse;
 
         try {
-            response = await Http.Request<NotificationModel.GetViewNotificationsResponse>(
+            response = await Http.UserAuthRequest<NotificationModel.GetViewNotificationsResponse>(
                 "POST",
                 "/users/" + payload.userId + "/notifications/view",
+                payload.authtoken,
                 undefined,
                 { type: payload.type }
             );

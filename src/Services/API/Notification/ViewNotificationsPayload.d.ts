@@ -1,4 +1,5 @@
 export interface ViewNotificationsPayload {
     userId: number,
-    type: number
+    type: number,
+    authtoken: string,
 }

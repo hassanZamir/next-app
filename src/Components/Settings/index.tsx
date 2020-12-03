@@ -58,7 +58,6 @@ const UploadProfileImages: React.FunctionComponent<{
     locationslist,
     DobConst,
 }) => {
-        console.log(user);
         const [files, setFiles] = useState<IUploadImage[]>([]);
         const [editProfile, setEditProfile] = useState(true);
         const [accountSettings, setAccountSettings] = useState(false);
