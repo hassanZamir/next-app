@@ -72,13 +72,14 @@ export const NotificationService = {
         payload: NotificationModel.GetSeenNotificationPayload
     ): Promise<NotificationModel.GetSeenNotificationResponse> => {
         let response: NotificationModel.GetSeenNotificationResponse;
-
+        const { authtoken, ...rest } = payload
         try {
-            response = await Http.Request<NotificationModel.GetSeenNotificationResponse>(
+            response = await Http.UserAuthRequest<NotificationModel.GetSeenNotificationResponse>(
                 "POST",
                 "/notifications/notifcationId/seen",
+                authtoken,
                 undefined,
-                [...payload.notifications] as any
+                [...rest.notifications] as any
             );
         } catch (error) {
             response = {

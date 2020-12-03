@@ -1,3 +1,4 @@
 export interface SeenNotificationPayload {
-    notifications: {id: number}[]
+    notifications: { id: number }[];
+    authtoken: string;
 }
