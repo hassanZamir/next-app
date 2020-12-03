@@ -8,20 +8,32 @@ import { CreatorProfileService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IProfilePage } from "@Interfaces";
+import { IProfilePage, UserCreatorProfileModel, USER_CREATOR_PROFILE } from "@Interfaces";
 // #endregion Interface Imports
 
 export const CreatorProfileActions = {
+    // called by the pusher event only
+    VerficationStatusUpdated: (result: USER_CREATOR_PROFILE) => async (dispatch: Dispatch) => {
+        console.log("VerficationStatusUpdated: ", result);
+
+        dispatch({
+            payload: result,
+            type: ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess
+        });
+        if (result.creatorProfileVerified)
+            dispatch({
+                payload: null,
+                type: ActionConsts.Payment.OnBecomeCreatorSuccess
+            });
+    },
     GetUserCreatorProfile: (
         payload: IProfilePage.Actions.IGetUserCreatorProfilePayload
     ) => async (dispatch: Dispatch) => {
         const result = await CreatorProfileService.GetUserCreatorProfile(payload);
+        // console.log("GetUserCreatorProfile: ", result);
 
         dispatch({
-            payload: {
-                profile:
-                    result.status && result.response ? result.response : {},
-            },
+            payload: result.status && result.response ? result.response : {},
             type:
                 result.status && result.response
                     ? ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess
@@ -34,6 +46,11 @@ export const CreatorProfileActions = {
     GetCreatorProfile: (payload: IProfilePage.Actions.IGetCreatorProfilePayload) => async (
         dispatch: Dispatch
     ) => {
+        dispatch({
+            payload: { isFetchingProfile: true },
+            type: ActionConsts.CreatorProfile.SetProfileFetching,
+        })
+
         const result = await CreatorProfileService.GetCreatorProfile(payload);
 
         dispatch({

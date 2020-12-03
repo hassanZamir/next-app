@@ -11,12 +11,13 @@ export const StatusService = {
         let response: AllCommentsModel.GetAllCommentsResponse;
 
         try {
-            response = await Http.Request<AllCommentsModel.GetAllCommentsResponse>(
+            response = await Http.UserAuthRequest<AllCommentsModel.GetAllCommentsResponse>(
                 "GET",
-                "/content/" + payload.contentId + "/comments?page=" + payload.pageNo 
-                + "&offset=" + payload.offset 
-                + (payload.sort ===  'desc' ? "&sort=desc" : "&sort=" + payload.sort)
+                "/content/" + payload.contentId + "/comments?page=" + payload.pageNo
+                + "&offset=" + payload.offset
+                + (payload.sort === 'desc' ? "&sort=desc" : "&sort=" + payload.sort)
                 + (payload.userId ? ("&viewerId=" + payload.userId) : ""),
+                payload.authtoken,
                 undefined
             );
             // localStorage.setItem("user", response.status);
@@ -46,9 +47,10 @@ export const StatusService = {
         let response: PostCommentModel.GetPostCommentResponse;
 
         try {
-            response = await Http.Request<PostCommentModel.GetPostCommentResponse>(
+            response = await Http.UserAuthRequest<PostCommentModel.GetPostCommentResponse>(
                 "POST",
                 "/content/" + payload.contentId + "/comment",
+                payload.authtoken,
                 undefined,
                 { userId: payload.userId, commentText: payload.commentText }
             );
@@ -79,9 +81,10 @@ export const StatusService = {
         let response: LikeCommentModel.GetLikeCommentResponse;
 
         try {
-            response = await Http.Request<LikeCommentModel.GetLikeCommentResponse>(
+            response = await Http.UserAuthRequest<LikeCommentModel.GetLikeCommentResponse>(
                 "POST",
                 "/comment/" + payload.commentId + "/like",
+                payload.authtoken,
                 undefined,
                 { userId: payload.userId }
             );
@@ -99,9 +102,10 @@ export const StatusService = {
         let response: LikeCommentModel.GetLikeCommentResponse;
 
         try {
-            response = await Http.Request<LikeCommentModel.GetLikeCommentResponse>(
+            response = await Http.UserAuthRequest<LikeCommentModel.GetLikeCommentResponse>(
                 "DELETE",
                 "/comment/" + payload.commentId + "/like",
+                payload.authtoken,
                 undefined,
                 { userId: payload.userId }
             );

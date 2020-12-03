@@ -7,10 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "@Redux/IStore";
 import { IFooter } from "./Footer";
 import { StaticImage } from "@Components";
-import Router from "next/router";
-import { LoginActions, NotificationActions, MessagesActions } from "@Actions";
+import Router, { useRouter } from "next/router";
+import { LoginActions, NotificationActions, MessagesActions, BankingInfoActions, CreatorProfileActions } from "@Actions";
 import { NotificationPusher } from '@Services/Pusher';
-import { NOTIFICATION, CONVERSATION_RESPONSE, MESSAGE_LIST_ITEM } from "@Interfaces";
+import { NOTIFICATION, CONVERSATION_RESPONSE, MESSAGE_LIST_ITEM, USER_CREATOR_PROFILE } from "@Interfaces";
 
 // #endregion Local Imports
 
@@ -22,6 +22,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
     const dispatch = useDispatch();
     const persistState = useSelector((state: IStore) => state.persistState);
     const { notificationStats } = persistState;
+    const router = useRouter();
 
 
     const notificationSubscriptionCallback = (param: NOTIFICATION) => {
@@ -41,6 +42,21 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
         dispatch(NotificationActions.GetNotificationStats({ userId: session.id, authtoken: session.token }));
     }
 
+    const verificationStatusCallback = (userCreatorProfile: USER_CREATOR_PROFILE) => {
+        dispatch(CreatorProfileActions.VerficationStatusUpdated(userCreatorProfile));
+    }
+
+    const followingPaymentCallback = (payload: any) => {
+        console.log("followingPaymentCallback: ", payload);
+        if (payload.status == true)
+            dispatch(LoginActions.TokenVerify({
+                session: session
+            }))
+        setTimeout(() => {
+            router.push(`/profile/${payload.creatorUsername}?f=${btoa(payload.status)}&p=${btoa(payload)}`);
+        }, 3000);
+    }
+
     useEffect(() => {
         dispatch(NotificationActions.GetNotificationStats({ userId: session.id, authtoken: session.token }));
 
@@ -58,6 +74,8 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
                     NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
                     // NotificationPusher.subscribe('new-conversation', channel, newConversationRecievedCallBack);
                     NotificationPusher.subscribe('conversation-update', channel, newConversationRecievedCallBack);
+                    NotificationPusher.subscribe('verification-update', channel, verificationStatusCallback)
+                    NotificationPusher.subscribe('follow-payment-update', channel, followingPaymentCallback)
                 }).catch((err: any) => {
                     console.log("Error occured subscribing pusher : ", err);
                 });

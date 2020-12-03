@@ -27,7 +27,7 @@ export const Authenticated: React.FunctionComponent<{
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!session || !("id" in session))
+        if (!session || !session.token || !session.id)
             Router.push("/login", "/login", { shallow: true });
         else if (session && session.token) {
             // call the token verify api to check validity

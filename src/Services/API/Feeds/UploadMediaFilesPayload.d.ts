@@ -3,4 +3,5 @@ export interface UploadMediaFilesPayload {
     title?: string;
     userId?: number;
     blur?: boolean;
+    authtoken: string;
 }

@@ -3,7 +3,7 @@ import { ActionConsts } from "@Definitions";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, IFeedsPage, IFeed, FEED } from "@Interfaces";
+import { IAction, IFeedsPage, IFeed, FEED, CREATOR_PROFILE } from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IFeedsPage.IStateProps = {
@@ -14,6 +14,7 @@ const INITIAL_STATE: IFeedsPage.IStateProps = {
         emptyPageNo: 9999,
         value: []
     },
+    newPost: <FEED>{},
     profilesSuggestion: [],
     profilesSuggestionEnd: false,
 };
@@ -27,26 +28,29 @@ export const FeedsReducer = (
 ) => {
     switch (action.type) {
         case ActionConsts.Feeds.PostContentSuccess: {
-            let { feed } = action.payload!;
+            console.log("Reducer-payload: ", action.payload);
+            const feed = action.payload!.feed;
+            console.log("Reducer-feed: ", feed);
+            //console.log("Reducer-feeds: ", state);
 
-            if (!feed) return Object.assign({}, state, {
-                feeds: {
-                    value: [feed[0], ...state.feeds.value],
-                    emptyPaginationNo: state.feeds.emptyPageNo,
-                    paginationNo: state.feeds.paginationNo
-                },
-                errors: 'Post content failed',
-                postContentStatus: 'error'
-            });
             return Object.assign({}, state, {
-                feeds: {
-                    value: [feed[0], ...state.feeds.value],
-                    emptyPaginationNo: state.feeds.emptyPageNo,
-                    paginationNo: state.feeds.paginationNo
-                },
-                errors: '',
-                postContentStatus: 'success'
+                newPost: feed ? feed[0] : <FEED>{},
+                postContentStatus: feed ? 'success' : 'error'
             });
+            // if (!feed) return Object.assign({}, state, {
+            //     feeds: {
+            //         value: state.feeds.value,
+            //         emptyPaginationNo: state.feeds.emptyPageNo,
+            //         paginationNo: state.feeds.paginationNo
+            //     },
+            //     errors: 'Post content failed',
+            //     postContentStatus: 'error'
+            // // });
+            // return Object.assign({}, state, {
+            //     feeds.value: state.feeds.value,
+            //     errors: 'Post content failed',
+            //     postContentStatus: 'error'
+            // });
         }
         case ActionConsts.Feeds.PostContentError: {
             return Object.assign({}, state, {
@@ -61,9 +65,17 @@ export const FeedsReducer = (
         }
         case ActionConsts.Feeds.ProfilesSuggestionSuccess: {
             let { profiles } = action.payload!;
+            let newProfiles: CREATOR_PROFILE[] = [];
+
+            // avoiding duplicates
+            profiles.forEach((item: CREATOR_PROFILE) => {
+                if (state.profilesSuggestion.findIndex(x => x.userName == item.userName) === -1)
+                    newProfiles.push(item);
+            });
+
 
             return Object.assign({}, state, {
-                profilesSuggestion: [...state.profilesSuggestion, ...profiles],
+                profilesSuggestion: [...state.profilesSuggestion, ...newProfiles],
                 profilesSuggestionEnd: profiles.length === 0 ? true : false,
                 errors: ''
             });

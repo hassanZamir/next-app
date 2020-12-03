@@ -33,11 +33,11 @@ export const PaymentActions = {
             });
         }
         dispatch({
-            payload: result.status ? { paymentSettings: result.response } : {error: "Error updating card info"} ,
+            payload: result.status ? { paymentSettings: result.response } : { error: "Error updating card info" },
             type: result.status ? ActionConsts.Payment.UpdatePaymentSettingsSuccess : ActionConsts.Payment.UpdatePaymentSettingsError
         });
     },
-    AddCard: (payload: IPayment.Actions.IGetAddCardPayload, onAddCardSuccess: ()=>void) => async (
+    AddCard: (payload: IPayment.Actions.IGetAddCardPayload, onAddCardSuccess: () => void) => async (
         dispatch: Dispatch
     ) => {
         const result = await PaymentService.AddCard(payload);
@@ -49,7 +49,7 @@ export const PaymentActions = {
             onAddCardSuccess();
         }
         dispatch({
-            payload: result.status ? { paymentSettings: result.response } : {error: result.error} ,
+            payload: result.status ? { paymentSettings: result.response } : { error: result.error },
             type: result.status ? ActionConsts.Payment.AddCardSuccess : ActionConsts.Payment.AddCardError
         });
     },
@@ -57,9 +57,9 @@ export const PaymentActions = {
         dispatch: Dispatch
     ) => {
         const result = await PaymentService.AddFundsToWallet(payload);
-        
+
         dispatch({
-            payload: result.status ? { balance: result.balance } : { error: "Error adding funds to wallet" } ,
+            payload: result.status ? { balance: result.balance } : { error: "Error adding funds to wallet" },
             type: result.status ? ActionConsts.Payment.AddFundsToWalletSuccess : ActionConsts.Payment.AddFundsToWalletError
         });
     },

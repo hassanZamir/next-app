@@ -14,6 +14,7 @@ import {
     IAccountVerifyPage,
     IProfilePage,
     ISettingsPage,
+    USER_SESSION,
 } from "@Interfaces";
 // #endregion Interface Imports
 
@@ -21,13 +22,32 @@ export const LoginActions = {
     TokenVerify: (payload: ILoginPage.Actions.ITokenVerifyPayload) => async (dispatch: Dispatch) => {
         let response: ILoginPage.Actions.ITokenVerifyResponse;
         response = await LoginService.TokenVerify(payload);
+        const currentSession: USER_SESSION = payload.session;
+        const newSession: USER_SESSION = response.session;
 
-        dispatch({
-            payload: response,
-            type: response.authenticated
-                ? ActionConsts.Login.UpdateSession
-                : ActionConsts.Login.ClearSession,
-        });
+        // only reload if the refresh call has happened and we have new refresh token changed
+        // avoid null == null on successfull token verify call
+        if (response.status && response.authenticated && currentSession.refreshToken
+            && newSession.refreshToken && currentSession.refreshToken != newSession.refreshToken) {
+            // console.log("ActionTokenVerify: Token Refreshed");
+            // reload the site
+            dispatch({
+                payload: response,
+                type: ActionConsts.Login.ReloadPage
+            });
+        }
+        else {
+            // console.log("ActionTokenVerify: Token Valid");
+
+            dispatch({
+                payload: response,
+                type: response.authenticated
+                    ? ActionConsts.Login.UpdateSession
+                    : ActionConsts.Login.ClearSession,
+            });
+        }
+
+
     },
     UserLogin: (payload: ILoginPage.Actions.IGetLoginPayload) => async (
         dispatch: Dispatch

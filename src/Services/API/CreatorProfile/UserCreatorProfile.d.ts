@@ -8,7 +8,7 @@ declare namespace UserCreatorProfileModel {
 
     export interface GetUserCreatorProfileResponse {
         status: boolean;
-        response: {};
+        response?: USER_CREATOR_PROFILE;
         errors: {};
     }
 }

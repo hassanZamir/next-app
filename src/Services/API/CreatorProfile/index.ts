@@ -152,7 +152,7 @@ export const CreatorProfileService = {
         try {
             response = await Http.Request<
                 CreatorProfileModel.GetCreatorProfileResponse
-            >("GET", "/profiles/" + payload.username, undefined);
+            >("GET", `/creators/${payload.username}/profiles`, undefined);
         } catch (error) {
             response = {
                 status: false,
@@ -213,7 +213,6 @@ export const CreatorProfileService = {
         } catch (error) {
             result = {
                 status: false,
-                response: {},
                 errors: error,
             }
         }

@@ -14,6 +14,7 @@ export type USER_SESSION = {
     notificationCount: number;
     followersCount: number;
     token: string;
+    refreshToken: string;
 };
 
 export interface LoginResponse {

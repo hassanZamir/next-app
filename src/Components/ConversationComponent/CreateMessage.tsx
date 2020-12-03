@@ -12,7 +12,7 @@ import { MessagesActions } from "@Actions";
 import { USER_SESSION, CONVERSATION_THREAD } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
 import { MessageMediaPreview } from "./MessageMediaPreview";
-import { TipSubmitModal } from "../Modals/TipSubmitModal";
+import { NonFeedTipSubmitModal } from "../Modals/NonFeedTipSubmitModal";
 import { PriceTagModal } from "../Modals/PriceTagModal";
 import { ParagraphText } from "@Components/ParagraphText";
 import { LoadingSpinner } from "@Components";
@@ -162,7 +162,7 @@ export const CreateMessage: React.FunctionComponent<{
         setError("");
     };
 
-    const onTipSubmit = async (feed: FEED, amount: string, message: string) => {
+    const onTipSubmit = async (amount: string, message: string) => {
         const param: IFeed.Actions.ITipFeedPayload = {
             contentId: 0,
             viewerId: user.id,
@@ -187,11 +187,10 @@ export const CreateMessage: React.FunctionComponent<{
                 />
             )}
             {showTipModal && (
-                <TipSubmitModal
+                <NonFeedTipSubmitModal
                     isShowing={isShowing}
                     modalRef={modalRef}
                     onSubmit={onTipSubmit}
-                    clickedFeed={{ username: "", profileImageUrl: "" }}
                 />
             )}
             {files.length > 0 && <MessageMediaPreview files={files} />}

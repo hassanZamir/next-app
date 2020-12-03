@@ -12,7 +12,7 @@ export const StatusActions = {
         dispatch: Dispatch
     ) => {
         const result = await StatusService.GetAllComments(payload);
-        
+
         dispatch({
             payload: result.status ? { comments: result.response, pageNo: payload.pageNo } : { comments: [], pageNo: 0 },
             type: result.status ? ActionConsts.Status.GetAllCommentsSuccess : ActionConsts.Status.GetAllCommentsError
@@ -22,12 +22,12 @@ export const StatusActions = {
         dispatch: Dispatch
     ) => {
         const result = await StatusService.PostComment(payload);
-        
+
         if (result.status) {
             dispatch({
                 payload: {},
                 type: result.status ? ActionConsts.Status.UpdatePersistFeedCommentCount : ''
-            });            
+            });
         }
         dispatch({
             payload: result.status ? { comment: result.response } : { comment: {} },
@@ -56,9 +56,9 @@ export const StatusActions = {
     },
     GetFeed: (payload: IStatusPage.Actions.IGetGetFeedPayload) => async (dispatch: Dispatch) => {
         const result = await FeedsService.GetFeed(payload);
-        
+
         dispatch({
-            payload: { feed: result.status && result.response ? result.response[0] : {} },
+            payload: { feed: result.status && result.response ? result.response : {} },
             type: ActionConsts.Feeds.SetPolledPersistFeed
         });
     }

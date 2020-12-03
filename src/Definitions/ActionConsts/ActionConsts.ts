@@ -15,6 +15,7 @@ export const ActionConsts = {
         DoLogout: "DoLogout",
         onCloseResetPasswordModal: "onCloseResetPasswordModal",
 
+        ReloadPage: "ReloadPage",
         UpdateSession: "UpdateSession",
         ClearSession: "ClearSession"
     },
@@ -58,6 +59,7 @@ export const ActionConsts = {
         CheckUserFollowingError: "CheckUserFollowingError",
         GetUserCreatorProfileSuccess: "GetUserCreatorProfileSuccess",
         GetUserCreatorProfileError: "GetUserCreatorProfileError",
+        SetProfileFetching: "SetProfileFetching"
     },
     Status: {
         GetAllCommentsSuccess: "GetAllCommentsSuccess",
@@ -83,6 +85,8 @@ export const ActionConsts = {
         OnBecomeCreatorError: "OnBecomeCreatorError",
     },
     BankingInfo: {
+        VerificationStatusUpdated: "VerificationStatusUpdated",
+
         GetUserProfileSuccess: "GetUserProfileSuccess",
         GetUserProfileError: "GetUserProfileError",
         UploadProfileImagesError: "UploadProfileImagesError",

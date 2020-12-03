@@ -10,12 +10,14 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
 import { USER_SESSION } from "@Interfaces";
-import { Footer, CreatorProfile, CreatorContent, PaymentSettings, PaymentSettingsContainer } from '@Components';
-import { CreatorProfileActions, FollowingInfoAction, LoginActions } from "@Actions";
+import { Footer, CreatorProfile, CreatorContent } from '@Components';
+import { CreatorProfileActions } from "@Actions";
 import { AnimatePopup } from "@Components/Basic";
 import { PaymentConfirmationModal, UnFollowConfirmationModal, ReturnPolicyModal } from "@Components/Modals";
 import { useModal } from "@Components/Hooks";
-import { TYPE_ALL_FOLLOWING } from "config/FollowingConfigrator";
+import Suggestions from "@Pages/suggestions";
+import { theme } from "@Definitions/Styled";
+import { CCBillAddCardModal } from "@Components/Modals/CCBillAddCardModal";
 // #endregion Local Imports
 
 export const ProfileComponent: React.FunctionComponent<{
@@ -25,7 +27,7 @@ export const ProfileComponent: React.FunctionComponent<{
     const creatorProfileState = useSelector(
         (state: IStore) => state.creatorProfile
     );
-    const { creatorProfile, followers, isUserFollowingStatus, isUserFollowing } = creatorProfileState;
+    const { creatorProfile, followers, isUserFollowingStatus, isUserFollowing, isProfileFetching } = creatorProfileState;
     const { contentCount, imagesCount, videosCount, name } = creatorProfile;
     // const userFollowings = useSelector(
     //     (state: IStore) => state.followingInfo.defaultFollowingInformation
@@ -34,7 +36,7 @@ export const ProfileComponent: React.FunctionComponent<{
     const [showPaymentSettingsPopup, setShowPaymentSettingsPopup] = useState(
         false
     );
-    const [showPaymentSettingsModal, setShowPaymentSettingsModal] = useState(
+    const [showRedirectionModal, setShowRedirectionModal] = useState(
         false
     );
     const [scrolledToBottom, setScrolledToBottom] = useState(false);
@@ -43,6 +45,7 @@ export const ProfileComponent: React.FunctionComponent<{
     const followConfirmationModalRef = useModal(useRef<HTMLDivElement>(null));
     const unFollowConfirmationModalRef = useModal(useRef<HTMLDivElement>(null));
     const cancellationPolicyModalRef = useModal(useRef<HTMLDivElement>(null));
+    const ccbillAddCardModalRef = useModal(useRef<HTMLDivElement>(null));
 
     const dispatch = useDispatch();
 
@@ -91,9 +94,19 @@ export const ProfileComponent: React.FunctionComponent<{
         if (!wantToFollow) {
             unFollowConfirmationModalRef.toggle();
         } else if (user && user.id) {
-            if (user.paymentMode) {
-                followConfirmationModalRef.toggle();
-            } else setShowPaymentSettingsPopup(true);
+
+            // if user payment mode is set then use the confirmation dailog
+            //          and use the charge by previous id method
+            // otherwise initiate the add card modal which will take user to 
+            //          external payment processor page and take user payment info
+
+            // if (user.paymentMode) {
+            //     followConfirmationModalRef.toggle();
+            // } else {
+            // here user needs to be redirected to cc bill
+            // as falsy paymentmode means user has no active payment mode available
+            redirectToExternalPaymentGateway()
+            // }
         } else {
             Router.push({
                 pathname: "/login",
@@ -102,13 +115,14 @@ export const ProfileComponent: React.FunctionComponent<{
         }
     };
 
-    const onPaymentSettingsClick = () => {
-        setShowPaymentSettingsModal(true);
-        setShowPaymentSettingsPopup(false);
+    const redirectToExternalPaymentGateway = () => {
+        setShowRedirectionModal(true);
+        ccbillAddCardModalRef.toggle();
     };
 
     return (
         <div className="w-100 h-100 row flex-column justify-content-between flex-nowrap">
+
             <PaymentConfirmationModal
                 toggle={followConfirmationModalRef.toggle}
                 isShowing={followConfirmationModalRef.isShowing}
@@ -130,9 +144,15 @@ export const ProfileComponent: React.FunctionComponent<{
                 toggle={cancellationPolicyModalRef.toggle}
             />
 
-            {showPaymentSettingsPopup && (
-                <AnimatePopup animateIn={showPaymentSettingsPopup}>
-                    <PaymentSettings user={user} />
+            {showRedirectionModal && (
+                <AnimatePopup animateIn={showRedirectionModal}>
+                    {/* <PaymentSettings user={user} /> */}
+                    <CCBillAddCardModal
+                        user={user}
+                        isShowing={ccbillAddCardModalRef.isShowing}
+                        toggle={ccbillAddCardModalRef.toggle}
+                        creatorProfile={creatorProfile}
+                    />
                 </AnimatePopup>
             )}
 
@@ -147,7 +167,7 @@ export const ProfileComponent: React.FunctionComponent<{
                     setShowPaymentSettingsPopup(false);
                 }}
             >
-                <div className="bg-gradient d-flex flex-column">
+                <div className="d-flex flex-column">
                     <div
                         className="back-icon cursor-pointer"
                         onClick={() => {
@@ -156,44 +176,48 @@ export const ProfileComponent: React.FunctionComponent<{
                     >
                         <FontAwesomeIcon
                             icon={faArrowLeft}
-                            color="white"
+                            color={theme.colors.primary}
                             size="lg"
                         />
                     </div>
-                    <CreatorProfile
-                        creatorProfile={creatorProfile}
-                        onFollow={onFollow}
-                        isFollower={isAlreadyFollowing}
-                        user={user}
-                    />
+                    {/* {!creatorProfile.name && <>Loading...</>} */}
+                    {creatorProfile!.userName == profileUserName && <>
+                        <CreatorProfile
+                            creatorProfile={creatorProfile}
+                            onFollow={onFollow}
+                            isFollower={isAlreadyFollowing}
+                            user={user}
+                        />
 
-                    <CreatorContent
-                        scrolledToBottom={scrolledToBottom}
-                        followingFee={creatorProfile.followingFee}
-                        contentCount={contentCount}
-                        imagesCount={imagesCount}
-                        videosCount={videosCount}
-                        user={user}
-                        profileUserName={profileUserName}
-                        name={name}
-                        onFollow={onFollow}
-                        isFollower={isAlreadyFollowing}
-                    />
+                        <CreatorContent
+                            scrolledToBottom={scrolledToBottom}
+                            followingFee={creatorProfile.followingFee}
+                            contentCount={contentCount}
+                            imagesCount={imagesCount}
+                            videosCount={videosCount}
+                            user={user}
+                            profileUserName={profileUserName}
+                            name={name}
+                            onFollow={onFollow}
+                            isFollower={isAlreadyFollowing}
+                        />
+                    </>}
+
+                    {isProfileFetching == false && name === undefined && <>
+                        <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
+                            <div className="text-primary text-center mt-3 gibson-semibold font-20px">404</div>
+                            <div className="text-primary text-center mt-3 gibson-semibold font-20px">No Profile Found!</div>
+                        </div>
+                        <Suggestions />
+                    </>}
+
                 </div>
             </div>
             <Footer
                 selected="None"
                 session={user}
-                onMenuClick={() => { }} // TODO: Fix this
+                onMenuClick={() => { }} // TODO: Fix this. hint: useContext
             />
-
-            <PaymentSettingsContainer
-                session={user}
-                showPaymentSettings={showPaymentSettingsModal}
-                onModalClose={() => {
-                    setShowPaymentSettingsModal(false);
-                }}
-            />
-        </div>
+        </div >
     );
 };

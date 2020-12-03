@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faCog,
@@ -13,6 +13,8 @@ import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import { faUniversity } from "@fortawesome/free-solid-svg-icons";
 import { USER_SESSION } from "@Interfaces";
 import Link from "next/link";
+import { useModal } from "@Components/Hooks";
+import { AddCardModal } from "@Components/Modals/AddCardModal";
 
 const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media";
 
@@ -22,6 +24,9 @@ export const Menu: React.FunctionComponent<{
     session: USER_SESSION;
     onLogout: () => void;
 }> = ({ isShowing, toggle, session, onLogout }) => {
+
+    const addCardModalRef = useModal(useRef<HTMLDivElement>(null));
+
     return (
         <React.Fragment>
             <div
@@ -49,7 +54,7 @@ export const Menu: React.FunctionComponent<{
                                 }
                                 alt="Avatar"
                             />
-                            <span className="menu-profile-badge">
+                            {/* <span className="menu-profile-badge">
                                 <img
                                     src={
                                         session.isCreator
@@ -57,7 +62,7 @@ export const Menu: React.FunctionComponent<{
                                             : "images/baseline-check_circle_outline-24px@2x.png"
                                     }
                                 ></img>
-                            </span>
+                            </span> */}
                         </div>
                         <div className="p-2 bd-highlight align-self-center">
                             <span className="ml-2 menu-profile-picture-details">
@@ -71,68 +76,53 @@ export const Menu: React.FunctionComponent<{
                 </Link>
                 <Link href={`/profile/${session.username}`}>
                     <div className="link-anchor">
-                        <img src="images/profile.svg" alt="Profile Icon"></img>
+                        <img src="/images/profile.svg" alt="Profile Icon"></img>
                         <span className="ml-2">Profile</span>
                     </div>
                 </Link>
                 {session.isCreator && (
                     <Link href="/followersinfo">
                         <div className="link-anchor">
-                            <FontAwesomeIcon
-                                // className="menu-icon-color"
-                                icon={faUserPlus}
-                            />
+                            <img src="/images/followers.svg" alt="Followers Icon"></img>
                             <span className="ml-2">Followers</span>
-                            <span className="badge badge--line badge--smaller mr-1">
+                            {session.followersCount > 0 && <span className="badge badge--line badge--smaller mr-1">
                                 {session.followersCount}
-                            </span>
+                            </span>}
                         </div>
                     </Link>
                 )}
                 <Link href="/followinginfo">
                     <div className="link-anchor">
-                        <FontAwesomeIcon
-                            // className="menu-icon-color"
-                            icon={faUserCheck}
-                        />
+                        <img src="/images/followings.svg" alt="Following Icon"></img>
                         <span className="ml-2">Following</span>
-                        <span className="badge badge--line badge--smaller mr-1">
-                            {session.followersCount}
-                        </span>
+                        {/* {session.followingCount > 0 && <span className="badge badge--line badge--smaller mr-1">
+                            {session.followingCount}
+                        </span>} */}
                     </div>
                 </Link>
                 <hr />
                 <Link href="/settings">
                     <div className="link-anchor">
-                        <FontAwesomeIcon
-                            className={"menu-icon-color"}
-                            icon={faCog}
-                        />
+                        <img src="/images/settings.svg" alt="Settings Icon"></img>
                         <span className="ml-2">Settings</span>
                     </div>
                 </Link>
                 <Link href="#">
                     <div className="link-anchor">
-                        <FontAwesomeIcon
-                            className={"menu-icon-color"}
-                            icon={faListUl}
-                        />
+                        <img src="/images/statements.svg" alt="Statements Icon"></img>
                         <span className="ml-2">Statements</span>
                     </div>
                 </Link>
                 <hr />
-                <Link href="#">
+                <Link href="/payments">
                     <div className="link-anchor">
-                        <FontAwesomeIcon
-                            // className="menu-icon-color"
-                            icon={faCreditCard}
-                        />
+                        <img src="/images/cards.svg" alt="Card Icon"></img>
                         <span className="ml-2">
                             {session.cardNumber ? `Your Cards` : `Add Card`}
                             {!session.cardNumber && (
                                 <span className="menu-icon-color">
                                     {" "}
-                                    ( Become a subscriber )
+                                    ( To subscribe )
                                 </span>
                             )}
                         </span>
@@ -140,9 +130,8 @@ export const Menu: React.FunctionComponent<{
                 </Link>
 
                 <Link href="/account-upgrade">
-                    {/* <a href="/identity-verification"> */}
                     <div className="link-anchor">
-                        <FontAwesomeIcon icon={faUniversity} />
+                        <img src="/images/bank.svg" alt="Bank Icon"></img>
                         <span className="ml-2">
                             {session.isCreator
                                 ? `Bank Account Info`
@@ -150,7 +139,7 @@ export const Menu: React.FunctionComponent<{
                             {!session.isCreator && (
                                 <span className="menu-icon-color">
                                     {" "}
-                                    ( Become a creator )
+                                    ( To earn )
                                 </span>
                             )}
                         </span>
@@ -160,15 +149,13 @@ export const Menu: React.FunctionComponent<{
                 <hr />
                 <Link href="/support">
                     <div className="link-anchor">
-                        <FontAwesomeIcon
-                            icon={faQuestionCircle}
-                        />
+                        <img src="/images/help.svg" alt="Help Icon"></img>
                         <span className="ml-2">Help & Support</span>
                     </div>
                 </Link>
                 <Link href="/login">
                     <div className="link-anchor" onClick={() => onLogout()}>
-                        <FontAwesomeIcon icon={faPowerOff} />
+                        <img src="/images/logout.svg" alt="Logout Icon"></img>
                         <span className="ml-2">Logout </span>
                     </div>
                 </Link>

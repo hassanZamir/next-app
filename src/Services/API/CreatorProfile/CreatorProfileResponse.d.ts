@@ -17,7 +17,7 @@ export interface CreatorProfileResponse {
     response: CREATOR_PROFILE;
 }
 
-export type mediaUrl = { type: number; url: string; token: string };
+export type mediaUrl = { type: number; url: string; token: string, transformations?: any }; // TODO: OVERRIDE THIS ONCE optimizing brange is merged
 
 export type FEED = {
     name: string;
@@ -27,6 +27,7 @@ export type FEED = {
     id: number;
     title: string;
     media_url: mediaUrl[];
+    medialist?: mediaUrl[]; // TODO: OVERRIDE THIS ONCE optimizing branch is merged
     likesCount: number;
     commentsCount: number;
     tipsCount: number;

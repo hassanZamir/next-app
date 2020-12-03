@@ -5,7 +5,7 @@ import Link from "next/link";
 
 // #region Local Imports
 import { useDispatch } from "react-redux";
-import { StatusActions } from "@Actions";
+import { FeedsActions, StatusActions } from "@Actions";
 import { StaticImage, FeedsList, Comments } from "@Components";
 import { FEED, USER_SESSION } from "@Interfaces";
 import { ActionConsts } from "@Definitions";
@@ -21,6 +21,10 @@ export const ContentComponent: React.FunctionComponent<{ userName: string, conte
             const params = { viewerId: user.id, contentId: contentId, authtoken: user.token };
             dispatch(StatusActions.GetFeed(params));
         }
+        useEffect(() => {
+            const i = setInterval(pollFeed, 10000);
+        }, [contentId]);
+
 
         return (<div className="d-flex flex-column"
             style={{ position: "absolute", left: "0", right: "0", top: "0", bottom: "40px" }}>

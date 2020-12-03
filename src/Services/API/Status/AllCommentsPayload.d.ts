@@ -4,4 +4,5 @@ export interface AllCommentsPayload {
     offset: number;
     userId?: number;
     sort?: string;
+    authtoken: string;
 }

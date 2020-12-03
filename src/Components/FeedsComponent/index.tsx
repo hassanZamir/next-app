@@ -1,5 +1,5 @@
 // #region Global Imports
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 // #endregion Global Imports
@@ -32,7 +32,7 @@ export const FeedsComponent: React.FunctionComponent<{
         await dispatch(FeedsActions.GetAllFeeds(params));
     };
 
-    const getProfilesFollowers = async (
+    const getSuggestions = async (
         params: IFeedsPage.Actions.IGetProfilesSuggestionPayload
     ) => {
         await dispatch(FeedsActions.GetProfileSuggestion(params));
@@ -49,19 +49,17 @@ export const FeedsComponent: React.FunctionComponent<{
         })();
     }, [scrolledToBottom]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         (async () => {
             const params = { userId: user.id, page: paginationNo, authtoken: user.token };
             await getUserFeeds(params);
-            await getProfilesFollowers({ viewerId: user.id, authtoken: user.token });
+            await getSuggestions({ viewerId: user.id, authtoken: user.token });
             setLoading(false);
         })();
     }, []);
 
     return (
-        // <Menu isShowing={true}>
         <div>
-            {/* <Menu isShowing={true}> */}
             <div className="my-2 row justify-content-center no-gutters">
                 <Link href="/">
                     <a>
@@ -85,9 +83,9 @@ export const FeedsComponent: React.FunctionComponent<{
             )}
             {feeds && feeds.value.length <= 0 && !loading && (
                 <div className="py-3 border-bottom border-top d-flex flex-column align-items-center justify-content-center">
-                    {!user.isCreator && <PaymentSettings user={user} />}
+                    {/* {!user.isCreator && <PaymentSettings user={user} />} */}
                     <div className="mt-4 lato-regular font-17px text-grey200">
-                        Nothing New
+                        Follow creator profiles to see interesting content
                     </div>
                 </div>
             )}
@@ -97,8 +95,6 @@ export const FeedsComponent: React.FunctionComponent<{
                 />
             )}
             {loading && <FeedsLoaderDiv />}
-            {/* </Menu> */}
         </div>
-        // </Menu>
     );
 };

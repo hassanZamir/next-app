@@ -53,7 +53,8 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             const postContent: any = await dispatch(FeedsActions.PostContent({
                 media_url: files.length > 0 ? formData : null,
                 title: title,
-                userId: user.id
+                userId: user.id,
+                authtoken: user.token,
             }));
             if (postContent && postContent.status) { setFiles([]); setTitle(""); setShowPostSelection(false); }
             setLoading(false);
@@ -94,7 +95,19 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             <div style={{ flexGrow: 1 }}
                 className="px-2 border-top border-primary d-flex justify-content-between align-items-center">
                 <div style={{ minHeight: "53px" }} className="d-flex align-items-center">
-                    <FontAwesomeIcon
+                    <div className="upload-image-icon" onClick={(e: any) => {
+                        const _input = e.target.children[0];
+                        _input && _input.click();
+                    }}>
+                        <input accept="image/*,video/mp4,video/3gpp,video/quicktime"
+                            id="upload-media"
+                            name="upload-media"
+                            type="file"
+                            multiple={true}
+                            style={{ display: "none" }}
+                            onChange={handleChange} />
+                    </div>
+                    {/* <FontAwesomeIcon
                         onClick={() => { setShowPostSelection(!showPostSelection) }}
                         className="mr-2 cursor-pointer"
                         icon={faFileImage}
@@ -119,7 +132,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
                                 setShowWebcam(true);
                             }}>
                             </button>
-                        </ToggleAnimate>}
+                        </ToggleAnimate>} */}
                 </div>
                 <PrimaryButton
                     borderRadius="10px"

@@ -186,9 +186,10 @@ export const FeedsService = {
         let response: FeedsModel.GetLikeFeedResponse;
 
         try {
-            response = await Http.Request<FeedsModel.GetLikeFeedResponse>(
+            response = await Http.UserAuthRequest<FeedsModel.GetLikeFeedResponse>(
                 "POST",
                 "/content/" + payload.contentId + "/like",
+                payload.authtoken,
                 undefined,
                 { userId: payload.userId }
             );
@@ -205,9 +206,10 @@ export const FeedsService = {
         let response: FeedsModel.GetLikeFeedResponse;
 
         try {
-            response = await Http.Request<FeedsModel.GetLikeFeedResponse>(
+            response = await Http.UserAuthRequest<FeedsModel.GetLikeFeedResponse>(
                 "DELETE",
                 "/content/" + payload.contentId + "/like",
+                payload.authtoken,
                 undefined,
                 { userId: payload.userId }
             );
@@ -224,9 +226,10 @@ export const FeedsService = {
         let response: FeedsModel.GetReportFeedResponse;
 
         try {
-            response = await Http.Request<FeedsModel.GetReportFeedResponse>(
+            response = await Http.UserAuthRequest<FeedsModel.GetReportFeedResponse>(
                 "GET",
                 "/content/" + payload.contentId + "/report",
+                payload.authtoken,
                 undefined,
                 {
                     userId: payload.userId,
@@ -267,9 +270,11 @@ export const FeedsService = {
     ): Promise<PostContentModel.GetPostContentResponse> => {
         let response: PostContentModel.GetPostContentResponse;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 PostContentModel.GetPostContentResponse
-            >("POST", "/users/" + payload.userId + "/content", undefined, {
+            >("POST", "/users/" + payload.userId + "/content",
+                payload.authtoken,
+                undefined, {
                 title: payload.title as string,
                 media_url: payload.media_url,
             });
@@ -313,12 +318,13 @@ export const FeedsService = {
     ): Promise<FeedsModel.GetGetFeedResponse> => {
         let response: FeedsModel.GetGetFeedResponse;
         try {
-            response = await Http.Request<FeedsModel.GetGetFeedResponse>(
+            response = await Http.UserAuthRequest<FeedsModel.GetGetFeedResponse>(
                 "GET",
                 "/content/" +
-                    payload.contentId +
-                    "?viewerId=" +
-                    payload.viewerId,
+                payload.contentId +
+                "?viewerId=" +
+                payload.viewerId,
+                payload.authtoken,
                 undefined
             );
         } catch (error) {

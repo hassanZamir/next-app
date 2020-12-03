@@ -7,6 +7,27 @@ import { OnBecomeCreatorModel, PaymentSettingsModel, AddCardModel, UpdatePayment
 // #endregion Interface Imports
 
 export const PaymentService = {
+    FormDigest: async (payload: PaymentSettingsModel.IPaymentFormdigestPayload): Promise<PaymentSettingsModel.IPaymentFormdigestResponse> => {
+        let response: PaymentSettingsModel.IPaymentFormdigestResponse;
+        try {
+            response = await Http.FEAPIRequest<PaymentSettingsModel.IPaymentFormdigestResponse>(
+                'POST',
+                "/api/formdigest",
+                undefined,
+                { ...payload }
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                data: {
+                    formdigest: ""
+                },
+                error: "Something went wrong"
+
+            }
+        }
+        return response;
+    },
     GetPaymentSettings: async (
         payload: PaymentSettingsModel.GetPaymentSettingsPayload
     ): Promise<PaymentSettingsModel.GetPaymentSettingsResponse> => {
@@ -86,9 +107,10 @@ export const PaymentService = {
         payload.paymentMode && (params.paymentMode = payload.paymentMode);
         payload.defaultCard && (params.defaultCard = payload.defaultCard);
         try {
-            response = await Http.Request<UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse>(
+            response = await Http.UserAuthRequest<UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse>(
                 "POST",
                 "/user-payment/" + payload.userId,
+                payload.authtoken,
                 undefined,
                 params
             );
@@ -116,9 +138,10 @@ export const PaymentService = {
         let response: AddFundsToWalletModel.GetAddFundsToWalletResponse;
 
         try {
-            response = await Http.Request<AddFundsToWalletModel.GetAddFundsToWalletResponse>(
+            response = await Http.UserAuthRequest<AddFundsToWalletModel.GetAddFundsToWalletResponse>(
                 "POST",
                 "/user-payment/" + payload.userId + "/wallet",
+                payload.authtoken,
                 undefined,
                 { amount: payload.amount }
             );

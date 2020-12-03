@@ -26,8 +26,9 @@ const INITIAL_STATE: IProfilePage.IStateProps = {
     isUserFollowing: null,
 
     //  user creator profile  //
-    userCreatorProfile: <USER_CREATOR_PROFILE>{} // this will hold user's own creator profile
+    userCreatorProfile: <USER_CREATOR_PROFILE>{}, // this will hold user's own creator profile
     // --------------------- //
+    isProfileFetching: true,
 };
 
 export const CreatorProfileReducer = (
@@ -42,6 +43,11 @@ export const CreatorProfileReducer = (
     >
 ) => {
     switch (action.type) {
+        case ActionConsts.CreatorProfile.SetProfileFetching: {
+            return Object.assign({}, state, {
+                isProfileFetching: true
+            });
+        }
         case ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess: {
             return Object.assign({}, state, {
                 userCreatorProfile: action.payload!
@@ -97,6 +103,7 @@ export const CreatorProfileReducer = (
 
             return Object.assign({}, state, {
                 creatorProfile: profile,
+                isProfileFetching: false
             });
         }
         case ActionConsts.CreatorProfile.GetCreatorProfileError: {

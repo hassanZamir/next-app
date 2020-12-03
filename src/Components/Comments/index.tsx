@@ -11,7 +11,7 @@ import {
 
 // #region Local Imports
 import { CircularImage, LoadingSpinner } from "@Components";
-import { Textarea } from "@Components/Basic";
+import { CircularImageSmart, Textarea } from "@Components/Basic";
 import { StatusActions } from "@Actions";
 import { IStore } from "@Redux/IStore";
 import { COMMENT, USER_SESSION, IStatusPage } from "@Interfaces";
@@ -19,6 +19,8 @@ import { theme } from "@Definitions/Styled";
 import { CurrentTimeDifference } from "@Services/Time";
 import Link from "next/link";
 // #endregion Local Imports
+
+const mediaStorageBase = process.env.MEDIA_BASE_URL + "/";
 
 const Comment: React.FunctionComponent<{
     comment: COMMENT;
@@ -31,11 +33,9 @@ const Comment: React.FunctionComponent<{
             className="d-flex px-3 align-items-center my-4 w-100"
             ref={commentsListRef}
         >
-            <CircularImage
-                src={[
-                    comment.profileImageUrl,
-                    "/images/profile_image_placeholder.jpg",
-                ]}
+            <CircularImageSmart
+                src={mediaStorageBase + comment.profileImageUrl}
+                placeholder="/images/profile_image_placeholder.jpg"
                 height="50px"
                 width="50px"
                 border={"1px solid " + theme.colors.primary}
@@ -213,6 +213,7 @@ const PostComment: React.FunctionComponent<{
                 contentId: contentId,
                 userId: user.id,
                 commentText: comment,
+                authtoken: user.token,
             };
             setLoading(true);
             await dispatch(StatusActions.PostComment(params));
@@ -226,10 +227,7 @@ const PostComment: React.FunctionComponent<{
         <div className="px-4 d-flex flex-column pb-2 pt-4">
             <div className="d-flex align-items-center justify-content-between">
                 <CircularImage
-                    src={[
-                        user.profileImageUrl,
-                        "/images/profile_image_placeholder.jpg",
-                    ]}
+                    src={[mediaStorageBase + user.profileImageUrl, "/images/profile_image_placeholder.jpg"]}
                     height="35px"
                     width="35px"
                 />
@@ -301,6 +299,7 @@ export const Comments: React.FunctionComponent<{
             offset: 7,
             userId: user ? user.id : 0,
             sort: "desc",
+            authtoken: user.token,
         };
         await getComments(params);
         setLoading(false);
@@ -319,6 +318,7 @@ export const Comments: React.FunctionComponent<{
                 offset: 7,
                 userId: user ? user.id : 0,
                 sort: "asc",
+                authtoken: user.token,
             };
             await getComments(params);
             setPaginationPageNo(paginationPageNo + 1);
@@ -349,6 +349,7 @@ export const Comments: React.FunctionComponent<{
             offset: 7,
             userId: user ? user.id : 0,
             sort: "asc",
+            authtoken: user.token,
         };
         await getComments(params);
         setPaginationPageNo(1);
@@ -356,7 +357,7 @@ export const Comments: React.FunctionComponent<{
     };
 
     const likeComment = (comment: COMMENT) => {
-        const params = { commentId: comment.id, userId: user.id };
+        const params = { commentId: comment.id, userId: user.id, authtoken: user.token };
         if (!comment.content_viewer_like) {
             dispatch(StatusActions.LikeComment(params));
         } else {

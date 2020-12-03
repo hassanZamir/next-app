@@ -12,6 +12,9 @@ import { UploadPersonalInformation } from "@Components/BankingInfo/UploadPersona
 import { BackgroundImage } from "@Components/Basic";
 import React, { useEffect, useState } from "react";
 import { theme } from "@Definitions/Styled";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import Router, { useRouter } from "next/router";
 
 interface IUploadImage {
     key: string;
@@ -207,6 +210,7 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     user,
 }) => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const { userCreatorProfile } = useSelector((state: IStore) => state.creatorProfile)
     const bankingInfo = useSelector((state: IStore) => state.bankingInfo);
     const {
@@ -216,50 +220,83 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         defaultPersonalInformation,
     } = bankingInfo;
     const [loading, setLoading] = useState(true);
+    const [loadEmbedId, setLoadEmbedId] = useState(true);
 
     const truliooServiceUrl = process.env.TRULIOO_MS_URL;
     const truliooFeKey = process.env.TRULIOO_FE_KEY;
     const apiUrl = `${process.env.API_URL}/api/accounts/${user.id}/upgrade`;
-    const [trulioo, setTrulioo] = useState(false);
 
     useEffect(() => {
-        if (userCreatorProfile && defaultPersonalInformation)
+        success.splice(0, success.length);
+        errors.splice(0, errors.length);
+
+        if (userCreatorProfile)//&& defaultPersonalInformation)
             setLoading(false);
-    }, [userCreatorProfile, defaultPersonalInformation]);
+
+        if (userCreatorProfile.creatorProfileVerified)
+            success.push("Account upgraded successfully.");
+        else
+            errors.push("Account Verification: PENDING");
+
+        if (userCreatorProfile.idVerified && userCreatorProfile.docsVerified) {
+            setLoadEmbedId(false);
+            router.push("/");
+        }
+        else
+            setLoadEmbedId(true);
+
+        // if (userCreatorProfile.creatorProfileVerified) {
+
+        // }
+        // else {
+
+        //     if (userCreatorProfile.idVerified)
+        //         success.push("Identity Verification: DONE");
+        //     else
+        //         errors.push("Identity Verification: PENDING");
+
+        //     if (userCreatorProfile.docsVerified)
+        //         success.push("Document Verification: DONE");
+        //     else
+        //         errors.push("Document Verification: PENDING");
+        // }
+    }, [userCreatorProfile]);//, defaultPersonalInformation]);
+
     useEffect(() => {
         const params = {
             userid: user.id,
             authtoken: user.token,
         };
         dispatch(CreatorProfileActions.GetUserCreatorProfile(params));
-        dispatch(BankingInfoActions.GetPersonalInformation(params));
     }, []);
 
-    return (
+    return <React.Fragment>
+        <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
+            <FontAwesomeIcon
+                onClick={() => Router.push("/")}
+                className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
+        </div>
+        <ParagraphText className="mb-2 gibson-semibold font-40px text-center text-primary">Account Upgrade</ParagraphText>
+
         <div className="d-flex flex-column align-items-center flex-fill body-background">
-            <ParagraphText className="text-primary font-25px">
-                Account Upgrade
-            </ParagraphText>
-            {loading && (
+            {!userCreatorProfile ? (
                 <div
                     style={{ flex: 1 }}
                     className="w-100 h-100 d-flex align-items-center justify-content-center"
                 >
                     <LoadingSpinner size="3x" />
                 </div>
-            )}
-            {!loading && (
-                <React.Fragment>
-                    {console.info("loading trulioo iframe")}
-                    {!userCreatorProfile.creatorProfileVerified && <iframe
-                        name={`${user.token}#${apiUrl}#${truliooFeKey}`}
-                        frameBorder="0px"
-                        width="90%"
-                        height="100%"
-                        src={truliooServiceUrl}>
-                    </iframe>}
-                </React.Fragment>
-            )}
+            ) : (
+                    <React.Fragment>
+                        {!userCreatorProfile.creatorProfileVerified && loadEmbedId && <iframe
+                            name={`${user.token}#${apiUrl}#${truliooFeKey}`}
+                            frameBorder="0px"
+                            width="90%"
+                            height="100%"
+                            src={truliooServiceUrl}>
+                        </iframe>}
+                    </React.Fragment>
+                )}
             {success.length > 0 && (
                 <div className="d-flex flex-column">
                     {success.map((msg: string, i: number) => {
@@ -283,5 +320,5 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
                 </div>
             )}
         </div>
-    );
+    </React.Fragment>
 };

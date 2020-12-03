@@ -73,7 +73,7 @@ export const MessagesActions = {
         dispatch: Dispatch
     ) => {
         let uploadResult = null;
-        uploadResult = payload.type === 2 ? await FeedsService.UploadMediaOnStorage({ media_url: payload.meta!.media_urls, blur: true }) : null;
+        uploadResult = payload.type === 2 ? await FeedsService.UploadMediaOnStorage({ media_url: payload.meta!.media_urls, blur: true, authtoken: "dummy for now. fill fix with msgs module" }) : null;
 
         if (uploadResult && !uploadResult.status && payload.type === 2) {
             dispatch({

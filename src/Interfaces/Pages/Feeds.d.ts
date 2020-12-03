@@ -13,6 +13,7 @@ declare namespace IFeedsPage {
             value: FEED[],
             emptyPageNo: number
         },
+        newPost: FEED,
         profilesSuggestion: CREATOR_PROFILE[],
         profilesSuggestionEnd: boolean,
     }
@@ -20,7 +21,6 @@ declare namespace IFeedsPage {
     namespace Actions {
         export interface IMapAllFeedsResponse {
             feeds: FEED[],
-            page: number
         }
 
         export interface IMapPostContentResponse {
@@ -28,7 +28,8 @@ declare namespace IFeedsPage {
         }
 
         export interface IMapProfilesSuggestionResponse {
-            profiles: CREATOR_PROFILE[]
+            profiles: CREATOR_PROFILE[],
+            page: number
         }
 
         export interface IGetAllFeedsPayload extends FeedsModel.GetAllFeedsPayload { }

@@ -11,4 +11,5 @@ export { PaymentService } from "@Services/API/Payment";
 export { getQueryParams } from "@Services/Cookie";
 export { NotificationService } from "@Services/API/Notification";
 export { MessagesService } from "@Services/API/Messages";
+export { FollowingFeeDecimalFormatter } from "@Services/Utils";
 // #endregion Local Imports

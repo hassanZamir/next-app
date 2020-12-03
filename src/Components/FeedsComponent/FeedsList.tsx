@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { IStore } from "@Redux/IStore";
 import Link from "next/link";
 import Router from "next/router";
 import { useToasts } from "react-toast-notifications";
@@ -13,7 +14,7 @@ import {
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 
 import { IFeedsList, IFeed, IFeedOptions, FEED, mediaUrl } from "@Interfaces";
-import { BackgroundImage } from "@Components/Basic";
+import { BackgroundImage, BackgroundImageSmart } from "@Components/Basic";
 import { ParagraphText, VideoPlayer, MediaCarousel } from "@Components";
 import { TipSubmitModal } from "../Modals/TipSubmitModal";
 import { FeedOptionsModal } from "../Modals/FeedOptionsModal";
@@ -23,7 +24,7 @@ import { useModal } from "../Hooks";
 import { FeedsActions } from "@Actions";
 import { ActionConsts } from "@Definitions";
 
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media";
+const mediaBaseUrl = process.env.MEDIA_BASE_URL + "/";
 
 const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({
     likeContent,
@@ -46,7 +47,7 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({
                     likeContent(e, index);
                 }}
             >
-                <img src={content_viewer_like ? "images/like_filled.svg" : "images/like.svg"} alt="Like" />
+                <img src={content_viewer_like ? "/images/like_filled.svg" : "/images/like.svg"} alt="Like" />
                 <div className="text-darkGrey font-10px ml-1">{likesCount}</div>
             </div>
             <Link href={"/profile/" + feed.username + "/status/" + feed.id}>
@@ -72,7 +73,7 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({
                 <div className="text-darkGrey font-10px ml-1">Tip</div>
             </div>
             <div className="d-flex align-items-center cursor-pointer">
-                <img src="images/clock.svg"></img>
+                <img src="/images/clock.svg"></img>
                 <div className="text-darkGrey font-10px ml-1">
                     {CurrentTimeDifference(timeStamp)}
                 </div>
@@ -131,22 +132,26 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                 className="d-flex align-items-center justify-content-center position-absolute bottom-0"
                 style={{ left: "45%", right: "45%" }}
             >
-                {mediaUrl.map((validMQ, index) => (
-                    <div
-                        key={index}
-                        onClick={e => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setSelected(index);
-                            navigateTo(index);
-                        }}
-                        className={
-                            selected === index
-                                ? "navigation-dot active"
-                                : "navigation-dot"
-                        }
-                    />
-                ))}
+                <div className="navigation-dot-background">
+                    {mediaUrl.map((validMQ, index) => (
+
+                        <div
+                            key={index}
+                            onClick={e => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setSelected(index);
+                                navigateTo(index);
+                            }}
+                            className={
+                                selected === index
+                                    ? "navigation-dot active"
+                                    : "navigation-dot"
+                            }
+                        />
+                    ))}
+
+                </div>
             </div>
         );
     };
@@ -209,26 +214,23 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                                         videoHeight="260px"
                                         src={
                                             mediaBaseUrl +
-                                            "/" +
                                             media.url +
                                             media.token
                                         }
                                     />
                                 )}
                                 {media.type === 1 && (
-                                    <BackgroundImage
+                                    <BackgroundImageSmart
                                         onClick={e => {
                                             setShowMediaCarousel(i);
                                             toggle();
                                         }}
                                         paddingBottom="73.335%"
-                                        src={[
+                                        src={
                                             mediaBaseUrl +
-                                            "/" +
-                                            media.url +
-                                            media.token,
-                                            "/images/feed_placeholder.png",
-                                        ]}
+                                            media.url
+                                        }
+                                        token={media.token}
                                     />
                                 )}
                             </div>
@@ -310,6 +312,8 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
         index: number
     ) => {
         e.preventDefault();
+        // Prevent user to tip himself
+        if (feeds[index].username == user.username) return;
         setClickedTipFeed(feeds[index]);
         toggle();
     };
@@ -347,6 +351,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
         const param: IFeed.Actions.ILikeFeedPayload = {
             contentId: feeds[index].id,
             userId: user.id,
+            authtoken: user.token,
         };
         if (_FEEDS && _FEEDS[index] && !_FEEDS[index].content_viewer_like) {
             FeedsActions.LikeFeed(param)().then(resp => {
@@ -405,6 +410,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
         if (feeds && feeds.length > 0) set_FEEDS(feeds);
     }, [feeds]);
 
+
     if (feeds && feeds.length <= 0)
         return (
             <div className="d-flex flex-column w-100 px-0">
@@ -437,11 +443,11 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
 
             {_FEEDS &&
                 _FEEDS.map((feed: FEED, i: number) => {
-                    return "id" in feed ? (
+                    return feed != undefined && "id" in feed ? (
                         <Feed
                             feed={feed}
                             index={i}
-                            key={i}
+                            key={feed.id}
                             toggleTipModal={toggleTipModal}
                             likeContent={likeContent}
                             onReportClick={onReportClick}

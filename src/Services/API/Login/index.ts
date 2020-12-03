@@ -51,7 +51,7 @@ export const LoginService = {
                         undefined,
                         {
                             token: session.token,
-                            refreshToken: session.token
+                            refreshToken: session.refreshToken
                         }
                     )
                 } catch (error) {
@@ -107,6 +107,7 @@ export const LoginService = {
                     cardTitle: "",
                     followersCount: 0,
                     token: "",
+                    refreshToken: "",
                 },
                 authenticated: false,
                 errors: "Something went wrong",

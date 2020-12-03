@@ -169,6 +169,8 @@ export * from "@Services/API/Payment/AddCard";
 export * from "@Services/API/Payment/GetPaymentSettingsApiPayload";
 export * from "@Services/API/Payment/GetPaymentSettingsApiResponse";
 export * from "@Services/API/Payment/PaymentSettings";
+export * from "@Services/API/Payment/ICCBillAddCard";
+
 // #endregion Service Interfaces
 
 // #region Page Interfaces

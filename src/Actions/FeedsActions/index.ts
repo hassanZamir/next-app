@@ -17,7 +17,9 @@ export const FeedsActions = {
     ) => async (dispatch: Dispatch) => {
         const result = await FeedsService.GetProfilesSuggestion(payload);
         dispatch({
-            payload: { profiles: result.status ? result.response : [] },
+            payload: {
+                profiles: result.status ? result.response : []
+            },
             type: result.status
                 ? ActionConsts.Feeds.ProfilesSuggestionSuccess
                 : ActionConsts.Feeds.ProfilesSuggestionError,
@@ -70,8 +72,9 @@ export const FeedsActions = {
     ) => async (dispatch: Dispatch) => {
         const result = payload.media_url
             ? await FeedsService.UploadMediaOnStorage({
-                  media_url: payload.media_url,
-              })
+                media_url: payload.media_url,
+                authtoken: payload.authtoken
+            })
             : null;
         if (result && !result.status && payload.media_url) {
             dispatch({
@@ -84,9 +87,10 @@ export const FeedsActions = {
             title: payload.title,
             media_url: result ? result.uploadSuccess : [],
             userId: payload.userId,
+            authtoken: payload.authtoken
         });
         dispatch({
-            payload: postContent.status ? { feed: postContent.response } : null,
+            payload: postContent.status ? { feed: [postContent.response] } : null,
             type: postContent.status
                 ? ActionConsts.Feeds.PostContentSuccess
                 : ActionConsts.Feeds.PostContentError,

@@ -114,16 +114,20 @@ export const PersistReducer = (
         }
         case ActionConsts.Feeds.SetPolledPersistFeed: {
             let { feed } = action.payload!;
+            // console.log("state.feed: ", state.feed);
+            // console.log("feed:", feed);
+            // if (feed && state.feed && state.feed.id === feed.id
+            //     ) {
+            //     // if the feed object exists already then dont set media urls to avoid image flashes on polling
 
-            if ('id' in state.feed && state.feed.id === feed.id) {
-                return Object.assign({}, state, {
-                    feed: Object.assign({}, feed, {
-                        media_url: state.feed.media_url
-                    })
-                });
-            } else {
-                return Object.assign({}, state, { feed: feed });
-            }
+            //     return Object.assign({}, state, {
+            //         feed: Object.assign({}, feed, {
+            //             media_url: state.feed.media_url
+            //         })
+            //     });
+            // } else {
+            return Object.assign({}, state, { feed: feed });
+            // }
         }
         case ActionConsts.Feeds.SetPersistFeed: {
             let { feed } = action.payload!;
@@ -154,6 +158,9 @@ export const PersistReducer = (
                 session: session
             });
         }
+        case ActionConsts.Login.ReloadPage: {
+            Router.reload();
+        }
         case ActionConsts.Login.UpdateSession: {
             let { session } = action.payload!;
 
@@ -178,7 +185,7 @@ export const PersistReducer = (
             });
         }
         case ActionConsts.Payment.OnBecomeCreatorSuccess: {
-            Router.push("/");
+            Router.push("/?cr=1");
 
             return Object.assign({}, state, {
                 session: Object.assign({}, state.session, {
