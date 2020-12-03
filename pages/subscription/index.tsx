@@ -31,7 +31,7 @@ const Subscription: NextPage = () => {
     const user = useSelector((state: IStore) => state.persistState.session);
     const router = useRouter();
     const action = router.query["action"] as string;
-    const creatorUsername = router.query["creatorUsername"] as string;
+    const creatorUsername = router.query["creator"] as string;
 
     useEffect(() => {
         var paymentStatusQueryParam = "";
