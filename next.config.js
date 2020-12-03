@@ -35,7 +35,7 @@ const nextConfig = {
         MEDIA_BASE_URL: process.env.MEDIA_BASE_URL,
         TRULIOO_FE_KEY: process.env.TRULIOO_FE_KEY,
         TRULIOO_MS_URL: process.env.TRULIOO_MS_URL,
-
+        DYNAMIC_PRICING_FORM: process.env.DYNAMIC_PRICING_FORM,
     }
 };
 
