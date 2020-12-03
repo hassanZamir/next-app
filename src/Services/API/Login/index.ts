@@ -317,7 +317,7 @@ export const LoginService = {
                 GETFollowersInformationModel.GetGETFollowersInformationResponse
             >(
                 "GET",
-                `/profiles/${payload.username}/followers?type=` + payload.type,
+                `/users/${payload.username}/followers?type=` + payload.type,
                 payload.authtoken
             );
         } catch (error) {
