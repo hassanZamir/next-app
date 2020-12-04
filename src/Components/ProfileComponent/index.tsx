@@ -160,9 +160,7 @@ export const ProfileComponent: React.FunctionComponent<{
                 className="custom-scroller"
                 style={{ overflowY: "scroll", marginBottom: "40px", flex: 1 }}
                 onScroll={(e: any) => {
-                    const bottom =
-                        e.target.scrollHeight - e.target.scrollTop ===
-                        e.target.clientHeight;
+                    const bottom = Math.abs(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight) <= 3.0;
                     setScrolledToBottom(bottom);
                     setShowPaymentSettingsPopup(false);
                 }}

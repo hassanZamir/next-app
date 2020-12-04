@@ -125,15 +125,17 @@ const CommentsList: React.FunctionComponent<{
             else setShowSeeAllComments(false);
         }, [commentsCount]);
 
+        const checkBottomScrollEvent = (e: any) => {
+            if (e && e.target) {
+                const element = e.target;
+                const bottom = Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0;
+                !bottom ? setScrollingTop(true) : setScrollingTop(false);
+                onScroll(e);
+            }
+        }
         return (
             <div
-                onScroll={(e: any) => {
-                    const bottom =
-                        e.target.scrollHeight - e.target.scrollTop ===
-                        e.target.clientHeight;
-                    !bottom ? setScrollingTop(true) : setScrollingTop(false);
-                    onScroll(e);
-                }}
+                onScroll={checkBottomScrollEvent}
                 style={{ flex: "1", overflowY: "scroll" }}
                 className={
                     "scroll-y d-flex align-items-center flex-column px-4 border border-top-1 border-right-0 border-left-0 border-bottom-1 border-lightGrey " +
@@ -307,9 +309,7 @@ export const Comments: React.FunctionComponent<{
     };
 
     const trackScrolling = async (e: any) => {
-        const bottom =
-            e.target.scrollHeight - e.target.scrollTop ===
-            e.target.clientHeight;
+        const bottom = Math.abs(e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight) <= 3.0;
         const top = e.target.scrollTop <= 10;
         if (bottom && viewAllComments) {
             const params = {

@@ -41,7 +41,7 @@ export const Authenticated: React.FunctionComponent<{
     const checkBottomScrollEvent = (e: any) => {
         if (e && e.target) {
             const element = e.target;
-            const bottom = Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0
+            const bottom = Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0;
             onScroll && onScroll(bottom);
         }
     }
