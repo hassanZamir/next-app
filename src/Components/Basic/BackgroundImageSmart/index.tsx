@@ -17,18 +17,18 @@ const Container = styled.div<IBackgroundImageSmart.IProps>`
 `;
 
 export const BackgroundImageSmart: React.FunctionComponent<IBackgroundImageSmart.IProps> = (props) => {
-    const [currentUrlWithoutToken, setCurrentUrlWithoutToken] = useState("");
-    const [currentUrlToken, setCurrentUrlToken] = useState("");
+    const [currentUrlWithoutToken, setCurrentUrlWithoutToken] = useState<string>();
+    const [currentUrlToken, setCurrentUrlToken] = useState<string>();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (currentUrlWithoutToken == "") {
-            setCurrentUrlWithoutToken(props.src ?? "");
-            setCurrentUrlToken(props.token ?? "");
+        if (currentUrlWithoutToken == undefined) {
+            setCurrentUrlWithoutToken(props.src ?? undefined);
+            setCurrentUrlToken(props.token ?? undefined);
         }
         else if (currentUrlWithoutToken != props.src) {
             setCurrentUrlWithoutToken(props.src);
-            setCurrentUrlToken(props.token ?? "");
+            setCurrentUrlToken(props.token ?? undefined);
         }
         setLoading(false);
         // return () => {

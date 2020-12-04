@@ -19,18 +19,18 @@ const Container = styled.div<ICircularImageSmart.IProps>`
 `;
 
 export const CircularImageSmart: React.FunctionComponent<ICircularImageSmart.IProps> = (props) => {
-    const [currentUrlWithoutToken, setCurrentUrlWithoutToken] = useState("");
-    const [currentUrlToken, setCurrentUrlToken] = useState("");
+    const [currentUrlWithoutToken, setCurrentUrlWithoutToken] = useState<string>();
+    const [currentUrlToken, setCurrentUrlToken] = useState<string>();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (currentUrlWithoutToken == "") {
-            setCurrentUrlWithoutToken(props.src ?? props.placeholder ?? "");
-            setCurrentUrlToken(props.token ?? "");
+        if (currentUrlWithoutToken == undefined) {
+            setCurrentUrlWithoutToken(props.src ?? props.placeholder ?? undefined);
+            setCurrentUrlToken(props.token ?? undefined);
         }
         else if (currentUrlWithoutToken != props.src) {
             setCurrentUrlWithoutToken(props.src);
-            setCurrentUrlToken(props.token ?? "");
+            setCurrentUrlToken(props.token ?? undefined);
         }
         setLoading(false);
         // return () => {
