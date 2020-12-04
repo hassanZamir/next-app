@@ -8,7 +8,7 @@ import {
     IProfilePage,
     FEED,
     CREATOR_PROFILE,
-    mediaUrl,
+    FEED_MEDIA,
     USER_CREATOR_PROFILE
 } from "@Interfaces";
 // #endregion Interface Imports
@@ -17,7 +17,7 @@ const INITIAL_STATE: IProfilePage.IStateProps = {
     emptyPageNoFeeds: 9999,
     emptyPageNoImage: 9999,
     emptyPageNoVideo: 9999,
-    mediaGallary: new Array<mediaUrl>(),
+    mediaGallary: new Array<FEED_MEDIA>(),
     errors: "",
     creatorProfile: <CREATOR_PROFILE>{},
     creatorFeeds: new Array<FEED>(),

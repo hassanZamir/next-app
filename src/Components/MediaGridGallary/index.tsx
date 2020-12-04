@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { mediaUrl } from "@Interfaces";
+import { FEED_MEDIA } from "@Interfaces";
 import { BackgroundImage } from "@Components/Basic";
 import { VideoPlayer, MediaCarousel } from "@Components";
 import { useModal } from '../Hooks';
 
 const mediaBaseUrl = process.env.MEDIA_BASE_URL + "/";
 
-export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: mediaUrl[], errors: string }>
+export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: FEED_MEDIA[], errors: string }>
     = ({ mediaGallary, errors }) => {
 
         const [showMediaCarousel, setShowMediaCarousel] = useState(-1);
@@ -24,15 +24,12 @@ export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: mediaUrl[
         }
 
         return <div style={{ minHeight: "400px" }} className="w-100 d-flex flex-column align-items-center">
-            {mediaGallary.length == 0 && <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
-                <h4 className="text-primary text-center mt-3 gibson-semibold">No content to show</h4>
-            </div>}
-            {/* {errors && <div className="px-4 w-100 d-flex text-danger font-12px">{errors}</div>} */}
+            {errors && <div className="px-4 w-100 d-flex text-danger font-12px">{errors}</div>}
             {mediaGallary.length > 0 && chunk(mediaGallary, 3).map((mediaChunk, i) => {
                 return <div className="px-2 d-flex w-100 align-items-center"
                     key={i}>
 
-                    {mediaChunk.map((media: mediaUrl, j: number) => {
+                    {mediaChunk.map((media: FEED_MEDIA, j: number) => {
                         return <div key={j}
                             style={{
                                 flex: "0 0 33%",

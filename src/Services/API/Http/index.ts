@@ -8,10 +8,8 @@ import { stringify } from "query-string";
 import { HttpModel, IStore } from "@Interfaces";
 // #endregion Interface Imports
 
-// const {
-//     publicRuntimeConfig: { API_KEY, API_URL },
-// } = getConfig();
 const BaseUrl = `${process.env.API_URL}/api`;
+const uploadingServiceBaseUrl = process.env.CloudinaryMS_URL;
 
 export const Http = {
     UserAuthRequest: async <A>(
@@ -89,6 +87,25 @@ export const Http = {
                 //    "Content-Type": "multipart/form-data"
                 // },
                 method: `${methodType}`,
+            } as any)
+                .then(async response => {
+                    if (response.status === 200) {
+                        return response.json().then(resolve);
+                    }
+                    return reject(response);
+                })
+                .catch(e => {
+                    reject(e);
+                });
+        });
+    },
+    UploadContentMedia: async <A>(
+        payload?: HttpModel.IRequestPayload
+    ): Promise<A> => {
+        return new Promise((resolve, reject) => {
+            fetch(`${uploadingServiceBaseUrl}/api/upload/content`, {
+                body: payload,
+                method: `POST`,
             } as any)
                 .then(async response => {
                     if (response.status === 200) {

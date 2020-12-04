@@ -1,5 +1,7 @@
-import { FEED, USER_SESSION, PAYMENT_USER_SETTINGS, PAYMENT_USER_WALLET, 
-        PAYMENT_CARD, NOTIFICATION_STATS, CONVERSATION_THREAD } from "@Interfaces";
+import {
+    FEED, USER_SESSION, PAYMENT_USER_SETTINGS, PAYMENT_USER_WALLET,
+    PAYMENT_CARD, NOTIFICATION_STATS, CONVERSATION_THREAD
+} from "@Interfaces";
 
 declare namespace IPersistState {
     export interface IStateProps {
@@ -7,6 +9,7 @@ declare namespace IPersistState {
         feed: FEED;
         notificationStats: NOTIFICATION_STATS;
         activeConversation: CONVERSATION_THREAD;
+        statusFound: boolean; // sets to false in case GetFeed failed to load status 
     }
 
     namespace Actions {

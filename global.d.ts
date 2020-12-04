@@ -4,6 +4,7 @@ declare namespace NodeJS {
         STATIC_PATH: string;
         API_URL: string;
         API_KEY: string;
+        CloudinaryMS_URL: string;
         PUSHER_KEY: string,
         MEDIA_BASE_URL: string,
         TRULIOO_FE_KEY: string,

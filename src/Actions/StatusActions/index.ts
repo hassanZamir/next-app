@@ -56,7 +56,6 @@ export const StatusActions = {
     },
     GetFeed: (payload: IStatusPage.Actions.IGetGetFeedPayload) => async (dispatch: Dispatch) => {
         const result = await FeedsService.GetFeed(payload);
-
         dispatch({
             payload: { feed: result.status && result.response ? result.response : {} },
             type: ActionConsts.Feeds.SetPolledPersistFeed

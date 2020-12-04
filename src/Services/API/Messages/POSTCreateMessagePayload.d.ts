@@ -1,6 +1,7 @@
 import { TIP_MESSAGE } from "@Interfaces";
 
 export interface POSTCreateMessagePayload {
+    authtoken: string;
     conversationId: number;
     senderId: number;
     type: number;

@@ -27,7 +27,7 @@ const Authenticated: any = dynamic(
 );
 
 const UserStatus: NextPage<IProfilePage.IProps> = () => {
-    const { session, feed } = useSelector(
+    const { session, feed, statusFound } = useSelector(
         (state: IStore) => state.persistState
     );
     const dispatch = useDispatch()
@@ -35,34 +35,15 @@ const UserStatus: NextPage<IProfilePage.IProps> = () => {
     const userName = router.query["username"] as string,
         contentId = parseInt(router.query["contentId"] as string);
 
-    useEffect(() => {
-        // console.log("UserStatus-contentid: ", contentId);
-        // redirect to creator profile if status Id is not valid
-        if (!(contentId > 0))
-            router.push(`/profile/${userName}?c=${btoa(contentId.toString())}&e=${btoa("status id not valid")}`);
-
-        // console.log("UserStatus-feed: ", feed);
-
-        // load the feed object if the existing is not the same
-        if (!feed.id || feed.id != contentId) {
-            // console.log("Fetching status feed content");
-            var params: IStatusPage.Actions.IGetGetFeedPayload = {
-                viewerId: session.id,
-                authtoken: session.token,
-                contentId: contentId,
-            };
-            dispatch(StatusActions.GetFeed(params));
-        }
-    }, []);
 
     return (
         <Authenticated session={session} name="Home">
-            {contentId > 0 && "id" in feed && <ContentComponent
+            <ContentComponent
                 userName={userName}
                 contentId={contentId}
                 user={session}
                 feed={feed}
-            />}
+            />
         </Authenticated>
     );
 };

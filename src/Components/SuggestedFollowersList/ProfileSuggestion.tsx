@@ -25,7 +25,7 @@ export const ProfileSuggestion: React.FunctionComponent<{
                     <BackgroundImage
                         src={[
                             mediaBaseUrl + "/" + creatorProfile.coverImageUrl,
-                            "/images/cover_image_placeholder.jpg",
+                            "/images/cover_image_placeholder.png",
                         ]}
                         paddingBottom="17.25%"
                         borderRadius="13px 13px 0px 0px"
@@ -44,7 +44,7 @@ export const ProfileSuggestion: React.FunctionComponent<{
                                     mediaBaseUrl +
                                         "/" +
                                         creatorProfile.profileImageUrl,
-                                    "/images/profile_image_placeholder.jpg",
+                                    "/images/profile_image_placeholder.png",
                                 ]}
                                 height="75px"
                                 width="75px"

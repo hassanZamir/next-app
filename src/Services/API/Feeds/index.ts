@@ -83,71 +83,12 @@ export const FeedsService = {
                                 type: 1,
                             },
                         ],
+                        medialist: [],
                         likesCount: 0,
                         commentsCount: 0,
                         tipsCount: 0,
                         timeStamp: "2020-07-09T09:03:28.8766667",
-                    },
-                    {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
-                        content_viewer_like: false,
-                        id: 7,
-                        title: "My First Post",
-                        media_url: [
-                            {
-                                url: "72227.jpg",
-                                token:
-                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
-                                type: 1,
-                            },
-                        ],
-                        likesCount: 0,
-                        commentsCount: 0,
-                        tipsCount: 0,
-                        timeStamp: "2020-07-09T09:03:28.8766667",
-                    },
-                    {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
-                        content_viewer_like: false,
-                        id: 7,
-                        title: "My First Post",
-                        media_url: [
-                            {
-                                url: "72227.jpg",
-                                token:
-                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
-                                type: 1,
-                            },
-                        ],
-                        likesCount: 0,
-                        commentsCount: 0,
-                        tipsCount: 0,
-                        timeStamp: "2020-07-09T09:03:28.8766667",
-                    },
-                    {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
-                        content_viewer_like: false,
-                        id: 7,
-                        title: "My First Post",
-                        media_url: [
-                            {
-                                url: "72227.jpg",
-                                token:
-                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
-                                type: 1,
-                            },
-                        ],
-                        likesCount: 0,
-                        commentsCount: 0,
-                        tipsCount: 0,
-                        timeStamp: "2020-07-09T09:03:28.8766667",
-                    },
+                    }
                 ],
             };
         }
@@ -265,6 +206,24 @@ export const FeedsService = {
         }
         return response;
     },
+    UploadContentMedia: async (
+        payload: UploadMediaFilesModel.GetUploadMediaFilesPayload
+    ): Promise<UploadMediaFilesModel.GetUploadMediaFilesResponse> => {
+        let response: UploadMediaFilesModel.GetUploadMediaFilesResponse;
+        try {
+            const { media_url, ...rest } = payload;
+            response = await Http.UploadContentMedia<
+                UploadMediaFilesModel.GetUploadMediaFilesResponse
+            >(
+                media_url
+            );
+        } catch (error) {
+            response = {
+                status: false,
+            };
+        }
+        return response;
+    },
     PostContent: async (
         payload: UploadMediaFilesModel.GetUploadMediaFilesPayload
     ): Promise<PostContentModel.GetPostContentResponse> => {
@@ -272,12 +231,15 @@ export const FeedsService = {
         try {
             response = await Http.UserAuthRequest<
                 PostContentModel.GetPostContentResponse
-            >("POST", "/users/" + payload.userId + "/content",
+            >(
+                "POST",
+                "/users/" + payload.userId + "/content",
                 payload.authtoken,
-                undefined, {
-                title: payload.title as string,
-                media_url: payload.media_url,
-            });
+                undefined,
+                {
+                    title: payload.title as string,
+                    media_url: payload.media_url,
+                });
         } catch (error) {
             response = {
                 status: false,
@@ -303,6 +265,7 @@ export const FeedsService = {
                                 type: 2,
                             },
                         ],
+                        medialist: [],
                         likesCount: 0,
                         commentsCount: 0,
                         tipsCount: 0,
@@ -352,6 +315,7 @@ export const FeedsService = {
                                 type: 2,
                             },
                         ],
+                        medialist: [],
                         likesCount: 0,
                         commentsCount: 0,
                         tipsCount: 0,

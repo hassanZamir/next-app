@@ -11,7 +11,7 @@ import {
     SuggestedFollowersList,
     CreatePost,
 } from "@Components";
-import { USER_SESSION, FeedsModel, IFeedsPage } from "@Interfaces";
+import { USER_SESSION, FeedsModel, IFeedsPage, FEED } from "@Interfaces";
 import { IStore } from "@Redux/IStore";
 import { FeedsActions } from "@Actions";
 
@@ -25,8 +25,17 @@ export const FeedsComponent: React.FunctionComponent<{
     const feedsState = useSelector((state: IStore) => state.feeds);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
-    const { feeds, errors, profilesSuggestion } = feedsState;
+    const { feeds, errors, profilesSuggestion, newPost, postContentStatus } = feedsState;
     const { paginationNo, emptyPageNo } = feeds;
+    const [newPosts, setNewPosts] = useState<FEED[]>([]);
+
+    useEffect(() => {
+        if (postContentStatus == "success")
+            setNewPosts([newPost, ...newPosts]);
+        return () => {
+            newPosts.slice(0, newPosts.length);
+        }
+    }, [newPost])
 
     const getUserFeeds = async (params: FeedsModel.GetAllFeedsPayload) => {
         await dispatch(FeedsActions.GetAllFeeds(params));
@@ -49,7 +58,7 @@ export const FeedsComponent: React.FunctionComponent<{
         })();
     }, [scrolledToBottom]);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         (async () => {
             const params = { userId: user.id, page: paginationNo, authtoken: user.token };
             await getUserFeeds(params);
@@ -78,6 +87,9 @@ export const FeedsComponent: React.FunctionComponent<{
                 </div>
             )}
             {errors && <div className="text-danger font-12px">{errors}</div>}
+            {newPosts && newPosts.length > 0 && !loading && (
+                <FeedsList feeds={newPosts} user={user} />
+            )}
             {feeds && feeds.value.length > 0 && !loading && (
                 <FeedsList feeds={feeds.value} user={user} />
             )}

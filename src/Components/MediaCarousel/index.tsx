@@ -1,7 +1,7 @@
 import ImageGallery from 'react-image-gallery';
 import React, { RefObject } from 'react';
 
-import { mediaUrl } from "@Interfaces";
+import { FEED_MEDIA } from "@Interfaces";
 import { Modal, BackgroundImage } from "@Components/Basic";
 import { VideoPlayer } from "@Components";
 import ReactDOM from "react-dom";
@@ -10,7 +10,7 @@ declare namespace IMediaCarousel {
   export interface IProps {
     isShowing: boolean;
     modalRef?: RefObject<HTMLDivElement>;
-    media: mediaUrl[],
+    media: FEED_MEDIA[],
     toggle: () => void,
     startingIndex: number
   }
@@ -32,8 +32,8 @@ export const MediaCarousel: React.ForwardRefRenderFunction<HTMLDivElement, IMedi
         return <VideoPlayer src={a.original} />
     }
 
-    const mapMedia = (media: mediaUrl[]) => {
-      return media.map((m: mediaUrl) => {
+    const mapMedia = (media: FEED_MEDIA[]) => {
+      return media.map((m: FEED_MEDIA) => {
         return {
           original: mediaBaseUrl + '/' + m.url + m.token,
           thumbnail: mediaBaseUrl + '/' + m.url + m.token,
@@ -55,6 +55,7 @@ export const MediaCarousel: React.ForwardRefRenderFunction<HTMLDivElement, IMedi
           showThumbnails={false}
           showIndex={true}
           showPlayButton={false}
+          showFullscreenButton={false}
           startIndex={startingIndex} />
       </div>
     </Modal>, document.body) : null

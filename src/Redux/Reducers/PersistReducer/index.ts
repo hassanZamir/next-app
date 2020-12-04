@@ -11,7 +11,8 @@ const INITIAL_STATE: IPersistState.IStateProps = {
     session: <USER_SESSION>{},
     feed: <FEED>{},
     notificationStats: <NOTIFICATION_STATS>{},
-    activeConversation: <CONVERSATION_THREAD>{}
+    activeConversation: <CONVERSATION_THREAD>{},
+    statusFound: false,
 };
 
 export const PersistReducer = (
@@ -114,20 +115,11 @@ export const PersistReducer = (
         }
         case ActionConsts.Feeds.SetPolledPersistFeed: {
             let { feed } = action.payload!;
-            // console.log("state.feed: ", state.feed);
-            // console.log("feed:", feed);
-            // if (feed && state.feed && state.feed.id === feed.id
-            //     ) {
-            //     // if the feed object exists already then dont set media urls to avoid image flashes on polling
+            return Object.assign({}, state, {
+                feed: feed,
+                statusFound: feed ? true : false
+            });
 
-            //     return Object.assign({}, state, {
-            //         feed: Object.assign({}, feed, {
-            //             media_url: state.feed.media_url
-            //         })
-            //     });
-            // } else {
-            return Object.assign({}, state, { feed: feed });
-            // }
         }
         case ActionConsts.Feeds.SetPersistFeed: {
             let { feed } = action.payload!;

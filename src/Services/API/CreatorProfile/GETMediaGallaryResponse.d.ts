@@ -1,6 +1,6 @@
-import { mediaUrl } from "@Interfaces";
+import { FEED_MEDIA } from "@Interfaces";
 
 export interface GETMediaGallaryResponse {
     status: boolean;
-    response: mediaUrl[]
+    response: FEED_MEDIA[]
 }

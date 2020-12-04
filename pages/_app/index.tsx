@@ -37,7 +37,7 @@ class WebApp extends App<AppWithStore> {
                             <ToastProvider
                                 components={{ Toast: Toast } as any}
                                 autoDismiss={true}
-                                placement="top-left"
+                                placement="top-center"
                             >
                                 <Component {...pageProps} />
                             </ToastProvider>

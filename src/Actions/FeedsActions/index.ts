@@ -70,12 +70,16 @@ export const FeedsActions = {
     PostContent: (
         payload: IFeedsPage.Actions.IGetUploadMediaFilesPayload
     ) => async (dispatch: Dispatch) => {
+
+        /// --- Upload Content Media --- ///
         const result = payload.media_url
-            ? await FeedsService.UploadMediaOnStorage({
+            ? await FeedsService.UploadContentMedia({
                 media_url: payload.media_url,
-                authtoken: payload.authtoken
+                authtoken: payload.authtoken,
             })
             : null;
+
+        /// --- Abort PostContent if Media Upload failed --- ///
         if (result && !result.status && payload.media_url) {
             dispatch({
                 payload: result.error || "Media upload failed",
@@ -83,11 +87,13 @@ export const FeedsActions = {
             });
             return;
         }
+
+        /// --- Post the content along with uploaded media urls --- ///
         const postContent = await FeedsService.PostContent({
             title: payload.title,
             media_url: result ? result.uploadSuccess : [],
             userId: payload.userId,
-            authtoken: payload.authtoken
+            authtoken: payload.authtoken,
         });
         dispatch({
             payload: postContent.status ? { feed: [postContent.response] } : null,

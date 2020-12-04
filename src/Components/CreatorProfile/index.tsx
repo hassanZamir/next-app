@@ -22,7 +22,7 @@ export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFol
                 <BackgroundImage
                     src={[
                         mediaBaseUrl + "/" + creatorProfile.coverImageUrl,
-                        "/images/cover_image_placeholder.jpg",
+                        "/images/cover_image_placeholder.png",
                     ]}
                     paddingBottom="70.25%"
                 />
@@ -38,7 +38,7 @@ export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFol
                         <CircularImage
                             src={[
                                 mediaBaseUrl + "/" + creatorProfile.profileImageUrl,
-                                "/images/profile_image_placeholder.jpg",
+                                "/images/profile_image_placeholder.png",
                             ]}
                             height="100px"
                             width="100px"

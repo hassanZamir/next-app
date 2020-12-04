@@ -1,10 +1,5 @@
 import {
-    FEED,
-    CREATOR_PROFILE,
-    CreatorProfileModel,
-    ProfileFollowersModel,
-    mediaUrl,
-    CheckUserProfileFollowingModel,
+    FEED, CREATOR_PROFILE, CreatorProfileModel, ProfileFollowersModel, FEED_MEDIA, CheckUserProfileFollowingModel,
     UserCreatorProfileModel
 } from "@Interfaces";
 import { USER_CREATOR_PROFILE } from "@Services/API/CreatorProfile/UserCreatorProfile";
@@ -16,7 +11,7 @@ declare namespace IProfilePage {
         errors: '',
         creatorProfile: CREATOR_PROFILE,
         creatorFeeds: FEED[],
-        mediaGallary: mediaUrl[],
+        mediaGallary: FEED_MEDIA[],
         emptyPageNoFeeds: number,
         emptyPageNoImage: number,
         emptyPageNoVideo: number,
@@ -41,7 +36,7 @@ declare namespace IProfilePage {
         }
 
         export interface IMapMediaGallaryResponse {
-            mediaGallary: mediaUrl[],
+            mediaGallary: FEED_MEDIA[],
             type: number,
             page: number
         }

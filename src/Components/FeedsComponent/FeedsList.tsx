@@ -313,7 +313,10 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
     ) => {
         e.preventDefault();
         // Prevent user to tip himself
-        if (feeds[index].username == user.username) return;
+        if (feeds[index].username == user.username) {
+            addToast("You cant Tip yourself!", { appearance: "error" })
+            return;
+        }
         setClickedTipFeed(feeds[index]);
         toggle();
     };
@@ -447,7 +450,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
                         <Feed
                             feed={feed}
                             index={i}
-                            key={feed.id}
+                            key={i}
                             toggleTipModal={toggleTipModal}
                             likeContent={likeContent}
                             onReportClick={onReportClick}

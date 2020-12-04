@@ -9,6 +9,7 @@ import { FeedsActions, StatusActions } from "@Actions";
 import { StaticImage, FeedsList, Comments } from "@Components";
 import { FEED, USER_SESSION } from "@Interfaces";
 import { ActionConsts } from "@Definitions";
+import { useRouter } from "next/router";
 // #endregion Local Imports
 
 export const ContentComponent: React.FunctionComponent<{ userName: string, contentId: number, user: USER_SESSION, feed: FEED }> =
@@ -16,14 +17,26 @@ export const ContentComponent: React.FunctionComponent<{ userName: string, conte
 
         const [getFeedError, setGetFeedError] = useState('');
         const dispatch = useDispatch();
+        const router = useRouter();
 
         const pollFeed = () => {
             const params = { viewerId: user.id, contentId: contentId, authtoken: user.token };
             dispatch(StatusActions.GetFeed(params));
         }
+
         useEffect(() => {
-            const i = setInterval(pollFeed, 10000);
-        }, [contentId]);
+            // load the feed object if the existing is not the same
+            if (!feed.id || feed.id != contentId) {
+                console.log("Fetching status feed content");
+                pollFeed()
+            }
+
+            const i: number = setInterval(pollFeed, 500000);
+
+            return () => {
+                clearInterval(i);
+            }
+        }, []);
 
 
         return (<div className="d-flex flex-column"
