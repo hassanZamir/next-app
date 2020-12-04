@@ -38,6 +38,14 @@ export const Authenticated: React.FunctionComponent<{
         }
     }, []);
 
+    const checkBottomScrollEvent = (e: any) => {
+        if (e && e.target) {
+            const element = e.target;
+            const bottom = Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 3.0
+            onScroll && onScroll(bottom);
+        }
+    }
+
     const onPaymentSettingsClick = () => {
         setShowPaymentSettings(true);
     };
@@ -53,12 +61,7 @@ export const Authenticated: React.FunctionComponent<{
             <div className="w-100 h-100 row flex-column justify-content-between flex-nowrap">
                 <div ref={onScrollDiv}
                     className="custom-scroller d-flex flex-column"
-                    onScroll={(e: any) => {
-                        if (e && e.target) {
-                            const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-                            onScroll && onScroll(bottom);
-                        }
-                    }}
+                    onScroll={checkBottomScrollEvent}
                 >
                     {children}
                 </div>
