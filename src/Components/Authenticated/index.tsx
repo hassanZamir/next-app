@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Router from "next/router";
 import dynamic from "next/dynamic";
 import { useDispatch } from "react-redux";
@@ -23,8 +23,22 @@ export const Authenticated: React.FunctionComponent<{
     onScroll?: (a: boolean) => void;
 }> = ({ session, children, name, onScroll }) => {
     const menuModalRef = useModal(useRef<HTMLDivElement>(null));
+    const onScrollDiv = useRef<HTMLDivElement>(null);
     const [showPaymentSettings, setShowPaymentSettings] = useState(false);
     const dispatch = useDispatch();
+
+    useLayoutEffect(() => {
+        // if (onScrollDiv != undefined)
+        const target = onScrollDiv.current ?? document.body;
+
+        target.onscroll = (e: any) => {
+            const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+            onScroll && onScroll(bottom);
+        };
+        return () => {
+            target.onscroll = () => { };
+        };
+    }, [])
 
     useEffect(() => {
         if (!session || !session.token || !session.id)
@@ -50,12 +64,9 @@ export const Authenticated: React.FunctionComponent<{
     } else {
         return <>
             <div className="w-100 h-100 row flex-column justify-content-between flex-nowrap">
-                <div
+                <div ref={onScrollDiv}
                     className="custom-scroller d-flex flex-column"
-                    onScroll={(e: any) => {
-                        const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-                        onScroll && onScroll(bottom);
-                    }}
+                // onScroll={ }
                 >
                     {children}
                 </div>
