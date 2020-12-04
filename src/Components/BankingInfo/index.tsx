@@ -289,6 +289,7 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
             ) : (
                     <React.Fragment>
                         {!userCreatorProfile.creatorProfileVerified && loadEmbedId && <iframe
+                            allow={'camera;geolocation'}
                             name={`${user.token}#${apiUrl}#${truliooFeKey}`}
                             frameBorder="0px"
                             width="90%"
