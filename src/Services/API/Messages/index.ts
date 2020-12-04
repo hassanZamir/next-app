@@ -11,27 +11,32 @@ export const MessagesService = {
         payload: MessagesModel.GetGETAllMessagesPayload
     ): Promise<MessagesModel.GetGETAllMessagesResponse> => {
         let response: MessagesModel.GetGETAllMessagesResponse;
-        
-        const { userId, ...rest } = payload;
+
+        const { userId, authtoken, ...rest } = payload;
         try {
-            response = await Http.Request<MessagesModel.GetGETAllMessagesResponse>(
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetGETAllMessagesResponse
+            >(
                 "GET",
-                "/user/" + userId + "/conversations" + getQueryParams({ ...rest }),
+                `/user/${userId}/conversations${getQueryParams({ ...rest })}`,
+                authtoken,
                 undefined
             );
         } catch (error) {
             response = {
                 status: false,
-                response: [{
-                    id: 5,
-                    lastVisited: "2020-09-12T14:17:10.5233333",
-                    message: "Hello buddy",
-                    name: "Sohaib Riaz",
-                    participantSeenStatus: true,
-                    profileImageUrl: "",
-                    userId: 130,
-                    userName: "sohaib1"
-                }]
+                response: [
+                    {
+                        id: 5,
+                        lastVisited: "2020-09-12T14:17:10.5233333",
+                        message: "Hello buddy",
+                        name: "Sohaib Riaz",
+                        participantSeenStatus: true,
+                        profileImageUrl: "",
+                        userId: 130,
+                        userName: "sohaib1",
+                    },
+                ],
             };
         }
         return response;
@@ -40,23 +45,29 @@ export const MessagesService = {
         payload: MessagesModel.GetGETMessageRecipientsPayload
     ): Promise<MessagesModel.GetGETMessageRecipientsResponse> => {
         let response: MessagesModel.GetGETMessageRecipientsResponse;
-        
-        const { userId, ...rest } = payload;
+
+        const { userId, authtoken, ...rest } = payload;
         try {
-            response = await Http.Request<MessagesModel.GetGETMessageRecipientsResponse>(
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetGETMessageRecipientsResponse
+            >(
                 "GET",
-                "/users/" + userId + "/recipients" + getQueryParams({ ...rest }),
+                `/users/${userId}/recipients${getQueryParams({ ...rest })}`,
+                authtoken,
                 undefined
             );
         } catch (error) {
             response = {
                 status: false,
-                response: [{
-                    id: 118,
-                    name: "venotest2",
-                    userName: "venotest2",
-                    profileImageUrl: "images/c106f040-e959-11ea-8146-29d65498973d.17?sv=2018-03-28&sr=b&sig=srPW3Ku6gvkPy9jNX5oGezLs9AEHTfGQ5O0w%2BhP4eEc%3D&st=2020-09-14T17%3A15%3A07Z&se=2020-09-14T17%3A20%3A07Z&sp=r"
-                }]
+                response: [
+                    {
+                        id: 118,
+                        name: "venotest2",
+                        userName: "venotest2",
+                        profileImageUrl:
+                            "images/c106f040-e959-11ea-8146-29d65498973d.17?sv=2018-03-28&sr=b&sig=srPW3Ku6gvkPy9jNX5oGezLs9AEHTfGQ5O0w%2BhP4eEc%3D&st=2020-09-14T17%3A15%3A07Z&se=2020-09-14T17%3A20%3A07Z&sp=r",
+                    },
+                ],
             };
         }
         return response;
@@ -65,13 +76,16 @@ export const MessagesService = {
         payload: MessagesModel.GetPOSTConversationCreateThreadPayload
     ): Promise<MessagesModel.GetPOSTConversationCreateThreadResponse> => {
         let response: MessagesModel.GetPOSTConversationCreateThreadResponse;
-        
+
         try {
-            response = await Http.Request<MessagesModel.GetPOSTConversationCreateThreadResponse>(
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetPOSTConversationCreateThreadResponse
+            >(
                 "POST",
                 "/conversation/create-thread",
+                payload.authtoken,
                 undefined,
-                {...payload}
+                { ...payload }
             );
         } catch (error) {
             response = {
@@ -89,9 +103,9 @@ export const MessagesService = {
                         favourite: true,
                         isBlocked: false,
                         isRestricted: false,
-                        isFollower: false
-                    }
-                }
+                        isFollower: false,
+                    },
+                },
             };
         }
         return response;
@@ -100,26 +114,33 @@ export const MessagesService = {
         payload: MessagesModel.GetGETConversationPayload
     ): Promise<MessagesModel.GetGETConversationResponse> => {
         let response: MessagesModel.GetGETConversationResponse;
-        
-        const { userName, conversationId, ...rest } = payload;
+
+        const { userName, conversationId, authtoken, ...rest } = payload;
         try {
-            response = await Http.Request<MessagesModel.GetGETConversationResponse>(
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetGETConversationResponse
+            >(
                 "GET",
-                "/users/" + userName + "/conversation/" + conversationId + getQueryParams({ ...rest }),
+                `/users/${userName}/conversation/${conversationId}${getQueryParams(
+                    { ...rest }
+                )}`,
+                authtoken,
                 undefined
             );
         } catch (error) {
             response = {
                 status: false,
-                response: [{
-                    conversationId: 14,
-                    id: 11,
-                    message: "ass",
-                    recipientId: 0,
-                    senderId: 112,
-                    sentAt: "2020-08-16T00:00:00",
-                    type: 1
-                }]
+                response: [
+                    {
+                        conversationId: 14,
+                        id: 11,
+                        message: "ass",
+                        recipientId: 0,
+                        senderId: 112,
+                        sentAt: "2020-08-16T00:00:00",
+                        type: 1,
+                    },
+                ],
             };
         }
         return response;
@@ -129,28 +150,39 @@ export const MessagesService = {
     ): Promise<MessagesModel.GetPOSTCreateMessageResponse> => {
         let response: MessagesModel.GetPOSTCreateMessageResponse;
 
-        const { conversationId, meta, senderId, type, message, sentAt } = payload;
+        const {
+            conversationId,
+            meta,
+            senderId,
+            authtoken,
+            type,
+            message,
+            sentAt,
+        } = payload;
         let _payload = {};
         if (type > 1 && type < 4) {
             _payload = {
-                senderId: senderId,
-                type: type,
-                message: message,
-                sentAt: sentAt,
-                meta: meta
-            }
+                senderId,
+                type,
+                message,
+                sentAt,
+                meta,
+            };
         } else {
             _payload = {
-                senderId: senderId,
-                type: type,
-                message: message,
-                sentAt: sentAt
-            }
+                senderId,
+                type,
+                message,
+                sentAt,
+            };
         }
         try {
-            response = await Http.Request<MessagesModel.GetPOSTCreateMessageResponse>(
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetPOSTCreateMessageResponse
+            >(
                 "POST",
-                "/conversation/" + conversationId,
+                `/conversation/${conversationId}`,
+                authtoken,
                 undefined,
                 _payload
             );
@@ -169,9 +201,9 @@ export const MessagesService = {
                         amount: 12,
                         tipMsg: "optional msg send by user",
                         tipId: 11,
-                        userId: 135
-                    }
-                }
+                        userId: 135,
+                    },
+                },
             };
         }
         return response;
@@ -180,17 +212,16 @@ export const MessagesService = {
         payload: MessagesModel.GetPOSTConversationSeenPayload
     ): Promise<MessagesModel.GetPOSTConversationSeenResponse> => {
         let response: MessagesModel.GetPOSTConversationSeenResponse;
-        
+
         try {
-            response = await Http.Request<MessagesModel.GetPOSTConversationSeenResponse>(
-                "POST",
-                "/conversation/seen",
-                undefined,
-                { ...payload }
-            );
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetPOSTConversationSeenResponse
+            >("POST", "/conversation/seen", payload.authtoken, undefined, {
+                ...payload,
+            });
         } catch (error) {
             response = {
-                status: false
+                status: false,
             };
         }
         return response;
@@ -202,12 +233,16 @@ export const MessagesService = {
 
         const { messageId, ...rest } = payload;
         try {
-            response = await Http.Request<MessagesModel.GetPOSTBuyMessageResponse>(
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetPOSTBuyMessageResponse
+            >(
                 "POST",
-                "/conversation-message/" + messageId + "/buy",
+                `/conversation-message/${messageId}/buy`,
+                payload.authtoken,
                 undefined,
-                { ...rest }
-            );
+                {
+                    ...rest,
+            });
         } catch (error) {
             response = {
                 status: false,
@@ -223,9 +258,9 @@ export const MessagesService = {
                         amount: 12,
                         tipMsg: "optional msg send by user",
                         tipId: 11,
-                        userId: 135
-                    }
-                }
+                        userId: 135,
+                    },
+                },
             };
         }
         return response;
@@ -235,14 +270,13 @@ export const MessagesService = {
     ): Promise<MessagesModel.GetPOSTMessageSettingResponse> => {
         let response: MessagesModel.GetPOSTMessageSettingResponse;
 
-        const { userName, apiRouteKey, ...recipientUsername } = payload;
+        const { userName, apiRouteKey, authtoken, ...recipientUsername } = payload;
         try {
-            response = await Http.Request<MessagesModel.GetPOSTMessageSettingResponse>(
-                "POST",
-                "/users/" + userName + "/" + apiRouteKey,
-                undefined,
-                { ...recipientUsername }
-            );
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetPOSTMessageSettingResponse
+            >("POST", `/users/${userName}/${apiRouteKey}`, authtoken, undefined, {
+                ...recipientUsername,
+            });
         } catch (error) {
             response = { status: false };
         }
@@ -253,17 +287,20 @@ export const MessagesService = {
     ): Promise<MessagesModel.GetPOSTUpdateViewStatusResponse> => {
         let response: MessagesModel.GetPOSTUpdateViewStatusResponse;
 
-        const { messageId } = payload;
+        const { messageId, authtoken } = payload;
         try {
-            response = await Http.Request<MessagesModel.GetPOSTUpdateViewStatusResponse>(
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetPOSTUpdateViewStatusResponse
+            >(
                 "POST",
-                "/conversation-messages/" + messageId + "/view",
+                `/conversation-messages/${messageId}/view`,
+                authtoken,
                 undefined
             );
         } catch (error) {
-            response = { 
+            response = {
                 status: false,
-                response: false
+                response: false,
             };
         }
         return response;
@@ -273,24 +310,32 @@ export const MessagesService = {
     ): Promise<MessagesModel.GetGETSearchMessagesResponse> => {
         let response: MessagesModel.GetGETSearchMessagesResponse;
 
-        const { username, ...rest } = payload;
+        const { username, authtoken, ...rest } = payload;
         try {
-            response = await Http.Request<MessagesModel.GetGETSearchMessagesResponse>(
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetGETSearchMessagesResponse
+            >(
                 "GET",
-                "/users/" + username + "/conversation/search" + getQueryParams({ ...rest }),
+                `/users/${username}/conversation/search${getQueryParams({
+                    ...rest,
+                })}`,
+                authtoken,
                 undefined
             );
         } catch (error) {
-            response = { 
+            response = {
                 status: true,
-                response: [{
-                    id: 118,
-                    name: "venotest2",
-                    userName: "venotest2",
-                    profileImageUrl: "images/c106f040-e959-11ea-8146-29d65498973d.17?sv=2018-03-28&sr=b&sig=srPW3Ku6gvkPy9jNX5oGezLs9AEHTfGQ5O0w%2BhP4eEc%3D&st=2020-09-14T17%3A15%3A07Z&se=2020-09-14T17%3A20%3A07Z&sp=r"
-                }]
+                response: [
+                    {
+                        id: 118,
+                        name: "venotest2",
+                        userName: "venotest2",
+                        profileImageUrl:
+                            "images/c106f040-e959-11ea-8146-29d65498973d.17?sv=2018-03-28&sr=b&sig=srPW3Ku6gvkPy9jNX5oGezLs9AEHTfGQ5O0w%2BhP4eEc%3D&st=2020-09-14T17%3A15%3A07Z&se=2020-09-14T17%3A20%3A07Z&sp=r",
+                    },
+                ],
             };
         }
         return response;
-    }
-}
+    },
+};

@@ -25,7 +25,8 @@ export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIEN
         setLoading(true);
         await dispatch(MessagesActions.CreateConversation({ 
             userId: user.id, 
-            recipientId: recipient.id
+            recipientId: recipient.id,
+            authtoken: user.token,
         }));
     }
 

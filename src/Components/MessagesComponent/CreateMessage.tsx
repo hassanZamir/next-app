@@ -21,7 +21,7 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
     
     useEffect(() => {
         (async () => {
-            const param = { userId: user.id };
+            const param = { userId: user.id, authtoken: user.token };
             setLoading(true);
             await dispatch(MessagesActions.GetMessageRecipients(param));
             setLoading(false);
@@ -36,7 +36,8 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
         if (messageRecipients.emptyPaginationNo > messageRecipients.paginationNo) {
             await MessagesActions.GetMessageRecipients({ 
                 userId: user.id, 
-                page: messageRecipients.paginationNo 
+                page: messageRecipients.paginationNo,
+                authtoken: user.token, 
             });
         }
     }

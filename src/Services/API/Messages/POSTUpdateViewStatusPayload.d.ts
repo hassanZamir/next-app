@@ -1,3 +1,4 @@
 export interface POSTUpdateViewStatusPayload {
-    messageId: number
+    messageId: number,
+    authtoken: string, 
 }

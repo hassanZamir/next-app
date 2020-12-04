@@ -1,4 +1,5 @@
 export interface POSTConversationSeenPayload {
-    userId: number,
-    conversationId: number
+    userId: number;
+    conversationId: number;
+    authtoken: string;
 }

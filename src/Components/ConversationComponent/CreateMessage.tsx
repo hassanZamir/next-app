@@ -83,6 +83,7 @@ export const CreateMessage: React.FunctionComponent<{
             senderId: user.id,
             type: messageType,
             message: message,
+            authtoken: user.token,
             onSuccessScroll: onSuccess,
             sentAt:
                 date.getFullYear() +
@@ -135,6 +136,7 @@ export const CreateMessage: React.FunctionComponent<{
             conversationId: conversationId,
             senderId: user.id,
             type: 3,
+            authtoken: user.token,
             message: message,
             onSuccessScroll: onSuccess,
             sentAt:

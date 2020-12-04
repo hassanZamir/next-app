@@ -35,6 +35,7 @@ export const MessagesComponent: React.FunctionComponent<{
                 username: user.username,
                 type: showCreateMessage ? 2 : 1,
                 text: e.target.value,
+                authtoken: user.token,
             };
             setLoadingSearch(true);
             setSearchActive(true);

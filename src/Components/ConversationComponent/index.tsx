@@ -65,11 +65,12 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             }
             (async () => {
                 setLoading(true);
-                dispatch(MessagesActions.ConversationSeen({ userId: user.id, conversationId: conversationId }));
+                dispatch(MessagesActions.ConversationSeen({ userId: user.id, conversationId: conversationId, authtoken: user.token }));
                 subscribePresenceChannel();
                 await dispatch(MessagesActions.GetConversation({
                     conversationId: conversationId,
-                    userName: user.username
+                    userName: user.username,
+                    authtoken: user.token,
                 }));
                 setLoading(false);
                 scrollToLastComment();
@@ -82,7 +83,8 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                 await dispatch(MessagesActions.GetConversation({
                     conversationId: conversationId,
                     page: conversation.paginationNo,
-                    userName: user.username
+                    userName: user.username,
+                    authtoken: user.token,
                 }));
                 setFetchingPagination(false);
             }
@@ -128,7 +130,8 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                                 userName: user.username,
                                 recipientUsername: conversationThread.userName,
                                 apiRouteKey: conversationSettings && conversationSettings.favourite ? 'unfavourite' : 'favourite',
-                                apiReducerKey: 'favourite'
+                                apiReducerKey: 'favourite',
+                                authtoken: user.token,
                             }));
                         }}
                         src={conversationSettings && conversationSettings.favourite ? '/images/favourite_star_filled.svg' : '/images/favourite_star.svg'} />}

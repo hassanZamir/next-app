@@ -23,7 +23,7 @@ export const MessageList: React.FunctionComponent<{ loadingSearch: boolean, user
     
     useEffect(() => {
         (async () => {
-            const param = { userId: user.id };
+            const param = { userId: user.id, authtoken: user.token };
             setLoading(true);
             await dispatch(MessagesActions.GetAllMessages(param));
             setLoading(false);
@@ -37,7 +37,7 @@ export const MessageList: React.FunctionComponent<{ loadingSearch: boolean, user
 
     const getMessages = async () => {
         if (allMessages.emptyPaginationNo > allMessages.paginationNo) {
-            await MessagesActions.GetAllMessages({ userId: user.id, page: allMessages.paginationNo });
+            await MessagesActions.GetAllMessages({ userId: user.id, page: allMessages.paginationNo, authtoken: user.token });
         }
     }
 

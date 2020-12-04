@@ -1,4 +1,5 @@
 export interface POSTBuyMessagePayload {
     messageId: number,
-    userId: number
+    userId: number,
+    authtoken: string,
 }

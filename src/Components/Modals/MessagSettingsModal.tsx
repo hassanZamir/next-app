@@ -41,7 +41,8 @@ export const MessageSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
                 userName: user.username,
                 recipientUsername: conversationThread.userName,
                 apiRouteKey: getApiRouteKey(index),
-                apiReducerKey: index === 3 ? 'isRestricted' : 'isBlocked'
+                apiReducerKey: index === 3 ? 'isRestricted' : 'isBlocked',
+                authtoken: user.token,
             }));
         }
     }

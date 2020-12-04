@@ -1,5 +1,6 @@
 export interface GETMessageRecipientsPayload {
     userId: number,
     page?: number,
-    offset?: number
+    offset?: number,
+    authtoken: string,
 }

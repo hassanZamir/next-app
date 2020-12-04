@@ -6,6 +6,7 @@ export interface POSTCreateMessagePayload {
     type: number;
     message: string;
     sentAt: string;
+    authtoken: string;
     meta?: {
         media_urls: [{
             url: string,

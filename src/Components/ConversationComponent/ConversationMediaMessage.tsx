@@ -26,7 +26,7 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
     const { meta } = conversationMessage;
 
     const buyMedia = (message: CONVERSATION_MEDIA_MESSAGE) => {
-        const params = { messageId: message.id, userId: user.id }
+        const params = { messageId: message.id, userId: user.id, authtoken: user.token }
         dispatch(MessagesActions.BuyMessage(params));
     }
 
