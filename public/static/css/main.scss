@@ -370,6 +370,7 @@ input:checked + .slider:before {
     display: flex;
     border-radius: 15px;
     padding: 2px 4px;
+    padding-bottom: 5px;
 }
 .navigation-dot {
     color: white;
@@ -768,7 +769,7 @@ input:checked + .slider:before {
     height: 100%;
     width: 0;
     position: absolute;
-    z-index: 1;
+    z-index: 10000;
     top: 0;
     left: 0px;
     background-color: #ffffff;

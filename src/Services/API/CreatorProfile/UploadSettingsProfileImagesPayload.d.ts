@@ -4,4 +4,5 @@ export interface UploadSettingsProfileImagesPayload {
     following_fee: string;
     bio: string;
     location: string;
+    authtoken: string;
 }

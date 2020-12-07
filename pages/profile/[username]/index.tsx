@@ -9,7 +9,8 @@ import dynamic from "next/dynamic";
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
 import { IProfilePage, USER_SESSION } from "@Interfaces";
-import { ProfileComponent } from "@Components";
+import { Toast } from "@Components";
+import { ToastProvider } from "react-toast-notifications";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -33,10 +34,13 @@ const UserProfile: NextPage<IProfilePage.IProps> = () => {
     const router = useRouter();
     const profileUserName = router.query["username"] as string;
 
-    return <DynamicProfile user={session} profileUserName={profileUserName} />;
-    // return <Authenticated session={login.session} name="Profile">
-    //     <ProfileComponent user={login.session} profileUserName={profileUserName} />
-    // </Authenticated>;
+    return <ToastProvider
+        components={{ Toast: Toast } as any}
+        autoDismiss={true}
+        placement="top-center"
+    >
+        <DynamicProfile user={session} profileUserName={profileUserName} />
+    </ToastProvider>;
 };
 
 export default UserProfile;

@@ -4,7 +4,7 @@ import Router from "next/router";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, IPersistState, USER_SESSION, FEED, NOTIFICATION_STATS, CONVERSATION_THREAD } from "@Interfaces";
+import { IAction, IPersistState, USER_SESSION, FEED, NOTIFICATION_STATS, CONVERSATION_THREAD, IProfilePage, ISettingsPage } from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IPersistState.IStateProps = {
@@ -23,9 +23,20 @@ export const PersistReducer = (
         & IPersistState.Actions.IUpdatePaymentInfoInSession
         & IPersistState.Actions.IViewNotificationType
         & IPersistState.Actions.ISetActiveConversation
-        & IPersistState.Actions.IUpdateActiveConversation>
+        & IPersistState.Actions.IUpdateActiveConversation
+        & ISettingsPage.Actions.IPostUploadSettingsProfileImagesResponse>
 ) => {
     switch (action.type) {
+        case ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess: {
+            const response = action.payload!;
+            console.log(response);
+            return Object.assign({}, state, {
+                session: Object.assign({}, state.session, {
+                    name: response.name,
+                    profileImgUrl: response.profileImageUrl
+                })
+            });
+        }
         case ActionConsts.Conversation.UpdateMessageSettingSuccess: {
             const { apiReducerKey } = action.payload!;
 
@@ -160,9 +171,6 @@ export const PersistReducer = (
                 session: session
             });
         }
-        case ActionConsts.Login.ClearSession: {
-            return INITIAL_STATE;
-        }
         case ActionConsts.Payment.UpdatePaymentInfoInSession: {
             let { paymentSettings } = action.payload!;
             const defaultCard = paymentSettings.userCard.find((card) => {
@@ -177,7 +185,7 @@ export const PersistReducer = (
             });
         }
         case ActionConsts.Payment.OnBecomeCreatorSuccess: {
-            Router.push("/?cr=1");
+            // Router.push("/?cr=1");
 
             return Object.assign({}, state, {
                 session: Object.assign({}, state.session, {
@@ -185,9 +193,16 @@ export const PersistReducer = (
                 })
             });
         }
+
+        case ActionConsts.Login.ClearSession: {
+            return Object.assign({}, state, {
+                session: null
+            });
+        }
         case ActionConsts.Login.DoLogout: {
-            Router.push("/login");
-            return INITIAL_STATE;
+            return Object.assign({}, state, {
+                session: null
+            });
         }
         default:
             return state;

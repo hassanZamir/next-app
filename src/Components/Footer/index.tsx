@@ -47,7 +47,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
     }
 
     const followingPaymentCallback = (payload: any) => {
-        console.log("followingPaymentCallback: ", payload);
+        //console.log("followingPaymentCallback: ", payload);
         if (payload.status == true)
             dispatch(LoginActions.TokenVerify({
                 session: session
@@ -77,7 +77,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
                     NotificationPusher.subscribe('verification-update', channel, verificationStatusCallback)
                     NotificationPusher.subscribe('follow-payment-update', channel, followingPaymentCallback)
                 }).catch((err: any) => {
-                    console.log("Error occured subscribing pusher : ", err);
+                    console.log("Error occured while subscribing to push events: ", err);
                 });
         }
     }, []);

@@ -2,20 +2,17 @@
 import React, { useEffect } from "react";
 import { NextPage } from "next";
 import { useSelector, useDispatch } from "react-redux";
-
 // #endregion Global Imports
 
 // #region Local Imports
-import { Settings } from "@Components";
 import { IStore } from "@Redux/IStore";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IFeedsPage, USER_SESSION } from "@Interfaces";
+import { USER_SESSION } from "@Interfaces";
 import dynamic from "next/dynamic";
-import LocationsList from "./locations-list.json";
-import DobConst from "./dob-constants.json";
-
+import { Locations } from "@Constants";
+import { SettingsComponent } from "@Components/SettingsComponent";
 // #endregion Interface Imports
 
 const Authenticated: any = dynamic(
@@ -34,10 +31,9 @@ const Home: NextPage = () => {
 
     return (
         <Authenticated session={session} name="Account">
-            <Settings
+            <SettingsComponent
                 user={session}
-                locationslist={LocationsList}
-                DobConst={DobConst}
+                locationslist={Locations}
             />
             {/* <DynamicFeeds user={session} /> */}
         </Authenticated>

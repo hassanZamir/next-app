@@ -11,6 +11,28 @@ declare namespace UserCreatorProfileModel {
         response?: USER_CREATOR_PROFILE;
         errors: {};
     }
+
+    // being used in edit profile settings screen
+    export interface PostUserCreatorProfilePayload {
+        authtoken: string;
+        userId: number;
+        name: string;
+        coverImageUrl: string;
+        profileImageUrl: string;
+        location: string;
+        bio: string;
+        followingFee: double;
+    }
+    export interface PostUserCreatorProfileResponse {
+        authtoken: string;
+        userId: number;
+        name: string;
+        coverImageUrl: string;
+        profileImageUrl: string;
+        location: string;
+        bio: string;
+        followingFee: double;
+    }
 }
 
 export interface USER_CREATOR_PROFILE extends CREATOR_PROFILE {

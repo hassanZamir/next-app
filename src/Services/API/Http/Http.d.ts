@@ -13,6 +13,10 @@ declare namespace HttpModel {
     export interface IRequestQueryParams {
         [key: string]: string;
     }
+
+
 }
 
-export { HttpModel };
+type HTTP_REQUEST_STATUS = 'idle' | 'awaiting' | 'success' | 'error';
+
+export { HttpModel, HTTP_REQUEST_STATUS };

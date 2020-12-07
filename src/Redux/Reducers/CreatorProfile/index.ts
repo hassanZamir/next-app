@@ -50,7 +50,8 @@ export const CreatorProfileReducer = (
         }
         case ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess: {
             return Object.assign({}, state, {
-                userCreatorProfile: action.payload!
+                userCreatorProfile: action.payload!,
+                creatorProfile: action.payload!
             });
         }
         case ActionConsts.CreatorProfile.GetUserCreatorProfileError: {

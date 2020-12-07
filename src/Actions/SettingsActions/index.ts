@@ -8,161 +8,96 @@ import { CreatorProfileService, FeedsService, LoginService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { ISettingsPage, IProfilePage } from "@Interfaces";
+import { HTTP_REQUEST_STATUS, ISettingsPage } from "@Interfaces";
 // #endregion Interface Imports
 
 export const SettingsActions = {
-    GetCreatorProfile: (
-        payload: IProfilePage.Actions.IGetCreatorProfilePayload
-    ) => async (dispatch: Dispatch) => {
-        const result = await CreatorProfileService.GetCreatorProfile(payload);
-
+    UpdateHttpStatus: (payload: ISettingsPage.Actions.IUpdateHttpStatus) => async (dispatch: Dispatch) => {
         dispatch({
-            payload: {
-                profile:
-                    result.status && result.response ? result.response : {},
-            },
-            type:
-                result.status && result.response
-                    ? ActionConsts.BankingInfo.GetUserProfileSuccess
-                    : ActionConsts.BankingInfo.GetUserProfileError,
+            payload: payload,
+            type: ActionConsts.Settings.UpdateHttpStatus,
         });
     },
-    UploadProfileImages: (
-        payload: ISettingsPage.Actions.IGetUploadSettingsProfileImagesPayload
+    PostEditProfileSettings: (
+        payload: ISettingsPage.Actions.IPostUploadSettingsProfileImagesPayload
     ) => async (dispatch: Dispatch) => {
-        const mediaUrl = payload.media_url;
+        const mediaFiles: [] = payload.media_url;
+
         const postCreatorProfileParams = {
             profileImageUrl: "",
             coverImageUrl: "",
         };
-        for (let i = 0; i < mediaUrl.length; i++) {
-            const result = await FeedsService.UploadMediaOnStorage({
-                media_url: mediaUrl[i].url,
+
+        let mediaUploadResult: string = "";
+        /// ---- upload Media using external service --- ///
+        for (let i = 0; i < mediaFiles.length; i++) {
+            // console.log("Media File: ", mediaFiles[i]);
+            const file: any = mediaFiles[i];
+            const formData = new FormData();
+            formData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
+            const result = await FeedsService.UploadContentMedia({
+                media_url: formData,
+                authtoken: payload.authtoken,
             } as any);
-            if (
-                result &&
-                result.status &&
-                result.uploadSuccess! &&
-                result.uploadSuccess![0]
-            ) {
-                if (mediaUrl[i].key === "profileImageUrl")
-                    postCreatorProfileParams.profileImageUrl = result.uploadSuccess![0].url;
-                if (mediaUrl[i].key === "coverImageUrl")
-                    postCreatorProfileParams.coverImageUrl = result.uploadSuccess![0].url;
-            } else {
-                dispatch({
-                    type: ActionConsts.BankingInfo.UploadProfileImagesError,
-                    payload: null,
-                });
+            // console.log("UploadContentMedia-result: ", result);
+
+            /// --- Abort PostContent if Media Upload failed --- ///
+            if (result && !result.status) {
+                mediaUploadResult = "failed";
+                break;
             }
-            if (i === mediaUrl.length - 1) {
-                const postResult = await CreatorProfileService.PostCreatorProfile(
-                    {
-                        username: payload.username,
-                        follwingFee: payload.following_fee,
-                        bio: payload.bio,
-                        location: payload.location,
-                        ...postCreatorProfileParams,
-                    }
-                );
-                dispatch({
-                    payload: {
-                        profile:
-                            postResult.status && postResult.response
-                                ? postResult.response
-                                : {},
-                    },
-                    type: postResult.status
-                        ? ActionConsts.BankingInfo.GetUserProfileSuccess
-                        : ActionConsts.BankingInfo.UpdateUserProfileError,
-                });
+            else if (result.uploadSuccess && result.uploadSuccess.length > 0) {
+                if (file.key === "profileImageUrl")
+                    postCreatorProfileParams.profileImageUrl = result.uploadSuccess[0].url ?? "";
+                else if (file.key === "coverImageUrl")
+                    postCreatorProfileParams.coverImageUrl = result.uploadSuccess![0].url;
             }
         }
-    },
-    PostPersonalInformation: (
-        payload: ISettingsPage.Actions.IGetPostPersonalInformationPayload
-    ) => async (dispatch: Dispatch) => {
-        // const { media_url, ...rest } = payload;
-        // let updatedPayload = { ...rest };
+        /// --- post the profile data to api ---- ///
+        if (mediaUploadResult != "failed") {
+            const postResult = await CreatorProfileService.PostCreatorProfile(
+                {
+                    userId: payload.userId,
+                    name: payload.name,
+                    followingFee: payload.followingFee,
+                    bio: payload.bio,
+                    location: payload.location,
+                    profileImageUrl: postCreatorProfileParams.profileImageUrl,
+                    coverImageUrl: postCreatorProfileParams.coverImageUrl,
+                    authtoken: payload.authtoken,
+                }
+            );
+            dispatch({
+                payload: postResult.status && postResult.response
+                    ? postResult.response
+                    : {},
 
-        const checkIsCreator = (
-            result: ISettingsPage.Actions.IGetPostPersonalInformationResponse
-        ) => {
-            if (result.session && result.session.isCreator) {
-                dispatch({
-                    payload: null,
-                    type: result.status
-                        ? ActionConsts.Payment.OnBecomeCreatorSuccess
-                        : "",
-                });
-            }
-        };
-
-        // if (!media_url.length) {
-        //     const postResult = await LoginService.PostPersonalInformation({
-        //         ...updatedPayload,
-        //     } as any);
-
-        //     checkIsCreator(postResult);
-        //     dispatch({
-        //         payload:
-        //             postResult.status && !postResult.error
-        //                 ? "Success"
-        //                 : postResult.error,
-        //         type: postResult.status
-        //             ? ActionConsts.BankingInfo.PostBankingInfoSuccess
-        //             : ActionConsts.BankingInfo.PostBankingInfoError,
-        //     });
-        // } else {
-        //     for (let i = 0; i < media_url.length; i++) {
-        //         const result = await FeedsService.UploadMediaOnStorage({
-        //             media_url: media_url[i].url,
-        //         } as any);
-        //         if (result && result.status) {
-        //             if (media_url[i].key === "docPhoto")
-        //                 updatedPayload.docPhoto = result.uploadSuccess![0].url;
-        //             if (media_url[i].key === "docUserPhoto")
-        //                 updatedPayload.docUserPhoto = result.uploadSuccess![0].url;
-        //         } else {
-        //             dispatch({
-        //                 type: ActionConsts.BankingInfo.UploadProfileImagesError,
-        //                 payload: null,
-        //             });
-        //             return;
-        //         }
-        //         if (i === media_url.length - 1) {
-        //             const postResult = await LoginService.PostPersonalInformation(
-        //                 { ...updatedPayload } as any
-        //             );
-        //             checkIsCreator(postResult);
-        //             dispatch({
-        //                 payload:
-        //                     postResult.status && !postResult.error
-        //                         ? "Success"
-        //                         : postResult.error,
-        //                 type: postResult.status
-        //                     ? ActionConsts.BankingInfo.PostBankingInfoSuccess
-        //                     : ActionConsts.BankingInfo.PostBankingInfoError,
-        //             });
-        //         }
-        //     }
-        // }
-    },
-    GetPersonalInformation: (
-        payload: ISettingsPage.Actions.IGetGETPersonalInformationPayload
-    ) => async (dispatch: Dispatch) => {
-        const result = await LoginService.GetPersonalInformation(payload);
-        dispatch({
-            payload: {
-                personalInformation:
-                    result.status && result.response ? result.response : {},
-            },
-            type:
-                result.status && result.response
-                    ? ActionConsts.BankingInfo.GetBankingInfoSuccess
+                type: postResult.status
+                    ? ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess
                     : null,
-        });
+            });
+            dispatch({
+                payload: {},
+                type: postResult.status
+                    ? ActionConsts.Settings.UpdateUserProfileSuccess
+                    : ActionConsts.Settings.UpdateUserProfileError,
+            });
+            dispatch({
+                payload: "success",
+                type: ActionConsts.Settings.UpdateHttpStatus,
+            });
+        }
+        else {
+            dispatch({
+                payload: {},
+                type: ActionConsts.Settings.UpdateUserProfileError,
+            });
+            dispatch({
+                payload: "error",
+                type: ActionConsts.Settings.UpdateHttpStatus,
+            });
+        }
+
     },
     DeleteAccount: (
         payload: ISettingsPage.Actions.IGetDeleteAccountPayload

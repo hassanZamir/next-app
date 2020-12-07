@@ -4,10 +4,10 @@ import dynamic from "next/dynamic";
 import { useDispatch } from "react-redux";
 import { LoginActions } from "@Actions";
 import { ILoginPage, USER_SESSION } from "@Interfaces";
-import { Footer } from "@Components";
-import { PaymentSettingsContainer } from "@Components";
+import { Footer, Toast } from "@Components";
 import { Menu } from "@Components/Menu";
 import { useModal } from "@Components/Hooks";
+import { ToastProvider } from "react-toast-notifications";
 
 const DynamicLogin: any = dynamic(
     () =>
@@ -24,7 +24,6 @@ export const Authenticated: React.FunctionComponent<{
 }> = ({ session, children, name, onScroll }) => {
     const menuModalRef = useModal(useRef<HTMLDivElement>(null));
     const onScrollDiv = useRef<HTMLDivElement>(null);
-    const [showPaymentSettings, setShowPaymentSettings] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -46,10 +45,6 @@ export const Authenticated: React.FunctionComponent<{
         }
     }
 
-    const onPaymentSettingsClick = () => {
-        setShowPaymentSettings(true);
-    };
-
     const onLogout = () => {
         dispatch(LoginActions.UserLogout());
     };
@@ -57,10 +52,13 @@ export const Authenticated: React.FunctionComponent<{
     if (!session || !("id" in session)) {
         return <DynamicLogin />;
     } else {
-        return <>
+        return <ToastProvider
+            components={{ Toast: Toast } as any}
+            autoDismiss={true}
+            placement="top-center"
+        >
             <div className="w-100 h-100 row flex-column justify-content-between flex-nowrap">
-                <div ref={onScrollDiv}
-                    className="custom-scroller d-flex flex-column"
+                <div className="custom-scroller d-flex flex-column"
                     onScroll={checkBottomScrollEvent}
                 >
                     {children}
@@ -76,15 +74,7 @@ export const Authenticated: React.FunctionComponent<{
                     session={session}
                     onMenuClick={menuModalRef.toggle}
                 />
-
-                <PaymentSettingsContainer
-                    session={session}
-                    showPaymentSettings={showPaymentSettings}
-                    onModalClose={() => {
-                        setShowPaymentSettings(false);
-                    }}
-                />
             </div>
-        </>;
+        </ToastProvider>
     }
 };

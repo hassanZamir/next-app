@@ -60,7 +60,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                 birthDate:
                     data.dob.year +
                     "-" +
-                    (DobConst.months.indexOf(data.dob.month) + 2) +
+                    (DobConst.months.indexOf(data.dob.month)) +
                     "-" +
                     data.dob.date,
                 account_created: true,
@@ -98,7 +98,14 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             type="text"
                             labelText="Full Name"
                             name="name"
-                            validationRules={{ required: { value: true, message: "Full Name is required" } }}
+                            validationRules={{
+                                required: { value: true, message: "Full Name is required" },
+                                validate: async (value: string) => {
+                                    var regex = /^[a-zA-Z.]{1,10}(?: [a-zA-Z]{1,10}){1,3}$/;
+                                    if (!regex.test(value.trim()))
+                                        return "Please enter valid full name e.g. John Doe or J. Doe or John D";
+                                }
+                            }}
                         />
 
                         <SelectInput
@@ -110,7 +117,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             validationRules={[{
                                 required: "Date is required",
                                 validate: (value: string) => {
-                                    return value !== "DD"
+                                    return value !== "Date"
                                         ? true
                                         : "Please select Date of Birth";
                                 },
@@ -118,7 +125,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             {
                                 required: "Month is required",
                                 validate: (value: string) => {
-                                    return value !== "MM"
+                                    return value !== "Month"
                                         ? true
                                         : "Please select Month of Birth";
                                 },
@@ -126,7 +133,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             {
                                 required: "Year is required",
                                 validate: (value: string) => {
-                                    return value !== "YYYY"
+                                    return value !== "Year"
                                         ? true
                                         : "Please select Year of Birth";
                                 },

@@ -6,45 +6,36 @@ import {
     PostPersonalInformationModel,
     GETPersonalInformationModel,
     DeleteAccountModel,
+    UserCreatorProfileModel,
+    HTTP_REQUEST_STATUS
 } from "@Interfaces";
 
 declare namespace ISettingsPage {
     export interface IProps {
         user: USER_SESSION;
     }
-
     export interface IStateProps {
-        showPersonalInformation: boolean;
-        defaultPersonalInformation: any;
-        creatorProfile: CREATOR_PROFILE;
-        errors: string[];
-        success: string[];
+        httpStatus: HTTP_REQUEST_STATUS;
     }
 
     namespace Actions {
-        export interface IMapGetPersonalInformation {
-            personalInformation: GETPersonalInformationModel.GetGETPersonalInformationResponse;
+
+        export interface IUpdateHttpStatus extends HTTP_REQUEST_STATUS { }
+        export interface IGetUserProfileSettingsPayload
+            extends UserCreatorProfileModel.GetUserCreatorProfilePayload { }
+        export interface IGetUserProfileSettingsResponse
+            extends UserCreatorProfileModel.GetUserCreatorProfileResponse { }
+        export interface IPostUploadSettingsProfileImagesPayload
+            extends UserCreatorProfileModel.PostUserCreatorProfilePayload {
+            media_url: any = []
         }
-
-        export interface IGetUploadSettingsProfileImagesPayload
-            extends CreatorProfileModel.GetUploadSettingsProfileImagesPayload {}
-        export interface IGetUploadProfileImagesResponse
-            extends CreatorProfileModel.GetUploadSettingsProfileImagesResponse {}
-
-        export interface IGetPostPersonalInformationPayload
-            extends PostPersonalInformationModel.GetPostPersonalInformationPayload {}
-        export interface IGetPostPersonalInformationResponse
-            extends PostPersonalInformationModel.GetPostPersonalInformationResponse {}
-
-        export interface IGetGETPersonalInformationPayload
-            extends GETPersonalInformationModel.GetGETPersonalInformationPayload {}
-        export interface IGetGETPersonalInformationResponse
-            extends GETPersonalInformationModel.GetGETPersonalInformationResponse {}
-
+        export interface IPostUploadSettingsProfileImagesResponse
+            extends UserCreatorProfileModel.PostUserCreatorProfileResponse {
+        }
         export interface IGetDeleteAccountPayload
-            extends DeleteAccountModel.DeleteAccountPayload {}
+            extends DeleteAccountModel.DeleteAccountPayload { }
         export interface IGetDeleteAccountResponse
-            extends DeleteAccountModel.DeleteAccountResponse {}
+            extends DeleteAccountModel.DeleteAccountResponse { }
     }
 }
 

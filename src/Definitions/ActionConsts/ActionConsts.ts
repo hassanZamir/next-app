@@ -98,6 +98,7 @@ export const ActionConsts = {
         GetBankingInfoError: "GetBankingInfoError",
     },
     Settings: {
+        UpdateHttpStatus: "UpdateHttpStatus",
         GetUserProfileSuccess: "GetUserProfileSuccess",
         GetUserProfileError: "GetUserProfileError",
         UploadProfileImagesError: "UploadProfileImagesError",

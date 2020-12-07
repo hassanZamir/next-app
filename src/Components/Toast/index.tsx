@@ -17,9 +17,10 @@ const Container = styled.div`
     color: white;
     left: auto !important;
     right: auto !important;
-    width: auto !important;
+    width: 80vw !important;
     position: relative !important;
     text-align: center !important;
+
 `;
 
 export const Toast: React.FunctionComponent<ToastProps> = ({ children, ...props }) => {

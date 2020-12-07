@@ -17,9 +17,11 @@ const _Textarea = styled.textarea`
     min-height: 35px;
 `;
 export const Textarea: React.FunctionComponent<ITextarea.IProps> = ({
+    ref,
+    defaultValue,
     rows,
     columns,
     ...rest
 }) => {
-    return <_Textarea rows={rows} cols={columns} {...rest} />;
+    return <_Textarea ref={ref} defaultValue={defaultValue} rows={rows} cols={columns} {...rest} />;
 };

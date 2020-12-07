@@ -1,5 +1,7 @@
 declare namespace ITextarea {
     export interface IProps {
+        ref?: any;
+        defaultValue?: string;
         rows: number;
         columns?: number;
         className?: string;

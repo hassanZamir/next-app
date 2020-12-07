@@ -7,7 +7,8 @@ import dynamic from 'next/dynamic';
 import { useModal } from '../Hooks';
 import { CardStatus } from "@Components";
 import { AddCardModal } from "../Modals/AddCardModal";
-import { USER_SESSION } from "@Interfaces";
+import { CREATOR_PROFILE, USER_SESSION } from "@Interfaces";
+import { CCBillAddCardModal } from "@Components/Modals/CCBillAddCardModal";
 // import { IStore } from "@Redux/IStore";
 // import { FeedsActions } from "@Actions";
 // #endregion Local Imports
@@ -17,28 +18,34 @@ const DynamicPaymentsModal: any = dynamic(
     { ssr: false }
 );
 
-export const PaymentSettings: React.FunctionComponent<{ user: USER_SESSION }> 
-    = ({ user }) => {
-    // const onCloseModal = () => { setClickedPaymentSettings && setClickedPaymentSettings(false); }
-    const modalRef = useRef<HTMLDivElement>(null);
-    const { isShowing, toggle } = useModal(modalRef);
-    const [ showAddCard, setShowAddCard ] = React.useState(false);
+export const PaymentSettings: React.FunctionComponent<{ user: USER_SESSION, creatorProfile?: CREATOR_PROFILE }>
+    = ({ user, creatorProfile }) => {
+        // const onCloseModal = () => { setClickedPaymentSettings && setClickedPaymentSettings(false); }
+        const modalRef = useRef<HTMLDivElement>(null);
+        const { isShowing, toggle } = useModal(modalRef);
+        const [showAddCard, setShowAddCard] = React.useState(false);
 
-    return (<React.Fragment>
-        <CardStatus user={user} onClick={() => {
-            setShowAddCard(false); 
-            toggle();
-        }} />
-        {!showAddCard && <DynamicPaymentsModal
+        return (<React.Fragment>
+            <CardStatus user={user} onClick={() => {
+                setShowAddCard(false);
+                toggle();
+            }} />
+            {!showAddCard && <DynamicPaymentsModal
+                toggle={toggle}
+                isShowing={isShowing}
+                modalRef={modalRef}
+                user={user}
+                onAddCard={setShowAddCard} />}
+            {/* {showAddCard && <AddCardModal
             toggle={toggle}
             isShowing={isShowing}  
             modalRef={modalRef} 
-            user={user} 
-            onAddCard={setShowAddCard} />}
-        {showAddCard && <AddCardModal
-            toggle={toggle}
-            isShowing={isShowing}  
-            modalRef={modalRef} 
-            user={user} />}
-    </React.Fragment>);
-}
+            user={user} />} */}
+            {showAddCard && creatorProfile && <CCBillAddCardModal
+                user={user}
+                isShowing={isShowing}
+                toggle={toggle}
+                creatorProfile={creatorProfile}
+            />}
+        </React.Fragment>);
+    }

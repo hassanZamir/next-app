@@ -5,10 +5,9 @@ import Link from "next/link";
 
 // #region Local Imports
 import { useDispatch } from "react-redux";
-import { FeedsActions, StatusActions } from "@Actions";
+import { StatusActions } from "@Actions";
 import { StaticImage, FeedsList, Comments } from "@Components";
 import { FEED, USER_SESSION } from "@Interfaces";
-import { ActionConsts } from "@Definitions";
 import { useRouter } from "next/router";
 // #endregion Local Imports
 
@@ -27,7 +26,7 @@ export const ContentComponent: React.FunctionComponent<{ userName: string, conte
         useEffect(() => {
             // load the feed object if the existing is not the same
             if (!feed.id || feed.id != contentId) {
-                console.log("Fetching status feed content");
+                console.log("Status loading...");
                 pollFeed()
             }
 

@@ -2,7 +2,7 @@
 // #region Global Imports
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 // #endregion Global Imports
@@ -10,14 +10,15 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
 import { USER_SESSION } from "@Interfaces";
-import { Footer, CreatorProfile, CreatorContent } from '@Components';
-import { CreatorProfileActions } from "@Actions";
+import { Footer, CreatorProfile, CreatorContent, PaymentSettings } from '@Components';
+import { CreatorProfileActions, LoginActions } from "@Actions";
 import { AnimatePopup } from "@Components/Basic";
 import { PaymentConfirmationModal, UnFollowConfirmationModal, ReturnPolicyModal } from "@Components/Modals";
 import { useModal } from "@Components/Hooks";
 import Suggestions from "@Pages/suggestions";
 import { theme } from "@Definitions/Styled";
 import { CCBillAddCardModal } from "@Components/Modals/CCBillAddCardModal";
+import { Menu } from "@Components/Menu";
 // #endregion Local Imports
 
 export const ProfileComponent: React.FunctionComponent<{
@@ -27,6 +28,7 @@ export const ProfileComponent: React.FunctionComponent<{
     const creatorProfileState = useSelector(
         (state: IStore) => state.creatorProfile
     );
+    const menuModalRef = useModal(useRef<HTMLDivElement>(null));
     const { creatorProfile, followers, isUserFollowingStatus, isUserFollowing, isProfileFetching } = creatorProfileState;
     const { contentCount, imagesCount, videosCount, name } = creatorProfile;
     // const userFollowings = useSelector(
@@ -47,6 +49,7 @@ export const ProfileComponent: React.FunctionComponent<{
     const cancellationPolicyModalRef = useModal(useRef<HTMLDivElement>(null));
     const ccbillAddCardModalRef = useModal(useRef<HTMLDivElement>(null));
 
+    const router = useRouter();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -57,10 +60,17 @@ export const ProfileComponent: React.FunctionComponent<{
     }, [isUserFollowing]);
 
     useEffect(() => {
-        // TODO: combine the creator profile and follow check
-        const params = { username: profileUserName };
-        dispatch(CreatorProfileActions.GetActiveCreatorProfile(params));
-
+        if (user.username == profileUserName) {
+            dispatch(CreatorProfileActions.GetUserCreatorProfile({
+                authtoken: user.token,
+                userid: user.id
+            }));
+        }
+        else {
+            // TODO: combine the creator profile and follow check
+            const params = { username: profileUserName };
+            dispatch(CreatorProfileActions.GetActiveCreatorProfile(params));
+        }
         // if its not user's own profile then check profile following status
         if (user && user.username && user.username != profileUserName) {
             dispatch(CreatorProfileActions.CheckUserProfileFollowing({
@@ -69,6 +79,7 @@ export const ProfileComponent: React.FunctionComponent<{
                 creatorUsername: profileUserName,
             }))
         }
+
     }, [followers, isAlreadyFollowing]);
 
     const sendFollowRequest = () => {
@@ -100,13 +111,14 @@ export const ProfileComponent: React.FunctionComponent<{
             // otherwise initiate the add card modal which will take user to 
             //          external payment processor page and take user payment info
 
-            // if (user.paymentMode) {
-            //     followConfirmationModalRef.toggle();
-            // } else {
-            // here user needs to be redirected to cc bill
-            // as falsy paymentmode means user has no active payment mode available
-            redirectToExternalPaymentGateway()
-            // }
+            if (user.paymentMode) {
+                followConfirmationModalRef.toggle();
+            } else {
+                setShowPaymentSettingsPopup(true);
+                // here user needs to be redirected to cc bill
+                // as falsy paymentmode means user has no active payment mode available
+                //    redirectToExternalPaymentGateway()
+            }
         } else {
             Router.push({
                 pathname: "/login",
@@ -118,6 +130,10 @@ export const ProfileComponent: React.FunctionComponent<{
     const redirectToExternalPaymentGateway = () => {
         setShowRedirectionModal(true);
         ccbillAddCardModalRef.toggle();
+    };
+
+    const onLogout = () => {
+        dispatch(LoginActions.UserLogout());
     };
 
     return (
@@ -147,14 +163,21 @@ export const ProfileComponent: React.FunctionComponent<{
             {showRedirectionModal && (
                 <AnimatePopup animateIn={showRedirectionModal}>
                     {/* <PaymentSettings user={user} /> */}
-                    <CCBillAddCardModal
+                    {/* <CCBillAddCardModal
                         user={user}
                         isShowing={ccbillAddCardModalRef.isShowing}
                         toggle={ccbillAddCardModalRef.toggle}
                         creatorProfile={creatorProfile}
-                    />
+                    /> */}
                 </AnimatePopup>
             )}
+            {
+                showPaymentSettingsPopup && (
+                    <AnimatePopup animateIn={showPaymentSettingsPopup}>
+                        <PaymentSettings user={user} creatorProfile={creatorProfile} />
+                    </AnimatePopup>
+                )
+            }
 
             <div
                 className="custom-scroller"
@@ -169,7 +192,8 @@ export const ProfileComponent: React.FunctionComponent<{
                     <div
                         className="back-icon cursor-pointer"
                         onClick={() => {
-                            return Router.back();
+                            const options = { shallow: true };
+                            return router.push("/", "/", options);
                         }}
                     >
                         <FontAwesomeIcon
@@ -214,8 +238,14 @@ export const ProfileComponent: React.FunctionComponent<{
             <Footer
                 selected="None"
                 session={user}
-                onMenuClick={() => { }} // TODO: Fix this. hint: useContext
+                onMenuClick={menuModalRef.toggle}
             />
+            {user && <Menu
+                isShowing={menuModalRef.isShowing}
+                toggle={menuModalRef.toggle}
+                session={user}
+                onLogout={onLogout}
+            />}
         </div >
     );
 };

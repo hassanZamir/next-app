@@ -224,15 +224,15 @@ export const CreatorProfileService = {
         return result;
     },
     PostCreatorProfile: async (
-        payload: CreatorProfileModel.GetPostCreatorProfilePayload
+        payload: UserCreatorProfileModel.PostUserCreatorProfilePayload
     ): Promise<CreatorProfileModel.GetPostCreatorProfileResponse> => {
         let response: CreatorProfileModel.GetPostCreatorProfileResponse;
 
-        const { username, ...rest } = payload;
+        const { authtoken, ...rest } = payload;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 CreatorProfileModel.GetPostCreatorProfileResponse
-            >("POST", "/profiles/" + username, undefined, { ...rest });
+            >("POST", "/users/" + payload.userId, authtoken, undefined, { ...rest });
         } catch (error) {
             response = {
                 status: false,

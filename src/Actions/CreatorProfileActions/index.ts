@@ -14,7 +14,7 @@ import { IProfilePage, UserCreatorProfileModel, USER_CREATOR_PROFILE } from "@In
 export const CreatorProfileActions = {
     // called by the pusher event only
     VerficationStatusUpdated: (result: USER_CREATOR_PROFILE) => async (dispatch: Dispatch) => {
-        console.log("VerficationStatusUpdated: ", result);
+        // console.log("VerficationStatusUpdated: ", result);
 
         dispatch({
             payload: result,
@@ -38,6 +38,10 @@ export const CreatorProfileActions = {
                 result.status && result.response
                     ? ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess
                     : ActionConsts.CreatorProfile.GetUserCreatorProfileError,
+        });
+        dispatch({
+            payload: result.status && result.response ? "success" : "error",
+            type: ActionConsts.Settings.UpdateHttpStatus,
         });
     },
     /**
