@@ -60,7 +60,7 @@ export const ProfileComponent: React.FunctionComponent<{
     }, [isUserFollowing]);
 
     useEffect(() => {
-        if (user.username == profileUserName) {
+        if (user && user.username == profileUserName) {
             dispatch(CreatorProfileActions.GetUserCreatorProfile({
                 authtoken: user.token,
                 userid: user.id
@@ -138,27 +138,29 @@ export const ProfileComponent: React.FunctionComponent<{
 
     return (
         <div className="w-100 h-100 row flex-column justify-content-between flex-nowrap">
+            {user && <div>
+                <PaymentConfirmationModal
+                    toggle={followConfirmationModalRef.toggle}
+                    isShowing={followConfirmationModalRef.isShowing}
+                    profileUserName={creatorProfile.name}
+                    onConfirm={sendFollowRequest}
+                    paymentMode={user.paymentMode}
+                    creatorProfile={creatorProfile}
+                />
 
-            <PaymentConfirmationModal
-                toggle={followConfirmationModalRef.toggle}
-                isShowing={followConfirmationModalRef.isShowing}
-                profileUserName={creatorProfile.name}
-                onConfirm={sendFollowRequest}
-                paymentMode={user.paymentMode}
-                creatorProfile={creatorProfile}
-            />
+                <UnFollowConfirmationModal
+                    isShowing={unFollowConfirmationModalRef.isShowing}
+                    toggle={unFollowConfirmationModalRef.toggle}
+                    onConfirm={sendUnFollowRequest}
+                    returnPolicyModalToggle={cancellationPolicyModalRef.toggle}
+                />
 
-            <UnFollowConfirmationModal
-                isShowing={unFollowConfirmationModalRef.isShowing}
-                toggle={unFollowConfirmationModalRef.toggle}
-                onConfirm={sendUnFollowRequest}
-                returnPolicyModalToggle={cancellationPolicyModalRef.toggle}
-            />
+                <ReturnPolicyModal
+                    isShowing={cancellationPolicyModalRef.isShowing}
+                    toggle={cancellationPolicyModalRef.toggle}
+                />
+            </div>}
 
-            <ReturnPolicyModal
-                isShowing={cancellationPolicyModalRef.isShowing}
-                toggle={cancellationPolicyModalRef.toggle}
-            />
 
             {showRedirectionModal && (
                 <AnimatePopup animateIn={showRedirectionModal}>
@@ -203,7 +205,7 @@ export const ProfileComponent: React.FunctionComponent<{
                         />
                     </div>
                     {/* {!creatorProfile.name && <>Loading...</>} */}
-                    {creatorProfile!.userName == profileUserName && <>
+                    {creatorProfile && creatorProfile.userName == profileUserName && <>
                         <CreatorProfile
                             creatorProfile={creatorProfile}
                             onFollow={onFollow}
