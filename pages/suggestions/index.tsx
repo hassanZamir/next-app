@@ -52,12 +52,11 @@ const Suggestions: NextPage = () => {
         await dispatch(FeedsActions.GetProfileSuggestion(params));
     };
     useEffect(() => {
-        (async () => {
-            await getProfilesSuggestions({ viewerId: user.id, authtoken: user.token, page: currentPage, offset: 10 });
-        })();
-        // return () => {
-        //     cleanup
-        // }
+        if (user && user.id) {
+            (async () => {
+                await getProfilesSuggestions({ viewerId: user.id, authtoken: user.token, page: currentPage, offset: 10 });
+            })();
+        }
     }, [currentPage])
 
     return (

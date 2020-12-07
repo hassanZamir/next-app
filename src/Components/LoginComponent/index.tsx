@@ -194,9 +194,9 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                     )}
                 </div>
             )}
-            <SocialLogin />
+            {/* <SocialLogin />
 
-            <div className="font-19px text-darkGrey">-----OR-----</div>
+            <div className="font-19px text-darkGrey">-----OR-----</div> */}
 
             <form
                 name="login-form"

@@ -142,7 +142,7 @@ export const LoginActions = {
     GetCreatorProfile: (
         payload: IProfilePage.Actions.IGetCreatorProfilePayload
     ) => async (dispatch: Dispatch) => {
-        const result = await CreatorProfileService.GetCreatorProfile(payload);
+        const result = await CreatorProfileService.GetActiveCreatorProfile(payload);
 
         dispatch({
             payload: { profile: result.response },

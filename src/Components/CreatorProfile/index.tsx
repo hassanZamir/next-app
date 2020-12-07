@@ -103,8 +103,10 @@ export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFol
                         )}
                     </div>
                     <div className="d-flex justify-content-end" style={{ width: "50%" }}>
-                        {creatorProfile && creatorProfile.name && user && user.name && creatorProfile.name !== user.name && <div>
-                            {!isFollower && <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-12px">Follow for ${creatorProfile.followingFee} a month</PrimaryButton>}
+                        {<div>
+                            {!isFollower && creatorProfile && creatorProfile.name && <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-12px">
+                                Follow for ${creatorProfile.followingFee} a month
+                                </PrimaryButton>}
                             {isFollower && <div className="d-flex flex-column">
                                 <PrimaryButton borderRadius="10px" isActive={true}
                                     onClick={() => onFollow(false)}
@@ -118,7 +120,7 @@ export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFol
                                 </PrimaryButton>
                             </div>}
                         </div>}
-                        {creatorProfile && creatorProfile.name && creatorProfile.name === user.name && <div>
+                        {creatorProfile && creatorProfile.name && user && user.name && creatorProfile.name === user.name && <div>
                             <div className="d-flex flex-column">
                                 <PrimaryButton borderRadius="10px" isActive={true} className="gibson-regular font-15px mt-2">
                                     <span className="mr-2">Edit Profile</span>
