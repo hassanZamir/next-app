@@ -205,7 +205,7 @@ export const ProfileComponent: React.FunctionComponent<{
                         />
                     </div>
                     {/* {!creatorProfile.name && <>Loading...</>} */}
-                    {creatorProfile && creatorProfile.userName == profileUserName && <>
+                    {creatorProfile && creatorProfile.userName && creatorProfile.userName == profileUserName && <>
                         <CreatorProfile
                             creatorProfile={creatorProfile}
                             onFollow={onFollow}
