@@ -58,29 +58,31 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
     }
 
     useEffect(() => {
-        dispatch(NotificationActions.GetNotificationStats({ userId: session.id, authtoken: session.token }));
+        if (session && session.id) {
+            dispatch(NotificationActions.GetNotificationStats({ userId: session.id, authtoken: session.token }));
 
-        if (typeof window !== "undefined" && !(window as any).Pusher) {
-            const channelName = 'creators-' + session.id;
-            NotificationPusher.getChannel(channelName, { cluster: 'ap4', encrypted: true })
-                .then((channel: any) => {
-                    NotificationPusher.subscribe('like', channel, notificationSubscriptionCallback);
-                    NotificationPusher.subscribe('comment', channel, notificationSubscriptionCallback);
-                    NotificationPusher.subscribe('subscribe', channel, notificationSubscriptionCallback);
-                    NotificationPusher.subscribe('tip', channel, notificationSubscriptionCallback);
-                    NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
-                    NotificationPusher.subscribe('comment-like', channel, notificationSubscriptionCallback);
-                    NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
-                    NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
-                    // NotificationPusher.subscribe('new-conversation', channel, newConversationRecievedCallBack);
-                    NotificationPusher.subscribe('conversation-update', channel, newConversationRecievedCallBack);
-                    NotificationPusher.subscribe('verification-update', channel, verificationStatusCallback)
-                    NotificationPusher.subscribe('follow-payment-update', channel, followingPaymentCallback)
-                }).catch((err: any) => {
-                    console.log("Error occured while subscribing to push events: ", err);
-                });
+            if (typeof window !== "undefined" && !(window as any).Pusher) {
+                const channelName = 'creators-' + session.id;
+                NotificationPusher.getChannel(channelName, { cluster: 'ap4', encrypted: true })
+                    .then((channel: any) => {
+                        NotificationPusher.subscribe('like', channel, notificationSubscriptionCallback);
+                        NotificationPusher.subscribe('comment', channel, notificationSubscriptionCallback);
+                        NotificationPusher.subscribe('subscribe', channel, notificationSubscriptionCallback);
+                        NotificationPusher.subscribe('tip', channel, notificationSubscriptionCallback);
+                        NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
+                        NotificationPusher.subscribe('comment-like', channel, notificationSubscriptionCallback);
+                        NotificationPusher.subscribe('message-purchase', channel, notificationSubscriptionCallback);
+                        NotificationPusher.subscribe('new-message', channel, newMessageRecievedCallBack);
+                        // NotificationPusher.subscribe('new-conversation', channel, newConversationRecievedCallBack);
+                        NotificationPusher.subscribe('conversation-update', channel, newConversationRecievedCallBack);
+                        NotificationPusher.subscribe('verification-update', channel, verificationStatusCallback)
+                        NotificationPusher.subscribe('follow-payment-update', channel, followingPaymentCallback)
+                    }).catch((err: any) => {
+                        console.log("Error occured while subscribing to push events: ", err);
+                    });
+            }
         }
-    }, []);
+    }, [session]);
 
     return <div style={{ height: "40px" }}
         className={"footer-navigation d-flex align-items-center justify-content-between text-white bg-primary"}>
