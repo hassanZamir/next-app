@@ -13,8 +13,8 @@ import Suggestions from "@Pages/suggestions";
 export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
     = ({ user, scrolledToBottom, followingFee, contentCount, imagesCount,
         videosCount, name, profileUserName, isFollower, onFollow }) => {
-        isFollower = isFollower || user.username == profileUserName; // user is considered to be a follower of his own profile
-        const isSelfProfile: boolean = user.username === profileUserName;
+        isFollower = isFollower || (user && user.username == profileUserName); // user is considered to be a follower of his own profile
+        const isSelfProfile: boolean = (user && user.username === profileUserName);
         const creatorProfileState = useSelector((state: IStore) => state.creatorProfile);
         const { creatorFeeds, mediaGallary, errors,
             emptyPageNoFeeds, emptyPageNoImage, emptyPageNoVideo } = creatorProfileState;
