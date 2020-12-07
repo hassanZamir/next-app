@@ -654,10 +654,10 @@ input:checked + .slider:before {
         margin-left: 70px;
     }
     @media only screen and (min-width: 375px) {
-        margin-left: 100px;
+        margin-left: 123px;
     }
     @media only screen and (min-width: 425px) {
-        margin-left: 140px;
+        margin-left: 162px;
     }
     @media only screen and (min-width: 768px) {
         margin-left: 160px;
@@ -675,12 +675,24 @@ input:checked + .slider:before {
         top: 235px;
     }
     @media only screen and (min-width: 320px) {
-        top: 233px;
+        top: 206px;
     }
-    @media only screen and (min-width: 321px) {
-        top: 220px;
+    @media only screen and (min-width: 325px) {
+        top: 210px;
+    }
+    @media only screen and (min-width: 340px) {
+        top: 210px;
     }
     @media only screen and (min-width: 365px) {
+        top: 225px;
+    }
+    @media only screen and (min-width: 355px) {
+        top: 215px;
+    }
+    @media only screen and (min-width: 415px) {
+        top: 225px;
+    }
+    @media only screen and (min-width: 410px) {
         top: 225px;
     }
     @media only screen and (min-width: 425px) {
@@ -1068,11 +1080,37 @@ $badge-success-bg: #f57b52;
 .switch-label-padding-bottom {
     margin-bottom: 0px !important;
 }
+
 .heading-styles {
     font-size: 0.8rem;
     color: #707070;
 }
 
+.spinner-styles {
+    margin-top: 50px;
+}
+
+.followers-cards-btn{
+    font-size: 13px;
+    margin-right: 32px;
+    @media screen and (max-width: 375px) {
+        font-size: 10px;
+        margin-right: 16px;
+    }
+}
+
+.followers-cards-btn-margin {
+    margin-right: 0.5rem;
+    @media screen and (max-width: 320){
+        margin-right: 0.2rem;
+    }
+    
+}
+
+.container{width:100%;}
+.left{float:left;width:100px;}
+.right{float:right;width:100px;}
+.center{margin:0 auto;width:100px;}
 // Circle Checkbox
 
 // TODO: fix this, as this was changing the whole applicaiton;s background
@@ -1156,3 +1194,4 @@ $badge-success-bg: #f57b52;
 //     width: 731px;
 //     height: 20px;
 // }
+

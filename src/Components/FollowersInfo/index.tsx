@@ -52,6 +52,7 @@ const FollowerCard: React.FunctionComponent<{
     const [selectSubscription, setSelectSubscription] = useState(false);
     const [checkedItems, setCheckedItems] = useState<any>({});
     const [fetchUpdatedData, setFetchUpdatedData] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (allFollowers) {
@@ -72,7 +73,9 @@ const FollowerCard: React.FunctionComponent<{
             username: user.username,
             type: followerType,
         };
+        setLoading(true);
         dispatch(FollowersInfoAction.GetFollowersInformation(params));
+        setLoading(false);
         setFetchUpdatedData(false);
     }, [
         dispatch,
@@ -83,7 +86,7 @@ const FollowerCard: React.FunctionComponent<{
         user.username,
     ]);
 
-    const selectListType = (e: any) => {
+    const selectListType = async (e: any) => {
         if (e.target.name === LIST_ALL_FOLLOWERS) {
             setAllFollowers(true);
             setActiveFollowers(false);
@@ -95,7 +98,9 @@ const FollowerCard: React.FunctionComponent<{
                 username: user.username,
                 type: TYPE_ALL_FOLLOWERS,
             };
-            dispatch(FollowersInfoAction.GetFollowersInformation(params));
+            setLoading(true);
+            await dispatch(FollowersInfoAction.GetFollowersInformation(params));
+            setLoading(false);
             setCheckedItems({});
         } else if (e.target.name === LIST_ACTIVE_FOLLOWERS) {
             setActiveFollowers(true);
@@ -108,7 +113,9 @@ const FollowerCard: React.FunctionComponent<{
                 username: user.username,
                 type: TYPE_ACTIVE_FOLLOWERS,
             };
-            dispatch(FollowersInfoAction.GetFollowersInformation(params));
+            setLoading(true);
+            await dispatch(FollowersInfoAction.GetFollowersInformation(params));
+            setLoading(false);
             setCheckedItems({});
         } else if (e.target.name === LIST_RESTRICTED_FOLLOWERS) {
             setAllFollowers(false);
@@ -121,7 +128,10 @@ const FollowerCard: React.FunctionComponent<{
                 username: user.username,
                 type: TYPE_RESTRICTED_FOLLOWERS,
             };
-            dispatch(FollowersInfoAction.GetFollowersInformation(params));
+            setLoading(true);
+            await dispatch(FollowersInfoAction.GetFollowersInformation(params));
+            setLoading(false);
+
             setCheckedItems({});
         } else if (e.target.name === LIST_BLOCKED_FOLLOWERS) {
             setBlockedFollowers(true);
@@ -134,7 +144,9 @@ const FollowerCard: React.FunctionComponent<{
                 username: user.username,
                 type: TYPE_BLOCKED_FOLLOWERS,
             };
-            dispatch(FollowersInfoAction.GetFollowersInformation(params));
+            setLoading(true);
+            await dispatch(FollowersInfoAction.GetFollowersInformation(params));
+            setLoading(false);
             setCheckedItems({});
         }
     };
@@ -186,6 +198,7 @@ const FollowerCard: React.FunctionComponent<{
             username: user.username,
         };
         dispatch(FollowersInfoAction.PostFavouriteFollower(params));
+        setFetchUpdatedData(true);
     };
 
     const unFavourite = (username: string) => {
@@ -195,6 +208,7 @@ const FollowerCard: React.FunctionComponent<{
             username: user.username,
         };
         dispatch(FollowersInfoAction.PostUnFavouriteFollower(params));
+        setFetchUpdatedData(true);
     };
 
     const toggleCard = (name: any) => {
@@ -238,7 +252,7 @@ const FollowerCard: React.FunctionComponent<{
                             width="22px"
                             height="22px"
                             name="allFollowers"
-                            onClick={e => selectListType(e)}
+                            onClick={(e: any) => selectListType(e)}
                         />
                     ) : (
                         <StaticImage
@@ -290,7 +304,7 @@ const FollowerCard: React.FunctionComponent<{
                             width="22px"
                             height="22px"
                             name="restrictedFollowers"
-                            onClick={e => selectListType(e)}
+                            onClick={(e: any) => selectListType(e)}
                         />
                     ) : (
                         <StaticImage
@@ -315,7 +329,7 @@ const FollowerCard: React.FunctionComponent<{
                             width="22px"
                             height="22px"
                             name="blockedFollowers"
-                            onClick={e => selectListType(e)}
+                            onClick={(e:any) => selectListType(e)}
                         />
                     ) : (
                         <StaticImage
@@ -340,12 +354,29 @@ const FollowerCard: React.FunctionComponent<{
                 </div>
             </p>
             {followersList.length == 0 ? (
-                <div className="empty-list-text">No Data to Display</div>
+                <>
+                {loading ? 
+                    <div className="empty-list-text">   
+                        <LoadingSpinner size="3x" showLoading={loading}></LoadingSpinner>
+                    </div>
+                    :
+                     <div className="empty-list-text">No Data to Display</div>
+                }
+                </>
             ) : (
-                <div className="followers-cards">
+                <>
+                {loading ?  
+                        <div className="d-flex flex-column align-items-center flex-fill body-background">
+
+                <div className="empty-list-text">
+                        <LoadingSpinner size="3x" showLoading={loading}></LoadingSpinner>
+                    </div>
+                    </div>
+                    :
+                    <div className="followers-cards">
                     {followersList.map((follower: any) => {
                         return (
-                            <div className="position-relative my-2 cursor-pointer user-information-sub-text-margin-right-lrg user-information-sub-text-margin-left-lrg">
+                            <div className="position-relative my-2 cursor-pointer user-information-sub-text-margin-right-lrg user-information-sub-text-margin-left-lrg pb-3">
                                 <div
                                     className="primary-border-thick border-primary"
                                     style={{
@@ -397,7 +428,7 @@ const FollowerCard: React.FunctionComponent<{
                                             <ParagraphText className="lato-semibold font-13px text-primary">
                                                 {follower.name}
                                             </ParagraphText>
-                                            {!follower.favourite ? (
+                                            {!follower.isFavourite ? (
                                                 <p className="font-8px">
                                                     <div className="d-flex">
                                                         <StaticImage
@@ -418,7 +449,6 @@ const FollowerCard: React.FunctionComponent<{
                                                     </div>
                                                 </p>
                                             ) : (
-                                                // </ParagraphText>
                                                 <p className="font-8px">
                                                     <div className="d-flex">
                                                         <StaticImage
@@ -439,20 +469,21 @@ const FollowerCard: React.FunctionComponent<{
                                                     </div>
                                                 </p>
                                             )}
+                                        <div className="d-flex">
                                             {followerType !==
                                                 TYPE_BLOCKED_FOLLOWERS &&
                                                 (!follower.isRestricted ? (
                                                     <TransparentButton
                                                         borderRadius="4px"
                                                         padding="0px 15px !important"
-                                                        className="mr-2 lato-semibold font-13px border-primary"
+                                                        className="mr-2 lato-semibold border-primary followers-cards-btn"
                                                         onClick={() =>
                                                             restrictedFollower(
                                                                 follower.username
                                                             )
                                                         }
                                                     >
-                                                        <span className="mr-2">
+                                                        <span className="followers-cards-btn-margin">
                                                             Restrict
                                                         </span>
                                                         <StaticImage
@@ -466,14 +497,14 @@ const FollowerCard: React.FunctionComponent<{
                                                     <TransparentButton
                                                         borderRadius="4px"
                                                         padding="0px 15px !important"
-                                                        className="mr-2 lato-semibold font-13px border-primary"
+                                                        className="lato-semibold border-primary followers-cards-btn"
                                                         onClick={() =>
                                                             unRestrictedFollower(
                                                                 follower.username
                                                             )
                                                         }
                                                     >
-                                                        <span className="mr-2">
+                                                        <span className="followers-cards-btn-margin">
                                                             UnRestrict
                                                         </span>
                                                         <StaticImage
@@ -488,14 +519,14 @@ const FollowerCard: React.FunctionComponent<{
                                                 <TransparentButton
                                                     borderRadius="4px"
                                                     padding="0px 15px !important"
-                                                    className="mr-2 lato-semibold font-13px border-primary"
+                                                    className="lato-semibold  border-primary followers-cards-btn"
                                                     onClick={() =>
                                                         blockedFollower(
                                                             follower.username
                                                         )
                                                     }
                                                 >
-                                                    <span className="mr-2">
+                                                    <span className="followers-cards-btn-margin">
                                                         Block
                                                     </span>
                                                     <StaticImage
@@ -512,8 +543,8 @@ const FollowerCard: React.FunctionComponent<{
                                                     className={
                                                         followerType ===
                                                         TYPE_BLOCKED_FOLLOWERS
-                                                            ? "mr-2 lato-semibold font-13px border-primary button-margin-left-xlarge"
-                                                            : "mr-2 lato-semibold font-13px border-primary"
+                                                            ? "lato-semibold border-primary button-margin-left-xsmall followers-cards-btn"
+                                                            : "lato-semibold border-primary followers-cards-btn"
                                                     }
                                                     onClick={() =>
                                                         unBlockedFollower(
@@ -521,7 +552,7 @@ const FollowerCard: React.FunctionComponent<{
                                                         )
                                                     }
                                                 >
-                                                    <span className="mr-2">
+                                                    <span className="followers-cards-btn-margin">
                                                         UnBlock
                                                     </span>
                                                     <StaticImage
@@ -532,8 +563,10 @@ const FollowerCard: React.FunctionComponent<{
                                                     />
                                                 </TransparentButton>
                                             )}
+                                            </div>
                                         </div>
                                     </div>
+                                    
                                     {selectEarning ? (
                                         <div
                                             style={{
@@ -601,17 +634,17 @@ const FollowerCard: React.FunctionComponent<{
                                                 left: "60px",
                                             }}
                                         >
-                                            <div className="d-flex justify-content-around">
-                                                <div className="p-1">
+                                            <div className="d-flex justify-content-around ml-1">
+                                                <div>
                                                     <ParagraphText className="font-8px user-information-text-color">
                                                         Renew Date
                                                     </ParagraphText>
                                                 </div>
-                                                <div className="p-1 card-details-spacing-col-bottom">
+                                                <div className="card-details-spacing-col-bottom">
                                                     <ParagraphText className="font-8px user-information-text-color">
-                                                        {moment(
+                                                        {follower.renewDate !== null ? moment(
                                                             follower.renewDate
-                                                        ).format("LL")}
+                                                        ).format("LL") : "-"}
                                                     </ParagraphText>
                                                 </div>
                                             </div>
@@ -628,13 +661,13 @@ const FollowerCard: React.FunctionComponent<{
                                                 left: "60px",
                                             }}
                                         >
-                                            <div className="d-flex justify-content-around">
-                                                <div className="p-1">
+                                            <div className="d-flex justify-content-around ml-1">
+                                                <div>
                                                     <ParagraphText className="font-8px user-information-text-color">
                                                         Renew Date
                                                     </ParagraphText>
                                                 </div>
-                                                <div className="p-1 card-details-spacing-col-bottom">
+                                                <div className="card-details-spacing-col-bottom">
                                                     <ParagraphText className="font-8px user-information-text-color">
                                                         {moment(
                                                             follower.renewDate
@@ -718,7 +751,7 @@ const FollowerCard: React.FunctionComponent<{
                                                 </div>
                                                 <div className="p-1">
                                                     <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                        {follower.earnings.tips}
+                                                        {`$ ${follower.earnings.tips.toFixed(2)}`}
                                                     </ParagraphText>
                                                 </div>
                                             </div>
@@ -731,8 +764,8 @@ const FollowerCard: React.FunctionComponent<{
                                                     </ParagraphText>
                                                 </div>
                                                 <div className="p-1">
-                                                    <ParagraphText className="font-8px mr-1 user-information-text-color">
-                                                        {`$ ${follower.earnings.messages}`}
+                                                    <ParagraphText className="font-8px mr-1 pr-1 user-information-text-color">
+                                                        {`$ ${follower.earnings.messages.toFixed(2)}`}
                                                     </ParagraphText>
                                                 </div>
                                             </div>
@@ -752,7 +785,7 @@ const FollowerCard: React.FunctionComponent<{
                                                     </div>
                                                     <div className="p-1">
                                                         <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                            {`$ ${follower.earnings.subscription}`}
+                                                            {`$ ${follower.earnings.subscription.toFixed(2)}`}
                                                         </ParagraphText>
                                                     </div>
                                                 </div>
@@ -772,63 +805,56 @@ const FollowerCard: React.FunctionComponent<{
                                                         </ParagraphText>
                                                     </div>
                                                     <div className="p-1">
-                                                        <ParagraphText className="font-8px mr-1 user-information-text-color">
-                                                            $250.98
+                                                        <ParagraphText className="font-8px mr-2 user-information-text-color">
+                                                            {`$ ${(follower.earnings.tips + follower.earnings.messages + follower.earnings.subscription).toFixed(2)}`}
                                                         </ParagraphText>
                                                     </div>
                                                 </div>
                                             </div>
                                         )}
                                         {selectSubscription && (
-                                            <div className="d-flex justify-content-around">
-                                                <div className="p-1  subscription-text-margin-left-small">
+                                           <div className="d-flex justify-content-around">
+                                           <div className="p-1">
                                                     <ParagraphText className="font-8px mr-2 user-information-text-color">
                                                         Current Subscription
                                                     </ParagraphText>
                                                 </div>
                                                 <div className="p-1">
                                                     <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                        $15.00
+                                                        {`$ ${follower.currentSubscriptionFee.toFixed(2)}`}
                                                     </ParagraphText>
                                                 </div>
                                             </div>
                                         )}
                                         {selectSubscription && (
                                             <div className="d-flex justify-content-around">
-                                                <div className="p-1">
+                                            <div className="p-1">
                                                     <ParagraphText className="font-8px mr-5 user-information-text-color">
                                                         New Price
                                                     </ParagraphText>
                                                 </div>
                                                 <div className="p-1">
                                                     <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                        $5.00
+                                                        {`$ ${follower.newFee.toFixed(2)}`}
                                                     </ParagraphText>
                                                 </div>
                                             </div>
                                         )}
                                         {selectSubscription && (
-                                            <div
-                                                style={{
-                                                    top: "75%",
-                                                    left: "60px",
-                                                }}
-                                            >
-                                                <div className="d-flex justify-content-around">
-                                                    <div className="p-1 subscription-text-margin-left-small">
-                                                        <ParagraphText className="font-8px mr-4 user-information-text-color">
+                                                 <div className="d-flex justify-content-around">
+                                                 <div className="p-1">
+                                                        <ParagraphText className="font-8px mr-3 user-information-text-color">
                                                             Started
                                                         </ParagraphText>
                                                     </div>
                                                     <div className="p-1">
-                                                        <ParagraphText className="font-8px mr-1 user-information-text-color">
+                                                        <ParagraphText className="font-8px mr-2 user-information-text-color">
                                                             {moment(
                                                                 follower.startDate
                                                             ).format("LL")}
                                                         </ParagraphText>
                                                     </div>
                                                 </div>
-                                            </div>
                                         )}
                                         {selectSubscription && (
                                             <div className="d-flex justify-content-around">
@@ -838,7 +864,7 @@ const FollowerCard: React.FunctionComponent<{
                                                     </ParagraphText>
                                                 </div>
                                                 <div className="p-1">
-                                                    <ParagraphText className="font-8px mr-1 user-information-text-color">
+                                                    <ParagraphText className="font-8px mr-2 user-information-text-color">
                                                         {moment(
                                                             follower.renewDate
                                                         ).format("LL")}
@@ -849,14 +875,14 @@ const FollowerCard: React.FunctionComponent<{
                                         {selectSubscription && (
                                             <div className="d-flex justify-content-around">
                                                 <div className="p-1 subscription-text-margin-right-large">
-                                                    <ParagraphText className="font-8px mr-4 user-information-text-color">
+                                                    <ParagraphText className="font-8px mr-2 user-information-text-color">
                                                         Recurring Followers
                                                     </ParagraphText>
                                                 </div>
                                                 <div className="p-1">
                                                     <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                        {
-                                                            follower.recurringFollower
+                                                        {follower.isRestricted?
+                                                            "Yes" : "No"
                                                         }
                                                     </ParagraphText>
                                                 </div>
@@ -901,7 +927,10 @@ const FollowerCard: React.FunctionComponent<{
                         );
                     })}
                 </div>
-            )}
+
+                }
+                </>
+                            )}
             {/* {showFilters && (
                 <div className="main-sticky visible-phone layout-center">
                     <div className="filter-border">
@@ -942,11 +971,6 @@ export const FollowersInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         dispatch(FollowersInfoAction.GetFollowersInformation(params));
     }, [dispatch, user.id, user.token, user.username]);
 
-    const followersDetails = {
-        user,
-        followersList: defaultFollowersInformation,
-        followerType,
-    };
 
     return (
         <div className="d-flex flex-column align-items-center flex-fill body-background">
@@ -962,6 +986,11 @@ export const FollowersInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
                         <LoadingSpinner size="3x" />
                     </div>
                 )} */}
+                {/* {loading && 
+                    <div className="mr-2">
+                        <LoadingSpinner size="1x" showLoading={loading}></LoadingSpinner>
+                    </div>
+                } */}
                 {defaultFollowersInformation.length >= 0 && (
                     <FollowerCard
                         user={user}
