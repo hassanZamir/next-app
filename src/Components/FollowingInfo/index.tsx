@@ -400,7 +400,7 @@ const FollowingCard: React.FunctionComponent<{
                                                                         borderRadius="4px"
                                                                         padding="0px 15px !important"
                                                                         className="following-cards-btn lato-semibold border-primary bg-primary text-white"
-                                                                        onClick={(e) => { redirectToMessage(e) }}
+                                                                    //onClick={(e) => redirectToMessage(e)}
                                                                     >
                                                                         <span className="following-cards-btn-margin">
                                                                             Message
