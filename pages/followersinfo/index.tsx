@@ -32,7 +32,6 @@ const Home: NextPage = () => {
     return (
         <Authenticated session={session} name="Account">
             <FollowersInfo user={session} />
-            {/* <DynamicFeeds user={session} /> */}
         </Authenticated>
     );
 };

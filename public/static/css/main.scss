@@ -636,7 +636,7 @@ input:checked + .slider:before {
 
 .switch-spacing-col-left {
     @media only screen and (min-width: 320px) {
-        margin-left: 70px;
+        margin-left: 100px;
     }
     @media only screen and (min-width: 375px) {
         margin-left: 155px;
@@ -1107,10 +1107,23 @@ $badge-success-bg: #f57b52;
     
 }
 
-.container{width:100%;}
-.left{float:left;width:100px;}
-.right{float:right;width:100px;}
-.center{margin:0 auto;width:100px;}
+.following-cards-btn{
+    font-size: 13px;
+    margin-right: 32px;
+    @media screen and (max-width: 375px) {
+        font-size: 10px;
+        margin-right: 16px;
+    }
+}
+
+.following-cards-btn-margin {
+    margin-right: 0.5rem;
+    @media screen and (max-width: 320){
+        margin-right: 0.2rem;
+    }
+    
+}
+
 // Circle Checkbox
 
 // TODO: fix this, as this was changing the whole applicaiton;s background
