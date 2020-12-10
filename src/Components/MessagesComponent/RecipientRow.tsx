@@ -12,41 +12,41 @@ import { RadioInput } from "@Components";
 import { MessagesActions } from "@Actions";
 import Router from "next/router";
 // #endregion Local Imports
-const mediaBaseUrl = 'https://venodev.blob.core.windows.net/veno-media';
+const mediaBaseUrl = process.env.MEDIA_BASE_URL;
 
 
-export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIENT, user: USER_SESSION }> 
+export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIENT, user: USER_SESSION }>
     = ({ recipient, user }) => {
-    
-    const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
-    
-    const onRecipientClick = async (recipient: MESSAGE_RECIPIENT) => {
-        setLoading(true);
-        await dispatch(MessagesActions.CreateConversation({ 
-            userId: user.id, 
-            recipientId: recipient.id,
-            authtoken: user.token,
-        }));
-    }
 
-    return (<div onClick={() => { !loading && onRecipientClick(recipient); }} 
-            style={{ 
+        const dispatch = useDispatch();
+        const [loading, setLoading] = useState(false);
+
+        const onRecipientClick = async (recipient: MESSAGE_RECIPIENT) => {
+            setLoading(true);
+            await dispatch(MessagesActions.CreateConversation({
+                userName: user.username,
+                recipientUsername: recipient.userName,
+                authtoken: user.token,
+            }));
+        }
+
+        return (<div onClick={() => { !loading && onRecipientClick(recipient); }}
+            style={{
                 marginBottom: "1px",
                 borderBottom: "1px solid " + theme.colors.grey300
             }}
             className="hover-bg cursor-pointer d-flex mx-4 py-4">
 
             <div style={{ minHeight: "62px", minWidth: "62px" }}>
-                <BackgroundImage 
+                <BackgroundImage
                     paddingBottom="100%"
-                    borderRadius="12px" 
-                    src={[mediaBaseUrl + "/" + recipient.profileImageUrl ,'/images/profile_image_placeholder.jpg']} />
+                    borderRadius="12px"
+                    src={[mediaBaseUrl + "/" + recipient.profileImageUrl, '/images/profile_image_placeholder.jpg']} />
             </div>
             <div className="d-flex flex-column w-100">
                 <div className="d-flex px-3 w-100 align-items-center justify-content-between w-100 h-100">
                     <div className="gibson-semibold font-16px text-primary">
-                        { recipient.name }
+                        {recipient.name}
                     </div>
                     {/* {!loading ? <RadioInput 
                         onChange={() => {}}
@@ -66,5 +66,5 @@ export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIEN
                     </div>}
                 </div>
             </div>
-    </div>);
-}
+        </div>);
+    }

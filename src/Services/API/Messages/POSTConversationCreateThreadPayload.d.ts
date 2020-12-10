@@ -1,5 +1,5 @@
 export interface POSTConversationCreateThreadPayload {
-    userId: number,
-    recipientId: number,
+    userName: string,
+    recipientUsername: string,
     authtoken: string,
 }

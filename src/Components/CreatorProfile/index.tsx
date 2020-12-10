@@ -11,12 +11,14 @@ import {
     faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { MessagesActions } from "@Actions";
 
 const mediaBaseUrl = process.env.MEDIA_BASE_URL;
 
 export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFollower: boolean; creatorProfile: CREATOR_PROFILE, onFollow: (followOrUnfolow: boolean) => void }>
     = ({ user, creatorProfile, onFollow, isFollower }) => {
-
+        const dispatch = useDispatch();
         const [bioToggle, setBioToggle] = useState(false);
         return (
             <React.Fragment>
@@ -116,7 +118,13 @@ export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFol
                                     <span className="mr-2">Following</span>
                                     <FontAwesomeIcon icon={faCheck} color="white" />
                                 </PrimaryButton>
-                                <PrimaryButton borderRadius="10px" isActive={true} className="gibson-regular font-15px mt-2">
+                                <PrimaryButton borderRadius="10px" isActive={true} className="gibson-regular font-15px mt-2" onClick={() => {
+                                    dispatch(MessagesActions.CreateConversation({
+                                        userName: user.username,
+                                        recipientUsername: creatorProfile.userName,
+                                        authtoken: user.token,
+                                    }));
+                                }}>
                                     <span className="mr-2">Message</span>
                                     <FontAwesomeIcon icon={faEnvelope} color="white" />
                                 </PrimaryButton>

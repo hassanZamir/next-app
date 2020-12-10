@@ -1,5 +1,5 @@
 import { USER_SESSION, IFeed, FEED } from "@Interfaces";
-import { FeedsActions, FollowingInfoAction } from "@Actions";
+import { FeedsActions, FollowingInfoAction, MessagesActions } from "@Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "@Redux/IStore";
 import {
@@ -395,7 +395,13 @@ const FollowingCard: React.FunctionComponent<{
                                                                             borderRadius="4px"
                                                                             padding="0px 15px !important"
                                                                             className="following-cards-btn lato-semibold border-primary bg-primary text-white"
-                                                                        // onClick={(e) => redirectToMessage(e)}
+                                                                            onClick={(e) => {
+                                                                                dispatch(MessagesActions.CreateConversation({
+                                                                                    userName: user.username,
+                                                                                    recipientUsername: followingInfo.username,
+                                                                                    authtoken: user.token,
+                                                                                }));
+                                                                            }}
                                                                         >
                                                                             <span className="following-cards-btn-margin font-14px">Message</span>
                                                                             <StaticImage

@@ -50,9 +50,9 @@ export const CreateMessage: React.FunctionComponent<{
     const { conversationSettings } = conversationThread;
 
     useEffect(() => {
-        if (conversationSettings && conversationSettings.isBlocked)
+        if (conversationSettings && conversationSettings.isBlocked === true)
             setError("You can no longer reply to this conversation.");
-        else if (conversationSettings && !conversationSettings.isFollower)
+        else if (conversationSettings && conversationSettings.isFollower !== true)
             setError("You are no longer following this creator.");
         else setError("");
     }, [conversationSettings]);

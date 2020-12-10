@@ -82,7 +82,7 @@ export const MessagesService = {
                 MessagesModel.GetPOSTConversationCreateThreadResponse
             >(
                 "POST",
-                "/conversation/create-thread",
+                "/conversations",
                 payload.authtoken,
                 undefined,
                 { ...payload }
@@ -242,7 +242,7 @@ export const MessagesService = {
                 undefined,
                 {
                     ...rest,
-            });
+                });
         } catch (error) {
             response = {
                 status: false,

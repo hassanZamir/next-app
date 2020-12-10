@@ -21,8 +21,8 @@ export const MessageRow: React.FunctionComponent<{
     const goToConversation = async () => {
         await dispatch(
             MessagesActions.CreateConversation({
-                userId: user.id,
-                recipientId: message.userId,
+                userName: user.username,
+                recipientUsername: message.userName,
                 authtoken: user.token,
             })
         );
@@ -78,11 +78,10 @@ export const MessageRow: React.FunctionComponent<{
                     </div>
                 </div>
                 <div
-                    className={`font-12px ${
-                        message.participantSeenStatus
-                            ? "gibson-regular text-inputText"
-                            : "gibson-semibold text-primary"
-                    }`}
+                    className={`font-12px ${message.participantSeenStatus
+                        ? "gibson-regular text-inputText"
+                        : "gibson-semibold text-primary"
+                        }`}
                 >
                     {message.message}
                 </div>
