@@ -132,10 +132,12 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
                         </div>)
                 }
                 {
-                    (selectedTab === 1 || selectedTab === 2) && (<MediaGridGallary errors={errors}
+                    (selectedTab === 1 || selectedTab === 2) && mediaGallary.length ? <MediaGridGallary errors={errors}
                         mediaGallary={mediaGallary.filter((media: any) => {
                             return media.type === selectedTab;
-                        })} />)
+                        })} /> : <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
+                            <h4 className="text-primary text-center mt-3 gibson-semibold">No content to show</h4>
+                        </div>
                 }
             </React.Fragment>}
         </div>

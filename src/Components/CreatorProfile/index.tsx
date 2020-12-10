@@ -10,8 +10,9 @@ import {
     faChevronDown,
     faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media";
+const mediaBaseUrl = process.env.MEDIA_BASE_URL;
 
 export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFollower: boolean; creatorProfile: CREATOR_PROFILE, onFollow: (followOrUnfolow: boolean) => void }>
     = ({ user, creatorProfile, onFollow, isFollower }) => {
@@ -104,8 +105,9 @@ export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFol
                     </div>
                     <div className="d-flex justify-content-end" style={{ width: "50%" }}>
                         {<div>
-                            {!isFollower && creatorProfile && creatorProfile.name && <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-12px">
-                                Follow for ${creatorProfile.followingFee} a month
+                            {!isFollower && creatorProfile && creatorProfile.userName && !(user && user.username == creatorProfile.userName) &&
+                                <PrimaryButton onClick={() => onFollow(true)} isActive={true} className="gibson-semibold font-12px">
+                                    Follow for ${creatorProfile.followingFee} a month
                                 </PrimaryButton>}
                             {isFollower && <div className="d-flex flex-column">
                                 <PrimaryButton borderRadius="10px" isActive={true}
@@ -123,7 +125,7 @@ export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFol
                         {creatorProfile && creatorProfile.name && user && user.name && creatorProfile.name === user.name && <div>
                             <div className="d-flex flex-column">
                                 <PrimaryButton borderRadius="10px" isActive={true} className="gibson-regular font-15px mt-2">
-                                    <span className="mr-2">Edit Profile</span>
+                                    <Link href="/settings"><span className="mr-2">Edit Profile</span></Link>
                                 </PrimaryButton>
                             </div>
                         </div>}
