@@ -32,7 +32,7 @@ import moment from "moment";
 import Switch from "react-switch";
 import { useRouter } from "next/router";
 
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media";
+const mediaBaseUrl = process.env.MEDIA_BASE_URL;
 
 const FollowingCard: React.FunctionComponent<{
     user: USER_SESSION;
@@ -71,24 +71,6 @@ const FollowingCard: React.FunctionComponent<{
             setDisplayListType(`Expired Following`);
         }
     }, [followingList]);
-
-    useEffect(() => {
-        const params = {
-            authtoken: user.token,
-            userId: user.id,
-            username: user.username,
-            type: followingType,
-        };
-        dispatch(FollowingInfoAction.GetFollowingInformation(params));
-        setFetchUpdatedData(false);
-    }, [
-        dispatch,
-        fetchUpdatedData,
-        followingType,
-        user.id,
-        user.token,
-        user.username,
-    ]);
 
     const selectListType = async (e: any) => {
         if (e.target.name === LIST_ALL_FOLLOWING) {
@@ -317,12 +299,12 @@ const FollowingCard: React.FunctionComponent<{
 
                                     followingList.map((followingInfo: any) => {
                                         return (
-                                            <div className="position-relative my-2 ml-2 mr-2 cursor-pointer">
+                                            <div key={followingInfo.id} className="position-relative my-2 ml-2 mr-2 cursor-pointer">
                                                 <div
                                                     className="primary-border-thick border-primary"
                                                     style={{
-                                                        borderRadius: "13px 13px 0px 0px",
-                                                        border: "1.5px solid",
+                                                        borderRadius: "30px 30px 0px 0px",
+                                                        border: "3px solid",
                                                     }}
                                                 >
                                                     <BackgroundImage
@@ -333,9 +315,9 @@ const FollowingCard: React.FunctionComponent<{
                                                                 followingInfo.coverImageUrl
                                                                 : "/images/cover_image_placeholder.jpg",
                                                         ]}
-                                                        paddingBottom="17.25%"
-                                                        borderRadius="13px 13px 0px 0px"
-                                                        backgroundPosition="top"
+                                                        paddingBottom="20%"
+                                                        borderRadius="30px 30px 0px 0px"
+                                                        backgroundPosition="center"
                                                     />
                                                     <div className="position-relative">
                                                         <div
@@ -366,127 +348,102 @@ const FollowingCard: React.FunctionComponent<{
                                                 <div
                                                     className="primary-border-thick border-primary"
                                                     style={{
-                                                        borderRadius: "0px 0px 13px 13px",
-                                                        border: "1.5px solid",
-                                                        padding: "0px 15px 80px 100px",
+                                                        borderRadius: "0px 0px 30px 30px",
+                                                        border: "3px solid",
+                                                        // padding: "0px 15px 80px 100px",
                                                     }}
                                                 >
                                                     <div className="d-flex justify-content-between align-items-center">
-                                                        <div>
-                                                            <ParagraphText className="lato-semibold font-13px text-primary">
+                                                        <div style={{
+                                                            width: "30%",
+                                                        }} />
+                                                        <div style={{
+                                                            width: "70%"
+                                                        }}>
+                                                            <ParagraphText className="lato-semibold font-16px text-primary">
                                                                 {followingInfo.name}
                                                             </ParagraphText>
+                                                            <ParagraphText className="lato font-13px text-primary">
+                                                                {`@${followingInfo.username}`}
+                                                            </ParagraphText>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="p-1 d-inline-flex justify-content-center w-100">
+                                                        <div className="d-flex flex-row justify-content-around">
                                                             {!followingInfo.isExpired && (
-                                                                <div className="d-flex">
-                                                                    <TransparentButton
-                                                                        borderRadius="4px"
-                                                                        padding="0px 15px !important"
-                                                                        className="mr-1 following-cards-btn lato-semibold border-primary bg-primary text-white"
-                                                                        onClick={e => {
-                                                                            toggleTipModal(e);
-                                                                        }}
-                                                                    >
-                                                                        <span className="following-cards-btn-margin">
-                                                                            SendTip
-                                                         </span>
-                                                                        <StaticImage
-                                                                            src="/images/Group 324.png"
-                                                                            className="user-information-sub-text-margin-bottom-xsmall"
-                                                                            width="12.59px"
-                                                                            height="12.59px"
-                                                                        />
-                                                                    </TransparentButton>
-                                                                    <TransparentButton
-                                                                        borderRadius="4px"
-                                                                        padding="0px 15px !important"
-                                                                        className="following-cards-btn lato-semibold border-primary bg-primary text-white"
-                                                                    //onClick={(e) => redirectToMessage(e)}
-                                                                    >
-                                                                        <span className="following-cards-btn-margin">
-                                                                            Message
-                                                    </span>
-                                                                        <StaticImage
-                                                                            src="/images/baseline-chat_bubble-24px.png"
-                                                                            className="user-information-sub-text-margin-bottom-xsmall"
-                                                                            width="12.59px"
-                                                                            height="12.59px"
-                                                                        />
-                                                                    </TransparentButton>
+                                                                <div className="d-flex flex-row justify-content-between m-2">
+                                                                    <span className="align-self-left">
+                                                                        <TransparentButton
+                                                                            borderRadius="4px"
+                                                                            padding="0px 15px !important"
+                                                                            className="mr-4 following-cards-btn lato-semibold border-primary bg-primary text-white"
+                                                                            onClick={e => {
+                                                                                toggleTipModal(e);
+                                                                            }}
+                                                                        >
+                                                                            <span className="following-cards-btn-margin font-14px">Tip</span>
+                                                                            <StaticImage
+                                                                                src="/images/Group 324.png"
+                                                                                className="user-information-sub-text-margin-bottom-xsmall"
+                                                                                width="14px"
+                                                                                height="14px"
+                                                                            />
+                                                                        </TransparentButton></span>
+                                                                    <span className="align-self-right">
+                                                                        <TransparentButton
+                                                                            borderRadius="4px"
+                                                                            padding="0px 15px !important"
+                                                                            className="following-cards-btn lato-semibold border-primary bg-primary text-white"
+                                                                        // onClick={(e) => redirectToMessage(e)}
+                                                                        >
+                                                                            <span className="following-cards-btn-margin font-14px">Message</span>
+                                                                            <StaticImage
+                                                                                src="/images/baseline-chat_bubble-24px.png"
+                                                                                className="user-information-sub-text-margin-bottom-xsmall"
+                                                                                width="14px"
+                                                                                height="14px"
+                                                                            />
+                                                                        </TransparentButton></span>
                                                                 </div>
                                                             )}
                                                         </div>
                                                     </div>
-                                                    {!followingInfo.isExpired ? (
-                                                        <div
-                                                            style={{
-                                                                position: "absolute",
-                                                                top: "63%",
-                                                                left: "100px",
-                                                            }}
+                                                    <div className="d-inline-flex justify-content-center w-100">
+                                                        <Link
+                                                            href={
+                                                                "/profile/" +
+                                                                followingInfo.username
+                                                            }
                                                         >
-                                                            <Link
-                                                                href={
-                                                                    "/profile/" +
-                                                                    followingInfo.username
-                                                                }
-                                                            >
+                                                            {!followingInfo.isExpired ? (
                                                                 <TransparentButton
                                                                     borderRadius="4px"
                                                                     padding="0px 15px !important"
                                                                     className="following-cards-btn lato-semibold border-primary bg-primary text-white"
                                                                 >
-                                                                    <span className="following-cards-btn-margin">
-                                                                        Following for $
-                                                    {followingInfo.newFee} a
-                                                    month
-                                                </span>
+                                                                    <span className="following-cards-btn-margin font-14px">Following for ${followingInfo.newFee} a month</span>
                                                                     <StaticImage
                                                                         src="/images/Path 6023.png"
                                                                         className="user-information-sub-text-margin-bottom-xsmall"
-                                                                        width="12.59px"
-                                                                        height="12.59px"
+                                                                        width="14px"
+                                                                        height="14px"
                                                                     />
                                                                 </TransparentButton>
-                                                            </Link>
-                                                        </div>
-                                                    ) : (
-                                                            <div
-                                                                style={{
-                                                                    position: "absolute",
-                                                                    top: "63%",
-                                                                    left: "100px",
-                                                                }}
-                                                            >
-                                                                <Link
-                                                                    href={
-                                                                        "/profile/" +
-                                                                        followingInfo.username
-                                                                    }
-                                                                >
+
+                                                            ) : (
                                                                     <TransparentButton
                                                                         borderRadius="4px"
                                                                         padding="0px 15px !important"
                                                                         className="lato-semibold followers-cards-btn border-primary"
                                                                     >
-                                                                        <span className="mr-2">
-                                                                            Follow for $
-                                                    {followingInfo.newFee} a
-                                                    month
-                                                </span>
-                                                                        <FontAwesomeIcon
-                                                                            icon={faPlus}
-                                                                        />
+                                                                        <span className="font-14px">Follow for ${followingInfo.newFee} a month</span>
+                                                                        <FontAwesomeIcon icon={faPlus} />
                                                                     </TransparentButton>
-                                                                </Link>
-                                                            </div>
-                                                        )}
-                                                    <div
-                                                        style={{
-                                                            position: "absolute",
-                                                            top: "80%",
-                                                            left: "25px",
-                                                        }}
-                                                    >
+                                                                )}
+                                                        </Link>
+                                                    </div>
+                                                    <div className="d-inline-flex justify-content-center w-100">
                                                         {!followingInfo.isExpired ? (
                                                             <div className="d-flex justify-content-around">
                                                                 <div className="p-1">
@@ -558,22 +515,6 @@ const FollowingCard: React.FunctionComponent<{
                                                                                 : moment().format("LL")}
                                                                         </p>
                                                                     </div>
-                                                                    {/* <div className="switch-spacing-col-left"> */}
-                                                                    {/* <div className="p-1 text-primary"> */}
-                                                                    {/* <Switch
-                                                            checked={false}
-                                                            uncheckedIcon={
-                                                                false
-                                                            }
-                                                            checkedIcon={false}
-                                                            className="switch-styles text-primary"
-                                                            offColor="#F57B52"
-                                                            onColor="#F57B52"
-                                                            height={22}
-                                                            width={45}
-                                                        /> */}
-                                                                    {/* </div> */}
-                                                                    {/* </div> */}
                                                                 </div>
                                                             )}
                                                     </div>
@@ -598,10 +539,7 @@ export const FollowingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     const dispatch = useDispatch();
     const followingInfo = useSelector((state: IStore) => state.followingInfo);
     const {
-        creatorProfile,
         defaultFollowingInformation,
-        errors,
-        success,
         followingType,
     } = followingInfo;
 
@@ -613,33 +551,30 @@ export const FollowingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
             type: followingType,
         };
         dispatch(FollowingInfoAction.GetFollowingInformation(params));
-    }, [dispatch, user.id, user.token, user.username]);
+    }, []);
 
-    console.log(followingType);
 
-    return (
-        <div className="d-flex flex-column align-items-center flex-fill body-background">
-            <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
-                <FontAwesomeIcon
-                    onClick={() => router.back()}
-                    className="cursor-pointer"
-                    icon={faArrowLeft}
-                    color={theme.colors.primary}
-                    size="lg"
-                />
-            </div>
-            <ParagraphText className="mb-2 font-40px gibson-semibold font-40px text-center text-primary">
-                Following
-            </ParagraphText>
-            <React.Fragment>
-                {defaultFollowingInformation.length >= 0 && (
-                    <FollowingCard
-                        user={user}
-                        followingList={defaultFollowingInformation}
-                        followingType={followingType}
-                    />
-                )}
-            </React.Fragment>
+    return <React.Fragment>
+        <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
+            <FontAwesomeIcon
+                onClick={() => router.back()}
+                className="cursor-pointer"
+                icon={faArrowLeft}
+                color={theme.colors.primary}
+                size="lg"
+            />
         </div>
-    );
+        <ParagraphText className="mb-2 font-40px gibson-semibold font-40px text-center text-primary">
+            Following
+            </ParagraphText>
+        <div className="d-flex flex-column align-items-center flex-fill">
+            {defaultFollowingInformation.length >= 0 && (
+                <FollowingCard
+                    user={user}
+                    followingList={defaultFollowingInformation}
+                    followingType={followingType}
+                />
+            )}
+        </div>
+    </React.Fragment>
 };

@@ -4,6 +4,7 @@ import {
     GETFollowingInformationModel,
     PUTRecurringFollowingModel,
 } from "@Interfaces";
+import { FollowingModel } from "@Services/API/Following/Following";
 
 declare namespace IFollowingInfoPage {
     export interface IProps {
@@ -33,6 +34,9 @@ declare namespace IFollowingInfoPage {
             extends PUTRecurringFollowingModel.GetPUTRecurringFollowingPayload { }
         export interface IGetPUTRecurringFollowerPayload
             extends PUTRecurringFollowingModel.GetPUTRecurringFollowingResponse { }
+
+        export interface ICheckUserFollowingPayload extends FollowingModel.ICheckUserFollowingPayload { }
+        export interface ICheckUserFollowingResponse extends FollowingModel.ICheckUserFollowingResponse { }
     }
 }
 

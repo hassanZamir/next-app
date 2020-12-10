@@ -33,7 +33,7 @@ import {
 import moment from "moment";
 import { useRouter } from "next/router";
 
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media";
+const mediaBaseUrl = process.env.MEDIA_BASE_URL;
 
 const FollowerCard: React.FunctionComponent<{
     user: USER_SESSION;
@@ -46,7 +46,7 @@ const FollowerCard: React.FunctionComponent<{
     const [blockedFollowers, setBlockedFollowers] = useState(false);
     const [restrictedFollowers, setRestrictedFollowers] = useState(false);
     const [displayedListType, setDisplayListType] = useState(
-        `All Followers (${followersList.length})`
+        `All Followers` //(${followersList.length})`
     );
     const [showFilters, setShowFilters] = useState(false);
     const [toggleDetials, setToggleDetails] = useState(false);
@@ -378,12 +378,12 @@ const FollowerCard: React.FunctionComponent<{
                             <div className="followers-cards">
                                 {followersList.map((follower: any) => {
                                     return (
-                                        <div className="position-relative my-2 cursor-pointer user-information-sub-text-margin-right-lrg user-information-sub-text-margin-left-lrg pb-3">
+                                        <div key={follower.id} className="position-relative my-2 cursor-pointer user-information-sub-text-margin-right-lrg user-information-sub-text-margin-left-lrg pb-3">
                                             <div
                                                 className="primary-border-thick border-primary"
                                                 style={{
-                                                    borderRadius: "13px 13px 0px 0px",
-                                                    border: "1.5px solid",
+                                                    borderRadius: "30px 30px 0px 0px",
+                                                    border: "3px solid",
                                                 }}
                                             >
                                                 <BackgroundImage
@@ -392,9 +392,9 @@ const FollowerCard: React.FunctionComponent<{
                                                             ? `${mediaBaseUrl}/${follower.coverImageUrl}`
                                                             : "/images/cover_image_placeholder.png",
                                                     ]}
-                                                    paddingBottom="17.25%"
-                                                    borderRadius="13px 13px 0px 0px"
-                                                    backgroundPosition="top"
+                                                    paddingBottom="20%"
+                                                    borderRadius="30px 30px 0px 0px"
+                                                    backgroundPosition="center"
                                                 />
                                                 <div className="position-relative">
                                                     <div
@@ -421,17 +421,23 @@ const FollowerCard: React.FunctionComponent<{
                                                 className="primary-border-thick border-primary"
                                                 style={{
                                                     borderRadius: "0px 0px 0px 0px",
-                                                    border: "1.5px solid",
-                                                    padding: "0px 15px 65px 100px",
+                                                    borderLeft: "3px solid",
+                                                    borderRight: "3px solid",
+                                                    // padding: "0px 15px 65px 100px",
                                                 }}
                                             >
-                                                <div className="d-flex justify-content-between align-items-center">
-                                                    <div>
+                                                <div className="d-flex flex-row justify-content-between">
+                                                    <div style={{
+                                                        width: "30%",
+                                                    }} />
+                                                    <div style={{
+                                                        width: "70%"
+                                                    }}>
                                                         <ParagraphText className="lato-semibold font-13px text-primary">
                                                             {follower.name}
                                                         </ParagraphText>
                                                         {!follower.isFavourite ? (
-                                                            <div className="font-8px">
+                                                            <div className="font-12px pt-2 pb-2">
                                                                 <div className="d-flex">
                                                                     <StaticImage
                                                                         className="user-information-sub-text-margin-left-xsmall"
@@ -445,8 +451,7 @@ const FollowerCard: React.FunctionComponent<{
                                                                         }
                                                                     />
                                                                     <p className="user-information-sub-text-padding-left-small text-margin-bottom-small user-information-text-color">
-                                                                        Add to Favourtes
-                                                                        List
+                                                                        Add to Favourites List
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -471,68 +476,27 @@ const FollowerCard: React.FunctionComponent<{
                                                                     </div>
                                                                 </div>
                                                             )}
-                                                        <div className="d-flex">
-                                                            {followerType !==
-                                                                TYPE_BLOCKED_FOLLOWERS &&
-                                                                (!follower.isRestricted ? (
-                                                                    <TransparentButton
-                                                                        borderRadius="4px"
-                                                                        padding="0px 15px !important"
-                                                                        className="mr-2 lato-semibold border-primary followers-cards-btn"
-                                                                        onClick={() =>
-                                                                            restrictedFollower(
-                                                                                follower.username
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        <span className="followers-cards-btn-margin">
-                                                                            Restrict
-                                                                        </span>
-                                                                        <StaticImage
-                                                                            src="/images/baseline-add_circle-24px@2xx.png"
-                                                                            className="user-information-sub-text-margin-bottom-xsmall"
-                                                                            width="12.59px"
-                                                                            height="12.59px"
-                                                                        />
-                                                                    </TransparentButton>
-                                                                ) : (
-                                                                        <TransparentButton
-                                                                            borderRadius="4px"
-                                                                            padding="0px 15px !important"
-                                                                            className="lato-semibold border-primary followers-cards-btn"
-                                                                            onClick={() =>
-                                                                                unRestrictedFollower(
-                                                                                    follower.username
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            <span className="followers-cards-btn-margin">
-                                                                                UnRestrict
-                                                                            </span>
-                                                                            <StaticImage
-                                                                                src="/images/baseline-add_circle-24px@2x.png"
-                                                                                className="user-information-sub-text-margin-bottom-xsmall"
-                                                                                width="12.59px"
-                                                                                height="12.59px"
-                                                                            />
-                                                                        </TransparentButton>
-                                                                    ))}
-                                                            {!follower.isBlocked ? (
+                                                    </div>
+                                                </div>
+                                                <div className="d-inline-flex justify-content-center w-100">
+                                                    <div className="d-flex flex-row justify-content-around">
+                                                        {followerType !== TYPE_BLOCKED_FOLLOWERS && !follower.isBlocked &&
+                                                            (!follower.isRestricted ? (
                                                                 <TransparentButton
                                                                     borderRadius="4px"
                                                                     padding="0px 15px !important"
-                                                                    className="lato-semibold  border-primary followers-cards-btn"
+                                                                    className="mr-2 lato-semibold border-primary followers-cards-btn"
                                                                     onClick={() =>
-                                                                        blockedFollower(
+                                                                        restrictedFollower(
                                                                             follower.username
                                                                         )
                                                                     }
                                                                 >
                                                                     <span className="followers-cards-btn-margin">
-                                                                        Block
-                                                                    </span>
+                                                                        Restrict
+                                                                        </span>
                                                                     <StaticImage
-                                                                        src="/images/baseline-not_interested-24px@2xxx.png"
+                                                                        src="/images/baseline-add_circle-24px@2xx.png"
                                                                         className="user-information-sub-text-margin-bottom-xsmall"
                                                                         width="12.59px"
                                                                         height="12.59px"
@@ -542,195 +506,127 @@ const FollowerCard: React.FunctionComponent<{
                                                                     <TransparentButton
                                                                         borderRadius="4px"
                                                                         padding="0px 15px !important"
-                                                                        className={
-                                                                            followerType ===
-                                                                                TYPE_BLOCKED_FOLLOWERS
-                                                                                ? "lato-semibold border-primary button-margin-left-xsmall followers-cards-btn"
-                                                                                : "lato-semibold border-primary followers-cards-btn"
-                                                                        }
+                                                                        className="mr-2 lato-semibold border-primary followers-cards-btn"
                                                                         onClick={() =>
-                                                                            unBlockedFollower(
+                                                                            unRestrictedFollower(
                                                                                 follower.username
                                                                             )
                                                                         }
                                                                     >
                                                                         <span className="followers-cards-btn-margin">
-                                                                            UnBlock
-                                                                        </span>
+                                                                            UnRestrict
+                                                                            </span>
                                                                         <StaticImage
-                                                                            src="/images/baseline-not_interested-24px@2xxx.png"
+                                                                            src="/images/baseline-add_circle-24px@2x.png"
                                                                             className="user-information-sub-text-margin-bottom-xsmall"
                                                                             width="12.59px"
                                                                             height="12.59px"
                                                                         />
                                                                     </TransparentButton>
-                                                                )}
-                                                        </div>
+                                                                ))}
+                                                        {!follower.isBlocked ? (
+                                                            <TransparentButton
+                                                                borderRadius="4px"
+                                                                padding="0px 15px !important"
+                                                                className="lato-semibold  border-primary followers-cards-btn"
+                                                                onClick={() =>
+                                                                    blockedFollower(
+                                                                        follower.username
+                                                                    )
+                                                                }
+                                                            >
+                                                                <span className="followers-cards-btn-margin">
+                                                                    Block
+                                                                    </span>
+                                                                <StaticImage
+                                                                    src="/images/baseline-not_interested-24px@2xxx.png"
+                                                                    className="user-information-sub-text-margin-bottom-xsmall"
+                                                                    width="12.59px"
+                                                                    height="12.59px"
+                                                                />
+                                                            </TransparentButton>
+                                                        ) : (
+                                                                <TransparentButton
+                                                                    borderRadius="4px"
+                                                                    padding="0px 15px !important"
+                                                                    className={
+                                                                        followerType ===
+                                                                            TYPE_BLOCKED_FOLLOWERS
+                                                                            ? "lato-semibold border-primary button-margin-left-xsmall followers-cards-btn"
+                                                                            : "lato-semibold border-primary followers-cards-btn"
+                                                                    }
+                                                                    onClick={() =>
+                                                                        unBlockedFollower(
+                                                                            follower.username
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <span className="followers-cards-btn-margin">
+                                                                        UnBlock
+                                                                        </span>
+                                                                    <StaticImage
+                                                                        src="/images/baseline-not_interested-24px@2xxx.png"
+                                                                        className="user-information-sub-text-margin-bottom-xsmall"
+                                                                        width="12.59px"
+                                                                        height="12.59px"
+                                                                    />
+                                                                </TransparentButton>
+                                                            )}
                                                     </div>
                                                 </div>
-
-                                                {selectEarning ? (
-                                                    <div
-                                                        style={{
-                                                            position: "absolute",
-                                                            top: checkedItems[
-                                                                follower.username
-                                                            ]
-                                                                ? "39%"
-                                                                : "57%",
-                                                            left: "60px",
-                                                        }}
-                                                    >
-                                                        <div className="d-flex justify-content-around">
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px user-information-text-color">
-                                                                    Recurring Follower
-                                                                </ParagraphText>
-                                                            </div>
-                                                            <div className="p-1 card-details-spacing-col-top">
-                                                                <ParagraphText className="font-8px user-information-text-color">
-                                                                    {follower.recurringFollower
-                                                                        ? "Yes"
-                                                                        : "No"}
-                                                                </ParagraphText>
-                                                            </div>
-                                                        </div>
+                                                {<div className="d-flex flex-column font-12px user-information-text-color" style={{
+                                                    margin: "0vw 15vw"
+                                                }}>
+                                                    <div className="d-flex flex-row justify-content-between m-2">
+                                                        <span className="align-self-left">Recurring Follower</span>
+                                                        <span className="align-self-right">{follower.recurringFollower ? "Yes" : "No"}</span>
                                                     </div>
-                                                ) : (
-                                                        <div
-                                                            style={{
-                                                                position: "absolute",
-                                                                top: checkedItems[
-                                                                    follower.username
-                                                                ]
-                                                                    ? "36%"
-                                                                    : "57%",
-                                                                left: "60px",
-                                                            }}
-                                                        >
-                                                            <div className="d-flex justify-content-around">
-                                                                <div className="p-1">
-                                                                    <ParagraphText className="font-8px user-information-text-color">
-                                                                        Recurring Follower
-                                                                    </ParagraphText>
-                                                                </div>
-                                                                <div className="p-1 card-details-spacing-col-top">
-                                                                    <ParagraphText className="font-8px user-information-text-color">
-                                                                        {follower.recurringFollower
-                                                                            ? "Yes"
-                                                                            : "No"}
-                                                                    </ParagraphText>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                {selectEarning ? (
-                                                    <div
-                                                        style={{
-                                                            position: "absolute",
-                                                            top: checkedItems[
-                                                                follower.username
-                                                            ]
-                                                                ? "45%"
-                                                                : "66%",
-                                                            left: "60px",
-                                                        }}
-                                                    >
-                                                        <div className="d-flex justify-content-around ml-1">
-                                                            <div>
-                                                                <ParagraphText className="font-8px user-information-text-color">
-                                                                    Renew Date
-                                                    </ParagraphText>
-                                                            </div>
-                                                            <div className="card-details-spacing-col-bottom">
-                                                                <ParagraphText className="font-8px user-information-text-color">
-                                                                    {follower.renewDate !== null ? moment(
-                                                                        follower.renewDate
-                                                                    ).format("LL") : "-"}
-                                                                </ParagraphText>
-                                                            </div>
-                                                        </div>
+                                                    <div className="d-flex flex-row justify-content-between m-2">
+                                                        <span className="align-self-left">Renew Date</span>
+                                                        <span className="align-self-right">{moment(follower.renewDate).format("LL")}</span>
                                                     </div>
-                                                ) : (
-                                                        <div
-                                                            style={{
-                                                                position: "absolute",
-                                                                top: checkedItems[
-                                                                    follower.username
-                                                                ]
-                                                                    ? "42%"
-                                                                    : "66%",
-                                                                left: "60px",
-                                                            }}
-                                                        >
-                                                            <div className="d-flex justify-content-around ml-1">
-                                                                <div>
-                                                                    <ParagraphText className="font-8px user-information-text-color">
-                                                                        Renew Date
-                                                                    </ParagraphText>
-                                                                </div>
-                                                                <div className="card-details-spacing-col-bottom">
-                                                                    <ParagraphText className="font-8px user-information-text-color">
-                                                                        {moment(
-                                                                            follower.renewDate
-                                                                        ).format("LL")}
-                                                                    </ParagraphText>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    )}
+                                                </div>}
                                             </div>
+
+
                                             <div
-                                                className="primary-border-thick border-primary"
+                                                className="border-primary"
                                                 style={{
                                                     borderRadius: checkedItems[
                                                         follower.username
                                                     ]
                                                         ? "0px 0px 0px 0px"
-                                                        : "0px 0px 13px 13px",
-                                                    border: "1.5px solid",
+                                                        : "0px 0px 30px 30px",
+                                                    border: "3px solid",
                                                 }}
                                             >
-                                                <div className="d-flex justify-content-between">
-                                                    <div
-                                                        onClick={() =>
-                                                            toggleOptions("Subscription")
-                                                        }
-                                                    >
-                                                        <ParagraphText
-                                                            className={
-                                                                checkedItems[
-                                                                    follower.username
-                                                                ] && selectSubscription
-                                                                    ? "font-15px text-margin-left-xxxlrg text-primary"
-                                                                    : "font-15px text-margin-left-xxxlrg"
-                                                            }
-                                                        >
+                                                <div className="d-flex justify-content-center" style={{
+                                                    margin: "0vw 1vw"
+                                                }}>
+                                                    <div className=""
+                                                        onClick={() => toggleOptions("Subscription")}
+                                                        style={{
+                                                            width: "100px",
+                                                            marginRight: "12vw",
+                                                            textAlign: "end"
+                                                        }}>
+                                                        <ParagraphText>
                                                             Subscription
                                                         </ParagraphText>
                                                     </div>
-                                                    <div
-                                                        className={
-                                                            followerType ===
-                                                                TYPE_BLOCKED_FOLLOWERS
-                                                                ? "vertical-line-blocked-followers"
-                                                                : "vertical-line"
-                                                        }
-                                                    />
-                                                    <div
-                                                        onClick={() =>
-                                                            toggleOptions("Earnings")
-                                                        }
-                                                    >
-                                                        <ParagraphText
-                                                            className={
-                                                                checkedItems[
-                                                                    follower.username
-                                                                ] && selectEarning
-                                                                    ? "font-15px text-margin-right-xxxlrg text-primary"
-                                                                    : "font-15px text-margin-right-xxxlrg"
-                                                            }
-                                                        >
+                                                    <div className="text-primary" style={{
+                                                        // border: "2px solid",
+                                                        margin: "1vh auto",
+                                                        position: "absolute",
+                                                        alignSelf: "center"
+                                                    }}>|</div>
+                                                    <div className=""
+                                                        onClick={() => toggleOptions("Earnings")}
+                                                        style={{
+                                                            width: "100px",
+                                                            marginLeft: "8vw"
+                                                        }}>
+                                                        <ParagraphText>
                                                             Earnings
                                                         </ParagraphText>
                                                     </div>
@@ -738,167 +634,63 @@ const FollowerCard: React.FunctionComponent<{
                                             </div>
                                             {checkedItems[follower.username] && (
                                                 <div
-                                                    className="primary-border-thick border-primary"
+                                                    className="border-primary"
                                                     style={{
-                                                        borderRadius: "0px 0px 13px 13px",
-                                                        border: "1.5px solid",
+                                                        borderRadius: "0px 0px 30px 30px",
+                                                        border: "3px solid",
+                                                        borderTop: "0px",
                                                     }}
                                                 >
-                                                    {selectEarning && (
-                                                        <div className="d-flex justify-content-around">
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-5 user-information-text-color">
-                                                                    Tips
-                                                    </ParagraphText>
-                                                            </div>
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                    {`$ ${follower.earnings.tips.toFixed(2)}`}
-                                                                </ParagraphText>
-                                                            </div>
+                                                    {selectEarning && <div className="d-flex flex-column font-12px user-information-text-color" style={{
+                                                        margin: "0vw 15vw"
+                                                    }}>
+                                                        <div className="d-flex flex-row justify-content-between m-2">
+                                                            <span className="align-self-left">Tips</span>
+                                                            <span className="align-self-right">{`$ ${follower.earnings.tips.toFixed(2)}`}</span>
                                                         </div>
-                                                    )}
-                                                    {selectEarning && (
-                                                        <div className="d-flex justify-content-around">
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-4 user-information-text-color">
-                                                                    Messages
-                                                    </ParagraphText>
-                                                            </div>
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-1 pr-1 user-information-text-color">
-                                                                    {`$ ${follower.earnings.messages.toFixed(2)}`}
-                                                                </ParagraphText>
-                                                            </div>
+                                                        <div className="d-flex flex-row justify-content-between m-2">
+                                                            <span className="align-self-left">Messages</span>
+                                                            <span className="align-self-right">{`$ ${follower.earnings.messages.toFixed(2)}`}</span>
                                                         </div>
-                                                    )}
-                                                    {selectEarning && (
-                                                        <div
-                                                            style={{
-                                                                top: "75%",
-                                                                left: "60px",
-                                                            }}
-                                                        >
-                                                            <div className="d-flex justify-content-around">
-                                                                <div className="p-1">
-                                                                    <ParagraphText className="font-8px mr-3 user-information-text-color">
-                                                                        Subscription
-                                                        </ParagraphText>
-                                                                </div>
-                                                                <div className="p-1">
-                                                                    <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                        {`$ ${follower.earnings.subscription.toFixed(2)}`}
-                                                                    </ParagraphText>
-                                                                </div>
-                                                            </div>
+                                                        <div className="d-flex flex-row justify-content-between m-2">
+                                                            <span className="align-self-left">Subscription</span>
+                                                            <span className="align-self-right">{`$ ${follower.earnings.subscription.toFixed(2)}`}</span>
                                                         </div>
-                                                    )}
-                                                    {selectEarning && (
-                                                        <div
-                                                            style={{
-                                                                top: "80%",
-                                                                left: "50px",
-                                                            }}
-                                                        >
-                                                            <div className="d-flex justify-content-around">
-                                                                <div className="p-1 subscription-text-margin-left-small">
-                                                                    <ParagraphText className="font-8px mr-5 user-information-text-color">
-                                                                        Total
-                                                        </ParagraphText>
-                                                                </div>
-                                                                <div className="p-1">
-                                                                    <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                        {`$ ${(follower.earnings.tips + follower.earnings.messages + follower.earnings.subscription).toFixed(2)}`}
-                                                                    </ParagraphText>
-                                                                </div>
-                                                            </div>
+                                                        <div className="d-flex flex-row justify-content-between m-2 font-15px">
+                                                            <span className="align-self-left">Total</span>
+                                                            <span className="align-self-right">{`$ ${(follower.earnings.tips + follower.earnings.messages + follower.earnings.subscription).toFixed(2)}`}</span>
                                                         </div>
-                                                    )}
-                                                    {selectSubscription && (
-                                                        <div className="d-flex justify-content-around">
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                    Current Subscription
-                                                    </ParagraphText>
-                                                            </div>
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                    {`$ ${follower.currentSubscriptionFee.toFixed(2)}`}
-                                                                </ParagraphText>
-                                                            </div>
+                                                    </div>}
+
+                                                    {selectSubscription && <div className="d-flex flex-column font-12px user-information-text-color" style={{
+                                                        margin: "0vw 15vw"
+                                                    }}>
+                                                        <div className="d-flex flex-row justify-content-between m-2">
+                                                            <span className="align-self-left">Subscription Price</span>
+                                                            <span className="align-self-right"> {`$ ${follower.currentSubscriptionFee.toFixed(2)}`}</span>
                                                         </div>
-                                                    )}
-                                                    {selectSubscription && (
-                                                        <div className="d-flex justify-content-around">
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-5 user-information-text-color">
-                                                                    New Price
-                                                    </ParagraphText>
-                                                            </div>
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                    {`$ ${follower.newFee.toFixed(2)}`}
-                                                                </ParagraphText>
-                                                            </div>
+                                                        <div className="d-flex flex-row justify-content-between m-2">
+                                                            <span className="align-self-left">New Price</span>
+                                                            <span className="align-self-right">{`$ ${follower.newFee.toFixed(2)}`}</span>
                                                         </div>
-                                                    )}
-                                                    {selectSubscription && (
-                                                        <div className="d-flex justify-content-around">
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-3 user-information-text-color">
-                                                                    Started
-                                                        </ParagraphText>
-                                                            </div>
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                    {moment(
-                                                                        follower.startDate
-                                                                    ).format("LL")}
-                                                                </ParagraphText>
-                                                            </div>
+                                                        <div className="d-flex flex-row justify-content-between m-2">
+                                                            <span className="align-self-left">Started On</span>
+                                                            <span className="align-self-right">{moment(follower.startDate).format("LL")}</span>
                                                         </div>
-                                                    )}
-                                                    {selectSubscription && (
-                                                        <div className="d-flex justify-content-around">
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-4 user-information-text-color">
-                                                                    Renews
-                                                    </ParagraphText>
-                                                            </div>
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                    {moment(
-                                                                        follower.renewDate
-                                                                    ).format("LL")}
-                                                                </ParagraphText>
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                    {selectSubscription && (
-                                                        <div className="d-flex justify-content-around">
-                                                            <div className="p-1 subscription-text-margin-right-large">
-                                                                <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                    Recurring Followers
-                                                    </ParagraphText>
-                                                            </div>
-                                                            <div className="p-1">
-                                                                <ParagraphText className="font-8px mr-2 user-information-text-color">
-                                                                    {follower.isRestricted ?
-                                                                        "Yes" : "No"
-                                                                    }
-                                                                </ParagraphText>
-                                                            </div>
-                                                        </div>
-                                                    )}
+                                                        {/* <div className="d-flex flex-row justify-content-between m-2 font-15px">
+                                                            <span className="align-self-left">Renew On</span>
+                                                            <span className="align-self-right">{moment(follower.renewDate).format("LL")}</span>
+                                                        </div> */}
+                                                    </div>}
                                                 </div>
                                             )}
-                                            <div
+                                            <div className="d-flex justify-content-center"
                                                 style={{
-                                                    textAlign: "center",
-                                                    paddingTop: "10px",
+                                                    // textAlign: "center",
+                                                    // paddingTop: "10px",
                                                     color: "#f57b52",
-                                                    height: "10px",
-                                                    paddingBottom: "12px",
+                                                    // // height: "10px",
+                                                    // paddingBottom: "12px",
                                                 }}
                                             >
                                                 <span
@@ -974,42 +766,28 @@ export const FollowersInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         dispatch(FollowersInfoAction.GetFollowersInformation(params));
     }, [dispatch, user.id, user.token, user.username]);
 
-    return (
-        <div className="d-flex flex-column align-items-center flex-fill body-background">
-            <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
-                <FontAwesomeIcon
-                    onClick={() => router.back()}
-                    className="cursor-pointer"
-                    icon={faArrowLeft}
-                    color={theme.colors.primary}
-                    size="lg"
-                />
-            </div>
-            <ParagraphText className="mb-2 font-40px gibson-semibold font-40px text-center text-primary">
-                Followers
-            </ParagraphText>
-            <React.Fragment>
-                {/* {errors.length <= 0 && (
-                    <div
-                        style={{ flex: 1 }}
-                        className="w-100 h-100 d-flex align-items-center justify-content-center"
-                    >
-                        <LoadingSpinner size="3x" />
-                    </div>
-                )} */}
-                {/* {loading && 
-                    <div className="mr-2">
-                        <LoadingSpinner size="1x" showLoading={loading}></LoadingSpinner>
-                    </div>
-                } */}
-                {defaultFollowersInformation.length >= 0 && (
-                    <FollowerCard
-                        user={user}
-                        followersList={defaultFollowersInformation}
-                        followerType={followerType}
-                    />
-                )}
-            </React.Fragment>
+    return <React.Fragment>
+        <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
+            <FontAwesomeIcon
+                onClick={() => router.back()}
+                className="cursor-pointer"
+                icon={faArrowLeft}
+                color={theme.colors.primary}
+                size="lg"
+            />
         </div>
-    );
+        <ParagraphText className="mb-2 font-40px gibson-semibold font-40px text-center text-primary">
+            Followers
+            </ParagraphText>
+        <div className="d-flex flex-column align-items-center flex-fill">
+            {defaultFollowersInformation.length >= 0 && (
+                <FollowerCard
+                    user={user}
+                    followersList={defaultFollowersInformation}
+                    followerType={followerType}
+                />
+            )}
+
+        </div>
+    </React.Fragment>
 };
