@@ -30,8 +30,10 @@ export const CreatorProfileActions = {
         payload: IProfilePage.Actions.IGetUserCreatorProfilePayload
     ) => async (dispatch: Dispatch) => {
         const result = await CreatorProfileService.GetUserCreatorProfile(payload);
-        // console.log("GetUserCreatorProfile: ", result);
-
+        dispatch({
+            payload: { isFetchingProfile: true },
+            type: ActionConsts.CreatorProfile.SetProfileFetching,
+        })
         dispatch({
             payload: result.status && result.response ? result.response : {},
             type:

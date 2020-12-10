@@ -35,7 +35,6 @@ const Home: NextPage = () => {
                 user={session}
                 locationslist={Locations}
             />
-            {/* <DynamicFeeds user={session} /> */}
         </Authenticated>
     );
 };

@@ -15,19 +15,19 @@ import { theme } from "@Definitions/Styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Router, { useRouter } from "next/router";
+import { useToasts } from "react-toast-notifications";
 
 export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     user,
 }) => {
+    const { addToast } = useToasts();
     const dispatch = useDispatch();
     const router = useRouter();
-    const { userCreatorProfile } = useSelector((state: IStore) => state.creatorProfile)
+    const { userCreatorProfile, isProfileFetching } = useSelector((state: IStore) => state.creatorProfile)
     const bankingInfo = useSelector((state: IStore) => state.bankingInfo);
     const {
         errors,
-        showPersonalInformation,
         success,
-        defaultPersonalInformation,
     } = bankingInfo;
     const [loading, setLoading] = useState(true);
     const [loadEmbedId, setLoadEmbedId] = useState(true);
@@ -37,40 +37,15 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     const apiUrl = `${process.env.API_URL}/api/accounts/${user.id}/upgrade`;
 
     useEffect(() => {
-        success.splice(0, success.length);
-        errors.splice(0, errors.length);
-
-        if (userCreatorProfile)//&& defaultPersonalInformation)
+        if (isProfileFetching == false) {
             setLoading(false);
-
-        if (userCreatorProfile.creatorProfileVerified)
-            success.push("Account upgraded successfully.");
-        else
-            errors.push("Account Verification: PENDING");
-
-        if (userCreatorProfile.idVerified && userCreatorProfile.docsVerified) {
-            setLoadEmbedId(false);
-            router.push("/");
+            if (!userCreatorProfile.creatorProfileVerified) {
+                addToast("Please provide correct identity details to match our records.");
+            }
         }
-        else
-            setLoadEmbedId(true);
 
-        // if (userCreatorProfile.creatorProfileVerified) {
 
-        // }
-        // else {
-
-        //     if (userCreatorProfile.idVerified)
-        //         success.push("Identity Verification: DONE");
-        //     else
-        //         errors.push("Identity Verification: PENDING");
-
-        //     if (userCreatorProfile.docsVerified)
-        //         success.push("Document Verification: DONE");
-        //     else
-        //         errors.push("Document Verification: PENDING");
-        // }
-    }, [userCreatorProfile]);//, defaultPersonalInformation]);
+    }, [isProfileFetching])
 
     useEffect(() => {
         const params = {
@@ -80,6 +55,24 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         dispatch(CreatorProfileActions.GetUserCreatorProfile(params));
     }, []);
 
+    useEffect(() => {
+        success.splice(0, success.length);
+        errors.splice(0, errors.length);
+
+        if (userCreatorProfile.name && (!userCreatorProfile.profileImageUrl || !userCreatorProfile.coverImageUrl))
+            router.push("/settings?action=upgrade");
+
+        if (userCreatorProfile.creatorProfileVerified) {
+            success.push("Account upgraded successfully.");
+            setLoadEmbedId(false);
+            router.push("/");
+        }
+        else {
+            errors.push("Account Status: UN-VERIFIED");
+            setLoadEmbedId(true);
+        }
+    }, [userCreatorProfile]);
+
     return <React.Fragment>
         <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
             <FontAwesomeIcon
@@ -88,48 +81,36 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         </div>
         <ParagraphText className="mb-2 gibson-semibold font-40px text-center text-primary">Account Upgrade</ParagraphText>
 
-        <div className="d-flex flex-column align-items-center flex-fill body-background">
-            {!userCreatorProfile ? (
-                <div
-                    style={{ flex: 1 }}
-                    className="w-100 h-100 d-flex align-items-center justify-content-center"
-                >
-                    <LoadingSpinner size="3x" />
-                </div>
-            ) : (
-                    <React.Fragment>
-                        {!userCreatorProfile.creatorProfileVerified && loadEmbedId && <iframe
-                            allow={'camera;geolocation'}
-                            name={`${user.token}#${apiUrl}#${truliooFeKey}`}
-                            frameBorder="0px"
-                            width="98%"
-                            height="100%"
-                            src={truliooServiceUrl}>
-                        </iframe>}
-                    </React.Fragment>
-                )}
-            {success.length > 0 && (
-                <div className="d-flex flex-column">
-                    {success.map((msg: string, i: number) => {
-                        return (
-                            <div className="text-success font-12px text-center">
-                                {msg}
-                            </div>
-                        );
-                    })}
-                </div>
-            )}
-            {errors.length > 0 && (
-                <div className="d-flex flex-column">
-                    {errors.map((error: string, i: number) => {
-                        return (
-                            <div className="text-danger font-12px text-center">
-                                {error}
-                            </div>
-                        );
-                    })}
-                </div>
-            )}
-        </div>
+        {!userCreatorProfile.creatorProfileVerified && loadEmbedId && <iframe
+            allow={'camera;geolocation'}
+            name={`${user.token}#${apiUrl}#${truliooFeKey}`}
+            frameBorder="0px"
+            width="98%"
+            height="100%"
+            src={truliooServiceUrl}>
+        </iframe>}
+
+        {success.length > 0 && (
+            <div className="d-flex flex-column">
+                {success.map((msg: string, i: number) => {
+                    return (
+                        <div className="text-success font-12px text-center">
+                            {msg}
+                        </div>
+                    );
+                })}
+            </div>
+        )}
+        {errors.length > 0 && (
+            <div className="d-flex flex-column">
+                {errors.map((error: string, i: number) => {
+                    return (
+                        <div className="text-danger font-12px text-center">
+                            {error}
+                        </div>
+                    );
+                })}
+            </div>
+        )}
     </React.Fragment>
 };

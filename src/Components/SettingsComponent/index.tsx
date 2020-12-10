@@ -30,6 +30,8 @@ import { useModal } from "../Hooks";
 import { useToasts } from "react-toast-notifications";
 import { ICCBillConstants } from "@Constants";
 import { ProfileSettings } from "./ProfileSettings";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const SettingsWrapper: React.FunctionComponent<{
     user: USER_SESSION;
@@ -840,13 +842,22 @@ export const SettingsComponent: React.FunctionComponent<{
     user: USER_SESSION;
     locationslist: any;
 }> = ({ user, locationslist }) => {
-    const { addToast } = useToasts();
 
     const { userCreatorProfile } = useSelector((state: IStore) => state.creatorProfile);
     const { httpStatus } = useSelector((state: IStore) => state.settings);
     const [loading, setLoading] = useState(true);
 
+    const router = useRouter();
     const dispatch = useDispatch();
+
+    const { addToast } = useToasts();
+    const action = router.query["action"] as string;
+    useEffect(() => {
+        console.log(action);
+        if (action == "upgrade")
+            addToast("Please upload profile and cover image before upgrading to creator account.", { appearance: "info" });
+    }, []);
+
 
     useEffect(() => {
         // On every post request make the loader block user actions
@@ -861,7 +872,7 @@ export const SettingsComponent: React.FunctionComponent<{
 
 
     return (
-        <div className="d-flex flex-column align-items-center flex-fill body-background">
+        <div className="d-flex flex-column align-items-center flex-fill">
             <ParagraphText className="text-primary font-25px">
                 Settings
             </ParagraphText>
@@ -871,29 +882,15 @@ export const SettingsComponent: React.FunctionComponent<{
                 locationslist={locationslist}
                 isLoading={loading}
             />
-            {/* {success.length > 0 && (
-                <div className="d-flex flex-column">
-                    {success.map((msg: string, i: number) => {
-                        // return (
-                        //     <div className="text-success font-12px text-center">
-                        //         {msg}
-                        //     </div>
-                        // );
 
-                    })}
-                </div>
-            )} */}
-            {/* {errors.length > 0 && (
-                <div className="d-flex flex-column">
-                    {errors.map((error: string, i: number) => {
-                        // return (
-                        //     <div className="text-danger font-12px text-center">
-                        //         {error}
-                        //     </div>
-                        // );
-                    })}
-                </div>
-            )} */}
+            {!user.isCreator && <div className="mt-5 d-flex flex-column align-items-center">
+                <ParagraphText className="text-primary font-14px align-self-center">
+                    Upgrade your account to post content and earn
+                    </ParagraphText>
+                <Link href="/account-upgrade">
+                    <PrimaryButton isActive={true}>Become a creator</PrimaryButton>
+                </Link>
+            </div>}
         </div >
     );
 }

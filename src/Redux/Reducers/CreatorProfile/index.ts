@@ -51,7 +51,8 @@ export const CreatorProfileReducer = (
         case ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess: {
             return Object.assign({}, state, {
                 userCreatorProfile: action.payload!,
-                creatorProfile: action.payload!
+                creatorProfile: action.payload!,
+                isProfileFetching: false
             });
         }
         case ActionConsts.CreatorProfile.GetUserCreatorProfileError: {
