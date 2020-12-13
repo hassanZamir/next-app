@@ -7,6 +7,7 @@ import { USER_SESSION } from "@Interfaces";
 import { PrimaryButton, TakePictureWithWebcam } from "@Components";
 import { Textarea, ToggleAnimate, AnimatePopup } from "@Components/Basic";
 import { FeedsActions } from "@Actions";
+import { useToasts } from "react-toast-notifications";
 
 interface IUploadImage {
     preview: "",
@@ -19,7 +20,7 @@ interface IUploadImage {
 }
 export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
     = ({ user }) => {
-
+        const { addToast } = useToasts();
         const [showPostSelection, setShowPostSelection] = useState(false);
         const [files, setFiles] = useState<IUploadImage[]>([]);
         const [title, setTitle] = useState("");
@@ -31,10 +32,26 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             setTitle(value);
         }
 
+        const convertBytesToString = (bytes: any, decimals: any = 2) => {
+            if (bytes === 0) return '0 Bytes';
+
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+
         const handleChange = (e: any) => {
             if (e.target.files.length) {
                 const uploadedFiles = [];
                 for (let i = 0; i < e.target.files.length; i++) {
+                    if (e.target.files[i].size > 10053651) {
+                        addToast(`Can't upload file greater than 10.00 MB. ${e.target.files[i].name}, Size=${convertBytesToString(e.target.files[i].size)}.`);
+                        continue;
+                    }
                     uploadedFiles.push({
                         preview: URL.createObjectURL(e.target.files[i]),
                         raw: e.target.files[i]
@@ -46,12 +63,25 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
 
         const savePost = async () => {
             const formData = new FormData();
+            const videoFormData = new FormData();
             files.forEach((file) => {
-                formData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
+                const isVideo = file.raw.name.split('.')[1] === ('mp4' || '3gpp' || 'quicktime' || 'avi');
+                if (isVideo)
+                    videoFormData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
+                else
+                    formData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
             });
+
+            // for (var value of formData.values() as any) {
+            //     console.log("formdata: ", value);
+            // } for (var value of videoFormData.values() as any) {
+            //     console.log("videoFormdata: ", value);
+            // }
+
             setLoading(true);
             const postContent: any = await dispatch(FeedsActions.PostContent({
                 media_url: files.length > 0 ? formData : null,
+                video_media_url: files.length > 0 ? videoFormData : null,
                 title: title,
                 userId: user.id,
                 authtoken: user.token,

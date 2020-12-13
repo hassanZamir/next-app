@@ -224,6 +224,24 @@ export const FeedsService = {
         }
         return response;
     },
+    UploadVideoContentMedia: async (
+        payload: UploadMediaFilesModel.GetUploadMediaFilesPayload
+    ): Promise<UploadMediaFilesModel.GetUploadMediaFilesResponse> => {
+        let response: UploadMediaFilesModel.GetUploadMediaFilesResponse;
+        try {
+            const { video_media_url, ...rest } = payload;
+            response = await Http.UploadVideoContentMedia<
+                UploadMediaFilesModel.GetUploadMediaFilesResponse
+            >(
+                video_media_url
+            );
+        } catch (error) {
+            response = {
+                status: false,
+            };
+        }
+        return response;
+    },
     PostContent: async (
         payload: UploadMediaFilesModel.GetUploadMediaFilesPayload
     ): Promise<PostContentModel.GetPostContentResponse> => {

@@ -118,6 +118,25 @@ export const Http = {
                 });
         });
     },
+    UploadVideoContentMedia: async <A>(
+        payload?: HttpModel.IRequestPayload
+    ): Promise<A> => {
+        return new Promise((resolve, reject) => {
+            fetch(`${uploadingServiceBaseUrl}/api/upload/video`, {
+                body: payload,
+                method: `POST`,
+            } as any)
+                .then(async response => {
+                    if (response.status === 200) {
+                        return response.json().then(resolve);
+                    }
+                    return reject(response);
+                })
+                .catch(e => {
+                    reject(e);
+                });
+        });
+    },
     FEAPIRequest: async <A>(
         methodType: string,
         url: string,

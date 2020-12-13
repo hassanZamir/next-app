@@ -8,7 +8,7 @@ import { FeedsService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IFeedsPage, IFeed, UploadMediaFilesModel } from "@Interfaces";
+import { IFeedsPage, IFeed } from "@Interfaces";
 // #endregion Interface Imports
 
 export const FeedsActions = {
@@ -71,16 +71,20 @@ export const FeedsActions = {
         payload: IFeedsPage.Actions.IGetUploadMediaFilesPayload
     ) => async (dispatch: Dispatch) => {
 
+        const imagesMedia = payload.media_url;
+        const videosMedia = payload.video_media_url;
+
         /// --- Upload Content Media --- ///
-        const result = payload.media_url
+        const result = imagesMedia.has('mediaFiles')
             ? await FeedsService.UploadContentMedia({
-                media_url: payload.media_url,
+                media_url: imagesMedia,
+                video_media_url: null,
                 authtoken: payload.authtoken,
             })
             : null;
 
         /// --- Abort PostContent if Media Upload failed --- ///
-        if (result && !result.status && payload.media_url) {
+        if (result && !result.status && imagesMedia.has('mediaFiles')) {
             dispatch({
                 payload: result.error || "Media upload failed",
                 type: ActionConsts.Feeds.PostContentError,
@@ -88,19 +92,55 @@ export const FeedsActions = {
             return;
         }
 
+        /// --- Upload Video Content Media --- ///
+        const resultVideo = videosMedia.has('mediaFiles')
+            ? await FeedsService.UploadVideoContentMedia({
+                media_url: null,
+                video_media_url: videosMedia,
+                authtoken: payload.authtoken,
+            })
+            : null;
+
+        /// --- Abort PostContent if Video Media Upload failed --- ///
+        if (resultVideo && !resultVideo.status && videosMedia.has('mediaFiles')) {
+            dispatch({
+                payload: resultVideo.error || "Video Media upload failed",
+                type: ActionConsts.Feeds.PostContentError,
+            });
+            return;
+        }
+
+        /// --- Combine the video and images upload response
+        let combinedMedaArray: Array<any> = [];
+        if (result && result.uploadSuccess)
+            combinedMedaArray = combinedMedaArray.concat(result.uploadSuccess);
+        if (resultVideo && resultVideo.uploadSuccess)
+            combinedMedaArray = combinedMedaArray.concat(combinedMedaArray);
+
+        // console.log("imagesResult: ", result);
+        // console.log("videosResult: ", resultVideo);
+        // console.log("combinedMediaArray: ", combinedMedaArray);
+
         /// --- Post the content along with uploaded media urls --- ///
-        const postContent = await FeedsService.PostContent({
-            title: payload.title,
-            media_url: result ? result.uploadSuccess : [],
-            userId: payload.userId,
-            authtoken: payload.authtoken,
-        });
+        if (payload.title || combinedMedaArray.length > 0) {
+            const postContent = await FeedsService.PostContent({
+                title: payload.title,
+                media_url: combinedMedaArray,
+                userId: payload.userId,
+                authtoken: payload.authtoken,
+            });
+            dispatch({
+                payload: postContent.status ? { feed: [postContent.response] } : null,
+                type: postContent.status
+                    ? ActionConsts.Feeds.PostContentSuccess
+                    : ActionConsts.Feeds.PostContentError,
+            });
+
+            return postContent;
+        }
         dispatch({
-            payload: postContent.status ? { feed: [postContent.response] } : null,
-            type: postContent.status
-                ? ActionConsts.Feeds.PostContentSuccess
-                : ActionConsts.Feeds.PostContentError,
+            payload: null,
+            type: ActionConsts.Feeds.PostContentError,
         });
-        return postContent;
     },
 };
