@@ -115,7 +115,7 @@ export const FeedsActions = {
         if (result && result.uploadSuccess)
             combinedMedaArray = combinedMedaArray.concat(result.uploadSuccess);
         if (resultVideo && resultVideo.uploadSuccess)
-            combinedMedaArray = combinedMedaArray.concat(combinedMedaArray);
+            combinedMedaArray = combinedMedaArray.concat(resultVideo.uploadSuccess);
 
         // console.log("imagesResult: ", result);
         // console.log("videosResult: ", resultVideo);
