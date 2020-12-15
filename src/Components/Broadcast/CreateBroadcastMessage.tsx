@@ -107,8 +107,8 @@ export const CreateBroadcastMessage: React.FunctionComponent<{
             message: params,
             recipients: recipients.map((r: MESSAGE_RECIPIENT) => { return r.userName })
         }));
-        if (broadCastResponse.status && broadCastResponse.response) {
-            Router.push("/message", "/message");
+        if (broadCastResponse.status) {
+            // Router.push("/message", "/message");
             setMessage("");
             setFiles([]);
             setLoading(false);
@@ -160,8 +160,8 @@ export const CreateBroadcastMessage: React.FunctionComponent<{
             message: params,
             recipients: recipients.map((r: MESSAGE_RECIPIENT) => { return r.userName })
         }));
-        if (broadCastResponse.status && broadCastResponse.response) {
-            Router.push("/message", "/message");
+        if (broadCastResponse.status) {
+            // Router.push("/message", "/message");
             setMessage("");
             setFiles([]);
             setLoading(false);
