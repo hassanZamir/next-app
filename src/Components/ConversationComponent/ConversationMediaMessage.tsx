@@ -37,17 +37,24 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
         }
 
         const isMessagePaid = meta.purchase_status || !meta.amount || (meta.amount.toString() === "0");
-        const thumbnailUrl = meta.view_status || user.id === conversationMessage.senderId ? meta.media_urls[0].url : meta.media_urls[0].thumbnailUrl;
+        const thumbnailUrl = ((isMessagePaid || !isMessageRecieved) && meta.media_urls[0] && meta.view_status ? process.env.MEDIA_BASE_URL + "/" + meta.media_urls[0].url : "/images/default_thumbnail.jpg");//meta.view_status || user.id === conversationMessage.senderId ? meta.media_urls[0].url : meta.media_urls[0].thumbnailUrl;
 
         return (<div ref={messageRef} className={"pb-3 d-flex align-items-center " + (isMessageRecieved ? "justify-content-start" : "justify-content-end")}>
             <div className="d-flex flex-column h-100" style={{ width: "40%" }}>
                 <div className="position-relative d-flex flex-column align-items-center justify-content-center"
-                    style={{ border: "1px solid " + theme.colors.primary, borderRadius: "12px" }}>
+                    style={{ border: "1px solid " + theme.colors.primary, borderRadius: "12px" }}
+                    onClick={() => {
+                        if ((isMessagePaid || !isMessageRecieved) && meta.view_status) {
+                            updateViewStatus(conversationMessage);
+                            setShowMediaCarousel(0);
+                            toggle();
+                        }
+                    }}>
 
-                    {showMediaCarousel >= 0 && <MediaCarousel
+                    {showMediaCarousel >= 0 && meta.media_urls.length && <MediaCarousel
                         media={meta.media_urls.map((media) => {
                             return {
-                                type: media.media_type,
+                                type: media.type,
                                 token: '',
                                 url: media.url
                             }
@@ -56,37 +63,33 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                         modalRef={modalRef}
                         toggle={toggle}
                         startingIndex={showMediaCarousel} />}
-                    <BackgroundImage src={[process.env.MEDIA_BASE_URL + "/" + thumbnailUrl, '/images/feed_placeholder.png']}
+                    <BackgroundImage src={[thumbnailUrl, '/images/cover_image_placeholder.png']}
                         paddingBottom="65.25%"
                         borderRadius="12px" />
                     <div className="position-absolute">
-                        {isMessagePaid && <div className="py-1 px-2 cursor-pointer font-11px text-white"
+                        {(isMessagePaid || !isMessageRecieved) && !meta.view_status && <div className={`py-1 px-2 cursor-pointer font-11px text-white ${meta.view_status ? "p-4" : "bg-primary"}`}
                             onClick={() => { updateViewStatus(conversationMessage); setShowMediaCarousel(0); toggle(); }}
                             style={{ border: "1px solid white", borderRadius: "4px" }}>
-                            {/* <img src="/images/lock.svg"/> */}
-                            <span>Tap to Open</span>
+                            {<span> Tap to Open</span>}
                         </div>}
                         {!isMessagePaid &&
                             (isMessageRecieved ? <div className="d-flex flex-column">
                                 <img src="/images/lock.svg" />
                                 <div style={{ border: "1px solid white", borderRadius: "4px" }}
-                                    className="py-1 px-2 cursor-pointer font-11px text-white d-flex flex-column"
+                                    className="py-1 px-2 cursor-pointer font-11px text-white bg-primary d-flex flex-column"
                                     onClick={() => { buyMedia(conversationMessage) }}>
                                     {'Pay $' + meta.amount}
                                 </div>
-                            </div> :
-                                <div className="py-1 px-2 cursor-pointer font-11px text-white"
-                                    onClick={() => { updateViewStatus(conversationMessage); setShowMediaCarousel(0); toggle(); }}
-                                    style={{ border: "1px solid white", borderRadius: "4px" }}>
-                                    <span>Tap to Open</span>
-                                </div>)
+                            </div> : ""
+
+                            )
                         }
                     </div>
                 </div>
                 {!isMessagePaid && <ParagraphText className="text-darkGrey font-11px">
                     {'$' + meta.amount + " " + (isMessagePaid ? "Paid" : "Not paid yet")}
                 </ParagraphText>}
-                {meta.purchase_status && meta.amount && <ParagraphText className="text-darkGrey font-11px">
+                {meta.purchase_status && meta.amount > 0 && <ParagraphText className="text-darkGrey font-11px">
                     {'$' + meta.amount + " Paid"}
                 </ParagraphText>}
                 {conversationMessage.message && <div className="mt-1"></div>}
@@ -94,5 +97,5 @@ export const ConversationMediaMessage: React.FunctionComponent<{ user: USER_SESS
                     {conversationMessage.message}
                 </TextMessageContainer>}
             </div>
-        </div>);
+        </div >);
     }

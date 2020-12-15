@@ -167,17 +167,17 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                                         return conversationMessage.type === 1 ? <ConversationTextMessage
                                             messageRef={conversationMessage.id === conversation.values[conversation.values.length - 1].id ? messagesListRef : null}
                                             conversationMessage={conversationMessage}
-                                            isMessageRecieved={user.id !== conversationMessage.senderId}
+                                            isMessageRecieved={user.username !== conversationMessage.senderUsername}
                                             key={i} /> : conversationMessage.type === 2 ? <ConversationMediaMessage
                                                 messageRef={conversationMessage.id === conversation.values[conversation.values.length - 1].id ? messagesListRef : null}
                                                 conversationMessage={conversationMessage as CONVERSATION_MEDIA_MESSAGE}
-                                                isMessageRecieved={user.id !== conversationMessage.senderId}
+                                                isMessageRecieved={user.username !== conversationMessage.senderUsername}
                                                 user={user}
                                                 key={i} /> : <ConversationTipMessage
                                                     user={user}
                                                     messageRef={conversationMessage.id === conversation.values[conversation.values.length - 1].id ? messagesListRef : null}
                                                     conversationMessage={conversationMessage as CONVERSATION_TIP_MESSAGE}
-                                                    isMessageRecieved={user.id !== conversationMessage.senderId}
+                                                    isMessageRecieved={user.username !== conversationMessage.senderUsername}
                                                     key={i} />
                                     })}
                                 </div>

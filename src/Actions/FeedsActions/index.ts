@@ -111,21 +111,21 @@ export const FeedsActions = {
         }
 
         /// --- Combine the video and images upload response
-        let combinedMedaArray: Array<any> = [];
+        let combinedMediaArray: Array<any> = [];
         if (result && result.uploadSuccess)
-            combinedMedaArray = combinedMedaArray.concat(result.uploadSuccess);
+            combinedMediaArray = combinedMediaArray.concat(result.uploadSuccess);
         if (resultVideo && resultVideo.uploadSuccess)
-            combinedMedaArray = combinedMedaArray.concat(resultVideo.uploadSuccess);
+            combinedMediaArray = combinedMediaArray.concat(resultVideo.uploadSuccess);
 
         // console.log("imagesResult: ", result);
         // console.log("videosResult: ", resultVideo);
         // console.log("combinedMediaArray: ", combinedMedaArray);
 
         /// --- Post the content along with uploaded media urls --- ///
-        if (payload.title || combinedMedaArray.length > 0) {
+        if (payload.title || combinedMediaArray.length > 0) {
             const postContent = await FeedsService.PostContent({
                 title: payload.title,
-                media_url: combinedMedaArray,
+                media_url: combinedMediaArray,
                 userId: payload.userId,
                 authtoken: payload.authtoken,
             });

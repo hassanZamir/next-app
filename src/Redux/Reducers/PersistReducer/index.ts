@@ -4,7 +4,7 @@ import Router from "next/router";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IAction, IPersistState, USER_SESSION, FEED, NOTIFICATION_STATS, CONVERSATION_THREAD, IProfilePage, ISettingsPage } from "@Interfaces";
+import { IAction, IPersistState, USER_SESSION, FEED, NOTIFICATION_STATS, CONVERSATION_THREAD, MESSAGE_RECIPIENT, ISettingsPage } from "@Interfaces";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IPersistState.IStateProps = {
@@ -13,6 +13,7 @@ const INITIAL_STATE: IPersistState.IStateProps = {
     notificationStats: <NOTIFICATION_STATS>{},
     activeConversation: <CONVERSATION_THREAD>{},
     statusFound: false,
+    broadcastRecipients: new Array<MESSAGE_RECIPIENT>()
 };
 
 export const PersistReducer = (
@@ -24,7 +25,8 @@ export const PersistReducer = (
         & IPersistState.Actions.IViewNotificationType
         & IPersistState.Actions.ISetActiveConversation
         & IPersistState.Actions.IUpdateActiveConversation
-        & ISettingsPage.Actions.IPostUploadSettingsProfileImagesResponse>
+        & ISettingsPage.Actions.IPostUploadSettingsProfileImagesResponse
+        & MESSAGE_RECIPIENT[]>
 ) => {
     switch (action.type) {
         case ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess: {
@@ -53,6 +55,13 @@ export const PersistReducer = (
             } else {
                 return state;
             }
+        }
+        case ActionConsts.Messages.SetBroadcastRecipientsSuccess: {
+            Router.push("/broadcast-message", "broadcast-message");
+
+            return Object.assign({}, state, {
+                broadcastRecipients: action.payload!
+            });
         }
         case ActionConsts.Messages.SetActiveConversationSuccess: {
             const { conversation } = action.payload!;
@@ -155,7 +164,8 @@ export const PersistReducer = (
         }
         case ActionConsts.Login.SetUserPayload: {
             let { session } = action.payload!;
-            Router.push("/");
+            // if (Router.route.includes("login"))
+            //     // Router.push("/");
 
             return Object.assign({}, state, {
                 session: session

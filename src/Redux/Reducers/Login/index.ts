@@ -68,6 +68,13 @@ export const LoginErrorReducer = (
                 session: {}
             });
         }
+        case ActionConsts.Login.OnLoginSucess: {
+            console.log(Router);
+            if (Router.route.includes("login"))
+                Router.push("/");
+            else
+                Router.reload();
+        }
         default:
             return state;
     }

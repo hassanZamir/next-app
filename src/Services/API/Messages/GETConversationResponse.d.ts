@@ -1,9 +1,19 @@
+import { deprecate } from "util"
+
 export interface CONVERSATION_TEXT_MESSAGE {
     conversationId: number,
     id: number,
     message: string,
+    /**
+    * @deprecated Use `recipientUsername` instead.
+    */
     recipientId: number,
+    recipientUsername?: string,
+    /**
+    * @deprecated Use `senderUsername` instead.
+    */
     senderId: number,
+    senderUsername?: string
     sentAt: string
     type: number
 }
@@ -11,7 +21,9 @@ export interface CONVERSATION_TEXT_MESSAGE {
 export interface MEDIA_MESSAGE {
     url: string,
     thumbnailUrl: string,
-    media_type: string
+    media_type: string,
+
+    type: string,
 }
 export interface CONVERSATION_MEDIA_MESSAGE extends CONVERSATION_TEXT_MESSAGE {
     meta: {

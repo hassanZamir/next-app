@@ -45,5 +45,6 @@ export { NotificationComponent } from "@Components/NotificationComponent";
 export { FollowersInfo } from "@Components/FollowersInfo";
 export { FollowingInfo } from "@Components/FollowingInfo";
 export { MessagesComponent } from "@Components/MessagesComponent";
+export { BroadcastComponent } from "@Components/Broadcast";
 export { ConversationComponent } from "@Components/ConversationComponent";
 export { SettingsComponent } from "@Components/SettingsComponent";

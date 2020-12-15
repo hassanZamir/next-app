@@ -62,6 +62,12 @@ export const LoginActions = {
                 ? ActionConsts.Login.SetUserPayload
                 : ActionConsts.Login.SetLoginError,
         });
+
+        if (result.authenticated)
+            dispatch({
+                payload: result,
+                type: ActionConsts.Login.OnLoginSucess,
+            });
     },
     UserLogout: () => async (dispatch: Dispatch) => {
         dispatch({

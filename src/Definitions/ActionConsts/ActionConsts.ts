@@ -17,7 +17,8 @@ export const ActionConsts = {
 
         ReloadPage: "ReloadPage",
         UpdateSession: "UpdateSession",
-        ClearSession: "ClearSession"
+        ClearSession: "ClearSession",
+        OnLoginSucess: "OnLoginSucess",
     },
     SignUp: {
         SignUpSuccess: "SignUpSuccess",
@@ -154,6 +155,7 @@ export const ActionConsts = {
         SerachMessagesSuccess: "SerachMessagesSuccess",
         SerachMessagesError: "SerachMessagesError",
         ClearSearch: "ClearSearch",
+        SetBroadcastRecipientsSuccess: "SetBroadcastRecipientsSuccess"
     },
     Conversation: {
         PusherMessageRecieved: "PusherMessageRecieved",
@@ -168,5 +170,7 @@ export const ActionConsts = {
         UpdateMessageSettingError: "UpdateMessageSettingError",
         UpdateViewStatusSuccess: "UpdateViewStatusSuccess",
         UpdateViewStatusError: "UpdateViewStatusError",
+        BroadcastSuccess: "BroadcastSuccess",
+        BroadcastError: "BroadcastError"
     },
 };

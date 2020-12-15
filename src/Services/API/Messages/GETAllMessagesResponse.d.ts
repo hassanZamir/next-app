@@ -5,6 +5,9 @@ export type MESSAGE_LIST_ITEM = {
     name: string,
     participantSeenStatus: boolean,
     profileImageUrl: string,
+    /**
+    * @deprecated Use `userName` instead.
+    */
     userId: number,
     userName: string
 }

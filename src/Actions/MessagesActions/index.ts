@@ -8,7 +8,7 @@ import { MessagesService, FeedsService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IMessagesPage, IConversationPage, IPersistState, CONVERSATION_RESPONSE, MESSAGE_LIST_ITEM } from "@Interfaces";
+import { IMessagesPage, IConversationPage, IPersistState, CONVERSATION_RESPONSE, MESSAGE_LIST_ITEM, MESSAGE_RECIPIENT } from "@Interfaces";
 // #endregion Interface Imports
 
 export const MessagesActions = {
@@ -48,6 +48,15 @@ export const MessagesActions = {
             type: result.status && result.response ? ActionConsts.Messages.SetActiveConversationSuccess : ActionConsts.Messages.SetActiveConversationError
         });
     },
+    CreateBroadcast: (payload: MESSAGE_RECIPIENT[]) => async (
+        dispatch: Dispatch
+    ) => {
+        // this action redirects the page to compose new broadcast msg
+        dispatch({
+            payload: payload,
+            type: ActionConsts.Messages.SetBroadcastRecipientsSuccess
+        });
+    },
     SetConversation: (payload: IPersistState.Actions.ISetActiveConversation) => async (
         dispatch: Dispatch
     ) => {
@@ -72,22 +81,63 @@ export const MessagesActions = {
     CreateMessage: (payload: IConversationPage.Actions.IGetPOSTCreateMessagePayload) => async (
         dispatch: Dispatch
     ) => {
-        let uploadResult = null;
-        uploadResult = payload.type === 2 ? await FeedsService.UploadMediaOnStorage({ media_url: payload.meta!.media_urls, blur: true, authtoken: payload.authtoken }) : null;
 
-        if (uploadResult && !uploadResult.status && payload.type === 2) {
-            dispatch({
-                payload: "Media upload failed",
-                type: ''
-            });
-            return;
+        const imagesMedia = payload.images_formData;
+        const videosMedia = payload.videos_formData;
+        let resultImages = null;
+        let resultVideo = null;
+        let combinedMediaArray: Array<any> = [];
+        if (payload.type == 2) // if message has media 
+        {
+            /// --- Upload Image Media --- ///
+            resultImages = imagesMedia.has('mediaFiles')
+                ? await FeedsService.UploadContentMedia({
+                    media_url: imagesMedia,
+                    video_media_url: null,
+                    authtoken: payload.authtoken,
+                })
+                : null;
+
+            /// --- Abort CreateMessage if Media Upload failed --- ///
+            if (resultImages && !resultImages.status && imagesMedia.has('mediaFiles')) {
+                dispatch({
+                    payload: "Media upload failed",
+                    type: ActionConsts.Conversation.CreateMessageError,
+                });
+                return;
+            }
+
+            /// --- Upload Video Media --- ///
+            resultVideo = videosMedia.has('mediaFiles')
+                ? await FeedsService.UploadVideoContentMedia({
+                    media_url: null,
+                    video_media_url: videosMedia,
+                    authtoken: payload.authtoken,
+                })
+                : null;
+
+            /// --- Abort CreateMessage if Video Media Upload failed --- ///
+            if (resultVideo && !resultVideo.status && videosMedia.has('mediaFiles')) {
+                dispatch({
+                    payload: "Media upload failed",
+                    type: ActionConsts.Conversation.CreateMessageError,
+                });
+                return;
+            }
         }
+
+        /// --- Combine the video and images upload response
+        if (resultImages && resultImages.uploadSuccess)
+            combinedMediaArray = combinedMediaArray.concat(resultImages.uploadSuccess);
+        if (resultVideo && resultVideo.uploadSuccess)
+            combinedMediaArray = combinedMediaArray.concat(resultVideo.uploadSuccess);
+
 
         let result: any = { status: false, response: null };
         if (payload.type === 2) {
             result = await MessagesService.CreateMessage(Object.assign({}, payload, {
                 meta: {
-                    media_urls: uploadResult!.uploadSuccess,
+                    media_urls: combinedMediaArray,
                     purchase_status: payload.meta!.purchase_status,
                     amount: payload.meta!.amount
                 }
@@ -104,6 +154,41 @@ export const MessagesActions = {
         if (result.status && result.response) {
             payload.onSuccessScroll();
         }
+    },
+    SendBroadcastMessage: (payload: IConversationPage.Actions.IGetPOSTCreateBroadcastMessagesPayload) => async (
+        dispatch: Dispatch
+    ) => {
+        let uploadResult = null;
+        uploadResult = payload.message.type === 2 ? await FeedsService.UploadContentMedia({ media_url: payload.message.meta!.media_urls, blur: true, authtoken: payload.message.authtoken }) : null;
+
+        if (uploadResult && !uploadResult.status && payload.message.type === 2) {
+            dispatch({
+                payload: "Media upload failed",
+                type: ''
+            });
+            return;
+        }
+
+        let result: any = { status: false, response: null };
+
+        // if (payload.message.type === 2) {
+        //     result = await MessagesService.CreateBroadcast(Object.assign({}, payload.message, {
+        //         meta: {
+        //             media_urls: uploadResult!.uploadSuccess,
+        //             purchase_status: payload.meta!.purchase_status,
+        //             amount: payload.meta!.amount
+        //         }
+        //     }));
+        // } else {
+        result = await MessagesService.CreateBroadcast({ recipients: payload.recipients, message: payload.message });
+        // }
+        // console.log("SendBroadcastMsg-ApiResult: ", result);
+        // return result;
+        dispatch({
+            payload: null,
+            type: result.status ? ActionConsts.Conversation.BroadcastSuccess : ActionConsts.Conversation.BroadcastError
+        });
+        return result;
     },
     MessageRecieved: (payload: CONVERSATION_RESPONSE) => async (
         dispatch: Dispatch

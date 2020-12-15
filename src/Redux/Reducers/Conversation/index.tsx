@@ -4,6 +4,7 @@ import { ActionConsts } from "@Definitions";
 
 // #region Interface Imports
 import { IAction, IConversationPage } from "@Interfaces";
+import Router from "next/router";
 // #endregion Interface Imports
 
 const INITIAL_STATE: IConversationPage.IStateProps = {
@@ -14,13 +15,15 @@ const INITIAL_STATE: IConversationPage.IStateProps = {
         errors: ['']
     }
 };
-
 export const ConversationReducer = (
-        state = INITIAL_STATE,
-        action: IAction<IConversationPage.Actions.IMapGetConversation
-            & IConversationPage.Actions.IMapCreateMessage> 
+    state = INITIAL_STATE,
+    action: IAction<IConversationPage.Actions.IMapGetConversation
+        & IConversationPage.Actions.IMapCreateMessage>
 ) => {
     switch (action.type) {
+        case ActionConsts.Conversation.BroadcastSuccess: {
+            Router.push("/message");
+        }
         case ActionConsts.Conversation.UpdateViewStatusSuccess: {
             // const updatedViewStatus = state.conversation.values.map((msg, i) => {
             //     return {
@@ -123,7 +126,7 @@ export const ConversationReducer = (
                     }
                 });
             }
-            
+
             if (conversation.length) {
                 return Object.assign({}, state, {
                     conversation: {
@@ -148,7 +151,7 @@ export const ConversationReducer = (
                     ...state.conversation,
                     errors: ['Error getting conversation']
                 }
-            });   
+            });
         }
         default:
             return state;

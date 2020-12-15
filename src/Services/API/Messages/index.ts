@@ -27,14 +27,14 @@ export const MessagesService = {
                 status: false,
                 response: [
                     {
-                        id: 5,
-                        lastVisited: "2020-09-12T14:17:10.5233333",
-                        message: "Hello buddy",
-                        name: "Sohaib Riaz",
+                        id: 0,
+                        lastVisited: "",
+                        message: "",
+                        name: "",
                         participantSeenStatus: true,
                         profileImageUrl: "",
-                        userId: 130,
-                        userName: "sohaib1",
+                        userId: 0,
+                        userName: "",
                     },
                 ],
             };
@@ -141,6 +141,55 @@ export const MessagesService = {
                         type: 1,
                     },
                 ],
+            };
+        }
+        return response;
+    },
+    CreateBroadcast: async (
+        payload: MessagesModel.GetPOSTCreateBroadcastMessagesPayload
+    ): Promise<MessagesModel.GetPOSTCreateBroadcastMessagesResponse> => {
+        let response: MessagesModel.GetPOSTCreateBroadcastMessagesResponse;
+
+        const {
+            conversationId,
+            meta,
+            senderId,
+            authtoken,
+            type,
+            message,
+            sentAt,
+        } = payload.message;
+        let _payload = {};
+        if (type > 1 && type < 4) {
+            _payload = {
+                senderId,
+                type,
+                message,
+                sentAt,
+                meta,
+            };
+        } else {
+            _payload = {
+                senderId,
+                type,
+                message,
+                sentAt,
+            };
+        }
+        try {
+            response = await Http.UserAuthRequest<
+                MessagesModel.GetPOSTCreateBroadcastMessagesResponse
+            >(
+                "POST",
+                `/broadcasts`,
+                authtoken,
+                undefined,
+                { recipients: payload.recipients, message: payload.message }
+            );
+        } catch (error) {
+            response = {
+                status: false,
+                response: {}
             };
         }
         return response;

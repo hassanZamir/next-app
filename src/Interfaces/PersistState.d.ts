@@ -1,6 +1,6 @@
 import {
     FEED, USER_SESSION, PAYMENT_USER_SETTINGS, PAYMENT_USER_WALLET,
-    PAYMENT_CARD, NOTIFICATION_STATS, CONVERSATION_THREAD
+    PAYMENT_CARD, NOTIFICATION_STATS, CONVERSATION_THREAD, MESSAGE_RECIPIENT
 } from "@Interfaces";
 
 declare namespace IPersistState {
@@ -9,6 +9,7 @@ declare namespace IPersistState {
         feed: FEED;
         notificationStats: NOTIFICATION_STATS;
         activeConversation: CONVERSATION_THREAD;
+        broadcastRecipients: MESSAGE_RECIPIENT[];
         statusFound: boolean; // sets to false in case GetFeed failed to load status 
     }
 

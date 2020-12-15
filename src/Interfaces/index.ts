@@ -6,6 +6,8 @@ export * from "@Redux/IStore";
 // #region Service Interfaces
 export * from "@Services/API/Http/Http";
 
+export * from "@Services/API/Messages/POSTBroadcastMessagesPayload";
+export * from "@Services/API/Messages/POSTBroadcastMessagesResponse";
 export * from "@Services/API/Messages/POSTUpdateViewStatusPayload";
 export * from "@Services/API/Messages/POSTUpdateViewStatusResponse";
 export * from "@Services/API/Messages/POSTMessageSettingPayload";

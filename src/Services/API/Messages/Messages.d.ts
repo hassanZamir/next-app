@@ -8,7 +8,8 @@ import { GETAllMessagesPayload, GETAllMessagesResponse,
     POSTConversationSeenPayload, POSTConversationSeenResponse,
     POSTBuyMessagePayload, POSTBuyMessageResponse,
     POSTMessageSettingPayload, POSTMessageSettingResponse,
-    POSTUpdateViewStatusPayload, POSTUpdateViewStatusResponse } from "@Interfaces";
+    POSTUpdateViewStatusPayload, POSTUpdateViewStatusResponse,
+    POSTCreateBroadcastMessagesPayload, POSTCreateBroadcastMessagesResponse } from "@Interfaces";
 // #endregion Interface Imports
 
 declare namespace MessagesModel {
@@ -41,6 +42,9 @@ declare namespace MessagesModel {
 
     export interface GetPOSTUpdateViewStatusPayload extends POSTUpdateViewStatusPayload {}
     export interface GetPOSTUpdateViewStatusResponse extends POSTUpdateViewStatusResponse {}
+
+    export interface GetPOSTCreateBroadcastMessagesPayload extends POSTCreateBroadcastMessagesPayload {}
+    export interface GetPOSTCreateBroadcastMessagesResponse extends POSTCreateBroadcastMessagesResponse {}
 }
 
 export { MessagesModel };

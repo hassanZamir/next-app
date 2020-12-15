@@ -3,21 +3,23 @@ import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch } from "react-redux";
 import { useModal } from "../Hooks";
-import { faLink, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Router from "next/router";
 // #endregion Global Imports
 
 // #region Local Imports
 import { Textarea } from "@Components/Basic";
 import { MessagesActions } from "@Actions";
-import { USER_SESSION, CONVERSATION_THREAD, IConversationPage } from "@Interfaces";
+import { USER_SESSION, CONVERSATION_THREAD, MESSAGE_RECIPIENT } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
-import { MessageMediaPreview } from "./MessageMediaPreview";
+import { MessageMediaPreview } from "../ConversationComponent/MessageMediaPreview";
 import { NonFeedTipSubmitModal } from "../Modals/NonFeedTipSubmitModal";
 import { PriceTagModal } from "../Modals/PriceTagModal";
 import { ParagraphText } from "@Components/ParagraphText";
 import { LoadingSpinner } from "@Components";
 import { FeedsActions } from "@Actions";
-import { IFeed } from "@Interfaces";
+import { IFeed, FEED } from "@Interfaces";
+
 // #endregion Local Imports
 
 interface IUploadImage {
@@ -30,12 +32,11 @@ interface IUploadImage {
     };
 }
 
-export const CreateMessage: React.FunctionComponent<{
-    conversationThread: CONVERSATION_THREAD;
+export const CreateBroadcastMessage: React.FunctionComponent<{
     user: USER_SESSION;
-    conversationId: number;
     onSuccess: () => void;
-}> = ({ conversationThread, user, conversationId, onSuccess }) => {
+    recipients: MESSAGE_RECIPIENT[]
+}> = ({ user, onSuccess, recipients }) => {
     const [message, setMessage] = useState("");
     const [priceTagAmount, setPriceTagAmount] = useState("");
     const modalRef = useRef<HTMLDivElement>(null);
@@ -46,15 +47,6 @@ export const CreateMessage: React.FunctionComponent<{
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-    const { conversationSettings } = conversationThread;
-
-    useEffect(() => {
-        if (conversationSettings && conversationSettings.isBlocked === true)
-            setError("You can no longer reply to this conversation.");
-        else if (conversationSettings && conversationSettings.isFollower !== true)
-            setError("You are no longer following this creator.");
-        else setError("");
-    }, [conversationSettings]);
 
     const handleMessageChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { value } = e.currentTarget;
@@ -77,8 +69,8 @@ export const CreateMessage: React.FunctionComponent<{
     const sendMessage = async () => {
         const messageType = files.length > 0 ? 2 : 1;
         const date = new Date();
-        const params: any = { //IConversationPage.Actions.IGetPOSTCreateMessagePayload = {
-            conversationId: conversationId,
+        const params: any = {
+            conversationId: '',
             senderId: user.id,
             type: messageType,
             message: message,
@@ -97,28 +89,34 @@ export const CreateMessage: React.FunctionComponent<{
         };
         if (messageType === 2) {
             const formData = new FormData();
-            const videoFormData = new FormData();
             files.forEach(file => {
-                const isVideo = file.raw.name.split('.')[1] === ('mp4');
-                if (isVideo)
-                    videoFormData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
-                else
-                    formData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
+                formData.append(
+                    "mediaFiles",
+                    new Blob([file.raw as any]),
+                    file.raw.name
+                );
             });
             params.meta = {
+                media_urls: formData,
                 purchase_status: false,
-                amount: user.isCreator ? parseFloat(priceTagAmount) : 0,
+                amount: user.isCreator ? priceTagAmount : 0,
                 view_status: true,
             };
-            params.images_formData = formData;
-            params.videos_formData = videoFormData;
         }
-        await dispatch(MessagesActions.CreateMessage(params));
-        setMessage("");
-        setFiles([]);
-        setLoading(false);
-        setError("");
-        setPriceTagAmount("");
+        const broadCastResponse: any = await dispatch(MessagesActions.SendBroadcastMessage({
+            message: params,
+            recipients: recipients.map((r: MESSAGE_RECIPIENT) => { return r.userName })
+        }));
+        if (broadCastResponse.status && broadCastResponse.response) {
+            Router.push("/message", "/message");
+            setMessage("");
+            setFiles([]);
+            setLoading(false);
+            setError("");
+        } else {
+            setLoading(false);
+            setError("Failed to send broadcast");
+        }
     };
 
     const onSetPriceTagAmount = (amount: string) => {
@@ -134,7 +132,7 @@ export const CreateMessage: React.FunctionComponent<{
     ) => {
         const date = new Date();
         const params: any = {
-            conversationId: conversationId,
+            conversationId: '',
             senderId: user.id,
             type: 3,
             authtoken: user.token,
@@ -158,11 +156,21 @@ export const CreateMessage: React.FunctionComponent<{
             },
         };
         setLoading(true);
-        await dispatch(MessagesActions.CreateMessage(params));
-        setMessage("");
-        setFiles([]);
-        setLoading(false);
-        setError("");
+        const broadCastResponse: any = await dispatch(MessagesActions.SendBroadcastMessage({
+            message: params,
+            recipients: recipients.map((r: MESSAGE_RECIPIENT) => { return r.userName })
+        }));
+        if (broadCastResponse.status && broadCastResponse.response) {
+            Router.push("/message", "/message");
+            setMessage("");
+            setFiles([]);
+            setLoading(false);
+            setError("");
+
+        } else {
+            setLoading(false);
+            setError("Failed to send broadcast");
+        }
     };
 
     const onTipSubmit = async (amount: string, message: string) => {
@@ -266,7 +274,7 @@ export const CreateMessage: React.FunctionComponent<{
                     name="message"
                     rows={1}
                     disabled={
-                        conversationSettings && conversationSettings.isBlocked
+                        false
                     }
                     columns={10}
                     className="px-3 py-3 border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow"
@@ -277,13 +285,6 @@ export const CreateMessage: React.FunctionComponent<{
                     <FontAwesomeIcon
                         onClick={() => {
                             if (message || files.length > 0) {
-                                if (
-                                    conversationSettings &&
-                                    (conversationSettings.isBlocked ||
-                                        !conversationSettings.isFollower)
-                                )
-                                    return false;
-
                                 setLoading(true);
                                 sendMessage();
                             }

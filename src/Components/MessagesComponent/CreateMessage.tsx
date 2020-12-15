@@ -1,65 +1,152 @@
 // #region Global Imports
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 // #endregion Global Imports
 
 // #region Local Imports
 import { IStore } from "@Redux/IStore";
-import { LoadingSpinner } from "@Components";
-import { USER_SESSION } from "@Interfaces";
+import { LoadingSpinner, RadioInput } from "@Components";
+import { USER_SESSION, MESSAGE_RECIPIENT } from "@Interfaces";
 import { MessagesActions } from "@Actions";
 import { RecipientRow } from "./RecipientRow";
 import { ParagraphText } from "@Components/ParagraphText";
+import { theme } from "@Definitions/Styled";
 // #endregion Local Imports
 
-export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, user: USER_SESSION, scrolledToBottom: boolean, searchActive: boolean }> 
+export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, user: USER_SESSION, scrolledToBottom: boolean, searchActive: boolean }>
     = ({ loadingSearch, user, scrolledToBottom, searchActive }) => {
-    const messagesState = useSelector((state: IStore) => state.messages);
-    const { messageRecipients } = messagesState;
-    const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
-    
-    useEffect(() => {
-        (async () => {
-            const param = { userId: user.id, authtoken: user.token };
-            setLoading(true);
-            await dispatch(MessagesActions.GetMessageRecipients(param));
-            setLoading(false);
-        })();
-    }, []);
+        const messagesState = useSelector((state: IStore) => state.messages);
+        const { messageRecipients } = messagesState;
+        const [loading, setLoading] = useState(false);
+        const [recipientsForMessage, setRecipientsForMessage] = useState<MESSAGE_RECIPIENT[]>([]);
+        const [selectAll, setSelectAll] = useState(false);
+        const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (scrolledToBottom) getRecipients();
-    }, [scrolledToBottom]);
+        useEffect(() => {
+            (async () => {
+                const param = { userId: user.id, authtoken: user.token };
+                setLoading(true);
+                await dispatch(MessagesActions.GetMessageRecipients(param));
+                setLoading(false);
+            })();
+        }, []);
 
-    const getRecipients = async () => {
-        if (messageRecipients.emptyPaginationNo > messageRecipients.paginationNo) {
-            await MessagesActions.GetMessageRecipients({ 
-                userId: user.id, 
-                page: messageRecipients.paginationNo,
-                authtoken: user.token, 
-            });
+        useEffect(() => {
+            if (scrolledToBottom) getRecipients();
+        }, [scrolledToBottom]);
+
+        const getRecipients = async () => {
+            if (messageRecipients.emptyPaginationNo > messageRecipients.paginationNo) {
+                await MessagesActions.GetMessageRecipients({
+                    userId: user.id,
+                    page: messageRecipients.paginationNo,
+                    authtoken: user.token,
+                });
+            }
         }
-    }
 
-    const _recipients = searchActive ? messageRecipients.searchValues : messageRecipients.values;
-    return (<div className="d-flex flex-column" 
+        const onRecipientAdd = (recipient: MESSAGE_RECIPIENT) => {
+            if (recipientsForMessage.length + 1 == _recipients.length)
+                setSelectAll(true);
+            setRecipientsForMessage([...recipientsForMessage, recipient]);
+        }
+
+        const onRecipientAddAll = () => {
+            setRecipientsForMessage([..._recipients]);
+        }
+
+        const onRecipientRemove = (recipient: MESSAGE_RECIPIENT) => {
+            if (selectAll)
+                setSelectAll(false);
+            const filtered = recipientsForMessage.filter((reciever) => {
+                return reciever.userName !== recipient.userName;
+            });
+            setRecipientsForMessage(filtered);
+        }
+
+        const onRecipientRemoveAll = () => {
+            setRecipientsForMessage([]);
+        }
+
+        const goToSendMessage = async () => {
+            if (recipientsForMessage.length === 1) {
+                await dispatch(MessagesActions.CreateConversation({
+                    userName: user.username,
+                    recipientUsername: recipientsForMessage[0].userName,
+                    authtoken: user.token,
+                }));
+            } else {
+                await dispatch(MessagesActions.CreateBroadcast(recipientsForMessage));
+            }
+        }
+
+        const _recipients = searchActive ? messageRecipients.searchValues : messageRecipients.values;
+        return (<div className="d-flex flex-column"
             style={{ flex: 1 }}>
-            
+            <div className="d-flex flex-row mx-4 px-3" style={{
+                alignSelf: "flex-end"
+            }}>
+                <div style={{
+                    alignContent: "right"
+                }}>{selectAll ? "Tap to unselect all" : "Tap to select all"}</div>
+                <div style={{
+                    marginLeft: "10px"
+                }}>
+                    <RadioInput
+                        onChange={() => {
+                        }}
+                        onClick={() => {
+                            if (selectAll) {
+                                setSelectAll(false);
+                                onRecipientRemoveAll();
+                            }
+                            else {
+                                setSelectAll(true);
+                                onRecipientAddAll();
+                            }
+                        }}
+                        inputHeight="28px"
+                        inputWidth="28px"
+                        showLabel={false}
+                        name=""
+                        type="radio"
+                        value="0"
+                        checked={selectAll}
+                        inputMargin="0px 5px 0px 0px"
+                    />
+                </div>
+            </div>
             <div className="d-flex align-items-center justify-content-center h-100 w-100">
                 <LoadingSpinner size="3x" showLoading={loading || loadingSearch}>
                     {_recipients.length > 0 && <div className="d-flex flex-column h-100 w-100">
                         {_recipients.map((recipient, i) => {
-                            return <RecipientRow recipient={recipient} 
+                            return <RecipientRow recipient={recipient}
                                 user={user}
+                                onRecipientAdd={onRecipientAdd}
+                                onRecipientRemove={onRecipientRemove}
+                                recipientsForMessage={recipientsForMessage}
                                 key={i} />
                         })}
                     </div>}
-                    {_recipients.length <= 0 && <ParagraphText 
+                    {_recipients.length <= 0 && <ParagraphText
                         className="text-primary font-20px lato-bold">
-                            {!searchActive ? "You don't have any contacts" : "No Content"}
+                        {!searchActive ? "You don't have any contacts" : "No Content"}
                     </ParagraphText>}
+                    <div className="position-absolute"
+                        onClick={() => { recipientsForMessage.length > 0 && goToSendMessage(); }}
+                        style={{ bottom: "80px", right: "50px", transform: "rotate(180deg)" }}>
+
+                        <FontAwesomeIcon
+                            onClick={() => { }}
+                            className="cursor-pointer"
+                            icon={faArrowLeft}
+                            color={recipientsForMessage.length > 0 ? theme.colors.primary : theme.colors.disabledGrey}
+                            size="lg"
+                        />
+                    </div>
                 </LoadingSpinner>
             </div>
-    </div>);
-}
+        </div>);
+    }
