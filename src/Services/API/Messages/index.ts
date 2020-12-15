@@ -91,19 +91,27 @@ export const MessagesService = {
             response = {
                 status: false,
                 response: {
-                    id: 5,
-                    lastVisited: "2020-09-12T14:17:10.5233333",
-                    message: "Hello buddy",
-                    name: "Sohaib Riaz",
+                    id: 0,
+                    lastVisited: "",
+                    message: "",
+                    name: "",
                     participantSeenStatus: true,
                     profileImageUrl: "",
-                    userId: 130,
-                    userName: "sohaib1",
-                    conversationSettings: {
-                        favourite: true,
+                    userId: 0,
+                    userName: "",
+                    userConversationSettings: {
+                        isFavourite: true,
                         isBlocked: false,
                         isRestricted: false,
                         isFollower: false,
+                        state: 1,
+                    },
+                    creatorConversationSettings: {
+                        isFavourite: true,
+                        isBlocked: false,
+                        isRestricted: false,
+                        isFollower: false,
+                        state: 1,
                     },
                 },
             };

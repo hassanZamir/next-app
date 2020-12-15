@@ -233,7 +233,7 @@ export const MessagesActions = {
 
         dispatch({
             payload: payload,
-            type: result ? ActionConsts.Conversation.UpdateMessageSettingSuccess : ActionConsts.Conversation.UpdateMessageSettingError
+            type: result.status ? ActionConsts.Conversation.UpdateMessageSettingSuccess : ActionConsts.Conversation.UpdateMessageSettingError
         });
     },
     UpdateViewStatus: (payload: IConversationPage.Actions.IGetPOSTUpdateViewStatusPayload) => async (

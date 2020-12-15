@@ -113,7 +113,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
             return groupArrays;
         }
 
-        const { conversationSettings } = conversationThread;
+        const { userConversationSettings, creatorConversationSettings } = conversationThread;
 
         return (<div className="d-flex flex-column h-100"
             style={{ flex: "1 1 auto" }}>
@@ -129,12 +129,12 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                             dispatch(MessagesActions.UpdateMessageSettings({
                                 userName: user.username,
                                 recipientUsername: conversationThread.userName,
-                                apiRouteKey: conversationSettings && conversationSettings.favourite ? 'unfavourite' : 'favourite',
-                                apiReducerKey: 'favourite',
+                                apiRouteKey: userConversationSettings && userConversationSettings.isFavourite ? 'unfavourite' : 'favourite',
+                                apiReducerKey: 'isFavourite',
                                 authtoken: user.token,
                             }));
                         }}
-                        src={conversationSettings && conversationSettings.favourite ? '/images/favourite_star_filled.svg' : '/images/favourite_star.svg'} />}
+                        src={userConversationSettings && userConversationSettings.isFavourite ? '/images/favourite_star_filled.svg' : '/images/favourite_star.svg'} />}
 
                     <FontAwesomeIcon className="cursor-pointer ml-2" icon={faEllipsisH}
                         onClick={() => { toggle(); }}
@@ -184,7 +184,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                             })}
                         </div> : <ParagraphText className="text-primary font-20px lato-bold">
                                 No Messages
-                </ParagraphText>}
+                            </ParagraphText>}
                     </LoadingSpinner>
                 </div>
             </div>

@@ -10,16 +10,16 @@ declare namespace IMessageSettingsModal {
     export interface IProps {
         isShowing: boolean;
         modalRef?: RefObject<HTMLDivElement>;
-        toggle: ()=>void;
+        toggle: () => void;
         user: USER_SESSION;
         conversationThread: CONVERSATION_THREAD;
     }
 }
 
-export const MessageSettingsModal: React.RefForwardingComponent<HTMLDivElement, IMessageSettingsModal.IProps> = ((props) => {
+export const MessageSettingsModal: React.ForwardRefRenderFunction<HTMLDivElement, IMessageSettingsModal.IProps> = ((props) => {
     const { isShowing, modalRef, toggle, user, conversationThread } = props;
 
-    const { conversationSettings } = conversationThread;
+    const { userConversationSettings, creatorConversationSettings } = conversationThread;
     const dispatch = useDispatch();
 
     const getApiRouteKey = (index: number) => {
@@ -27,8 +27,8 @@ export const MessageSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
             case 0: return ""
             case 1: return ""
             case 2: return ""
-            case 3: return conversationSettings.isRestricted ? "unrestrict" : "restrict"
-            case 4:return conversationSettings.isBlocked ? "unblock" : "block"
+            case 3: return userConversationSettings.isRestricted ? "unrestrict" : "restrict"
+            case 4: return userConversationSettings.isBlocked ? "unblock" : "block"
             case 5: return ""
             default: return ""
         }
@@ -47,12 +47,12 @@ export const MessageSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
         }
     }
 
-    return isShowing ? <PositionedModal 
-        borderRadius="11px" 
-        triangleProps={{ right: "-4px", top: "15px" }} 
+    return isShowing ? <PositionedModal
+        borderRadius="11px"
+        triangleProps={{ right: "-4px", top: "15px" }}
         containerProps={{ right: "-4px", top: "20px" }}
         triangleUp={true}>
-        
+
         <div className="modal-header">
             <span className="cursor-pointer" aria-hidden="true" onClick={toggle}>&times;</span>
         </div>
@@ -60,13 +60,13 @@ export const MessageSettingsModal: React.RefForwardingComponent<HTMLDivElement, 
             {/* <div onClick={()=>{ onSettingClick(0) }} className="text-grey100 cursor-pointer">Copy Profile Link</div>
             <div onClick={()=>{ onSettingClick(1) }} className="text-grey100 cursor-pointer">Hide Chat</div>
             <div onClick={()=>{ onSettingClick(2) }} className="text-grey100 cursor-pointer">Turn Off Notifications</div> */}
-            {user.isCreator && <div onClick={()=>{ onSettingClick(3) }} className="text-primary cursor-pointer">
-                { conversationSettings.isRestricted ? "Un Restrict Messages" : "Restrict Messages" }
+            {user.isCreator && <div onClick={() => { onSettingClick(3) }} className="text-primary cursor-pointer">
+                {userConversationSettings.isRestricted ? "Unrestrict User" : "Restrict User"}
             </div>}
-            {user.isCreator && <div onClick={()=>{ onSettingClick(4) }} className="text-primary cursor-pointer">
-                { conversationSettings.isBlocked ? "UnBlock" : "Block" }
+            {user.isCreator && <div onClick={() => { onSettingClick(4) }} className="text-primary cursor-pointer">
+                {userConversationSettings.isBlocked ? "Unblock User" : "Block User"}
             </div>}
-            {!user.isCreator && <div onClick={()=>{ onSettingClick(5) }} className="text-primary cursor-pointer">Report</div>}
+            {!user.isCreator && <div onClick={() => { onSettingClick(5) }} className="text-primary cursor-pointer">Report</div>}
         </div>
     </PositionedModal> : null
 });

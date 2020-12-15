@@ -42,13 +42,34 @@ export const PersistReducer = (
         case ActionConsts.Conversation.UpdateMessageSettingSuccess: {
             const { apiReducerKey } = action.payload!;
 
-            if (apiReducerKey) {
-                const existing = state.activeConversation.conversationSettings[apiReducerKey];
+            if (apiReducerKey == "isBlocked") {
+                const existing = state.activeConversation.userConversationSettings.isBlocked;
                 return Object.assign({}, state, {
                     activeConversation: Object.assign({}, state.activeConversation, {
-                        conversationSettings: {
-                            ...state.activeConversation.conversationSettings,
-                            [apiReducerKey]: !existing
+                        userConversationSettings: {
+                            ...state.activeConversation.userConversationSettings,
+                            isBlocked: !existing
+                        }
+                    })
+                });
+            }
+            else if (apiReducerKey == "isRestricted") {
+                const existing = state.activeConversation.userConversationSettings.isRestricted;
+                return Object.assign({}, state, {
+                    activeConversation: Object.assign({}, state.activeConversation, {
+                        userConversationSettings: {
+                            ...state.activeConversation.userConversationSettings,
+                            isRestricted: !existing
+                        }
+                    })
+                });
+            } else if (apiReducerKey == "isFavourite") {
+                const existing = state.activeConversation.userConversationSettings.isFavourite;
+                return Object.assign({}, state, {
+                    activeConversation: Object.assign({}, state.activeConversation, {
+                        userConversationSettings: {
+                            ...state.activeConversation.userConversationSettings,
+                            isFavourite: !existing
                         }
                     })
                 });
@@ -65,9 +86,8 @@ export const PersistReducer = (
         }
         case ActionConsts.Messages.SetActiveConversationSuccess: {
             const { conversation } = action.payload!;
-            Router.push("/message/" + conversation.id, "/message/" + conversation.id);
-
             console.log("activeConversation : ", conversation);
+            Router.push("/message/" + conversation.id, "/message/" + conversation.id);
             return Object.assign({}, state, {
                 activeConversation: conversation
             });

@@ -46,15 +46,17 @@ export const CreateMessage: React.FunctionComponent<{
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-    const { conversationSettings } = conversationThread;
+    const { userConversationSettings, creatorConversationSettings } = conversationThread;
 
     useEffect(() => {
-        if (conversationSettings && conversationSettings.isBlocked === true)
-            setError("You can no longer reply to this conversation.");
-        else if (conversationSettings && conversationSettings.isFollower !== true)
-            setError("You are no longer following this creator.");
+        if (userConversationSettings && userConversationSettings.isBlocked === true)
+            setError("You can no longer reply to this conversation as the user is blocked.");
+        else if (userConversationSettings && userConversationSettings.isRestricted === true)
+            setError("You may not recieve some msgs as the user is restricted.");
+        else if (creatorConversationSettings && creatorConversationSettings.state !== 2)
+            setError("You can no longer reply to this conversation as your subscription is not active.");
         else setError("");
-    }, [conversationSettings]);
+    }, [conversationThread.creatorConversationSettings, conversationThread.userConversationSettings]);
 
     const handleMessageChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { value } = e.currentTarget;
@@ -266,7 +268,7 @@ export const CreateMessage: React.FunctionComponent<{
                     name="message"
                     rows={1}
                     disabled={
-                        conversationSettings && conversationSettings.isBlocked
+                        (userConversationSettings && userConversationSettings.isBlocked) || (creatorConversationSettings && creatorConversationSettings.isBlocked)
                     }
                     columns={10}
                     className="px-3 py-3 border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow"
@@ -277,11 +279,7 @@ export const CreateMessage: React.FunctionComponent<{
                     <FontAwesomeIcon
                         onClick={() => {
                             if (message || files.length > 0) {
-                                if (
-                                    conversationSettings &&
-                                    (conversationSettings.isBlocked ||
-                                        !conversationSettings.isFollower)
-                                )
+                                if ((userConversationSettings && userConversationSettings.isBlocked) || (creatorConversationSettings && creatorConversationSettings.isBlocked))
                                     return false;
 
                                 setLoading(true);
