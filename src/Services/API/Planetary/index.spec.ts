@@ -7,7 +7,7 @@ describe("Planetary Service tests", () => {
         // const result = await PlanetaryService.GetPlanetImage({
         //     params: { hd: true },
         // });
-        // expect(result.copyright).toEqual("Pankod");
+        // expect(result.copyright).toEqual("");
     });
 
     test("500 test", async () => {

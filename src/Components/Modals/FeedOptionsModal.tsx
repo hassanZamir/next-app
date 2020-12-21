@@ -32,7 +32,7 @@ export const FeedOptionsModal: React.RefForwardingComponent<HTMLDivElement, IFee
                 </div>
                 <div onClick={(e) => { e.preventDefault(); onReportClick(feed) }}>
                     <ParagraphText className="text-primary font-12px text-center">
-                        Report
+                        Report Content
                         </ParagraphText>
                 </div>
             </div>

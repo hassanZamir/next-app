@@ -2,7 +2,11 @@
 import { Http } from "@Services";
 // #endregion Local Imports
 
-import { AllCommentsModel, PostCommentModel, LikeCommentModel } from "@Interfaces";
+import {
+    AllCommentsModel,
+    PostCommentModel,
+    LikeCommentModel,
+} from "@Interfaces";
 
 export const StatusService = {
     GetAllComments: async (
@@ -24,19 +28,21 @@ export const StatusService = {
         } catch (error) {
             response = {
                 status: false,
-                response: [{
-                    "isTipComment": true,
-                    "name": "sohaib Riaz",
-                    "profileImageUrl": "",
-                    "userName": "sohaibminhas",
-                    "content_viewer_like": true,
-                    "id": 6,
-                    "userId": 11,
-                    "contentId": 6,
-                    "text": "sadasd",
-                    "likesCount": 0,
-                    "timeStamp": "2020-07-16T12:51:41.8133333"
-                }]
+                response: [
+                    {
+                        isTipComment: true,
+                        name: "John dummy",
+                        profileImageUrl: "",
+                        userName: "dummy",
+                        content_viewer_like: true,
+                        id: 6,
+                        userId: 11,
+                        contentId: 6,
+                        text: "sadasd",
+                        likesCount: 0,
+                        timeStamp: "2020-07-16T12:51:41.8133333",
+                    },
+                ],
             };
         }
         return response;
@@ -59,18 +65,18 @@ export const StatusService = {
             response = {
                 status: false,
                 response: {
-                    "isTipComment": false,
-                    "name": "sohaib Riaz",
-                    "profileImageUrl": "",
-                    "userName": "sohaibminhas",
-                    "content_viewer_like": true,
-                    "id": 6,
-                    "userId": 11,
-                    "contentId": 6,
-                    "text": "sadasd",
-                    "likesCount": 0,
-                    "timeStamp": "2020-07-16T12:51:41.8133333"
-                }
+                    isTipComment: false,
+                    name: "John Dummy",
+                    profileImageUrl: "",
+                    userName: "tv",
+                    content_viewer_like: true,
+                    id: 6,
+                    userId: 11,
+                    contentId: 6,
+                    text: "sadasd",
+                    likesCount: 0,
+                    timeStamp: "2020-07-16T12:51:41.8133333",
+                },
             };
         }
         return response;
@@ -91,7 +97,7 @@ export const StatusService = {
             // localStorage.setItem("user", response.status);
         } catch (error) {
             response = {
-                status: false
+                status: false,
             };
         }
         return response;
@@ -112,9 +118,9 @@ export const StatusService = {
             // localStorage.setItem("user", response.status);
         } catch (error) {
             response = {
-                status: false
+                status: false,
             };
         }
         return response;
-    }
-}
+    },
+};

@@ -12,16 +12,11 @@ import { NotificationComponent } from "@Components";
 
 // #region Interface Imports
 import { USER_SESSION } from "@Interfaces";
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 // #endregion Interface Imports
 
 const Authenticated: any = dynamic(
-    () =>
-        import("@Components/Authenticated").then(
-            mod => mod.Authenticated
-        ) as Promise<
-            React.FunctionComponent<{ session: USER_SESSION; name: string }>
-        >,
+    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{session: USER_SESSION, name: string}>>,
     { ssr: false }
 );
 
@@ -32,20 +27,11 @@ const Notifications: NextPage = () => {
 
     const onScroll = (bottom: boolean) => {
         bottom ? setScrolledToBottom(true) : setScrolledToBottom(false);
-    };
+    }
 
-    return (
-        <Authenticated
-            session={session}
-            name="Notification"
-            onScroll={onScroll}
-        >
-            <NotificationComponent
-                user={session}
-                scrolledToBottom={scrolledToBottom}
-            />
-        </Authenticated>
-    );
+    return <Authenticated session={session} name="Notification" onScroll={onScroll}>
+        <NotificationComponent user={session} scrolledToBottom={scrolledToBottom} />
+    </Authenticated>
 };
 
 export const getStaticProps = (...params: any) => {

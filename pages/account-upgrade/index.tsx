@@ -12,16 +12,11 @@ import { IStore } from "@Redux/IStore";
 
 // #region Interface Imports
 import { IFeedsPage, USER_SESSION } from "@Interfaces";
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 // #endregion Interface Imports
 
 const Authenticated: any = dynamic(
-    () =>
-        import("@Components/Authenticated").then(
-            mod => mod.Authenticated
-        ) as Promise<
-            React.FunctionComponent<{ session: USER_SESSION; name: string }>
-        >,
+    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{ session: USER_SESSION, name: string }>>,
     { ssr: false }
 );
 

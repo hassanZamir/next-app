@@ -5,11 +5,7 @@ export { Heading } from "@Components/Heading";
 export { LocaleButton } from "@Components/LocaleButton";
 export { StaticImage } from "@Components/StaticImage";
 export { ThemedInput, ThemedInputWithLabel } from "@Components/ThemedInput";
-export {
-    LabelInput,
-    SelectInput,
-    MultiLabelInput,
-} from "@Components/LabelInput";
+export { LabelInput, SelectInput, MultiLabelInput } from "@Components/LabelInput";
 export { PrimaryButton } from "@Components/PrimaryButton";
 export { ParagraphText } from "@Components/ParagraphText";
 export { FormComponent } from "@Components/FormComponent";

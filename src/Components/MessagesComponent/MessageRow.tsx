@@ -10,7 +10,7 @@ import { MESSAGE_LIST_ITEM, USER_SESSION } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
 import { MessagesActions } from "@Actions";
 // #endregion Local Imports
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media";
+const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media"; // TODO: convert to env
 
 export const MessageRow: React.FunctionComponent<{
     message: MESSAGE_LIST_ITEM;

@@ -275,10 +275,9 @@ const Feed: React.FunctionComponent<IFeed.IProps> = ({
                     passHref
                 >
                     <span
-                        //style={{ textDecoration: "underline" }}
                         className="text-primary lato-semibold font-10px my-0 cursor-pointer"
                     >
-                        {feed.name}
+                        {feed.username}
                     </span>
                 </Link>
                 <FeedOptions
@@ -383,11 +382,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
     };
 
     const onCopyClick = (feed: FEED) => {
-        // const input: Input = document.createElement("INPUT");
-        // input.setAttribute("value", "asssa");
-        // input.select();
-        // input.setSelectionRange(0, 99999);
-        // document.execCommand("copy");
+        console.log("Copy link address");
     };
 
     const onCommentClick = (

@@ -7,7 +7,7 @@ import { theme } from "@Definitions/Styled/theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media";
+const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media"; // TODO: convert to env
 
 export const ProfileSuggestion: React.FunctionComponent<{
     creatorProfile: CREATOR_PROFILE;
@@ -42,8 +42,8 @@ export const ProfileSuggestion: React.FunctionComponent<{
                             <CircularImage
                                 src={[
                                     mediaBaseUrl +
-                                        "/" +
-                                        creatorProfile.profileImageUrl,
+                                    "/" +
+                                    creatorProfile.profileImageUrl,
                                     "/images/profile_image_placeholder.png",
                                 ]}
                                 height="75px"

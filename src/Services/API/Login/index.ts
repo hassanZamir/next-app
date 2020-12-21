@@ -241,8 +241,8 @@ export const LoginService = {
         try {
             response = await Http.UserAuthRequest<
                 PUTRecurringFollowingModel.PUTRecurringFollowingResponse
-            >("PUT", `/users/${payload.username}/auto-renewal`, payload.authtoken ,undefined, {
-                 ...restructurePayload,
+            >("PUT", `/users/${payload.username}/auto-renewal`, payload.authtoken, undefined, {
+                ...restructurePayload,
             });
         } catch (error) {
             response = {
@@ -293,7 +293,7 @@ export const LoginService = {
                     street: "",
                     city: "",
                     state: "",
-                    postCode: 10000,
+                    postCode: 11111,
                     country: "",
                     dob: "",
                     docType: 1,

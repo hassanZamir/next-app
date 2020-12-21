@@ -90,10 +90,14 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                     <FormComponent
                         onSubmit={handleSubmit}
                         defaultValues={{}}
-                        submitActive={enableSignUp && recaptchaToken ? true : false}
-                        submitSuccess={errors.message === "" && successMessage !== ""}
-                        triggerValidation={triggerValidation}>
-
+                        submitActive={
+                            enableSignUp && recaptchaToken ? true : false
+                        }
+                        submitSuccess={
+                            errors.message === "" && successMessage !== ""
+                        }
+                        triggerValidation={triggerValidation}
+                    >
                         <LabelInput
                             type="text"
                             labelText="Full Name"
@@ -112,7 +116,11 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             type={["number", "number", "number"]}
                             labelText="Date of Birth"
                             name={["dob.date", "dob.month", "dob.year"]}
-                            options={[DobConst.date, DobConst.months, DobConst.year]}
+                            options={[
+                                DobConst.date,
+                                DobConst.months,
+                                DobConst.year,
+                            ]}
                             wrapperClass="mt-3"
                             validationRules={[{
                                 required: "Date is required",
@@ -137,7 +145,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                                         ? true
                                         : "Please select Year of Birth";
                                 },
-                            },
+                            }
                             ]}
                         />
 
@@ -255,39 +263,48 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             inputHeight="25px"
                             inputWidth="25px"
                             inputMargin="0px 10px 0px 0px"
-                            labelTextElem={<div className="text-darkGrey lato-regular font-11px">
-                                <span>By signing up you agree to our</span><span className="text-primary mx-1">
-                                    <Link href="/terms-and-conditions"><a>Terms of Service</a></Link>
-                                </span>{" "}
-                                and{" "}
-                                <span className="text-primary mx-1">
-                                    <Link href="/privacy-policy"><a>Privacy Policy</a></Link>
-                                </span>
-                            </div>}
+                            labelTextElem={
+                                <div className="text-darkGrey lato-regular font-11px">
+                                    <span>By signing up you agree to our</span>
+                                    <span className="text-primary mx-1">
+                                        <Link href="/terms-and-conditions"><a>Terms of Service</a></Link>
+                                    </span>{" "}
+                                    and{" "}
+                                    <span className="text-primary mx-1">
+                                        <Link href="/privacy-policy"><a>Privacy Policy</a></Link>
+                                    </span>
+                                </div>
+                            }
                             name="termsOfService"
                             wrapperClass=""
                             validationRules={{
-                                required: { value: true, message: "Check privacy policy is required" }
+                                required: {
+                                    value: true,
+                                    message: "Check privacy policy is required",
+                                },
                             }}
                         />
-                        {!successMessage &&
-                            <ParagraphText className="py-4 text-danger text-center">
-                                {errors.message}
-                            </ParagraphText>
+                        {!successMessage && <ParagraphText className="py-4 text-danger text-center">
+                            {errors.message}
+                        </ParagraphText>
                         }
                         <PrimaryButton
                             type="submit"
                             className="mt-2 mb-3 font-20px"
                             name="signUp"
-                            showLoader={!enableSignUp}>
+                            showLoader={!enableSignUp}
+                        >
                             Sign Up
-                            </PrimaryButton>
+                        </PrimaryButton>
                     </FormComponent>
                 </div>
                 <Link href="/login" passHref>
-                    <LinkText style={{ height: "40px" }} className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white">
+                    <LinkText
+                        style={{ height: "40px" }}
+                        className="w-100 bg-primary-gradient seoge-ui-bold d-flex align-items-center justify-content-center text-white"
+                    >
                         Have an account? Log in here!
-                        </LinkText>
+                    </LinkText>
                 </Link>
             </div>
         </div>

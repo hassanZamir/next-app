@@ -11,10 +11,10 @@ import { theme } from "@Definitions/Styled";
 import { AppWithStore } from "@Interfaces";
 import { makeStore } from "@Redux";
 
-import { persistStore } from "redux-persist";
-import { PersistGate } from "redux-persist/integration/react";
-import { ToastProvider } from "react-toast-notifications";
-import { Footer, Toast } from "@Components";
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+import { ToastProvider } from 'react-toast-notifications';
+import { Footer, Toast } from '@Components';
 
 import "@Static/css/main.scss";
 import "../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
@@ -29,10 +29,7 @@ class WebApp extends App<AppWithStore> {
         return (
             <ThemeProvider theme={theme}>
                 <Provider store={store}>
-                    <PersistGate
-                        loading={<Component {...pageProps} />}
-                        persistor={persistor}
-                    >
+                    <PersistGate loading={<Component {...pageProps} />} persistor={persistor}>
                         <Layout>
                             <ToastProvider
                                 components={{ Toast: Toast } as any}

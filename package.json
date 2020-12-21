@@ -1,9 +1,9 @@
 {
-  "name": "@pankod/next-boilerplate",
-  "description": "A well-structured production ready Next.js boilerplate with Typescript, Redux, Jest, React Testing Library, Express.js, Sass, Css, EnvConfig, Fetch, Reverse Proxy, Bundle Analyzer and Built-in Project CLI. https://pankod.github.io/next-boilerplate/",
-  "version": "2.0.0",
-  "repository": "https://github.com/pankod/next-boilerplate",
-  "author": "Pankod <info@pankod.com>",
+  "name": "vt-pwa",
+  "description": "",
+  "version": "5.0.0",
+  "repository": "",
+  "author": "",
   "scripts": {
     "start:dev": "nodemon",
     "build": "next build && tsc --project tsconfig.server.json",
@@ -14,7 +14,6 @@
     "format": "npm run lint -- --fix",
     "analyze": "cross-env BUNDLE_ANALYZE=both npm run build",
     "export": "cross-env NODE_ENV=production next export",
-    "cli": "pankod-cli add",
     "storybook": "start-storybook -s ./public/static -p 6006",
     "build-storybook": "build-storybook -s ./public/static  -c .storybook -o .storybookout"
   },
@@ -83,7 +82,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
-    "@pankod/pankod-cli": "^1.0.0",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addon-links": "^5.3.18",
@@ -145,9 +143,6 @@
     "ts-loader": "^6.2.2",
     "ts-node": "^8.4.1",
     "typescript": "^3.9.3"
-  },
-  "pankod": {
-    "projectType": "nextjs2"
   },
   "license": "ISC"
 }

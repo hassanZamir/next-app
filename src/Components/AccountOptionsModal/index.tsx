@@ -1,5 +1,4 @@
 import { IAccountOptionsModal } from "./AccountOptionsModal";
-import { Menu } from "../../Components/Menu";
 import React, { useEffect, useState } from "react";
 export const AccountOptionsModal: React.FunctionComponent<IAccountOptionsModal.IProps> = ({
     isShowing,

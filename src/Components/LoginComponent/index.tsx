@@ -16,11 +16,8 @@ import {
     LoadingSpinner,
     SocialLogin,
 } from "@Components";
-import { CheckYourEmailModal } from "../Modals/CheckYourEmailModal";
-import { EmailVerifiedModal } from "../Modals/EmailVerifiedModal";
-import { ResetPasswordModal } from "../Modals/ResetPasswordModal";
-import { ChangePasswordModal } from "../Modals/ChangePasswordModal";
-import { ReturnPolicyModal } from "@Components/Modals";
+import { CheckYourEmailModal, EmailVerifiedModal, ResetPasswordModal, ChangePasswordModal, ReturnPolicyModal } from "@Components/Modals";
+
 import { LinkText } from "@Components/Basic";
 import { useModal } from "../Hooks";
 import { IStore } from "@Redux/IStore";
@@ -248,7 +245,7 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
                 <div className="captcha-container" style={{ height: "78px" }}>
                     <ReCAPTCHA
                         size="normal"
-                        sitekey="6LcPdqsZAAAAADygw6uZ0kPMd-OW8F55aPEtq5FK"
+                        sitekey="6LcNTbQZAAAAAEDpws3e0ztLvX1qGwkFP04P9RUq"
                         onChange={handleCaptchaChange}
                     />
                 </div>
@@ -269,7 +266,7 @@ export const LoginComponent: React.FunctionComponent<{}> = () => {
             </form>
             {/* { add footer links here} */}
             <div
-                className="text-grey100 font-12px text-center my-2"
+                className="text-grey100 font-12px text-center my-2 cursor-pointer"
                 onClick={() => {
                     returnPolicyModalRef.toggle();
                 }}

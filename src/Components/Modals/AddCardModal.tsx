@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 
 import { Modal } from "@Components/Basic";
 import { theme } from "@Definitions/Styled/theme"
-import { ParagraphText, FormComponent, LabelInput, MultiLabelInput ,PrimaryButton, SelectInput } from "@Components";
+import { ParagraphText } from "@Components";
 import DobConst from "../../../pages/signup/dob-constants.json";
 import { PaymentActions } from "@Actions";
 import { USER_SESSION } from "@Interfaces";
@@ -14,7 +14,7 @@ declare namespace IAddCardModal {
     export interface IProps {
         isShowing: boolean;
         modalRef?: RefObject<HTMLDivElement>;
-        toggle: ()=>void;
+        toggle: () => void;
         user: USER_SESSION;
     }
 }
@@ -52,19 +52,19 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
 
     useEffect(() => {
         document.addEventListener("click", onModalClose);
-    
+
         return () => {
-          document.removeEventListener("click", onModalClose);
+            document.removeEventListener("click", onModalClose);
         };
     });
 
     return isShowing ? ReactDOM.createPortal(
-                <Modal border={theme.colors.primary} borderRadius="18px"
-                    width="initial">
-                    <div className="w-100 h-100 d-flex flex-column" ref={modalRef}>
-                        <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Redirecting to payment gateway ...</ParagraphText>
-                        {/* <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Enter your card details</ParagraphText> */}
-                        {/* <div style={{ width: "275px" }}>
+        <Modal border={theme.colors.primary} borderRadius="18px"
+            width="initial">
+            <div className="w-100 h-100 d-flex flex-column" ref={modalRef}>
+                <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Redirecting to payment gateway ...</ParagraphText>
+                {/* <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Enter your card details</ParagraphText> */}
+                {/* <div style={{ width: "275px" }}>
                             <FormComponent 
                                 onSubmit={handleSubmit} 
                                 defaultValues={{}} 
@@ -137,8 +137,8 @@ export const AddCardModal: React.RefForwardingComponent<HTMLDivElement, IAddCard
                                 </PrimaryButton>
                                 <span className="mb-5 text-danger font-12px">{ addCardError }</span>
                             </FormComponent>
-                        </div> */}
-                    </div>
-                </Modal>, document.body
-        ) : null;
+                        </div>*/}
+            </div>
+        </Modal>, document.body
+    ) : null;
 });

@@ -2,8 +2,8 @@
 import React from "react";
 import { NextPage } from "next";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
+import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 // #endregion Global Imports
 
 // #region Local Imports
@@ -17,15 +17,7 @@ import { ToastProvider } from "react-toast-notifications";
 // #endregion Interface Imports
 
 const DynamicProfile: any = dynamic(
-    () =>
-        import("@Components/ProfileComponent").then(
-            mod => mod.ProfileComponent
-        ) as Promise<
-            React.FunctionComponent<{
-                user: USER_SESSION;
-                profileUserName: string;
-            }>
-        >,
+    () => import('@Components/ProfileComponent').then((mod) => mod.ProfileComponent) as Promise<React.FunctionComponent<{ user: USER_SESSION, profileUserName: string }>>,
     { ssr: false }
 );
 

@@ -33,7 +33,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
     };
 
     const newMessageRecievedCallBack = (message: CONVERSATION_RESPONSE) => {
-        if (message.senderId !== session.id)
+        if (message.senderUsername !== session.username)
             dispatch(MessagesActions.MessageRecieved(message));
     }
 
@@ -125,9 +125,9 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
                         height={selected === config.name ? config.imageSelected.height : config.image.height}
                         width={selected === config.name ? config.imageSelected.width : config.image.width} />
                 </div>
-            </div>
+            </div >
         })}
-    </div>;
+    </div >;
 };
 
 const FooterConfig = [

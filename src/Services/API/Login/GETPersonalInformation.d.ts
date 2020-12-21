@@ -7,10 +7,10 @@ import {
 
 declare namespace GETPersonalInformationModel {
     export interface GetGETPersonalInformationPayload
-        extends GETPersonalInformationPayload {}
+        extends GETPersonalInformationPayload { }
 
     export interface GetGETPersonalInformationResponse
-        extends GETPersonalInformationResponse {}
+        extends GETPersonalInformationResponse { }
 }
 
 export { GETPersonalInformationModel };

@@ -24,18 +24,18 @@ export const FeedsService = {
             >(
                 "GET",
                 "/profiles/suggestion" + getQueryParams({ ...rest }),
-                authtoken
+                authtoken,
             );
         } catch (error) {
             response = {
                 status: false,
                 response: [
                     {
-                        name: "Sohaib Riaz",
+                        name: "John Dummy",
                         coverImageUrl:
-                            " https://storage.cricingif.com/cig-live-images/article-images/reduce/620x350/72227.jpg ",
+                            " https://storage.tv.com/live-images/article-images/reduce/620x350/72227.jpg ",
                         profileImageUrl:
-                            " https://storage.cricingif.com/cig-live-images/user-images/262319.png ",
+                            " https://storage.tv.com/live-images/user-images/262319.png ",
                         location: "",
                         bio: "",
                         followersCount: 3,
@@ -43,7 +43,7 @@ export const FeedsService = {
                         imagesCount: 0,
                         videosCount: 0,
                         followingFee: 0.0,
-                        userName: "sohaibminhas789",
+                        userName: "tv",
                     },
                 ],
             };
@@ -69,9 +69,9 @@ export const FeedsService = {
                 status: false,
                 response: [
                     {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
+                        name: "John Dummy",
+                        username: "tv",
+                        profileImageUrl: "/images/placeholder.png",
                         content_viewer_like: false,
                         id: 7,
                         title: "My First Post",
@@ -83,12 +83,31 @@ export const FeedsService = {
                                 type: 1,
                             },
                         ],
-                        medialist: [],
                         likesCount: 0,
                         commentsCount: 0,
                         tipsCount: 0,
                         timeStamp: "2020-07-09T09:03:28.8766667",
-                    }
+                    },
+                    {
+                        name: "John Dummy",
+                        username: "tv",
+                        profileImageUrl: "/images/placeholder.png",
+                        content_viewer_like: false,
+                        id: 7,
+                        title: "My Second Post",
+                        media_url: [
+                            {
+                                url: "72227.jpg",
+                                token:
+                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
+                                type: 1,
+                            },
+                        ],
+                        likesCount: 0,
+                        commentsCount: 0,
+                        tipsCount: 0,
+                        timeStamp: "2020-07-09T09:03:28.8766667",
+                    },
                 ],
             };
         }
@@ -263,9 +282,9 @@ export const FeedsService = {
                 status: false,
                 response: [
                     {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
+                        name: "John Dummy",
+                        username: "tv",
+                        profileImageUrl: "/images/placeholder.png",
                         content_viewer_like: false,
                         id: 7,
                         title: "My First Post",
@@ -313,9 +332,9 @@ export const FeedsService = {
                 status: false,
                 response: [
                     {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
+                        name: "John Dummy",
+                        username: "tv",
+                        profileImageUrl: "/images/placeholder.png",
                         content_viewer_like: false,
                         id: 7,
                         title: "My First Post",

@@ -17,12 +17,7 @@ import { StatusActions } from "@Actions";
 // #endregion Interface Imports
 
 const Authenticated: any = dynamic(
-    () =>
-        import("@Components/Authenticated").then(
-            mod => mod.Authenticated
-        ) as Promise<
-            React.FunctionComponent<{ session: USER_SESSION; name: string }>
-        >,
+    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{ session: USER_SESSION, name: string }>>,
     { ssr: false }
 );
 
@@ -49,7 +44,7 @@ const UserStatus: NextPage<IProfilePage.IProps> = () => {
 };
 
 export async function getServerSideProps(context: any) {
-    return { props: {} };
+    return { props: {} }
 }
 
 export default UserStatus;

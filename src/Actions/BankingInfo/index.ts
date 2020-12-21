@@ -26,19 +26,13 @@ export const BankingInfoActions = {
                 : ActionConsts.BankingInfo.PostBankingInfoError,
         });
     },
-    GetPersonalInformation: (
-        payload: IBankingInfoPage.Actions.IGetGETPersonalInformationPayload
-    ) => async (dispatch: Dispatch) => {
+    GetPersonalInformation: (payload: IBankingInfoPage.Actions.IGetGETPersonalInformationPayload) => async (
+        dispatch: Dispatch
+    ) => {
         const result = await LoginService.GetPersonalInformation(payload);
         dispatch({
-            payload: {
-                personalInformation:
-                    result.status && result.response ? result.response : {},
-            },
-            type:
-                result.status && result.response
-                    ? ActionConsts.BankingInfo.GetBankingInfoSuccess
-                    : null,
+            payload: { personalInformation: result.status && result.response ? result.response : {} },
+            type: result.status && result.response ? ActionConsts.BankingInfo.GetBankingInfoSuccess : null
         });
-    },
-};
+    }
+}

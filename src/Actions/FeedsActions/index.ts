@@ -12,9 +12,9 @@ import { IFeedsPage, IFeed } from "@Interfaces";
 // #endregion Interface Imports
 
 export const FeedsActions = {
-    GetProfileSuggestion: (
-        payload: IFeedsPage.Actions.IGetProfilesSuggestionPayload
-    ) => async (dispatch: Dispatch) => {
+    GetProfileSuggestion: (payload: IFeedsPage.Actions.IGetProfilesSuggestionPayload) => async (
+        dispatch: Dispatch
+    ) => {
         const result = await FeedsService.GetProfilesSuggestion(payload);
         dispatch({
             payload: {
@@ -31,14 +31,8 @@ export const FeedsActions = {
         const result = await FeedsService.GetAllFeeds(payload);
 
         dispatch({
-            payload: {
-                feeds: result.status && result.response ? result.response : [],
-                page: payload.page,
-            },
-            type:
-                result.status && result.response
-                    ? ActionConsts.Feeds.GetAllFeedsSuccess
-                    : ActionConsts.Feeds.GetAllFeedsError,
+            payload: { feeds: result.status && result.response ? result.response : [], page: payload.page },
+            type: result.status && result.response ? ActionConsts.Feeds.GetAllFeedsSuccess : ActionConsts.Feeds.GetAllFeedsError
         });
     },
     TipFeed: (payload: IFeed.Actions.ITipFeedPayload) => async () => {
@@ -87,7 +81,7 @@ export const FeedsActions = {
         if (result && !result.status && imagesMedia.has('mediaFiles')) {
             dispatch({
                 payload: result.error || "Media upload failed",
-                type: ActionConsts.Feeds.PostContentError,
+                type: ActionConsts.Feeds.PostContentError
             });
             return;
         }

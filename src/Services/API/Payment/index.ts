@@ -3,7 +3,13 @@ import { Http } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { OnBecomeCreatorModel, PaymentSettingsModel, AddCardModel, UpdatePaymentSettingsModel, AddFundsToWalletModel } from "@Interfaces";
+import {
+    OnBecomeCreatorModel,
+    PaymentSettingsModel,
+    AddCardModel,
+    UpdatePaymentSettingsModel,
+    AddFundsToWalletModel,
+} from "@Interfaces";
 // #endregion Interface Imports
 
 export const PaymentService = {
@@ -45,22 +51,24 @@ export const PaymentService = {
                 response: {
                     userSettings: {
                         paymentMode: 0,
-                        defaultCard: 0
+                        defaultCard: 0,
                     },
                     userWallet: {
-                        balance: 220.0
+                        balance: 0.0,
                     },
-                    userCard: [{
-                        id: 2,
-                        userId: 10,
-                        cardNumber: "12345678910112",
-                        cardTitle: "sohaib",
-                        cvc: 1234,
-                        expMonth: 12,
-                        expYear: 10,
-                        cardType: ""
-                    }]
-                }
+                    userCard: [
+                        {
+                            id: 2,
+                            userId: 10,
+                            cardNumber: "12345678910112",
+                            cardTitle: "John",
+                            cvc: 1234,
+                            expMonth: 12,
+                            expYear: 10,
+                            cardType: "",
+                        },
+                    ],
+                },
             };
         }
         return response;
@@ -76,24 +84,27 @@ export const PaymentService = {
                 "/user-payment/" + payload.userId + "/cards",
                 undefined,
                 {
-                    cardTitle: payload.cardTitle, cardNumber: payload.cardNumber, expMonth: payload.expMonth,
-                    expYear: payload.expYear, cvc: payload.cvc
+                    cardTitle: payload.cardTitle,
+                    cardNumber: payload.cardNumber,
+                    expMonth: payload.expMonth,
+                    expYear: payload.expYear,
+                    cvc: payload.cvc,
                 }
             );
         } catch (error) {
             response = {
                 status: false,
-                error: 'Api Failed',
+                error: "Api Failed",
                 response: {
                     userSettings: {
                         paymentMode: 0,
-                        defaultCard: 0
+                        defaultCard: 0,
                     },
                     userWallet: {
-                        balance: 0
+                        balance: 0,
                     },
-                    userCard: []
-                }
+                    userCard: [],
+                },
             };
         }
         return response;
@@ -102,7 +113,7 @@ export const PaymentService = {
         payload: UpdatePaymentSettingsModel.GetUpdatePaymentSettingsPayload
     ): Promise<UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse> => {
         let response: UpdatePaymentSettingsModel.GetUpdatePaymentSettingsResponse;
-        let params = <{ paymentMode: number, defaultCard: number }>{};
+        let params = <{ paymentMode: number; defaultCard: number }>{};
 
         payload.paymentMode && (params.paymentMode = payload.paymentMode);
         payload.defaultCard && (params.defaultCard = payload.defaultCard);
@@ -117,17 +128,17 @@ export const PaymentService = {
         } catch (error) {
             response = {
                 status: false,
-                error: 'Api Failed',
+                error: "Api Failed",
                 response: {
                     userSettings: {
                         paymentMode: 0,
-                        defaultCard: 0
+                        defaultCard: 0,
                     },
                     userWallet: {
-                        balance: 0
+                        balance: 0,
                     },
-                    userCard: []
-                }
+                    userCard: [],
+                },
             };
         }
         return response;
@@ -148,7 +159,7 @@ export const PaymentService = {
         } catch (error) {
             response = {
                 status: false,
-                balance: 0.00
+                balance: 0.0,
             };
         }
         return response;
@@ -159,16 +170,14 @@ export const PaymentService = {
         let response: OnBecomeCreatorModel.GetOnBecomeCreatorResponse;
 
         try {
-            response = await Http.Request<OnBecomeCreatorModel.GetOnBecomeCreatorResponse>(
-                "POST",
-                "/profiles/" + payload.userName + "/upgrade",
-                undefined
-            );
+            response = await Http.Request<
+                OnBecomeCreatorModel.GetOnBecomeCreatorResponse
+            >("POST", "/profiles/" + payload.userName + "/upgrade", undefined);
         } catch (error) {
             response = {
-                status: false
+                status: false,
             };
         }
         return response;
-    }
+    },
 };

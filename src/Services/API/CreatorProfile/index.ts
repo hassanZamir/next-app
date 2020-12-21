@@ -57,9 +57,9 @@ export const CreatorProfileService = {
                 status: false,
                 response: [
                     {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
+                        name: "John Dummy",
+                        username: "tv",
+                        profileImageUrl: "/images/placeholder.png",
                         content_viewer_like: false,
                         id: 7,
                         title: "My First Post",
@@ -78,12 +78,12 @@ export const CreatorProfileService = {
                         timeStamp: "2020-07-09T09:03:28.8766667",
                     },
                     {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
+                        name: "John Dummy",
+                        username: "tv",
+                        profileImageUrl: "/images/placeholder.png",
                         content_viewer_like: false,
                         id: 7,
-                        title: "My First Post",
+                        title: "My Second Post",
                         media_url: [
                             {
                                 url: "72227.jpg",
@@ -97,49 +97,7 @@ export const CreatorProfileService = {
                         commentsCount: 0,
                         tipsCount: 0,
                         timeStamp: "2020-07-09T09:03:28.8766667",
-                    },
-                    {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
-                        content_viewer_like: false,
-                        id: 7,
-                        title: "My First Post",
-                        media_url: [
-                            {
-                                url: "72227.jpg",
-                                token:
-                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
-                                type: 1,
-                            },
-                        ],
-                        medialist: [],
-                        likesCount: 0,
-                        commentsCount: 0,
-                        tipsCount: 0,
-                        timeStamp: "2020-07-09T09:03:28.8766667",
-                    },
-                    {
-                        name: "sohaib",
-                        username: "venotv1234",
-                        profileImageUrl: "/images/Capture@2x.png",
-                        content_viewer_like: false,
-                        id: 7,
-                        title: "My First Post",
-                        media_url: [
-                            {
-                                url: "72227.jpg",
-                                token:
-                                    "?sp=rl&st=2020-07-30T17:05:23Z&se=2020-08-03T17:05:00Z&sv=2019-12-12&sr=b&sig=d7k6fJNCcn%2FUjsWMy8lHnHiL2syjG2fJsTFeeOZ0gK0%3D",
-                                type: 1,
-                            },
-                        ],
-                        medialist: [],
-                        likesCount: 0,
-                        commentsCount: 0,
-                        tipsCount: 0,
-                        timeStamp: "2020-07-09T09:03:28.8766667",
-                    },
+                    }
                 ],
             };
         }
@@ -161,17 +119,17 @@ export const CreatorProfileService = {
             response = {
                 status: false,
                 response: {
-                    name: "sohaib",
+                    name: "John Dummy",
                     coverImageUrl: "/images/5.jpg",
-                    profileImageUrl: "/images/Capture@2x.png",
-                    location: "Pakistan",
+                    profileImageUrl: "/images/placeholder.png",
+                    location: "Australia",
                     bio: "technology Geek",
                     followersCount: 0,
                     contentCount: 0,
                     imagesCount: 0,
                     videosCount: 0,
                     followingFee: 0.0,
-                    userName: "sohaibminhas789",
+                    userName: "tv",
                 },
             };
         }
@@ -237,17 +195,17 @@ export const CreatorProfileService = {
             response = {
                 status: false,
                 response: {
-                    name: "sohaib",
+                    name: "John Dummy",
                     coverImageUrl: "/images/5.jpg",
                     profileImageUrl: "/images/Capture@2x.png",
-                    location: "Pakistan",
+                    location: "Australia",
                     bio: "technology Geek",
                     followersCount: 0,
                     contentCount: 0,
                     imagesCount: 0,
                     videosCount: 0,
                     followingFee: 0.0,
-                    userName: "sohaibminhas789",
+                    userName: "tv",
                 },
             };
         }
@@ -263,7 +221,10 @@ export const CreatorProfileService = {
                 ProfileFollowersModel.GetProfileFollowersResponse
             >(
                 "GET",
-                "/profiles/" + payload.username + "/followers?userId=" + payload.userId,
+                "/profiles/" +
+                payload.username +
+                "/followers?userId=" +
+                payload.userId,
                 payload.authtoken,
                 undefined
             );
@@ -272,7 +233,7 @@ export const CreatorProfileService = {
                 status: false,
                 response: [
                     {
-                        userId: 10,
+                        userId: 0,
                     },
                 ],
             };
@@ -287,9 +248,11 @@ export const CreatorProfileService = {
         try {
             response = await Http.UserAuthRequest<
                 CreatorProfileModel.GetFollowProfileResponse
-            >("POST", "/profiles/" + payload.username + "/follow", payload.authtoken, undefined, {
-                userId: payload.userId,
-            });
+            >("POST", "/profiles/" + payload.username + "/follow",
+                payload.authtoken,
+                undefined,
+                { userId: payload.userId }
+            );
         } catch (error) {
             response = {
                 status: false,

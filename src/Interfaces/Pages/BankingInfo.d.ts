@@ -25,20 +25,14 @@ declare namespace IBankingInfoPage {
             personalInformation: GETPersonalInformationModel.GetGETPersonalInformationResponse;
         }
 
-        export interface IGetUploadProfileImagesPayload
-            extends CreatorProfileModel.GetUploadProfileImagesPayload {}
-        export interface IGetUploadProfileImagesResponse
-            extends CreatorProfileModel.GetUploadProfileImagesResponse {}
+        export interface IGetUploadProfileImagesPayload extends CreatorProfileModel.GetUploadProfileImagesPayload { }
+        export interface IGetUploadProfileImagesResponse extends CreatorProfileModel.GetUploadProfileImagesResponse { }
 
-        export interface IGetPostPersonalInformationPayload
-            extends PostPersonalInformationModel.GetPostPersonalInformationPayload {}
-        export interface IGetPostPersonalInformationResponse
-            extends PostPersonalInformationModel.GetPostPersonalInformationResponse {}
+        export interface IGetPostPersonalInformationPayload extends PostPersonalInformationModel.GetPostPersonalInformationPayload { }
+        export interface IGetPostPersonalInformationResponse extends PostPersonalInformationModel.GetPostPersonalInformationResponse { }
 
-        export interface IGetGETPersonalInformationPayload
-            extends GETPersonalInformationModel.GetGETPersonalInformationPayload {}
-        export interface IGetGETPersonalInformationResponse
-            extends GETPersonalInformationModel.GetGETPersonalInformationResponse {}
+        export interface IGetGETPersonalInformationPayload extends GETPersonalInformationModel.GetGETPersonalInformationPayload { }
+        export interface IGetGETPersonalInformationResponse extends GETPersonalInformationModel.GetGETPersonalInformationResponse { }
     }
 }
 

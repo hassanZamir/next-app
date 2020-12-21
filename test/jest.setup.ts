@@ -19,7 +19,7 @@ nock("http://localhost:3000")
     .get("/api/planetary/apod")
     .query({ api_key: "NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo", hd: true })
     .reply(200, {
-        copyright: "Pankod",
+        copyright: "",
         date: "2019-05-23",
         explanation: "",
         hdurl: "",

@@ -41,10 +41,10 @@ export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIEN
         return (<div onClick={() => { onRecipientClick(); }}
             style={{
                 marginBottom: "1px",
-                borderBottom: "1px solid " + theme.colors.grey300
+                borderBottom: "1px solid " + theme.colors.grey300,
             }}
-            className="hover-bg cursor-pointer d-flex mx-4 py-4">
-
+            className="hover-bg cursor-pointer d-flex mx-4 py-4"
+        >
             <div style={{ minHeight: "62px", minWidth: "62px" }}>
                 <BackgroundImage
                     paddingBottom="100%"

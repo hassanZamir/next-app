@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useModal } from "@Components/Hooks";
 import { AddCardModal } from "@Components/Modals/AddCardModal";
 
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media";
+const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media"; // TODO: convert to env
 
 export const Menu: React.FunctionComponent<{
     isShowing: boolean;
