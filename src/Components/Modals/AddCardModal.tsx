@@ -49,9 +49,12 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
             city: data.city,
             country: data.country,
 
+            fname: data.fname,
+            lname: data.lname,
+
             // phoneNumber: data.phoneNumber,
-            // address1: data.address1,
-            // address2: data.address2,
+            address1: data.address1,
+            address2: data.address2,
 
             userId: user.id,
             authtoken: user.token,
@@ -78,16 +81,16 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
 
     return isShowing ? ReactDOM.createPortal(
         <Modal border={theme.colors.primary} borderRadius="18px"
-            width="initial">
+            width="100%" style={{ minWidth: "325px", maxWidth: "325px", width:"100%" }}>
             <div className="w-100 h-100 d-flex flex-column" ref={modalRef}>
                 {/* <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Redirecting to payment gateway ...</ParagraphText> */}
                 <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Enter your card details</ParagraphText>
-                <div style={{ minWidth: "275px", width:"initial" }}>
+                <div>
                     <FormComponent 
                         onSubmit={handleSubmit} 
                         defaultValues={{}} 
                         submitActive={!loading}>
-                        <LabelInput 
+                        {/* <LabelInput 
                                 type="text"
                                 labelText="Name" 
                                 name="name" 
@@ -95,8 +98,8 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                                 validationRules={{ 
                                     required: "Name is required"
                                 }}
-                            />
-                        {/* <div className="d-flex flex-row">
+                            /> */}
+                        <div className="d-flex flex-row">
                             <LabelInput
                             type="text"
                             labelText="First Name" 
@@ -115,7 +118,7 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                                     required: "Last Name is required"
                                 }}
                             />
-                        </div> */}
+                        </div>
                         
                         <LabelInput 
                             type="text"
@@ -167,7 +170,7 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                             }}
                         />
                         </div>
-                        {/* <LabelInput
+                        <LabelInput
                                 type="text"
                                 labelText="Address 1"
                                 name="address1"
@@ -190,7 +193,7 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                                     message: "Address is required",
                                 },
                             }}
-                        /> */}
+                        />
                         <div className="d-flex flex-row"> 
                             <LabelInput
                                 type="text"

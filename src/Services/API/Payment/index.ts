@@ -94,6 +94,10 @@ export const PaymentService = {
                     city: payload.city,
                     country: payload.country,
                     zipcode: payload.poboxNumber,
+                    customerFname: payload.fname,
+                    customerLname: payload.lname,
+                    address1: payload.address1,
+                    address2: payload.address2
                 }
             );
         } catch (error) {

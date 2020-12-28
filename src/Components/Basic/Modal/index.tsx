@@ -22,7 +22,7 @@ const ModalContainer = styled.div<{ border?: string, borderRadius?: string, widt
 
 `;
 
-export const Modal: React.FunctionComponent<{ border?: string, borderRadius?: string, width?: string, background?: string, padding?: string }> = ({ children, ...rest }) => {
+export const Modal: React.FunctionComponent<{ border?: string, borderRadius?: string, width?: string, background?: string, padding?: string, style?: {} }> = ({ children, ...rest }) => {
     return <React.Fragment>
         <div className="modal-overlay" />
         <div className="modal-wrapper">
