@@ -125,8 +125,10 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                             validationRules={{ 
                                 required: "Card Number is required",
                                 validate: (value: string) => {
-                                    const regex = new RegExp("^[0-9]{12}(?:[0-9]{3})?$");
-                                    return regex.test(value) ? true : "Should be a valid card number";
+                                    // const regex = new RegExp("^[0-9]{16}(?:[0-9]{3})?$");
+                                    // reference: http://www.regular-expressions.info/creditcard.html
+                                    const regex = new RegExp(`^(?:4[0-9]{12}(?:[0-9]{3})?|(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}|(?:2131|1800|35\d{3})\d{11})$`);
+                                    return regex.test(value) ? true : "Please enter a valid card number";
                                 }
                             }}
                         />
