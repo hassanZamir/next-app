@@ -69,7 +69,7 @@ export const LoginErrorReducer = (
             });
         }
         case ActionConsts.Login.OnLoginSucess: {
-            console.log(Router);
+            // console.log(Router);
             if (Router.route.includes("login"))
                 Router.push("/");
             else

@@ -31,7 +31,7 @@ export const PersistReducer = (
     switch (action.type) {
         case ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess: {
             const response = action.payload!;
-            console.log(response);
+            // console.log(response);
             return Object.assign({}, state, {
                 session: Object.assign({}, state.session, {
                     name: response.name,
@@ -86,7 +86,7 @@ export const PersistReducer = (
         }
         case ActionConsts.Messages.SetActiveConversationSuccess: {
             const { conversation } = action.payload!;
-            console.log("activeConversation : ", conversation);
+            // console.log("activeConversation : ", conversation);
             Router.push("/message/" + conversation.id, "/message/" + conversation.id);
             return Object.assign({}, state, {
                 activeConversation: conversation

@@ -349,7 +349,7 @@ export const LoginService = {
     ): Promise<
         GETFollowingInformationModel.GetGETFollowingInformationResponse
     > => {
-        console.log(payload);
+        // console.log(payload);
         const filter = payload.filterUsername ? `&filterUsername=${payload.filterUsername}` : "";
         let response: GETFollowingInformationModel.GetGETFollowingInformationResponse;
         try {

@@ -29,7 +29,7 @@ export const FollowingInfoReducer = (
         case ActionConsts.FollowingInfo.GetFollowingInfoSuccess: {
             let FollowingInformation = action.payload.followingInformation;
             let type = action.payload.type;
-            console.log(type);
+            // console.log(type);
             return Object.assign({}, state, {
                 defaultFollowingInformation: FollowingInformation,
                 followingType: type,

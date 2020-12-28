@@ -28,9 +28,9 @@ export const FeedsReducer = (
 ) => {
     switch (action.type) {
         case ActionConsts.Feeds.PostContentSuccess: {
-            console.log("Reducer-payload: ", action.payload);
+            // console.log("Reducer-payload: ", action.payload);
             const feed = action.payload!.feed;
-            console.log("Reducer-feed: ", feed);
+            // console.log("Reducer-feed: ", feed);
             //console.log("Reducer-feeds: ", state);
 
             return Object.assign({}, state, {

@@ -36,16 +36,16 @@ export const PaymentSettings: React.FunctionComponent<{ user: USER_SESSION, crea
                 modalRef={modalRef}
                 user={user}
                 onAddCard={setShowAddCard} />}
-            {/* {showAddCard && <AddCardModal
+            {showAddCard && <AddCardModal
             toggle={toggle}
             isShowing={isShowing}  
             modalRef={modalRef} 
-            user={user} />} */}
-            {showAddCard && creatorProfile && <CCBillAddCardModal
+            user={user} />}
+            {/* {showAddCard && creatorProfile && <CCBillAddCardModal
                 user={user}
                 isShowing={isShowing}
                 toggle={toggle}
                 creatorProfile={creatorProfile}
-            />}
+            />} */}
         </React.Fragment>);
     }

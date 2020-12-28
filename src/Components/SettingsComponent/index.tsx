@@ -853,7 +853,7 @@ export const SettingsComponent: React.FunctionComponent<{
     const { addToast } = useToasts();
     const action = router.query["action"] as string;
     useEffect(() => {
-        console.log(action);
+        // console.log(action);
         if (action == "upgrade")
             addToast("Please upload profile and cover image before upgrading to creator account.", { appearance: "info" });
     }, []);

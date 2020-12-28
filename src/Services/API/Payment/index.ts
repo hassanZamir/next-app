@@ -79,16 +79,21 @@ export const PaymentService = {
         let response: AddCardModel.GetAddCardResponse;
 
         try {
-            response = await Http.Request<AddCardModel.GetAddCardResponse>(
+            response = await Http.UserAuthRequest<AddCardModel.GetAddCardResponse>(
                 "POST",
                 "/user-payment/" + payload.userId + "/cards",
+                payload.authtoken,
                 undefined,
                 {
                     cardTitle: payload.cardTitle,
                     cardNumber: payload.cardNumber,
                     expMonth: payload.expMonth,
                     expYear: payload.expYear,
-                    cvc: payload.cvc,
+                    cvcInput: payload.cvc,
+                    cityState: payload.state,
+                    city: payload.city,
+                    country: payload.country,
+                    zipcode: payload.poboxNumber,
                 }
             );
         } catch (error) {

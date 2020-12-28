@@ -37,7 +37,7 @@ export const CCBillAddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, 
             recurringPeriod: followingPeriod,
             rebills: rebills,
         });
-        console.log(response);
+        // console.log(response);
         if (response.status == false || !response.data?.formdigest) {
             // setModalText("Something went wrong. Please try again later.");
             // TODO: close the popup

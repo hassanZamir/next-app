@@ -15,7 +15,7 @@ const useModal = (ref: any, onCloseModal?: any) => {
       !ref.current.contains(e.target) && 
       e.target.className === 'modal-wrapper'
     ) {
-      console.log("handle caskda");
+      // console.log("handle caskda");
       onCloseModal && onCloseModal();
       toggle();
     }
