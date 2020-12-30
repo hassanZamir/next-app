@@ -47,14 +47,19 @@ const FollowingCard: React.FunctionComponent<{
     const [toggleDetials, setToggleDetails] = useState(false);
     const [checkedItems, setCheckedItems] = useState<any>({});
     const modalRef = useRef<HTMLDivElement>(null);
-    const [clickedTipFeed, setClickedTipFeed] = useState({});
+    const [clickedTipFeed, setClickedTipFeed] = useState({
+        recipientUserName: "undefined"
+    });
     const { isShowing, toggle } = useModal(modalRef);
     const [loading, setLoading] = useState(false);
     const [fetchUpdatedData, setFetchUpdatedData] = useState(false);
     const { addToast } = useToasts();
 
 
-    const toggleTipModal = (e: any) => {
+    const toggleTipModal = (e: any, recipientUsername: string) => {
+        setClickedTipFeed({
+            recipientUserName: recipientUsername
+        });
         if (isShowing) {
             toggle();
         } else {
@@ -124,7 +129,7 @@ const FollowingCard: React.FunctionComponent<{
             viewerId: user.id,
             message: message,
             amount: parseInt(amount),
-            creatorUserName: user.username,
+            creatorUserName: clickedTipFeed.recipientUserName,
             authtoken: user.token,
         };
         toggle();
@@ -379,7 +384,7 @@ const FollowingCard: React.FunctionComponent<{
                                                                             padding="0px 15px !important"
                                                                             className="mr-4 following-cards-btn lato-semibold border-primary bg-primary text-white"
                                                                             onClick={e => {
-                                                                                toggleTipModal(e);
+                                                                                toggleTipModal(e, followingInfo.username);
                                                                             }}
                                                                         >
                                                                             <span className="following-cards-btn-margin font-14px">Tip</span>
