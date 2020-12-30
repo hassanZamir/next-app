@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useModal } from "@Components/Hooks";
 import { AddCardModal } from "@Components/Modals/AddCardModal";
 
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media"; // TODO: convert to env
+const mediaBaseUrl = process.env.MEDIA_BASE_URL; // TODO: convert to env
 
 export const Menu: React.FunctionComponent<{
     isShowing: boolean;
@@ -118,11 +118,11 @@ export const Menu: React.FunctionComponent<{
                     <div className="link-anchor">
                         <img src="/images/cards.svg" alt="Card Icon"></img>
                         <span className="ml-2">
-                            {session.cardNumber ? `Your Cards` : `Add Card`}
+                            {session.cardNumber ? `Payments` : `Add Card`}
                             {!session.cardNumber && (
                                 <span className="menu-icon-color">
                                     {" "}
-                                    ( To subscribe )
+                                    ( To Follow )
                                 </span>
                             )}
                         </span>
@@ -135,16 +135,15 @@ export const Menu: React.FunctionComponent<{
                         <span className="ml-2">
                             {session.isCreator
                                 ? `Bank Account Info`
-                                : `Add Bank`}
+                                : `Upgrade Account`}
                             {!session.isCreator && (
                                 <span className="menu-icon-color">
                                     {" "}
-                                    ( To earn )
+                                    ( To Earn )
                                 </span>
                             )}
                         </span>
                     </div>
-                    {/* </a> */}
                 </Link>
                 <hr />
                 <Link href="/support">

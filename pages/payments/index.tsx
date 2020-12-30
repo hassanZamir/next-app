@@ -21,8 +21,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { theme } from "@Definitions/Styled";
 import Router, { useRouter } from "next/router";
 import { useModal } from "@Components/Hooks";
-import { IFrameModal } from "@Components/Modals/IframeModal";
-import { Url } from "url";
+import { AddCardModal } from "@Components/Modals/AddCardModal";
 // #endregion Interface Imports
 
 const DynamicPayments: any = dynamic(
@@ -64,9 +63,9 @@ const Payments: NextPage = () => {
     };
 
     // add card flow
-    const addCardModalRef = useRef<HTMLDivElement>(null);
-    const iframeModalRef = useModal(useRef());
-    const url = "https://sandbox-api.ccbill.com/wap-frontflex/flexforms/"
+    const addCardModelRef = useRef<HTMLDivElement>(null)
+    const addCardModal = useModal(addCardModelRef);
+    const [showAddCard, setShowAddCard] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -87,7 +86,8 @@ const Payments: NextPage = () => {
     }
 
     function onAddCard() {
-        window.location.href = url;
+        // setShowAddCard(true);
+        addCardModal.toggle();
     }
 
 
@@ -161,12 +161,11 @@ const Payments: NextPage = () => {
                     }
                 />
             </div>
-
-            {/* <IFrameModal
-                title="Add Card"
-                user={session}
-                url={url}
-            /> */}
+            {showAddCard && <AddCardModal
+            toggle={addCardModal.toggle}
+            isShowing={addCardModal.isShowing}  
+            modalRef={addCardModelRef} 
+            user={session} />}
         </Authenticated >
     );
 };

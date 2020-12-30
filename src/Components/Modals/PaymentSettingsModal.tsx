@@ -52,60 +52,60 @@ export const VenoWallet: React.FunctionComponent<{
     async function onAddFundsToWallet(amount: number) {
         setLoadingAddFundsToWallet(true);
 
-        // convert string to int and check CCBill minimum amount limitations
-        if (+inputs.amount > 2.95) {
-            // CCBill Form Data
-            const clientAccnum = 0; // An integer value representing the 6 - digit merchant account number.
-            const clientSubacc = '0000'; // An integer value representing the 4 - digit merchant subaccount number the customer should be charged on.
-            const initialPrice = +inputs.amount; // A decimal value representing the initial price.
-            const initialPeriod = 1;// An integer representing the length, in days, of the initial billing period.By default this is a 30, 60, or 90 day period.
-            const currencyCode = 36; // An integer representing the 3 - digit currency code that will be used for the transaction.  978 - EUR, 036 - AUD, 124 - CAD, 826 - GBP, 392 - JPY, 840 - USD
-            let formDigest;
-            // get encoded formDigest from backend
-            const { id, email, token } = user
-            const response = await fetch("api/pay", {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                mode: 'same-origin', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin', // include, *same-origin, omit
-                headers: {
-                    'Content-Type': 'application/json' // 'application/x-www-form-urlencoded',
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify({
-                    clientAccnum,
-                    clientSubacc,
-                    initialPrice,
-                    initialPeriod,
-                    currencyCode,
-                    user: {
-                        id,
-                        email,
-                        token
-                    }
-                })
-            });
+        // // convert string to int and check CCBill minimum amount limitations
+        // if (+inputs.amount > 2.95) {
+        //     // CCBill Form Data
+        //     const clientAccnum = 0; // An integer value representing the 6 - digit merchant account number.
+        //     const clientSubacc = '0000'; // An integer value representing the 4 - digit merchant subaccount number the customer should be charged on.
+        //     const initialPrice = +inputs.amount; // A decimal value representing the initial price.
+        //     const initialPeriod = 1;// An integer representing the length, in days, of the initial billing period.By default this is a 30, 60, or 90 day period.
+        //     const currencyCode = 36; // An integer representing the 3 - digit currency code that will be used for the transaction.  978 - EUR, 036 - AUD, 124 - CAD, 826 - GBP, 392 - JPY, 840 - USD
+        //     let formDigest;
+        //     // get encoded formDigest from backend
+        //     const { id, email, token } = user
+        //     const response = await fetch("api/pay", {
+        //         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        //         mode: 'same-origin', // no-cors, *cors, same-origin
+        //         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        //         credentials: 'same-origin', // include, *same-origin, omit
+        //         headers: {
+        //             'Content-Type': 'application/json' // 'application/x-www-form-urlencoded',
+        //         },
+        //         redirect: 'follow', // manual, *follow, error
+        //         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        //         body: JSON.stringify({
+        //             clientAccnum,
+        //             clientSubacc,
+        //             initialPrice,
+        //             initialPeriod,
+        //             currencyCode,
+        //             user: {
+        //                 id,
+        //                 email,
+        //                 token
+        //             }
+        //         })
+        //     });
 
-            const result = await response.json();
-            if (result.status) {
-                formDigest = result.data.formdigest;
+        //     const result = await response.json();
+        //     if (result.status) {
+        //         formDigest = result.data.formdigest;
 
-                // redirect user to cc bill with dynamic pricing
-                // https://api.ccbill.com/wap-frontflex/flexforms/?clientSubacc=0000&initialPrice=33.00&initialPeriod=1&currencyCode=036&formDigest=38295bb30118c0f7d88a2f12d600c995
-                window.location.href = "https://api.ccbill.com/wap-frontflex/flexforms/?clientSubacc=0000&initialPrice=33.00&initialPeriod=1&currencyCode=036&formDigest=38295bb30118c0f7d88a2f12d600c995";//`https://api.ccbill.com/wap-frontflex/flexforms/983634b7-`;//?clientSubacc=0000&initialPrice=${initialPrice}&initialPeriod=${initialPeriod}&currencyCode=${currencyCode}&formDigest=${formDigest}`;
-                return;
-            }
-        }
-        else {
-            // Error: amount should be greater than minimum value.
-            // parseFloat(inputs.amount) === NaN => invalid amount value
-        }
+        //         // redirect user to cc bill with dynamic pricing
+        //         // https://api.ccbill.com/wap-frontflex/flexforms/?clientSubacc=0000&initialPrice=33.00&initialPeriod=1&currencyCode=036&formDigest=38295bb30118c0f7d88a2f12d600c995
+        //         window.location.href = "https://api.ccbill.com/wap-frontflex/flexforms/?clientSubacc=0000&initialPrice=33.00&initialPeriod=1&currencyCode=036&formDigest=38295bb30118c0f7d88a2f12d600c995";//`https://api.ccbill.com/wap-frontflex/flexforms/983634b7-`;//?clientSubacc=0000&initialPrice=${initialPrice}&initialPeriod=${initialPeriod}&currencyCode=${currencyCode}&formDigest=${formDigest}`;
+        //         return;
+        //     }
+        // }
+        // else {
+        //     // Error: amount should be greater than minimum value.
+        //     // parseFloat(inputs.amount) === NaN => invalid amount value
+        // }
 
 
-        // await dispatch(
-        //     PaymentActions.AddFundsToWallet({ amount: amount, userId: user.id, authtoken: user.token })
-        // );
+        await dispatch(
+            PaymentActions.AddFundsToWallet({ amount: amount, userId: user.id, authtoken: user.token })
+        );
         setInputs({
             amount: ''
         })
@@ -303,7 +303,7 @@ export const AllCards: React.FunctionComponent<{
     );
 };
 
-export const PaymentSettingsModal: React.RefForwardingComponent<
+export const PaymentSettingsModal: React.ForwardRefRenderFunction<
     HTMLDivElement,
     IPaymentSettingsModal.IProps
 > = props => {
