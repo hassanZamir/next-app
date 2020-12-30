@@ -6,10 +6,14 @@ export type MESSAGE_LIST_ITEM = {
     participantSeenStatus: boolean,
     profileImageUrl: string,
     /**
-    * @deprecated Use `userName` instead.
+    * @deprecated Use `recipientUsername` instead.
     */
     userId: number,
-    userName: string
+    /**
+    * @deprecated Use `recipientUsername` instead.
+    */
+    userName: string,
+    recipientUserName: string
 }
 
 export interface GETAllMessagesResponse {

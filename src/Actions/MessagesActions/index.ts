@@ -42,7 +42,6 @@ export const MessagesActions = {
         dispatch: Dispatch
     ) => {
         const result = await MessagesService.CreateConversation(payload);
-
         dispatch({
             payload: { conversation: result.status && result.response ? result.response : {} },
             type: result.status && result.response ? ActionConsts.Messages.SetActiveConversationSuccess : ActionConsts.Messages.SetActiveConversationError

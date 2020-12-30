@@ -18,7 +18,7 @@ export const MessagesService = {
                 MessagesModel.GetGETAllMessagesResponse
             >(
                 "GET",
-                `/user/${userId}/conversations${getQueryParams({ ...rest })}`,
+                `/users/${userId}/messages${getQueryParams({ ...rest })}`,
                 authtoken,
                 undefined
             );
@@ -35,6 +35,7 @@ export const MessagesService = {
                         profileImageUrl: "",
                         userId: 0,
                         userName: "",
+                        recipientUserName: "",
                     },
                 ],
             };
@@ -76,16 +77,16 @@ export const MessagesService = {
         payload: MessagesModel.GetPOSTConversationCreateThreadPayload
     ): Promise<MessagesModel.GetPOSTConversationCreateThreadResponse> => {
         let response: MessagesModel.GetPOSTConversationCreateThreadResponse;
-
+        const {authtoken, ...rest}= payload;
         try {
             response = await Http.UserAuthRequest<
                 MessagesModel.GetPOSTConversationCreateThreadResponse
             >(
                 "POST",
                 "/conversations",
-                payload.authtoken,
+                authtoken,
                 undefined,
-                { ...payload }
+                { ...rest }
             );
         } catch (error) {
             response = {
@@ -99,6 +100,7 @@ export const MessagesService = {
                     profileImageUrl: "",
                     userId: 0,
                     userName: "",
+                    recipientUserName: "",
                     userConversationSettings: {
                         isFavourite: true,
                         isBlocked: false,

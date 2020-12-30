@@ -47,14 +47,15 @@ export const CreateMessage: React.FunctionComponent<{
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const { userConversationSettings, creatorConversationSettings } = conversationThread;
-
+    // console.log("CreateMessage-userConversationSettings", userConversationSettings);
+    // console.log("CreateMessage-creatorConversationSettings", creatorConversationSettings);
     useEffect(() => {
         if (userConversationSettings && userConversationSettings.isBlocked === true)
             setError("You can no longer reply to this conversation as the user is blocked.");
         else if (userConversationSettings && userConversationSettings.isRestricted === true)
             setError("You may not recieve some msgs as the user is restricted.");
-        else if (creatorConversationSettings && creatorConversationSettings.state !== 2)
-            setError("You can no longer reply to this conversation as your subscription is not active.");
+        else if (creatorConversationSettings && creatorConversationSettings.state !== 1)
+            setError("You can no longer reply to this conversation as the subscription is not active.");
         else setError("");
     }, [conversationThread.creatorConversationSettings, conversationThread.userConversationSettings]);
 
@@ -173,12 +174,16 @@ export const CreateMessage: React.FunctionComponent<{
             viewerId: user.id,
             message: message,
             amount: parseInt(amount),
-            creatorUserName: user.username,
+            creatorUserName: conversationThread.recipientUserName,
             authtoken: user.token,
         };
         toggle();
         FeedsActions.TipFeed(param)().then((resp: any) => {
-            sendTipMessage(resp.response, message, amount, user.id);
+            // console.log("TipFeed: ",resp);
+            if(resp && resp.status == true)
+                sendTipMessage(resp.response, message, amount, user.id);
+            else
+                setError(resp.error ?? "Tip failed. Please try again later.");
         });
     };
 

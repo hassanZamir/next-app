@@ -50,7 +50,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                 cluster: 'ap4', encrypted: true,
                 authTransport: 'jsonp',
                 authEndpoint: apiUrl + '/pusher/auth',
-                auth: { params: { userId: user.id } }
+                auth: { params: { userId: user.id, authtoken: user.token } }
             }).then((channel: any) => {
                 console.log("Presence channel subscribed");
             }).catch((err: any) => {
@@ -128,7 +128,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
                         onClick={() => {
                             dispatch(MessagesActions.UpdateMessageSettings({
                                 userName: user.username,
-                                recipientUsername: conversationThread.userName,
+                                recipientUsername: conversationThread.recipientUserName,
                                 apiRouteKey: userConversationSettings && userConversationSettings.isFavourite ? 'unfavourite' : 'favourite',
                                 apiReducerKey: 'isFavourite',
                                 authtoken: user.token,

@@ -39,7 +39,7 @@ export const MessageSettingsModal: React.ForwardRefRenderFunction<HTMLDivElement
         if (apiRouteKey) {
             dispatch(MessagesActions.UpdateMessageSettings({
                 userName: user.username,
-                recipientUsername: conversationThread.userName,
+                recipientUsername: conversationThread.recipientUserName,
                 apiRouteKey: getApiRouteKey(index),
                 apiReducerKey: index === 3 ? 'isRestricted' : 'isBlocked',
                 authtoken: user.token,

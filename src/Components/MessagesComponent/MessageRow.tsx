@@ -10,19 +10,18 @@ import { MESSAGE_LIST_ITEM, USER_SESSION } from "@Interfaces";
 import { theme } from "@Definitions/Styled";
 import { MessagesActions } from "@Actions";
 // #endregion Local Imports
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media"; // TODO: convert to env
+const mediaBaseUrl = process.env.MEDIA_BASE_URL; // TODO: convert to env
 
 export const MessageRow: React.FunctionComponent<{
     message: MESSAGE_LIST_ITEM;
     user: USER_SESSION;
 }> = ({ message, user }) => {
     const dispatch = useDispatch();
-
     const goToConversation = async () => {
         await dispatch(
             MessagesActions.CreateConversation({
                 userName: user.username,
-                recipientUsername: message.userName,
+                recipientUsername: message.recipientUserName,
                 authtoken: user.token,
             })
         );
