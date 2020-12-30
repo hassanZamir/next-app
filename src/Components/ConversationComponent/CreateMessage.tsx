@@ -90,9 +90,9 @@ export const CreateMessage: React.FunctionComponent<{
             sentAt:
                 date.getFullYear() +
                 "-" +
-                (date.getMonth() < 10
-                    ? "0" + date.getMonth()
-                    : date.getMonth()) +
+                (date.getMonth() < 9
+                    ? "0" + date.getMonth()+1
+                    : date.getMonth()+1) +
                 "-" +
                 (new Date().getDate() < 10
                     ? "0" + date.getDate()
@@ -146,9 +146,9 @@ export const CreateMessage: React.FunctionComponent<{
             sentAt:
                 date.getFullYear() +
                 "-" +
-                (date.getMonth() < 10
-                    ? "0" + date.getMonth()
-                    : date.getMonth()) +
+                (date.getMonth() < 9
+                    ? "0" + date.getMonth()+1
+                    : date.getMonth()+1) +
                 "-" +
                 (new Date().getDate() < 10
                     ? "0" + date.getDate()
