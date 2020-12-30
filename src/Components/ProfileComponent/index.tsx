@@ -105,19 +105,10 @@ export const ProfileComponent: React.FunctionComponent<{
         if (!wantToFollow) {
             unFollowConfirmationModalRef.toggle();
         } else if (user && user.id) {
-
-            // if user payment mode is set then use the confirmation dailog
-            //          and use the charge by previous id method
-            // otherwise initiate the add card modal which will take user to 
-            //          external payment processor page and take user payment info
-
             if (user.paymentMode) {
                 followConfirmationModalRef.toggle();
             } else {
                 setShowPaymentSettingsPopup(true);
-                // here user needs to be redirected to cc bill
-                // as falsy paymentmode means user has no active payment mode available
-                //    redirectToExternalPaymentGateway()
             }
         } else {
             Router.push({
@@ -125,11 +116,6 @@ export const ProfileComponent: React.FunctionComponent<{
                 query: { profile: profileUserName },
             });
         }
-    };
-
-    const redirectToExternalPaymentGateway = () => {
-        setShowRedirectionModal(true);
-        ccbillAddCardModalRef.toggle();
     };
 
     const onLogout = () => {
@@ -144,7 +130,7 @@ export const ProfileComponent: React.FunctionComponent<{
                     isShowing={followConfirmationModalRef.isShowing}
                     profileUserName={creatorProfile.name}
                     onConfirm={sendFollowRequest}
-                    paymentMode={user.paymentMode}
+                    paymentMode={1} // subscription can only be supported by card
                     creatorProfile={creatorProfile}
                 />
 

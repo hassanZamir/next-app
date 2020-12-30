@@ -120,24 +120,27 @@ export const CreatorContent: React.FunctionComponent<ICreatorContent.IProps>
                 </Tab>
             </Tabs>}
             {!isFollower && !isSelfProfile ? <CreatorContentPrivacy name={name} onFollow={onFollow} followingFee={followingFee} isLoading={isLoading} /> : <React.Fragment>
-                <ParagraphText className="gibson-semibold font-16px text-headingBlue px-4 mt-2">
+                {/* <ParagraphText className="gibson-semibold font-16px text-headingBlue px-4 mt-2">
                     {!selectedTab ? "Posts" : (selectedTab === 1 ? "Images" : "Videos")}
-                </ParagraphText>
+                </ParagraphText> */}
                 {
                     selectedTab === 0 && (creatorFeeds && creatorFeeds.length > 0 ? <FeedsList
                         user={user}
                         feeds={creatorFeeds} /> :
-                        <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
+                        <div style={{ minHeight: "200px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
                             <h4 className="text-primary text-center mt-3 gibson-semibold">No content to show</h4>
                         </div>)
                 }
                 {
-                    (selectedTab === 1 || selectedTab === 2) && mediaGallary.length ? <MediaGridGallary errors={errors}
-                        mediaGallary={mediaGallary.filter((media: any) => {
-                            return media.type === selectedTab;
-                        })} /> : <div style={{ minHeight: "400px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
-                            <h4 className="text-primary text-center mt-3 gibson-semibold">No content to show</h4>
-                        </div>
+                    (selectedTab === 1 || selectedTab === 2) && <> 
+                        {mediaGallary.length > 0 ? <MediaGridGallary errors={errors}
+                            mediaGallary={mediaGallary.filter((media: any) => {
+                                return media.type === selectedTab;
+                            })} /> : <div style={{ minHeight: "200px" }} className="px-5 w-100 d-flex flex-column align-items-center justify-content-center">
+                                <h4 className="text-primary text-center mt-3 gibson-semibold">No content to show</h4>
+                            </div>
+                        }
+                        </>
                 }
             </React.Fragment>}
         </div>
