@@ -42,6 +42,7 @@ export interface USER_CREATOR_PROFILE extends CREATOR_PROFILE {
     idVerified: boolean,
     docsVerified: boolean,
     bankVerfified: boolean,
+    manualVerify: boolean,
     creatorProfileVerified: boolean,
 
 }

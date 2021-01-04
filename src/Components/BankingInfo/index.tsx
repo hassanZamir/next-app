@@ -30,22 +30,23 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         success,
     } = bankingInfo;
     const [loading, setLoading] = useState(true);
-    const [loadEmbedId, setLoadEmbedId] = useState(true);
+    const [loadEmbedId, setLoadEmbedId] = useState(false);
+    const [loadManualForm, setLoadManualForm] = useState(false);
+
+    const manualVerificationUrl = "https://forms.clickup.com/f/359t3-473/2EV39OJPVWEVXEDSQU";
 
     const truliooServiceUrl = process.env.TRULIOO_MS_URL;
     const truliooFeKey = process.env.TRULIOO_FE_KEY;
     const apiUrl = `${process.env.API_URL}/api/accounts/${user.id}/upgrade`;
 
-    useEffect(() => {
-        if (isProfileFetching == false) {
-            setLoading(false);
-            if (!userCreatorProfile.creatorProfileVerified) {
-                addToast("Please provide correct identity details to match our records.");
-            }
-        }
-
-
-    }, [isProfileFetching])
+    // useEffect(() => {
+    //     if (isProfileFetching == false) {
+    //         setLoading(false);
+    //         if (!userCreatorProfile.creatorProfileVerified) {
+    //             addToast("Please provide correct identity details to match our records.");
+    //         }
+    //     }
+    // }, [isProfileFetching])
 
     useEffect(() => {
         const params = {
@@ -63,12 +64,18 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
             router.push("/settings?action=upgrade");
 
         if (userCreatorProfile.creatorProfileVerified) {
-            success.push("Account upgraded successfully.");
+            success.push("Account Status: Verification Completed");
             setLoadEmbedId(false);
+            setLoadManualForm(false);
             router.push("/");
         }
+        else if (userCreatorProfile.manualVerify) {
+            errors.push("Account Status: Manual Verification Required");
+            setLoadManualForm(true);
+            setLoadEmbedId(false);
+        }
         else {
-            errors.push("Account Status: UN-VERIFIED");
+            errors.push("Account Status: Verification Required");
             setLoadEmbedId(true);
         }
     }, [userCreatorProfile]);
@@ -80,37 +87,55 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
                 className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
         </div>
         <ParagraphText className="mb-2 gibson-semibold font-40px text-center text-primary">Account Upgrade</ParagraphText>
-
-        {!userCreatorProfile.creatorProfileVerified && loadEmbedId && <iframe
-            allow={'camera;geolocation'}
-            name={`${user.token}#${apiUrl}#${truliooFeKey}`}
-            frameBorder="0px"
-            width="98%"
-            height="100%"
-            src={truliooServiceUrl}>
-        </iframe>}
-
-        {success.length > 0 && (
-            <div className="d-flex flex-column">
-                {success.map((msg: string, i: number) => {
-                    return (
-                        <div className="text-success font-12px text-center">
-                            {msg}
-                        </div>
-                    );
-                })}
+        <div className="d-flex position-relative justify-content-center h-100 account-upgrade-loader">
+            {loading && <div className="position-absolute" style={{ top: "45%", left: "45%" }}>
+                <LoadingSpinner size="3x" />
+            </div>}
+            <div className="w-100 z-1">
+                {!userCreatorProfile.creatorProfileVerified && loadEmbedId && <iframe
+                    onLoad={() => { setLoading(false) }}
+                    name={`${user.token}#${apiUrl}#${truliooFeKey}`}
+                    frameBorder="0px"
+                    width="98%"
+                    height="100%"
+                    src={truliooServiceUrl}>
+                </iframe>}
+                {!userCreatorProfile.creatorProfileVerified && loadManualForm && <iframe
+                    onLoad={() => { setLoading(false) }}
+                    allow={'camera;geolocation'}
+                    name={`${user.token}#${apiUrl}#${truliooFeKey}`}
+                    frameBorder="0px"
+                    width="98%"
+                    height="100%"
+                    src={manualVerificationUrl}>
+                </iframe>}
             </div>
-        )}
-        {errors.length > 0 && (
-            <div className="d-flex flex-column">
-                {errors.map((error: string, i: number) => {
-                    return (
-                        <div className="text-danger font-12px text-center">
-                            {error}
-                        </div>
-                    );
-                })}
-            </div>
-        )}
+        </div>
+        {
+            success.length > 0 && (
+                <div className="d-flex flex-column">
+                    {success.map((msg: string, i: number) => {
+                        return (
+                            <div key={i} className="text-success font-12px text-center">
+                                {msg}
+                            </div>
+                        );
+                    })}
+                </div>
+            )
+        }
+        {
+            errors.length > 0 && (
+                <div className="d-flex flex-column">
+                    {errors.map((error: string, i: number) => {
+                        return (
+                            <div key={i} className="text-danger font-12px text-center">
+                                {error}
+                            </div>
+                        );
+                    })}
+                </div>
+            )
+        }
     </React.Fragment>
 };
