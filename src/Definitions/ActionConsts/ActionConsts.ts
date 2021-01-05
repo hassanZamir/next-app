@@ -87,7 +87,7 @@ export const ActionConsts = {
     },
     BankingInfo: {
         VerificationStatusUpdated: "VerificationStatusUpdated",
-
+        ExternalVertificationAttempt: "ExternalVertificationAttempt",
         GetUserProfileSuccess: "GetUserProfileSuccess",
         GetUserProfileError: "GetUserProfileError",
         UploadProfileImagesError: "UploadProfileImagesError",

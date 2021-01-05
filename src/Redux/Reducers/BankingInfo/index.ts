@@ -17,6 +17,7 @@ const INITIAL_STATE: IBankingInfoPage.IStateProps = {
     creatorProfile: <CREATOR_PROFILE>{},
     showPersonalInformation: false,
     defaultPersonalInformation: {},
+    externalVerificationAttempt: false,
 };
 
 export const BankingInfoReducer = (
@@ -27,6 +28,11 @@ export const BankingInfoReducer = (
     >
 ) => {
     switch (action.type) {
+        case ActionConsts.BankingInfo.ExternalVertificationAttempt: {
+            return Object.assign({}, state, {
+                externalVerificationAttempt: true,
+            });
+        }
         case ActionConsts.BankingInfo.GetBankingInfoSuccess: {
             let { personalInformation } = action.payload!;
             return Object.assign({}, state, {

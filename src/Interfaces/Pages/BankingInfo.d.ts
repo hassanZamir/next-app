@@ -18,6 +18,7 @@ declare namespace IBankingInfoPage {
         creatorProfile: CREATOR_PROFILE;
         errors: string[];
         success: string[];
+        externalVerificationAttempt: boolean;
     }
 
     namespace Actions {

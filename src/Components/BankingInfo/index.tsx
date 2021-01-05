@@ -23,11 +23,12 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     const { addToast } = useToasts();
     const dispatch = useDispatch();
     const router = useRouter();
-    const { userCreatorProfile, isProfileFetching } = useSelector((state: IStore) => state.creatorProfile)
+    const { userCreatorProfile } = useSelector((state: IStore) => state.creatorProfile)
     const bankingInfo = useSelector((state: IStore) => state.bankingInfo);
     const {
         errors,
         success,
+        externalVerificationAttempt
     } = bankingInfo;
     const [loading, setLoading] = useState(true);
     const [loadEmbedId, setLoadEmbedId] = useState(false);
@@ -39,14 +40,11 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     const truliooFeKey = process.env.TRULIOO_FE_KEY;
     const apiUrl = `${process.env.API_URL}/api/accounts/${user.id}/upgrade`;
 
-    // useEffect(() => {
-    //     if (isProfileFetching == false) {
-    //         setLoading(false);
-    //         if (!userCreatorProfile.creatorProfileVerified) {
-    //             addToast("Please provide correct identity details to match our records.");
-    //         }
-    //     }
-    // }, [isProfileFetching])
+    useEffect(() => {
+        if (externalVerificationAttempt && userCreatorProfile.manualVerify) {
+            addToast("Sorry, external verification failed. Please submit the required details for manual verification.");
+        }
+    }, [externalVerificationAttempt])
 
     useEffect(() => {
         const params = {
@@ -72,7 +70,8 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         else if (userCreatorProfile.manualVerify) {
             errors.push("Account Status: Manual Verification Required");
             setLoadManualForm(true);
-            setLoadEmbedId(false);
+            if (!externalVerificationAttempt)
+                setLoadEmbedId(false);
         }
         else {
             errors.push("Account Status: Verification Required");
