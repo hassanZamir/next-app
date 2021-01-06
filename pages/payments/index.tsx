@@ -63,8 +63,8 @@ const Payments: NextPage = () => {
     };
 
     // add card flow
-    const addCardModelRef = useRef<HTMLDivElement>(null)
-    const addCardModal = useModal(addCardModelRef);
+    const addCardModalRef = useRef<HTMLDivElement>(null)
+    const addCardModal = useModal(addCardModalRef);
     const [showAddCard, setShowAddCard] = useState(false);
 
     useEffect(() => {
@@ -85,15 +85,22 @@ const Payments: NextPage = () => {
         dispatch(PaymentActions.UpdatePaymentSettings(params));
     }
 
-    function onAddCard() {
-        // setShowAddCard(true);
+    function onAddCard(show: boolean) {
+        setShowAddCard(show);
         addCardModal.toggle();
     }
 
 
     return (
         <Authenticated session={session} name="Account" onScroll={onScroll}>
-            <div className="p-3">
+            <div className="p-3" ref={addCardModalRef}>
+
+                {showAddCard && <AddCardModal
+                    toggle={addCardModal.toggle}
+                    isShowing={addCardModal.isShowing}
+                    modalRef={addCardModalRef}
+                    user={session} />}
+
                 <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
                     <FontAwesomeIcon
                         onClick={() => Router.back()}
@@ -161,11 +168,6 @@ const Payments: NextPage = () => {
                     }
                 />
             </div>
-            {showAddCard && <AddCardModal
-            toggle={addCardModal.toggle}
-            isShowing={addCardModal.isShowing}  
-            modalRef={addCardModelRef} 
-            user={session} />}
         </Authenticated >
     );
 };

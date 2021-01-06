@@ -14,7 +14,6 @@ import { faUniversity } from "@fortawesome/free-solid-svg-icons";
 import { USER_SESSION } from "@Interfaces";
 import Link from "next/link";
 import { useModal } from "@Components/Hooks";
-import { AddCardModal } from "@Components/Modals/AddCardModal";
 
 const mediaBaseUrl = process.env.MEDIA_BASE_URL; // TODO: convert to env
 

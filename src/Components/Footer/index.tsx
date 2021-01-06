@@ -85,7 +85,7 @@ const Footer: React.FunctionComponent<IFooter.IProps> = ({
     }, [session]);
 
     return <div style={{ height: "40px" }}
-        className={"footer-navigation d-flex align-items-center justify-content-between text-white bg-primary"}>
+        className={"footer-navigation d-flex align-items-center justify-content-between text-white bg-primary-gradient"}>
         {FooterConfig.map((config, index) => {
             return <div key={index}
                 onClick={() => {

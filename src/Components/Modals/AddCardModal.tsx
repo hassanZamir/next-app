@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import { Modal } from "@Components/Basic";
 import { theme } from "@Definitions/Styled/theme"
 import { FormComponent, LabelInput, ParagraphText, PrimaryButton, SelectInput } from "@Components";
-import {DOB, Locations} from "@Constants";
+import { DOB, Locations } from "@Constants";
 import { PaymentActions } from "@Actions";
 import { USER_SESSION } from "@Interfaces";
 import { IStore } from "@Redux/IStore";
@@ -26,7 +26,7 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const year = (new Date()).getFullYear();
-    const years = Array.from(new Array(20),(val, index) => {
+    const years = Array.from(new Array(20), (val, index) => {
         var y = index + year;
         return y.toString();
     });
@@ -81,14 +81,35 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
 
     return isShowing ? ReactDOM.createPortal(
         <Modal border={theme.colors.primary} borderRadius="18px"
-            width="100%" style={{ minWidth: "325px", maxWidth: "325px", width:"100%" }}>
+            width="100%" style={{ overflow: "scroll", marginTop: "30px", marginBottom: "30px", minWidth: "325px", maxWidth: "325px", width: "100%" }}>
+
             <div className="w-100 h-100 d-flex flex-column" ref={modalRef}>
-                {/* <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Redirecting to payment gateway ...</ParagraphText> */}
-                <ParagraphText className="font-18px lato-bold text-primary text-center my-4">Enter your card details</ParagraphText>
+                <div
+                    className="modal-header"
+                    style={{
+                        // position: "absolute",
+                        top: "-38px",
+                        right: "15px",
+                        cursor: "pointer"
+                    }}
+                >
+                    <button
+                        type="button"
+                        className="text-primary modal-close-button"
+                        onClick={() => {
+                            toggle();
+                        }}
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <ParagraphText className="font-18px lato-bold text-primary text-center my-1">Enter your card details</ParagraphText>
+
                 <div>
-                    <FormComponent 
-                        onSubmit={handleSubmit} 
-                        defaultValues={{}} 
+                    <FormComponent
+                        onSubmit={handleSubmit}
+                        defaultValues={{}}
                         submitActive={!loading}>
                         {/* <LabelInput 
                                 type="text"
@@ -101,31 +122,31 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                             /> */}
                         <div className="d-flex flex-row">
                             <LabelInput
-                            type="text"
-                            labelText="First Name" 
-                            name="fname" 
-                            wrapperClass="mt-3 mr-1"
-                            validationRules={{ 
-                                required: "First Name is required"
-                            }}
+                                type="text"
+                                labelText="First Name"
+                                name="fname"
+                                wrapperClass="mt-3 mr-1"
+                                validationRules={{
+                                    required: "First Name is required"
+                                }}
                             />
                             <LabelInput
                                 type="text"
-                                labelText="Last Name" 
-                                name="lname" 
+                                labelText="Last Name"
+                                name="lname"
                                 wrapperClass="mt-3 ml-1"
-                                validationRules={{ 
+                                validationRules={{
                                     required: "Last Name is required"
                                 }}
                             />
                         </div>
-                        
-                        <LabelInput 
+
+                        <LabelInput
                             type="text"
-                            labelText="Card Number" 
-                            name="cardNumber" 
+                            labelText="Card Number"
+                            name="cardNumber"
                             wrapperClass="mt-2"
-                            validationRules={{ 
+                            validationRules={{
                                 required: "Card Number is required",
                                 validate: (value: string) => {
                                     // const regex = new RegExp("^[0-9]{16}(?:[0-9]{3})?$");
@@ -135,53 +156,53 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                                 }
                             }}
                         />
-                        
-                                
+
+
                         <div className="d-flex flex-row">
-                                <SelectInput
-                                    type={["number", "number"]}
-                                    labelText="Expiry" 
-                                    name={["expiry.month", "expiry.year"]}
-                                    options={[DOB.months, years]} 
-                                    wrapperClass="mt-3"
-                                    validationRules={[{ 
-                                        required: "Month is required",
-                                        validate: (value: string) => {
-                                            return value !== "Month" ? true : "Please select Month of Birth"
-                                        }
-                                    }, { 
-                                        required: "Year is required",
-                                        validate: (value: string) => {
-                                            return value !== "Year" ? true : "Please select Year of Birth"
-                                        } 
-                                    }]}
-                                />
-                                <LabelInput 
-                            type="text"
-                            labelText="CVC" 
-                            name="cvc" 
-                            wrapperClass="mt-3 ml-2 col-4 px-0"
-                            validationRules={{ 
-                                required: "CVC is required",
-                                validate: (value: string) => {
-                                    const regex = new RegExp("^[0-9]{4}|[0-9]{3}$");
-                                    return regex.test(value) ? true : "Should be a 3 or 4 digit number";
-                                }
-                            }}
-                        />
-                        </div>
-                        <LabelInput
+                            <SelectInput
+                                type={["number", "number"]}
+                                labelText="Expiry"
+                                name={["expiry.month", "expiry.year"]}
+                                options={[DOB.months, years]}
+                                wrapperClass="mt-3"
+                                validationRules={[{
+                                    required: "Month is required",
+                                    validate: (value: string) => {
+                                        return value !== "Month" ? true : "Please select Month of Birth"
+                                    }
+                                }, {
+                                    required: "Year is required",
+                                    validate: (value: string) => {
+                                        return value !== "Year" ? true : "Please select Year of Birth"
+                                    }
+                                }]}
+                            />
+                            <LabelInput
                                 type="text"
-                                labelText="Address 1"
-                                name="address1"
-                                wrapperClass="mt-3 mr-1"
+                                labelText="CVC"
+                                name="cvc"
+                                wrapperClass="mt-3 ml-2 col-4 px-0"
                                 validationRules={{
-                                    required: {
-                                        value: true,
-                                        message: "Address is required",
-                                    },
+                                    required: "CVC is required",
+                                    validate: (value: string) => {
+                                        const regex = new RegExp("^[0-9]{4}|[0-9]{3}$");
+                                        return regex.test(value) ? true : "Should be a 3 or 4 digit number";
+                                    }
                                 }}
                             />
+                        </div>
+                        <LabelInput
+                            type="text"
+                            labelText="Address 1"
+                            name="address1"
+                            wrapperClass="mt-3 mr-1"
+                            validationRules={{
+                                required: {
+                                    value: true,
+                                    message: "Address is required",
+                                },
+                            }}
+                        />
                         <LabelInput
                             type="text"
                             labelText="Address 2"
@@ -194,7 +215,7 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                                 },
                             }}
                         />
-                        <div className="d-flex flex-row"> 
+                        <div className="d-flex flex-row">
                             <LabelInput
                                 type="text"
                                 labelText="State"
@@ -221,20 +242,20 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                                             return "City must be a string";
                                     },
                                 }}
-                        />
+                            />
                         </div>
-                        <div className="d-flex flex-row"> 
-                        <SelectInput
-                            type={["text"]}
-                            labelText="Country"
-                            name={["country"]}
-                            options={[Locations.countries]}
-                            wrapperClass="mt-3"
-                            validationRules={[
-                                { required: "Country selection is required." },
-                            ]}
-                        />
-                        <LabelInput
+                        <div className="d-flex flex-row">
+                            <SelectInput
+                                type={["text"]}
+                                labelText="Country"
+                                name={["country"]}
+                                options={[Locations.countries]}
+                                wrapperClass="mt-3"
+                                validationRules={[
+                                    { required: "Country selection is required." },
+                                ]}
+                            />
+                            <LabelInput
                                 type="text"
                                 labelText="POBox/ZipCode"
                                 name="poboxNumber"
@@ -247,17 +268,19 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                                             return "POBox/Zipcode must be a number";
                                     },
                                 }}
-                        />
+                            />
                         </div>
-                        <PrimaryButton 
-                            type="submit"
-                            name="add-card"
-                            borderRadius="6px" 
-                            className="mt-5"
-                            showLoader={loading}>
-                            Add Card
+                        <span className="mb-5 text-danger font-12px">{addCardError}</span>
+                        <div className="d-flex">
+                            <PrimaryButton
+                                type="submit"
+                                name="add-card"
+                                borderRadius="6px"
+                                className="ml-3"
+                                showLoader={loading}>
+                                Add Card
                         </PrimaryButton>
-                        <span className="mb-5 text-danger font-12px">{ addCardError }</span>
+                        </div>
                     </FormComponent>
                 </div>
             </div>
