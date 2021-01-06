@@ -28,7 +28,7 @@ const INITIAL_STATE: IProfilePage.IStateProps = {
     //  user creator profile  //
     userCreatorProfile: <USER_CREATOR_PROFILE>{}, // this will hold user's own creator profile
     // --------------------- //
-    isProfileFetching: true,
+    isProfileFetching: true
 };
 
 export const CreatorProfileReducer = (

@@ -22,8 +22,7 @@ declare namespace IProfilePage {
         //  user creator profile  //
         userCreatorProfile: USER_CREATOR_PROFILE,
         // --------------------- //
-        isProfileFetching: boolean,
-        externalVertificationResult: any,
+        isProfileFetching: boolean
     }
 
     namespace Actions {
