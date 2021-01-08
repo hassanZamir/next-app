@@ -173,4 +173,8 @@ export const ActionConsts = {
         BroadcastSuccess: "BroadcastSuccess",
         BroadcastError: "BroadcastError"
     },
+    Statements:{
+        GetStatementsSuccess:"GetStatementsSuccess",
+        GetStatementError: "GetStatementError",
+    }
 };

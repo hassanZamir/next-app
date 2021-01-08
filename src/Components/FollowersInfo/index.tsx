@@ -46,7 +46,7 @@ const FollowerCard: React.FunctionComponent<{
     const [blockedFollowers, setBlockedFollowers] = useState(false);
     const [restrictedFollowers, setRestrictedFollowers] = useState(false);
     const [displayedListType, setDisplayListType] = useState(
-        `All Followers` //(${followersList.length})`
+        `All Followers` 
     );
     const [showFilters, setShowFilters] = useState(false);
     const [toggleDetials, setToggleDetails] = useState(false);
@@ -133,7 +133,6 @@ const FollowerCard: React.FunctionComponent<{
             setLoading(true);
             await dispatch(FollowersInfoAction.GetFollowersInformation(params));
             setLoading(false);
-
             setCheckedItems({});
         } else if (e.target.name === LIST_BLOCKED_FOLLOWERS) {
             setBlockedFollowers(true);

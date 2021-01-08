@@ -9,3 +9,4 @@ export * from "./NotificationActions";
 export * from "./FollowersInfo";
 export * from "./FollowingInfo";
 export * from "./MessagesActions";
+export * from "./StatementsActions";

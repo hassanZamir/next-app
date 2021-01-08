@@ -97,15 +97,15 @@ export const FeedsComponent: React.FunctionComponent<{
                 <div className="py-3 border-bottom border-top d-flex flex-column align-items-center justify-content-center">
                     {/* {!user.isCreator && <PaymentSettings user={user} />} */}
                     <div className="mt-4 lato-regular font-17px text-grey200">
-                        Follow creator profiles to see interesting content
+                        Follow creator profiles to see exclusive content
                     </div>
                 </div>
             )}
-            {!loading && (
+            {/* {!loading && (
                 <SuggestedFollowersList
                     profilesSuggestion={profilesSuggestion}
                 />
-            )}
+            )} */}
             {loading && <FeedsLoaderDiv />}
         </div>
     );

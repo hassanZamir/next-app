@@ -1207,4 +1207,407 @@ $badge-success-bg: #f57b52;
 //     width: 731px;
 //     height: 20px;
 // }
+/* MIXINS */
+/* Colors: */
+/* BASE */
 
+// TODO: Nest all the classes under one parent.
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+tr,
+td,
+table,
+ul,
+li,
+ol,
+dl,
+header,
+footer,
+article,
+figure,
+aside,
+span,
+form {
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
+  outline: 0px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*:focus {
+  outline: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border: 0;
+  background-color: transparent;
+}
+button:focus {
+  outline: 0;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix {
+  clear: both;
+}
+.clearfix:before,
+.clearfix:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-none {
+  text-transform: none;
+}
+
+.font-regular {
+  font-weight: 400;
+}
+
+.font-extra-light {
+  font-weight: 200;
+}
+
+.font-light {
+  font-weight: 300;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semi-bold {
+  font-weight: 600;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-black {
+  font-weight: 900;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.display-inline-block {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.display-flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+
+.flex-row {
+  flex-direction: row !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.img-responsive {
+  width: 100%;
+  height: auto;
+}
+
+.padding-none {
+  padding: 0;
+}
+
+.margin-none {
+  margin: 0;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.position-fixed {
+  position: fixed;
+}
+
+ul {
+  list-style: none;
+}
+
+.margin-auto {
+  margin: 0 auto;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.img-center {
+  top: 50% !important;
+  left: 50% !important;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+/* START OF MOBILE QUERY */
+@media (max-width: 767px) {
+  .display-sm-none {
+    display: none !important;
+  }
+}
+/* END OF MOBILE QUERY */
+.statements-btn {
+  padding: 6px 45px;
+  font-size: 14px;
+  color: #f47e51;
+  border: 2px solid #f47e51;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.balance-section {
+  padding: 30px;
+  background-color: #a0a0a06b;
+  color: #ffffff;
+}
+.balance-upper-wrapper {
+  background: $primaryBackgroundGradient;
+  padding-bottom: 20px;
+  -webkit-border-radius: 20px 20px 0 0;
+  -moz-border-radius: 20px 20px 0 0;
+  -ms-border-radius: 20px 20px 0 0;
+  border-radius: 20px 20px 0 0;
+}
+.balance-section .balance-middle-wrapper {
+    font-size: 35px;
+    line-height: 42px;
+}
+.balance-section .pending-middle-wrapper {
+    font-size: 13px;
+    line-height: 18px;
+}
+.balance-section .balance-lower-wrapper {
+  padding: 8px 0;
+  background-color: #ffffff;
+  -webkit-border-radius: 0px 0px 20px 20px;
+  -moz-border-radius: 0px 0px 20px 20px;
+  -ms-border-radius: 0px 0px 20px 20px;
+  border-radius: 0px 0px 20px 20px;
+}
+
+.tabs-section {
+  background-color: #f7f8fa;
+}
+.tabs-section .tabs-list {
+  color: #707070;
+  width: 100%;
+  font-size: 0;
+  border-bottom: 1px solid #707070;
+}
+.tabs-section .tabs-list li {
+  width: 33.3%;
+  font-size: 14px;
+  line-height: 40px;
+}
+.tabs-section .tabs-list li:after {
+  content: "";
+  width: 1px;
+  height: 27px;
+  background-color: #707070;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.tabs-section .tabs-list li:last-of-type::after {
+  display: none;
+}
+.tabs-section .tabs-list li.active {
+  color: #f57b52;
+}
+/* .tabs-section .Withdrawals-wrapper,
+.tabs-section .earning-wrapper,
+.tabs-section .stats-wrapper {
+  display: none;
+}
+.tabs-section .Withdrawals-wrapper.active,
+.tabs-section .earning-wrapper.active,
+.tabs-section .stats-wrapper.active {
+  display: block;
+} */
+.tabs-section .Withdrawals-wrapper ul li,
+.tabs-section .earning-wrapper ul li {
+  padding: 35px 20px 20px 30px;
+  border-bottom: 1px solid #707070;
+}
+.tabs-section .Withdrawals-wrapper ul li .list-content,
+.tabs-section .earning-wrapper ul li .list-content {
+  width: 75%;
+}
+.tabs-section .Withdrawals-wrapper ul li .list-content h4,
+.tabs-section .earning-wrapper ul li .list-content h4 {
+  font-size: 11px;
+  line-height: 13px;
+  letter-spacing: 2.2px;
+}
+.tabs-section .Withdrawals-wrapper ul li .list-content p,
+.tabs-section .earning-wrapper ul li .list-content p {
+  line-height: 17px;
+}
+.tabs-section .Withdrawals-wrapper ul li .list-content i,
+.tabs-section .earning-wrapper ul li .list-content i {
+  font-size: 11px;
+  line-height: 13px;
+  color: #f47e51;
+  margin-bottom: 4px;
+}
+.tabs-section .Withdrawals-wrapper ul li .list-content span,
+.tabs-section .earning-wrapper ul li .list-content span {
+  font-size: 12px;
+  color: #f47e51;
+}
+.tabs-section .Withdrawals-wrapper ul li .amount,
+.tabs-section .earning-wrapper ul li .amount {
+  width: 25%;
+}
+.tabs-section .stats-wrapper .range-wrapper {
+  padding: 20px 12px;
+}
+.tabs-section .stats-wrapper .range-wrapper h5 {
+  font-size: 15px;
+  color: #f57b52;
+  margin-bottom: 10px;
+}
+.tabs-section .stats-wrapper .range-wrapper .calander-wrapper {
+  font-size: 18px;
+  color: #707070;
+  font-weight: 500;
+}
+.tabs-section .stats-wrapper .range-wrapper .calander-wrapper span {
+  font-size: 11px;
+  padding: 8px 24px;
+  color: #ffffff;
+  background-color: #f47e51;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+}
+.tabs-section .stats-wrapper ul li {
+  padding: 20px 20px;
+  border-bottom: 1px solid #707070;
+}
+.tabs-section .stats-wrapper ul li p {
+  font-size: 14px;
+  line-height: 17px;
+}
+.tabs-section .stats-wrapper ul li.total p {
+  color: #f57b52;
+}
+.tabs-section .stats-wrapper ul li:last-of-type {
+  border: 0;
+}

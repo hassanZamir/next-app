@@ -16,6 +16,7 @@ import {
     IMessagesPage,
     IConversationPage,
     ISettingsPage,
+    IStatementsPage,
 } from "@Interfaces";
 // #endregion Interface Imports
 
@@ -36,4 +37,5 @@ export interface IStore {
     followersInfo: IFollowersInfoPage.IStateProps;
     followingInfo: IFollowingInfoPage.IStateProps;
     settings: ISettingsPage.IStateProps;
+    statements: IStatementsPage.IStateProps;
 }

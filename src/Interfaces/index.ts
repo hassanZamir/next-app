@@ -173,6 +173,10 @@ export * from "@Services/API/Payment/GetPaymentSettingsApiResponse";
 export * from "@Services/API/Payment/PaymentSettings";
 export * from "@Services/API/Payment/ICCBillAddCard";
 
+export * from "@Services/API/Statements/GETStatementsPayload";
+export * from "@Services/API/Statements/GETStatementsResponse";
+export * from "@Services/API/Statements/GETStatements";
+
 // #endregion Service Interfaces
 
 // #region Page Interfaces
@@ -192,5 +196,6 @@ export * from "@Interfaces/Pages/App";
 export * from "@Interfaces/PersistState";
 export * from "@Interfaces/Pages/Login";
 export * from "@Interfaces/Pages/SignUp";
+export * from "@Interfaces/Pages/Statements";
 export * from "@Interfaces/Pages/Error";
 // #endregion Page Interfaces

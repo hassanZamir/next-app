@@ -106,12 +106,12 @@ export const Menu: React.FunctionComponent<{
                         <span className="ml-2">Settings</span>
                     </div>
                 </Link>
-                <Link href="#">
+                {session && session.isCreator && <Link href="/statement">
                     <div className="link-anchor">
                         <img src="/images/statements.svg" alt="Statements Icon"></img>
                         <span className="ml-2">Statements</span>
                     </div>
-                </Link>
+                </Link>}
                 <hr />
                 <Link href="/payments">
                     <div className="link-anchor">
