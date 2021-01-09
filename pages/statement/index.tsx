@@ -24,24 +24,10 @@ const Authenticated: any = dynamic(
         >,
     { ssr: false }
 );
-// const DynamicStatements: any = dynamic(
-//     () =>
-//         import("@Components/Statements").then(
-//             mod => mod.Statements
-//         ) as Promise<
-//             React.FunctionComponent<{ session: USER_SESSION; name: string }>
-//         >,
-//     { ssr: false }
-// );
 
 const Statement: NextPage = () => {
     const persistState = useSelector((state: IStore) => state.persistState);
     const { session } = persistState;
-    // useEffect(() => {
-    //     if (!session || !session.isCreator)
-    //         Router.push("/");
-    // })
-
 
     return (
         <Authenticated session={session} name="Account">
@@ -49,9 +35,5 @@ const Statement: NextPage = () => {
         </Authenticated>
     );
 };
-
-// export const getStaticProps = (...params: any) => {
-//     return { props: {} };
-// };
 
 export default Statement;

@@ -11,6 +11,7 @@ declare namespace IStatementsPage {
     }
 
     export interface IStateProps {
+        loading: boolean;
         defaultStatementsInformation: any;
         creatorProfile: CREATOR_PROFILE;
         errors: string[];

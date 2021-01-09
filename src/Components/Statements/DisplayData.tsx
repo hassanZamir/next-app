@@ -23,7 +23,7 @@ export const DisplayData: React.FunctionComponent<{
             return <ul >
                 <li key={1} className="display-flex align-items-center flex-wrap justify-content-between">
                     <div className="list-content display-flex flex-column">
-                        <p className="font-semi-bold">{'Withdrawal#' + data.id}</p>
+                        <p className="font-semi-bold">{'Withdrawal #' + data.id}</p>
                         <i>{data.mode == 0 ? 'Withdrawl Rejected' : data.mode == 1 ? 'Withdrawl Processed' : 'Withdrawl Pending'}</i>
                         <span>{moment(data.timeStamp).format('DD-MM-YYYY hh:mmA')}</span>
                     </div>

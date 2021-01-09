@@ -17,6 +17,10 @@ export const StatementsAction = {
     ) => async (dispatch: Dispatch) => {
         const result = await StatementsServices.GetStatements(payload);
         dispatch({
+            payload: {},
+            type: ActionConsts.Statements.ClearDefaultStatements
+        });
+        dispatch({
             payload: {
                 StatementsDetail: result.status ? result : [],
             },
