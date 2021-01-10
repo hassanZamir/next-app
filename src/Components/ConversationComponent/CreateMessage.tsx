@@ -79,7 +79,6 @@ export const CreateMessage: React.FunctionComponent<{
 
     const sendMessage = async () => {
         const messageType = files.length > 0 ? 2 : 1;
-        const date = new Date();
         const params: any = { //IConversationPage.Actions.IGetPOSTCreateMessagePayload = {
             conversationId: conversationId,
             senderId: user.id,
@@ -88,15 +87,15 @@ export const CreateMessage: React.FunctionComponent<{
             authtoken: user.token,
             onSuccessScroll: onSuccess,
             sentAt:
-                date.getFullYear() +
+                new Date().getUTCFullYear() +
                 "-" +
-                (date.getMonth() < 9
-                    ? "0" + date.getMonth()+1
-                    : date.getMonth()+1) +
+                ((new Date().getUTCMonth() + 1) < 9
+                    ? "0" + new Date().getUTCMonth() + 1
+                    : new Date().getUTCMonth() + 1) +
                 "-" +
-                (new Date().getDate() < 10
-                    ? "0" + date.getDate()
-                    : date.getDate()),
+                (new Date().getUTCMonth() < 10
+                    ? "0" + new Date().getUTCDate()
+                    : new Date().getUTCDate()),
         };
         if (messageType === 2) {
             const formData = new FormData();
@@ -144,15 +143,15 @@ export const CreateMessage: React.FunctionComponent<{
             message: message,
             onSuccessScroll: onSuccess,
             sentAt:
-                date.getFullYear() +
+                new Date().getUTCFullYear() +
                 "-" +
-                (date.getMonth() < 9
-                    ? "0" + date.getMonth()+1
-                    : date.getMonth()+1) +
+                ((new Date().getUTCMonth() + 1) < 9
+                    ? "0" + new Date().getUTCMonth() + 1
+                    : new Date().getUTCMonth() + 1) +
                 "-" +
-                (new Date().getDate() < 10
-                    ? "0" + date.getDate()
-                    : date.getDate()),
+                (new Date().getUTCMonth() < 10
+                    ? "0" + new Date().getUTCDate()
+                    : new Date().getUTCDate()),
             meta: {
                 amount: amount,
                 tipMsg: message,
@@ -180,7 +179,7 @@ export const CreateMessage: React.FunctionComponent<{
         toggle();
         FeedsActions.TipFeed(param)().then((resp: any) => {
             // console.log("TipFeed: ",resp);
-            if(resp && resp.status == true)
+            if (resp && resp.status == true)
                 sendTipMessage(resp.response, message, amount, user.id);
             else
                 setError(resp.error ?? "Tip failed. Please try again later.");

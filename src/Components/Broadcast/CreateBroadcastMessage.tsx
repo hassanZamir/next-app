@@ -77,15 +77,15 @@ export const CreateBroadcastMessage: React.FunctionComponent<{
             authtoken: user.token,
             onSuccessScroll: onSuccess,
             sentAt:
-                date.getFullYear() +
+                new Date().getUTCFullYear() +
                 "-" +
-                (date.getMonth() < 9
-                    ? "0" + date.getMonth()+1
-                    : date.getMonth()+1) +
+                ((new Date().getUTCMonth() + 1) < 9
+                    ? "0" + new Date().getUTCMonth() + 1
+                    : new Date().getUTCMonth() + 1) +
                 "-" +
-                (new Date().getDate() < 10
-                    ? "0" + date.getDate()
-                    : date.getDate()),
+                (new Date().getUTCMonth() < 10
+                    ? "0" + new Date().getUTCDate()
+                    : new Date().getUTCDate()),
         };
         if (messageType === 2) {
             const formData = new FormData();
@@ -139,15 +139,15 @@ export const CreateBroadcastMessage: React.FunctionComponent<{
             message: message,
             onSuccessScroll: onSuccess,
             sentAt:
-                date.getFullYear() +
+                new Date().getUTCFullYear() +
                 "-" +
-                (date.getMonth() < 9
-                    ? "0" + date.getMonth()+1
-                    : date.getMonth()+1) +
+                ((new Date().getUTCMonth() + 1) < 9
+                    ? "0" + new Date().getUTCMonth() + 1
+                    : new Date().getUTCMonth() + 1) +
                 "-" +
-                (new Date().getDate() < 10
-                    ? "0" + date.getDate()
-                    : date.getDate()),
+                (new Date().getUTCMonth() < 10
+                    ? "0" + new Date().getUTCDate()
+                    : new Date().getUTCDate()),
             meta: {
                 amount: amount,
                 tipMsg: message,
