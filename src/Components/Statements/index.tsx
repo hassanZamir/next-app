@@ -22,15 +22,23 @@ const StatementsDetails: React.FunctionComponent<{
 }> = ({ user, defaultStatementsInformation, loadTabData, loading }) => {
     const [tab, setTab] = useState(0); // 0 = earnings, 1 = withdrawal, 2 = stats
     const [showLoader, setShowLoader] = useState(false);
+    const [stats, setStats] = useState({
+        subscriptions: 0.00,
+        tips: 0.00,
+        messages: 0.00
+    });;
+
+
+
     const dispatch = useDispatch();
 
     const getWrapperClass = () => {
         let cla = "tab-content h-100";
-        if (0 == tab) {
+        if (tab == 0) {
             cla = "earning-wrapper"
-        } else if (1 == tab) {
+        } else if (tab == 1) {
             cla = "Withdrawals-wrapper"
-        } else if (2 == tab) {
+        } else if (tab == 2) {
             cla = "stats-wrapper"
         }
         return cla;
@@ -39,12 +47,35 @@ const StatementsDetails: React.FunctionComponent<{
     useEffect(() => {
         if (loading)
             setShowLoader(true);
-        else
+        else {
+
+            if (tab == 2 && defaultStatementsInformation && defaultStatementsInformation.response) {
+                // stats counters
+                let subscriptions = 0.00;
+                let tips = 0.00;
+                let messages = 0.00;
+                defaultStatementsInformation.response
+                    .map((data: any, index: number) => {
+                        // if the transaction is processed then
+                        // calculate sum for each source
+                        if (data.status == 2 && data.type == 1)
+                            if (data.source == 1)
+                                subscriptions += data.amount;
+                            else if (data.source == 2)
+                                tips += data.amount;
+                            else if (data.source == 3)
+                                messages += data.amount;
+                    });
+
+                setStats({ subscriptions, tips, messages });
+            }
             setShowLoader(false);
+        }
+
     }, [loading])
 
     const tabClicked = (inputTab: any) => {
-        if (!tab == inputTab) {
+        if (!(tab == inputTab)) {
             setTab(inputTab);
             loadTabData(inputTab);
             setShowLoader(true);
@@ -55,10 +86,10 @@ const StatementsDetails: React.FunctionComponent<{
         <div>
             <Balance balance={defaultStatementsInformation.balance} pending={defaultStatementsInformation.pending} />
             <div className="tabs-section">
-                <ul className="tabs-list d-flex justify-content-center text-center">
+                <ul className="tabs-list d-flex justify-content-center text-center cursor-pointer font-bold">
                     <li className={tab == 0 ? "w-100 display-inline-block position-relative active" : "w-100 display-inline-block position-relative"} id="0" onClick={(e: any) => { tabClicked(0) }}>Earnings</li>
                     <li className={tab == 1 ? "w-100 display-inline-block position-relative active" : "w-100 display-inline-block position-relative"} id="1" onClick={(e: any) => { tabClicked(1) }}>Withdrawals</li>
-                    {/* <li className={tab == 2 ? "display-inline-block position-relative active" : "display-inline-block position-relative"} id="2" onClick={(e: any) => { tabClicked(2) }}>Stats</li> */}
+                    <li className={tab == 2 ? "w-100 display-inline-block position-relative active" : "w-100 display-inline-block position-relative"} id="2" onClick={(e: any) => { tabClicked(2) }}>Stats</li>
                 </ul>
                 {showLoader && <div className="w-100 d-flex flex-column" style={{
                     paddingTop: "30%",
@@ -88,8 +119,48 @@ const StatementsDetails: React.FunctionComponent<{
                                 </div>
                             })
                     }
+                    {
+                        (tab == 2)
+                        && !showLoader
+                        && stats
+                        && <div className="">
+                            <div>
+                                <div className="range-wrapper text-center">
+                                    <h5 className="font-bold">All Time Stats</h5>
+                                    {/* <div className="calander-wrapper display-flex align-items-center flex-wrap justify-content-between px-1">
+                                        <span className="display-flex text-uppercase">01 March 2020</span>
+                                                    to
+                                                <span className="display-flex text-uppercase">01 Sept 2020</span>
+                                    </div> */}
+                                </div>
+                                <ul className="">
+                                    <li className="display-flex align-items-center flex-wrap justify-content-between px-5" key="sub">
+                                        <p className="font-bold text-capitalize">Subscriptions</p>
+                                        <p className="font-bold">${stats.subscriptions}</p>
+                                    </li>
+                                    <li className="display-flex align-items-center flex-wrap justify-content-between px-5" key="tip">
+                                        <p className="font-bold  text-capitalize">Tips</p>
+                                        <p className="font-bold">${stats.tips}</p>
+                                    </li>
+                                    <li className="display-flex align-items-center flex-wrap justify-content-between px-5" key="mc">
+                                        <p className="font-bold  text-capitalize">Messages</p>
+                                        <p className="font-bold">${stats.messages}</p>
+                                    </li>
+                                    {/* <li className="display-flex align-items-center flex-wrap justify-content-between px-5" key="ref">
+                                        <p className="font-bold  text-capitalize">Refferals</p>
+                                        <p className="font-bold">${data.referral.amount}</p>
+                                    </li> */}
+                                    <li className="total display-flex align-items-center flex-wrap justify-content-between px-5" key="total">
+                                        <p className="font-bold  text-capitalize">Total</p>
+                                        <p className="font-bold">${stats.subscriptions + stats.tips + stats.messages}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
                     {!showLoader
-                        && (!defaultStatementsInformation || !defaultStatementsInformation.response || !Array.isArray(!defaultStatementsInformation.response))
+                        && (tab != 2)
+                        && (!defaultStatementsInformation || !defaultStatementsInformation.response || !Array.isArray(defaultStatementsInformation.response) || !defaultStatementsInformation.response.length)
                         && <div className="w-100 d-flex flex-column" style={{
                             paddingTop: "30%",
                             paddingBottom: "30%"
@@ -150,6 +221,7 @@ export const Statements: React.FunctionComponent<{
                 };
                 dispatch(StatementsAction.GetStatements(params));
             } else if (tab == 2) {
+                console.log("stats");
                 const params = {
                     authtoken: user.token,
                     userId: user.id,
