@@ -34,7 +34,7 @@ const Support: NextPage = () => {
 
     return (
         <Authenticated session={user} name="App Middle Icon" onScroll={onScroll}>
-            <iframe className="clickup-embed clickup-dynamic-height" src="https://forms.clickup.com/f/359t3-473/2EV39OJPVWEVXEDSQU" width="100%" height="100%" style={{background: "transparent", border: "1px solid #ccc"}}></iframe><script async src="https://app-cdn.clickup.com/assets/js/forms-embed/v1.js"></script>
+            <iframe className="clickup-embed clickup-dynamic-height" src="https://forms.clickup.com/f/359t3-487/Q4IN7HSAKKZAZ6ZSD5" width="100%" height="100%" style={{ background: "transparent", border: "1px solid #ccc" }}></iframe><script async src="https://app-cdn.clickup.com/assets/js/forms-embed/v1.js"></script>
         </Authenticated>
     );
 };
