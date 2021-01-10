@@ -8,6 +8,9 @@ import { ParagraphText } from "@Components/ParagraphText";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { LoadingSpinner } from "@Components/LoadingSpinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { theme } from "@Definitions/Styled";
 
 
 
@@ -168,9 +171,13 @@ export const Statements: React.FunctionComponent<{
         // }, [scrolledToBottom]);
 
         return <React.Fragment>
-            <ParagraphText className="d-flex justify-content-center text-primary font-25px">
-                Statements
-            </ParagraphText>
+            <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
+                <FontAwesomeIcon
+                    onClick={() => router.push("/")}
+                    className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
+            </div>
+            <ParagraphText className="mb-2 gibson-semibold font-40px text-center text-primary">Statements</ParagraphText>
+
             <div className="statements h-100">
                 <StatementsDetails
                     user={user}

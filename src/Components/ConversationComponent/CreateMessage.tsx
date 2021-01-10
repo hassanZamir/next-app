@@ -89,13 +89,9 @@ export const CreateMessage: React.FunctionComponent<{
             sentAt:
                 new Date().getUTCFullYear() +
                 "-" +
-                ((new Date().getUTCMonth() + 1) < 9
-                    ? "0" + new Date().getUTCMonth() + 1
-                    : new Date().getUTCMonth() + 1) +
+                (new Date().getUTCMonth() + 1) +
                 "-" +
-                (new Date().getUTCMonth() < 10
-                    ? "0" + new Date().getUTCDate()
-                    : new Date().getUTCDate()),
+                (new Date().getUTCDate()),
         };
         if (messageType === 2) {
             const formData = new FormData();
@@ -145,13 +141,9 @@ export const CreateMessage: React.FunctionComponent<{
             sentAt:
                 new Date().getUTCFullYear() +
                 "-" +
-                ((new Date().getUTCMonth() + 1) < 9
-                    ? "0" + new Date().getUTCMonth() + 1
-                    : new Date().getUTCMonth() + 1) +
+                (new Date().getUTCMonth() + 1) +
                 "-" +
-                (new Date().getUTCMonth() < 10
-                    ? "0" + new Date().getUTCDate()
-                    : new Date().getUTCDate()),
+                (new Date().getUTCDate()),
             meta: {
                 amount: amount,
                 tipMsg: message,
@@ -275,7 +267,7 @@ export const CreateMessage: React.FunctionComponent<{
                         (userConversationSettings && userConversationSettings.isBlocked) || (creatorConversationSettings && creatorConversationSettings.isBlocked)
                     }
                     columns={10}
-                    className="px-3 py-3 border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow"
+                    className="px-3 py-3 border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow resizeable-y"
                     onChange={handleMessageChange}
                     value={message}
                 />
