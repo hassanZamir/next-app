@@ -31,4 +31,8 @@ const AccountUpgrade: NextPage = () => {
     );
 };
 
+export const getStaticProps = (...params: any) => {
+    return { props: {} };
+};
+
 export default AccountUpgrade;

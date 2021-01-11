@@ -16,7 +16,7 @@ import { BroadcastComponent } from "@Components";
 // #endregion Interface Imports
 
 const Authenticated: any = dynamic(
-    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{session: USER_SESSION, name: string}>>,
+    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{ session: USER_SESSION, name: string }>>,
     { ssr: false }
 );
 
@@ -25,15 +25,15 @@ const BroadcastMessage: NextPage = () => {
     const router = useRouter();
 
     return <Authenticated session={session} name="Messages">
-        <BroadcastComponent 
-            user={session} 
+        <BroadcastComponent
+            user={session}
             recipients={broadcastRecipients} />
 
     </Authenticated>;
 };
 
-export async function getServerSideProps(context: any) {
-    return { props: {} }
-}
+export const getStaticProps = (...params: any) => {
+    return { props: {} };
+};
 
 export default BroadcastMessage;

@@ -36,4 +36,8 @@ const Statement: NextPage = () => {
     );
 };
 
+export const getStaticProps = (...params: any) => {
+    return { props: {} };
+};
+
 export default Statement;

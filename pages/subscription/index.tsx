@@ -88,4 +88,8 @@ const Subscription: NextPage = () => {
 
 };
 
+export const getStaticProps = (...params: any) => {
+    return { props: {} };
+};
+
 export default Subscription;

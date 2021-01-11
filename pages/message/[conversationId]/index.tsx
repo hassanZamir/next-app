@@ -16,7 +16,7 @@ import { ConversationComponent } from "@Components";
 // #endregion Interface Imports
 
 const Authenticated: any = dynamic(
-    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{session: USER_SESSION, name: string}>>,
+    () => import('@Components/Authenticated').then((mod) => mod.Authenticated) as Promise<React.FunctionComponent<{ session: USER_SESSION, name: string }>>,
     { ssr: false }
 );
 
@@ -26,8 +26,8 @@ const UserStatus: NextPage = () => {
     const conversationId = router.query["conversationId"] as string;
 
     return <Authenticated session={session} name="Messages">
-        <ConversationComponent 
-            user={session} 
+        <ConversationComponent
+            user={session}
             conversationId={parseInt(conversationId)}
             conversationThread={activeConversation} />
 
