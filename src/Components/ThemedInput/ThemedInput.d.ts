@@ -15,7 +15,7 @@ declare namespace IThemeInputWithLabel {
     export interface IProps {
         type: string;
         onChange: (param: any) => void;
-        labelProps:  { labelClass: string; labelText: string; [key: string]: {}; };
+        labelProps: { labelClass: string; labelText: string;[key: string]: {}; };
         placeholder?: string;
         onBlur?: (param: any) => void;
         name: string;

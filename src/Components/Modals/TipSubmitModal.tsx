@@ -14,6 +14,7 @@ import {
 } from "@Components";
 
 import { CREATOR_PROFILE, FEED } from "@Interfaces";
+import { ICCBillConstants } from "@Constants";
 
 declare namespace ITipSubmitModal {
     export interface IProps {
@@ -88,6 +89,20 @@ export const TipSubmitModal: React.ForwardRefRenderFunction<
                                     type="number"
                                     fontFamily="Lato Bold"
                                     disabled={session.username == clickedFeed?.username ?? ""}
+                                    validationRules={{
+                                        required: {
+                                            value: true,
+                                            message: "Input is required",
+                                        },
+                                        min: {
+                                            value: ICCBillConstants.MinimumLimit,
+                                            message: `Fee must be set to $${ICCBillConstants.MinimumLimit} minumim.`
+                                        },
+                                        max: {
+                                            value: ICCBillConstants.MaximumLimit,
+                                            message: `Fee must be lower or equal to $${ICCBillConstants.MaximumLimit}.`
+                                        }
+                                    }}
                                 />
                             </div>
                         </div>

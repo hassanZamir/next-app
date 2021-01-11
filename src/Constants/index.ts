@@ -8,7 +8,8 @@ export enum CONTENT_TYPE {
 export const ICCBillConstants = {
     "SinglePaymentType": 1,
     "RecurringPaymentType": 2,
-    "MinimumLimit": 3.00, // must be two decimal places
+    "MinimumLimit": 1.00, // must be two decimal places
+    "MaximumLimit": 100.00, // must be two decimal places
     "InfinitRebills": 99, // should be 99 for infinite rebills
     "DefaultFollowingPeriod": 30,
     "DefaultCurrencyCode": "840", // string instead of number  due to object literal issue

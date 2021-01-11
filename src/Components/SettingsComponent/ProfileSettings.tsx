@@ -289,6 +289,10 @@ export const ProfileSettings: React.FunctionComponent<{
                             min: {
                                 value: ICCBillConstants.MinimumLimit,
                                 message: `Fee must be set to $${ICCBillConstants.MinimumLimit} minumim.`
+                            },
+                            max: {
+                                value: ICCBillConstants.MaximumLimit,
+                                message: `Fee must be lower or equal to $${ICCBillConstants.MaximumLimit}.`
                             }
                         }}
                     />}
@@ -296,7 +300,7 @@ export const ProfileSettings: React.FunctionComponent<{
                     <div className="d-flex flex-column align-items-start mt-3 w-100">
                         <label className="text-primary font-13px lato-regular">
                             Bio
-                                        </label>
+                        </label>
                     </div>
                     <Textarea
                         ref={bioRef}
@@ -305,7 +309,7 @@ export const ProfileSettings: React.FunctionComponent<{
                         rows={5}
                         columns={40}
                         maxLength={500}
-                        className="border-primary rounded w-100 font-10px text-lightGrey bio-text-area"
+                        className="border-primary rounded w-100 font-13px text-lightGrey bio-text-area"
                         onChange={handleInputChange}
                     />
                     <SelectInput

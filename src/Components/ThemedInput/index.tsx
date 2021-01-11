@@ -5,13 +5,13 @@ import { IThemeInput, IThemeInputWithLabel } from "./ThemedInput";
 
 import { Input } from "../Basic";
 
-const Container = styled(Input)<{ border?: string, width?: string, fontFamily?: string}>`
-    width: ${({ width }) => { return width ? width : '100%'}};
+const Container = styled(Input) <{ border?: string, width?: string, fontFamily?: string }>`
+    width: ${({ width }) => { return width ? width : '100%' }};
     border: none;
     border-bottom: 1px solid ${({ border }) => (border ? border : ({ theme }) => theme.colors.primary)};
     border-radius: 0px;
     outline: none;
-    font-family: ${({ fontFamily }) => { return fontFamily ? fontFamily : 'inherit'}};
+    font-family: ${({ fontFamily }) => { return fontFamily ? fontFamily : 'inherit' }};
 `;
 
 export const ThemedInput: React.FunctionComponent<IThemeInput.IProps> = (props) => {
@@ -25,7 +25,7 @@ export const ThemedInputWithLabel: React.FunctionComponent<IThemeInputWithLabel.
     const { labelClass, labelText, ...labelPropsRest } = labelProps;
     return (
         <div className="position-relative">
-            <label className={labelClass} {...labelPropsRest}>{ labelText }</label>
+            <label className={labelClass} {...labelPropsRest}>{labelText}</label>
             <Container {...props} />
         </div>
     );

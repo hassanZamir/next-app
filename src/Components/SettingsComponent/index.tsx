@@ -32,6 +32,8 @@ import { ICCBillConstants } from "@Constants";
 import { ProfileSettings } from "./ProfileSettings";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const SettingsWrapper: React.FunctionComponent<{
     user: USER_SESSION;
@@ -346,7 +348,21 @@ const SettingsWrapper: React.FunctionComponent<{
                         Account Settings
                     </ParagraphText>
                     <div className="d-flex justify-content-center border-top">
-                        <div className="py-2" style={{ width: "300px" }}>
+                        <div className="w-100 d-flex flex-column" style={{
+                            paddingTop: "30%",
+                            paddingBottom: "30%"
+                        }}>
+                            <div
+                                style={{ flex: 1 }}
+                                className="w-100 h-100 d-flex align-items-center justify-content-center"
+                            >
+                                {/* <LoadingSpinner size="3x" /> */}
+                            </div>
+                            <ParagraphText className="font-18px lato-bold text-primary text-center my-4">
+                                Coming Soon!
+                            </ParagraphText>
+                        </div>
+                        {false && <div className="py-2" style={{ width: "300px" }}>
                             <FormComponent
                                 onSubmit={handleAccountSettingsSubmit}
                                 defaultValues={userCreatorProfile}
@@ -500,340 +516,395 @@ const SettingsWrapper: React.FunctionComponent<{
                                     Delete Account
                                 </PrimaryButton>
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </React.Fragment>}
-                {notificationSettings && <React.Fragment>
-                    <ParagraphText className="font-12px text-primary pl-2">
-                        Notification Settings
-                    </ParagraphText>
-                    <div className="row no-gutters justify-content-center border-top">
-                        <div style={{ width: "320px" }}>
-                            <FormComponent
-                                onSubmit={handleSubmit}
-                                defaultValues={{}}
-                                submitActive={false}
-                                submitSuccess
-                                triggerValidation={triggerValidation}
-                            >
-                                <div className="d-flex flex-row bd-highlight link-anchor">
-                                    <div className="p-2 mt-4 mr-2 bd-highlight">
-                                        <p className="font-11px switch-label-padding-bottom text-grey100">
-                                            Push Notifications
-                                        </p>
-                                    </div>
-                                    <div className="p-2 mt-4 ml-5 bd-highlight align-self-center">
-                                        <span className="ml-4 mr-4 pl-5">
-                                            <Switch
-                                                onChange={e =>
-                                                    togglePushNotification(e)
-                                                }
-                                                checked={pushNotifiaction}
-                                                onColor="#f57c52"
-                                                offColor="#707070"
-                                                uncheckedIcon={false}
-                                                checkedIcon={false}
-                                                height={20}
-                                                width={38}
-                                                handleDiameter={14}
-                                            />
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="d-flex flex-row bd-highlight mb-4 link-anchor">
-                                    <div className="p-2 bd-highlight">
-                                        <p className="font-11px text-grey100">
-                                            E-Mail Notifications
-                                        </p>
-                                    </div>
-                                    <div className="p-2 ml-5 bd-highlight align-self-center">
-                                        <span className="ml-4 mr-4 pl-5">
-                                            <Switch
-                                                onChange={e =>
-                                                    toggleEmailNotification(e)
-                                                }
-                                                checked={emailNotification}
-                                                onColor="#f57c52"
-                                                offColor="#707070"
-                                                uncheckedIcon={false}
-                                                checkedIcon={false}
-                                                height={20}
-                                                width={38}
-                                                handleDiameter={14}
-                                            />
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="w-100 mt-1 text-left">
-                                    {" "}
-                                    <h6 className="heading-styles text-grey100">
-                                        Receive Notifications About:
-                                    </h6>
-                                </div>
-                                <div className="flex mt-2 d-flex container">
-                                    <div className="round pl-3">
-                                        <input type="checkbox" id="checkbox1" />
-                                        <label htmlFor="checkbox1" />
-                                    </div>
-                                    <div>
-                                        <p className="font-10px text-grey100">
-                                            New Campaign Contribution
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex d-flex container">
-                                    <div className="round pl-3">
-                                        <input type="checkbox" id="checkbox2" />
-                                        <label htmlFor="checkbox2" />
-                                    </div>
-                                    <div>
-                                        <p className="font-10px text-grey100">
-                                            New Like
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex d-flex container">
-                                    <div className="round pl-3">
-                                        <input type="checkbox" id="checkbox3" />
-                                        <label htmlFor="checkbox3" />
-                                    </div>
-                                    <div>
-                                        <p className="font-10px text-grey100">
-                                            New Comment
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex d-flex container">
-                                    <div className="round pl-3">
-                                        <input type="checkbox" id="checkbox4" />
-                                        <label htmlFor="checkbox4" />
-                                    </div>
-                                    <div>
-                                        <p className="font-10px text-grey100">
-                                            New Follower
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex d-flex container mb-5">
-                                    <div className="round pl-3">
-                                        <input type="checkbox" id="checkbox5" />
-                                        <label htmlFor="checkbox5" />
-                                    </div>
-                                    <div>
-                                        <p className="font-10px text-grey100">
-                                            New Tip
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <PrimaryButton
-                                    onClick={deleteCardClick}
-                                    type="submit"
-                                    className="mt-2 font-10px"
-                                    isActive
-                                    padding="10px 23px"
-                                    borderRadius="4px"
+                {
+                    messageSettings && <React.Fragment>
+                        <ParagraphText className="font-12px text-primary pl-2">
+                            Message Settings
+                        </ParagraphText>
+                        <div className="row no-gutters justify-content-center border-top">
+                            <div className="w-100 d-flex flex-column" style={{
+                                paddingTop: "30%",
+                                paddingBottom: "30%"
+                            }}>
+                                <div
+                                    style={{ flex: 1 }}
+                                    className="w-100 h-100 d-flex align-items-center justify-content-center"
                                 >
-                                    Save Changes
-                                </PrimaryButton>
-                            </FormComponent>
+                                    {/* <LoadingSpinner size="3x" /> */}
+                                </div>
+                                <ParagraphText className="font-18px lato-bold text-primary text-center my-4">
+                                    Coming Soon!
+                            </ParagraphText>
+                            </div>
                         </div>
-                    </div>
-                </React.Fragment>}
-                {securityAndPrivacySettings && <React.Fragment>
-                    <ParagraphText className="font-12px text-primary pl-2">
-                        Security and Privacy Settings
-                    </ParagraphText>
-                    <div className="row no-gutters justify-content-center border-top">
-                        <div style={{ width: "320px" }}>
-                            <FormComponent
-                                onSubmit={handleSubmit}
-                                defaultValues={{}}
-                                submitActive={false}
-                                submitSuccess
-                                triggerValidation={triggerValidation}
-                            >
-                                <div className="w-100 mt-1 mr-4 text-left">
-                                    {" "}
-                                    <h6 className="heading-styles text-grey100">
-                                        Profile Privacy{" "}
+                    </React.Fragment>
+                }
+                {
+                    notificationSettings && <React.Fragment>
+                        <ParagraphText className="font-12px text-primary pl-2">
+                            Notification Settings
+                        </ParagraphText>
+                        <div className="row no-gutters justify-content-center border-top">
+                            <div className="w-100 d-flex flex-column" style={{
+                                paddingTop: "30%",
+                                paddingBottom: "30%"
+                            }}>
+                                <div
+                                    style={{ flex: 1 }}
+                                    className="w-100 h-100 d-flex align-items-center justify-content-center"
+                                >
+                                    {/* <LoadingSpinner size="3x" /> */}
+                                </div>
+                                <ParagraphText className="font-18px lato-bold text-primary text-center my-4">
+                                    Coming Soon!
+                            </ParagraphText>
+                            </div>
+                            {false && <div style={{ width: "320px" }}>
+                                <FormComponent
+                                    onSubmit={handleSubmit}
+                                    defaultValues={{}}
+                                    submitActive={false}
+                                    submitSuccess
+                                    triggerValidation={triggerValidation}
+                                >
+                                    <div className="d-flex flex-row bd-highlight link-anchor">
+                                        <div className="p-2 mt-4 mr-2 bd-highlight">
+                                            <p className="font-11px switch-label-padding-bottom text-grey100">
+                                                Push Notifications
+                                        </p>
+                                        </div>
+                                        <div className="p-2 mt-4 ml-5 bd-highlight align-self-center">
+                                            <span className="ml-4 mr-4 pl-5">
+                                                <Switch
+                                                    onChange={e =>
+                                                        togglePushNotification(e)
+                                                    }
+                                                    checked={pushNotifiaction}
+                                                    onColor="#f57c52"
+                                                    offColor="#707070"
+                                                    uncheckedIcon={false}
+                                                    checkedIcon={false}
+                                                    height={20}
+                                                    width={38}
+                                                    handleDiameter={14}
+                                                />
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="d-flex flex-row bd-highlight mb-4 link-anchor">
+                                        <div className="p-2 bd-highlight">
+                                            <p className="font-11px text-grey100">
+                                                E-Mail Notifications
+                                        </p>
+                                        </div>
+                                        <div className="p-2 ml-5 bd-highlight align-self-center">
+                                            <span className="ml-4 mr-4 pl-5">
+                                                <Switch
+                                                    onChange={e =>
+                                                        toggleEmailNotification(e)
+                                                    }
+                                                    checked={emailNotification}
+                                                    onColor="#f57c52"
+                                                    offColor="#707070"
+                                                    uncheckedIcon={false}
+                                                    checkedIcon={false}
+                                                    height={20}
+                                                    width={38}
+                                                    handleDiameter={14}
+                                                />
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="w-100 mt-1 text-left">
+                                        {" "}
+                                        <h6 className="heading-styles text-grey100">
+                                            Receive Notifications About:
                                     </h6>
-                                </div>
-                                <div className="d-flex flex-row bd-highlight link-anchor">
-                                    <div className="p-2 bd-highlight switch-settings">
-                                        <span className="font-11px text-grey100">
-                                            Nomad (Completely Private)
-                                        </span>
                                     </div>
-                                    <div className="p-2 ml-5 bd-highlight align-self-center">
-                                        <span className="ml-4 mr-4 pl-5">
-                                            <Switch
-                                                onChange={e => toggleNomad(e)}
-                                                checked={nomad}
-                                                onColor="#f57c52"
-                                                offColor="#707070"
-                                                uncheckedIcon={false}
-                                                checkedIcon={false}
-                                                height={20}
-                                                width={38}
-                                                handleDiameter={14}
-                                            />
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="d-flex flex-row bd-highlight">
-                                    <div className="p-2 bd-highlight switch-settings">
-                                        <span className="font-11px text-grey100">
-                                            Enable Comments
-                                        </span>
-                                    </div>
-                                    <div className="p-2 ml-5 bd-highlight align-self-center">
-                                        <span className="ml-4 mr-4 pl-5">
-                                            <Switch
-                                                onChange={e =>
-                                                    toggleEnableComments(e)
-                                                }
-                                                checked={enableComments}
-                                                onColor="#f57c52"
-                                                offColor="#707070"
-                                                uncheckedIcon={false}
-                                                checkedIcon={false}
-                                                height={20}
-                                                width={38}
-                                                handleDiameter={14}
-                                            />
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="d-flex flex-row bd-highlight ">
-                                    <div className="p-2 bd-highlight switch-settings">
-                                        <span className="font-11px text-grey100">
-                                            Show Number of `Following`
-                                        </span>
-                                    </div>
-                                    <div className="p-2 ml-5 bd-highlight align-self-center">
-                                        <span className="ml-4 mr-4 pl-5">
-                                            <Switch
-                                                onChange={e =>
-                                                    toggleShowNumberFollowing(e)
-                                                }
-                                                checked={showNumberFollowing}
-                                                onColor="#f57c52"
-                                                offColor="#707070"
-                                                uncheckedIcon={false}
-                                                checkedIcon={false}
-                                                height={20}
-                                                width={38}
-                                                handleDiameter={14}
-                                            />
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="d-flex flex-row bd-highlight">
-                                    <div className="p-2 bd-highlight switch-settings">
-                                        <span className="font-11px text-grey100">
-                                            Public Friend's List
-                                        </span>
-                                    </div>
-                                    <div className="p-2 ml-5 bd-highlight align-self-center">
-                                        <span className="ml-4 mr-4 pl-5">
-                                            <Switch
-                                                onChange={e =>
-                                                    togglePublicFriendsList(e)
-                                                }
-                                                checked={publicFriendsList}
-                                                onColor="#f57c52"
-                                                offColor="#707070"
-                                                uncheckedIcon={false}
-                                                checkedIcon={false}
-                                                height={20}
-                                                width={38}
-                                                handleDiameter={14}
-                                            />
-                                        </span>
-                                    </div>
-                                </div>
-                                {/* <div className="row no-gutters justify-content-center border-top"> */}
-                                <div id="line">
-                                    <hr />
-                                </div>
-                                <div className="row no-gutters w-100 mt-1 mr-4 text-left">
-                                    {" "}
-                                    <h6 className="heading-styles text-grey100">
-                                        IP and Geo Blocking{" "}
-                                    </h6>
-                                </div>
-                                <SelectInput
-                                    type={["text"]}
-                                    labelText="By Country"
-                                    name={["location"]}
-                                    options={[locationslist.countries]}
-                                    wrapperClass="mt-1 text-grey100"
-                                    validationRules={[
-                                        {
-                                            required:
-                                                "Country selection is required.",
-                                        },
-                                    ]}
-                                />
-                                {/* </div> */}
-                                <div id="line">
-                                    <hr />
-                                </div>
-                                <div className="row no-gutters w-100 mt-1 mr-4 text-left">
-                                    {" "}
-                                    <h6 className="heading-styles text-grey100">
-                                        Watermarks{" "}
-                                    </h6>
                                     <div className="flex mt-2 d-flex container">
                                         <div className="round pl-3">
-                                            <input
-                                                type="checkbox"
-                                                id="checkbox1"
-                                            />
+                                            <input type="checkbox" id="checkbox1" />
                                             <label htmlFor="checkbox1" />
                                         </div>
                                         <div>
                                             <p className="font-10px text-grey100">
-                                                Watermark my Videos
-                                            </p>
+                                                New Campaign Contribution
+                                        </p>
                                         </div>
                                     </div>
                                     <div className="flex d-flex container">
                                         <div className="round pl-3">
-                                            <input
-                                                type="checkbox"
-                                                id="checkbox2"
-                                            />
+                                            <input type="checkbox" id="checkbox2" />
                                             <label htmlFor="checkbox2" />
                                         </div>
                                         <div>
                                             <p className="font-10px text-grey100">
-                                                Watermark my Images
-                                            </p>
+                                                New Like
+                                        </p>
                                         </div>
                                     </div>
-                                    {/* <LabelInput
+                                    <div className="flex d-flex container">
+                                        <div className="round pl-3">
+                                            <input type="checkbox" id="checkbox3" />
+                                            <label htmlFor="checkbox3" />
+                                        </div>
+                                        <div>
+                                            <p className="font-10px text-grey100">
+                                                New Comment
+                                        </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex d-flex container">
+                                        <div className="round pl-3">
+                                            <input type="checkbox" id="checkbox4" />
+                                            <label htmlFor="checkbox4" />
+                                        </div>
+                                        <div>
+                                            <p className="font-10px text-grey100">
+                                                New Follower
+                                        </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex d-flex container mb-5">
+                                        <div className="round pl-3">
+                                            <input type="checkbox" id="checkbox5" />
+                                            <label htmlFor="checkbox5" />
+                                        </div>
+                                        <div>
+                                            <p className="font-10px text-grey100">
+                                                New Tip
+                                        </p>
+                                        </div>
+                                    </div>
+
+                                    <PrimaryButton
+                                        onClick={deleteCardClick}
+                                        type="submit"
+                                        className="mt-2 font-10px"
+                                        isActive
+                                        padding="10px 23px"
+                                        borderRadius="4px"
+                                    >
+                                        Save Changes
+                                </PrimaryButton>
+                                </FormComponent>
+                            </div>}
+                        </div>
+                    </React.Fragment>
+                }
+                {
+                    securityAndPrivacySettings && <React.Fragment>
+                        <ParagraphText className="font-12px text-primary pl-2">
+                            Security and Privacy Settings
+                    </ParagraphText>
+                        <div className="row no-gutters justify-content-center border-top">
+                            <div className="w-100 d-flex flex-column" style={{
+                                paddingTop: "30%",
+                                paddingBottom: "30%"
+                            }}>
+                                <div
+                                    style={{ flex: 1 }}
+                                    className="w-100 h-100 d-flex align-items-center justify-content-center"
+                                >
+                                    {/* <LoadingSpinner size="3x" /> */}
+                                </div>
+                                <ParagraphText className="font-18px lato-bold text-primary text-center my-4">
+                                    Coming Soon!
+                            </ParagraphText>
+                            </div>
+                            {false && <div style={{ width: "320px" }}>
+                                <FormComponent
+                                    onSubmit={handleSubmit}
+                                    defaultValues={{}}
+                                    submitActive={false}
+                                    submitSuccess
+                                    triggerValidation={triggerValidation}
+                                >
+                                    <div className="w-100 mt-1 mr-4 text-left">
+                                        {" "}
+                                        <h6 className="heading-styles text-grey100">
+                                            Profile Privacy{" "}
+                                        </h6>
+                                    </div>
+                                    <div className="d-flex flex-row bd-highlight link-anchor">
+                                        <div className="p-2 bd-highlight switch-settings">
+                                            <span className="font-11px text-grey100">
+                                                Nomad (Completely Private)
+                                        </span>
+                                        </div>
+                                        <div className="p-2 ml-5 bd-highlight align-self-center">
+                                            <span className="ml-4 mr-4 pl-5">
+                                                <Switch
+                                                    onChange={e => toggleNomad(e)}
+                                                    checked={nomad}
+                                                    onColor="#f57c52"
+                                                    offColor="#707070"
+                                                    uncheckedIcon={false}
+                                                    checkedIcon={false}
+                                                    height={20}
+                                                    width={38}
+                                                    handleDiameter={14}
+                                                />
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="d-flex flex-row bd-highlight">
+                                        <div className="p-2 bd-highlight switch-settings">
+                                            <span className="font-11px text-grey100">
+                                                Enable Comments
+                                        </span>
+                                        </div>
+                                        <div className="p-2 ml-5 bd-highlight align-self-center">
+                                            <span className="ml-4 mr-4 pl-5">
+                                                <Switch
+                                                    onChange={e =>
+                                                        toggleEnableComments(e)
+                                                    }
+                                                    checked={enableComments}
+                                                    onColor="#f57c52"
+                                                    offColor="#707070"
+                                                    uncheckedIcon={false}
+                                                    checkedIcon={false}
+                                                    height={20}
+                                                    width={38}
+                                                    handleDiameter={14}
+                                                />
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="d-flex flex-row bd-highlight ">
+                                        <div className="p-2 bd-highlight switch-settings">
+                                            <span className="font-11px text-grey100">
+                                                Show Number of `Following`
+                                        </span>
+                                        </div>
+                                        <div className="p-2 ml-5 bd-highlight align-self-center">
+                                            <span className="ml-4 mr-4 pl-5">
+                                                <Switch
+                                                    onChange={e =>
+                                                        toggleShowNumberFollowing(e)
+                                                    }
+                                                    checked={showNumberFollowing}
+                                                    onColor="#f57c52"
+                                                    offColor="#707070"
+                                                    uncheckedIcon={false}
+                                                    checkedIcon={false}
+                                                    height={20}
+                                                    width={38}
+                                                    handleDiameter={14}
+                                                />
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="d-flex flex-row bd-highlight">
+                                        <div className="p-2 bd-highlight switch-settings">
+                                            <span className="font-11px text-grey100">
+                                                Public Friend's List
+                                        </span>
+                                        </div>
+                                        <div className="p-2 ml-5 bd-highlight align-self-center">
+                                            <span className="ml-4 mr-4 pl-5">
+                                                <Switch
+                                                    onChange={e =>
+                                                        togglePublicFriendsList(e)
+                                                    }
+                                                    checked={publicFriendsList}
+                                                    onColor="#f57c52"
+                                                    offColor="#707070"
+                                                    uncheckedIcon={false}
+                                                    checkedIcon={false}
+                                                    height={20}
+                                                    width={38}
+                                                    handleDiameter={14}
+                                                />
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {/* <div className="row no-gutters justify-content-center border-top"> */}
+                                    <div id="line">
+                                        <hr />
+                                    </div>
+                                    <div className="row no-gutters w-100 mt-1 mr-4 text-left">
+                                        {" "}
+                                        <h6 className="heading-styles text-grey100">
+                                            IP and Geo Blocking{" "}
+                                        </h6>
+                                    </div>
+                                    <SelectInput
+                                        type={["text"]}
+                                        labelText="By Country"
+                                        name={["location"]}
+                                        options={[locationslist.countries]}
+                                        wrapperClass="mt-1 text-grey100"
+                                        validationRules={[
+                                            {
+                                                required:
+                                                    "Country selection is required.",
+                                            },
+                                        ]}
+                                    />
+                                    {/* </div> */}
+                                    <div id="line">
+                                        <hr />
+                                    </div>
+                                    <div className="row no-gutters w-100 mt-1 mr-4 text-left">
+                                        {" "}
+                                        <h6 className="heading-styles text-grey100">
+                                            Watermarks{" "}
+                                        </h6>
+                                        <div className="flex mt-2 d-flex container">
+                                            <div className="round pl-3">
+                                                <input
+                                                    type="checkbox"
+                                                    id="checkbox1"
+                                                />
+                                                <label htmlFor="checkbox1" />
+                                            </div>
+                                            <div>
+                                                <p className="font-10px text-grey100">
+                                                    Watermark my Videos
+                                            </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex d-flex container">
+                                            <div className="round pl-3">
+                                                <input
+                                                    type="checkbox"
+                                                    id="checkbox2"
+                                                />
+                                                <label htmlFor="checkbox2" />
+                                            </div>
+                                            <div>
+                                                <p className="font-10px text-grey100">
+                                                    Watermark my Images
+                                            </p>
+                                            </div>
+                                        </div>
+                                        {/* <LabelInput
                                         type="text"
                                         labelText="Custom Watermark"
                                         name="username"
                                         wrapperClass="ml-3"
                                     /> */}
-                                </div>
-                                <PrimaryButton
-                                    onClick={deleteCardClick}
-                                    type="submit"
-                                    className="mt-2 mb-2 font-10px"
-                                    isActive
-                                    padding="10px 23px"
-                                    borderRadius="4px"
-                                >
-                                    Save Changes
+                                    </div>
+                                    <PrimaryButton
+                                        onClick={deleteCardClick}
+                                        type="submit"
+                                        className="mt-2 mb-2 font-10px"
+                                        isActive
+                                        padding="10px 23px"
+                                        borderRadius="4px"
+                                    >
+                                        Save Changes
                                 </PrimaryButton>
-                            </FormComponent>
+                                </FormComponent>
+                            </div>}
                         </div>
-                    </div>
-                </React.Fragment>}
+                    </React.Fragment>
+                }
             </div >
         );
     };
@@ -872,10 +943,14 @@ export const SettingsComponent: React.FunctionComponent<{
 
 
     return (
-        <div className="d-flex flex-column align-items-center flex-fill">
-            <ParagraphText className="text-primary font-25px">
-                Settings
-            </ParagraphText>
+        <div className="d-flex flex-column flex-fill">
+            <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
+                <FontAwesomeIcon
+                    onClick={() => router.push("/")}
+                    className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
+            </div>
+            <ParagraphText className="mb-2 gibson-semibold font-40px text-center text-primary">Statements</ParagraphText>
+
             <SettingsWrapper
                 userCreatorProfile={userCreatorProfile}
                 user={user}
