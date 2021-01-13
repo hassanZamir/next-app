@@ -382,7 +382,17 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
     };
 
     const onCopyClick = (feed: FEED) => {
-        console.log("Copy link address");
+        if (feed && feed.username) {
+            var copyText = window.location.host + "/profile/" + feed.username;
+            var textField = document.createElement('textarea');
+            textField.innerText = copyText;
+            document.body.appendChild(textField);
+            textField.select();
+            document.execCommand('copy');
+            textField.remove();
+
+            addToast("Copied Profile Link: " + feed.username);
+        }
     };
 
     const onCommentClick = (
