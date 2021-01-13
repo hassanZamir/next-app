@@ -93,19 +93,16 @@ export const FeedsComponent: React.FunctionComponent<{
             {feeds && feeds.value.length > 0 && !loading && (
                 <FeedsList feeds={feeds.value} user={user} />
             )}
-            {feeds && feeds.value.length <= 0 && !loading && (
+            {feeds && feeds.value.length <= 0 && !loading && <div>
                 <div className="py-3 border-bottom border-top d-flex flex-column align-items-center justify-content-center">
                     {/* {!user.isCreator && <PaymentSettings user={user} />} */}
                     <div className="mt-4 lato-regular font-17px text-grey200">
                         Follow creator profiles to see exclusive content
                     </div>
                 </div>
-            )}
-            {/* {!loading && (
-                <SuggestedFollowersList
-                    profilesSuggestion={profilesSuggestion}
+                <SuggestedFollowersList profilesSuggestion={profilesSuggestion}
                 />
-            )} */}
+            </div>}
             {loading && <FeedsLoaderDiv />}
         </div>
     );
