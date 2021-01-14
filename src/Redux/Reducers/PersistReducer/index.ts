@@ -102,7 +102,7 @@ export const PersistReducer = (
         }
         case ActionConsts.Messages.SetActiveConversationError: {
             return Object.assign({}, state, {
-                activeConversationError: {}
+                activeConversation: {}
             });
         }
         case ActionConsts.Notifications.GetNotifiactionStatsSuccess: {
@@ -211,7 +211,7 @@ export const PersistReducer = (
         }
         case ActionConsts.Payment.UpdatePaymentInfoInSession: {
             let { paymentSettings } = action.payload!;
-            const defaultCard = paymentSettings.userCard.find((card) => {
+            const defaultCard = paymentSettings.userCard.find((card: any) => {
                 return paymentSettings.userSettings && card.id === paymentSettings.userSettings.defaultCard
             });
             return Object.assign({}, state, {

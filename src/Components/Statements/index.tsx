@@ -221,7 +221,6 @@ export const Statements: React.FunctionComponent<{
                 };
                 dispatch(StatementsAction.GetStatements(params));
             } else if (tab == 2) {
-                console.log("stats");
                 const params = {
                     authtoken: user.token,
                     userId: user.id,
