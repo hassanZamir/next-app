@@ -31,7 +31,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             const { value } = e.currentTarget;
             setTitle(value);
         }
-
+        const VIDEO_TYPES = ['mp4', '3gpp', 'quicktime', 'mov'];
         const convertBytesToString = (bytes: any, decimals: any = 2) => {
             if (bytes === 0) return '0 Bytes';
 
@@ -65,7 +65,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             const formData = new FormData();
             const videoFormData = new FormData();
             files.forEach((file) => {
-                const isVideo = file.raw.name.split('.')[1] === ('mp4');
+                const isVideo = VIDEO_TYPES.includes(file.raw.name.split('.').reverse()[0]);
                 if (isVideo)
                     videoFormData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
                 else
@@ -101,7 +101,9 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
 
             {files.length > 0 && <div className="px-2 py-1 d-flex align-items-center">
                 {files.map((url, i) => {
-                    const isVideo = url.raw.name.split('.')[1] === ('mp4');
+                    const isVideo = VIDEO_TYPES.includes(url.raw.name.split('.').reverse()[0]);
+                    console.log("file: ", url);
+                    console.log("isVideo: ", isVideo);
                     return (<React.Fragment key={i}>
                         {url.preview && !isVideo && <img src={url.preview} width="38" height="36" className={i > 0 ? "ml-1" : ""} />}
                         {url.preview && isVideo && <video className={i > 0 ? "ml-1" : ""} width="38" height="36" controls={false}>
@@ -133,7 +135,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
                         const _input = e.target.children[0];
                         _input && _input.click();
                     }}>
-                        <input accept="image/*,video/mp4"
+                        <input accept="image/*,video/mp4,video/3gpp,video/quicktime"
                             id="upload-media"
                             name="upload-media"
                             type="file"
