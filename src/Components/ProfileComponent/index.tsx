@@ -147,18 +147,6 @@ export const ProfileComponent: React.FunctionComponent<{
                 />
             </div>}
 
-
-            {showRedirectionModal && (
-                <AnimatePopup animateIn={showRedirectionModal}>
-                    {/* <PaymentSettings user={user} /> */}
-                    {/* <CCBillAddCardModal
-                        user={user}
-                        isShowing={ccbillAddCardModalRef.isShowing}
-                        toggle={ccbillAddCardModalRef.toggle}
-                        creatorProfile={creatorProfile}
-                    /> */}
-                </AnimatePopup>
-            )}
             {
                 showPaymentSettingsPopup && (
                     <AnimatePopup animateIn={showPaymentSettingsPopup}>

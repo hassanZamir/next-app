@@ -1,7 +1,7 @@
 // #region Global Imports
-import React from "react";
+import React, { useEffect } from "react";
 import { NextPage } from "next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 // #endregion Global Imports
@@ -11,6 +11,7 @@ import { IStore } from "@Redux/IStore";
 import { IProfilePage, USER_SESSION } from "@Interfaces";
 import { Toast } from "@Components";
 import { ToastProvider } from "react-toast-notifications";
+import { LoginActions } from "@Actions";
 // #endregion Local Imports
 
 // #region Interface Imports
@@ -24,7 +25,17 @@ const DynamicProfile: any = dynamic(
 const UserProfile: NextPage<IProfilePage.IProps> = () => {
     const { session } = useSelector((state: IStore) => state.persistState);
     const router = useRouter();
+    const dispatch = useDispatch();
     const profileUserName = router.query["username"] as string;
+
+    useEffect(() => {
+        if (session && session.token) {
+            // call the token verify api to check validity
+            dispatch(LoginActions.TokenVerify({
+                session: session
+            }));
+        }
+    });
 
     return <ToastProvider
         components={{ Toast: Toast } as any}

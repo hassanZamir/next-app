@@ -13,13 +13,30 @@ import {
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { MessagesActions } from "@Actions";
+import { useToasts } from "react-toast-notifications";
 
 const mediaBaseUrl = process.env.MEDIA_BASE_URL;
 
 export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFollower: boolean; creatorProfile: CREATOR_PROFILE, onFollow: (followOrUnfolow: boolean) => void }>
     = ({ user, creatorProfile, onFollow, isFollower }) => {
         const dispatch = useDispatch();
+        const { addToast } = useToasts();
         const [bioToggle, setBioToggle] = useState(false);
+
+        const onCopyClick = () => {
+            if (creatorProfile) {
+                var copyText = window.location.host + "/profile/" + creatorProfile.userName;
+                var textField = document.createElement('textarea');
+                textField.innerText = copyText;
+                document.body.appendChild(textField);
+                textField.select();
+                document.execCommand('copy');
+                textField.remove();
+
+                addToast("Copied Profile Link: " + creatorProfile.userName);
+            }
+        };
+
         return (
             <React.Fragment>
                 <BackgroundImage
@@ -72,29 +89,43 @@ export const CreatorProfile: React.FunctionComponent<{ user: USER_SESSION, isFol
                                     {creatorProfile.followersCount + " Followers"}
                                 </ParagraphText>
                                 <div className="d-flex flex-column">
-                                    <div
-                                        className="d-flex cursor-pointer align-items-center"
-                                        onClick={() => {
-                                            setBioToggle(!bioToggle);
-                                        }}
-                                    >
-                                        <span className="text-inputText seoge-ui-bold font-10px mr-1">
-                                            {!bioToggle ? "Show Bio" : "Hide Bio"}
-                                        </span>
-                                        {!bioToggle && (
-                                            <FontAwesomeIcon
-                                                icon={faChevronDown}
-                                                color="#78849E"
-                                                size="xs"
-                                            />
-                                        )}
-                                        {bioToggle && (
-                                            <FontAwesomeIcon
-                                                icon={faChevronUp}
-                                                color="#78849E"
-                                                size="xs"
-                                            />
-                                        )}
+
+                                    <div className="d-flex">
+                                        <div
+                                            className="d-flex cursor-pointer align-items-center"
+                                            onClick={() => {
+                                                setBioToggle(!bioToggle);
+                                            }}
+                                        >
+                                            <span className="text-inputText seoge-ui-bold font-10px mr-1">
+                                                {!bioToggle ? "Show Bio" : "Hide Bio"}
+                                            </span>
+                                            {!bioToggle && (
+                                                <FontAwesomeIcon
+                                                    icon={faChevronDown}
+                                                    color="#78849E"
+                                                    size="xs"
+                                                />
+                                            )}
+                                            {bioToggle && (
+                                                <FontAwesomeIcon
+                                                    icon={faChevronUp}
+                                                    color="#78849E"
+                                                    size="xs"
+                                                />
+                                            )}
+                                        </div>
+                                        <div onClick={() => { onCopyClick() }}
+                                            className="ml-2 cursor-pointer bg-primary-gradient d-flex align-items-center justify-content-center"
+                                            style={{
+                                                // right: "20px",
+                                                // bottom: "80px",
+                                                height: "24px",
+                                                width: "24px",
+                                                borderRadius: "6px"
+                                            }}>
+                                            <span><img src="/images/baseline-reply_all-24px.svg"></img></span>
+                                        </div>
                                     </div>
                                     {bioToggle && (
                                         <span className="font-12px gibson-regular">
