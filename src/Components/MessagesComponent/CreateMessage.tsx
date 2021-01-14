@@ -85,7 +85,7 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
         const _recipients = searchActive ? messageRecipients.searchValues : messageRecipients.values;
         return (<div className="d-flex flex-column"
             style={{ flex: 1 }}>
-            <div className="d-flex flex-row mx-4 px-3" style={{
+            <div className="d-flex flex-row mx-4" style={{
                 alignSelf: "flex-end"
             }}>
                 <div style={{
@@ -134,17 +134,19 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
                         className="text-primary font-20px lato-bold">
                         {!searchActive ? "You don't have any contacts" : "No Content"}
                     </ParagraphText>}
-                    <div className="position-absolute"
-                        onClick={() => { recipientsForMessage.length > 0 && goToSendMessage(); }}
-                        style={{ bottom: "80px", right: "50px", transform: "rotate(180deg)" }}>
-
-                        <FontAwesomeIcon
-                            onClick={() => { }}
-                            className="cursor-pointer"
-                            icon={faArrowLeft}
-                            color={recipientsForMessage.length > 0 ? theme.colors.primary : theme.colors.disabledGrey}
-                            size="lg"
-                        />
+                    <div onClick={() => { recipientsForMessage.length > 0 && goToSendMessage(); }}
+                        className="cursor-pointer"
+                    >
+                        <div className={"position-absolute d-flex align-items-center justify-content-center " + (recipientsForMessage.length > 0 ? "bg-primary-gradient" : "bg-grey400")}
+                            style={{
+                                right: "20px",
+                                bottom: "80px",
+                                height: "52px",
+                                width: "52px",
+                                borderRadius: "12px"
+                            }}>
+                            <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" style={{ transform: "rotate(180deg)" }} />
+                        </div>
                     </div>
                 </LoadingSpinner>
             </div>

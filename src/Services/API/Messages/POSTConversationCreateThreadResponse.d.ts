@@ -33,5 +33,6 @@ export interface CONVERSATION_THREAD extends MESSAGE_LIST_ITEM {
 
 export interface POSTConversationCreateThreadResponse {
     status: boolean,
+    error?: any,
     response: CONVERSATION_THREAD
 }

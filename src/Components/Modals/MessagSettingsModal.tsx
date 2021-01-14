@@ -44,6 +44,7 @@ export const MessageSettingsModal: React.ForwardRefRenderFunction<HTMLDivElement
                 apiReducerKey: index === 3 ? 'isRestricted' : 'isBlocked',
                 authtoken: user.token,
             }));
+            toggle(); // to close the menu after user action
         }
     }
 

@@ -13,7 +13,8 @@ const INITIAL_STATE: IPersistState.IStateProps = {
     notificationStats: <NOTIFICATION_STATS>{},
     activeConversation: <CONVERSATION_THREAD>{},
     statusFound: false,
-    broadcastRecipients: new Array<MESSAGE_RECIPIENT>()
+    broadcastRecipients: new Array<MESSAGE_RECIPIENT>(),
+    activeConversationError: {},
 };
 
 export const PersistReducer = (
@@ -26,7 +27,8 @@ export const PersistReducer = (
         & IPersistState.Actions.ISetActiveConversation
         & IPersistState.Actions.IUpdateActiveConversation
         & ISettingsPage.Actions.IPostUploadSettingsProfileImagesResponse
-        & MESSAGE_RECIPIENT[]>
+        & MESSAGE_RECIPIENT[]
+        & any>
 ) => {
     switch (action.type) {
         case ActionConsts.CreatorProfile.GetUserCreatorProfileSuccess: {
@@ -37,6 +39,12 @@ export const PersistReducer = (
                     name: response.name,
                     profileImgUrl: response.profileImageUrl
                 })
+            });
+        }
+        case ActionConsts.Conversation.UpdateMessageSettingError: {
+            const { error } = action.payload!;
+            return Object.assign({}, state, {
+                conversationError: error
             });
         }
         case ActionConsts.Conversation.UpdateMessageSettingSuccess: {
@@ -94,7 +102,7 @@ export const PersistReducer = (
         }
         case ActionConsts.Messages.SetActiveConversationError: {
             return Object.assign({}, state, {
-                activeConversation: {}
+                activeConversationError: {}
             });
         }
         case ActionConsts.Notifications.GetNotifiactionStatsSuccess: {

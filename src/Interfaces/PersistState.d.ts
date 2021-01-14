@@ -11,6 +11,7 @@ declare namespace IPersistState {
         activeConversation: CONVERSATION_THREAD;
         broadcastRecipients: MESSAGE_RECIPIENT[];
         statusFound: boolean; // sets to false in case GetFeed failed to load status 
+        activeConversationError: {},
     }
 
     namespace Actions {

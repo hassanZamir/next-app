@@ -1,9 +1,10 @@
 // #region Global Imports
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../Hooks";
 import { faLink, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { IStore } from "@Redux/IStore";
 // #endregion Global Imports
 
 // #region Local Imports
@@ -18,6 +19,7 @@ import { ParagraphText } from "@Components/ParagraphText";
 import { LoadingSpinner } from "@Components";
 import { FeedsActions } from "@Actions";
 import { IFeed } from "@Interfaces";
+import { PrimaryButton } from "@Components/PrimaryButton";
 // #endregion Local Imports
 
 interface IUploadImage {
@@ -36,6 +38,7 @@ export const CreateMessage: React.FunctionComponent<{
     conversationId: number;
     onSuccess: () => void;
 }> = ({ conversationThread, user, conversationId, onSuccess }) => {
+    const { activeConversationError } = useSelector((store: IStore) => store.persistState)
     const [message, setMessage] = useState("");
     const [priceTagAmount, setPriceTagAmount] = useState("");
     const modalRef = useRef<HTMLDivElement>(null);
@@ -50,13 +53,28 @@ export const CreateMessage: React.FunctionComponent<{
     // console.log("CreateMessage-userConversationSettings", userConversationSettings);
     // console.log("CreateMessage-creatorConversationSettings", creatorConversationSettings);
     useEffect(() => {
-        if (userConversationSettings && userConversationSettings.isBlocked === true)
-            setError("You can no longer reply to this conversation as the user is blocked.");
-        else if (userConversationSettings && userConversationSettings.isRestricted === true)
-            setError("You may not recieve some msgs as the user is restricted.");
-        else if (creatorConversationSettings && creatorConversationSettings.state !== 1)
-            setError("You can no longer reply to this conversation as the subscription is not active.");
-        else setError("");
+        // userConversationSetting is where followingId = recipient and creatorId = user
+        // creatorConversationSetting is where followingId = user and creatorId = recipient
+        var mySettingsAsCreator = userConversationSettings;
+        var recipientSettingsAsCreator = creatorConversationSettings;
+        var isFollower: boolean = userConversationSettings && userConversationSettings.state == 1;
+        var isFollowing: boolean = creatorConversationSettings && creatorConversationSettings.state == 1;
+
+        setError("");
+        if (user.isCreator) {
+            if (isFollower && mySettingsAsCreator && mySettingsAsCreator.isBlocked === true)
+                setError("You can no longer reply to this conversation as the follower is blocked.");
+            if (isFollower && mySettingsAsCreator && mySettingsAsCreator.isRestricted === true)
+                setError("You may not recieve messages as the follower is restricted.");
+            if (!isFollower && !isFollowing)
+                setError("You cannot send messages as the subscription is not active.");
+        }
+        else {
+            if (!isFollowing)
+                setError("You cannot send messages as the subscription is not active.");
+        }
+
+
     }, [conversationThread.creatorConversationSettings, conversationThread.userConversationSettings]);
 
     const handleMessageChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -120,6 +138,7 @@ export const CreateMessage: React.FunctionComponent<{
     };
 
     const onSetPriceTagAmount = (amount: string) => {
+        if (parseFloat(amount) < 1) amount = "";
         setPriceTagAmount(amount);
         toggle();
     };
@@ -177,7 +196,16 @@ export const CreateMessage: React.FunctionComponent<{
                 setError(resp.error ?? "Tip failed. Please try again later.");
         });
     };
-
+    const onSetPriceTag = async () => {
+        if (files.length > 0) {
+            setShowPriceTagModal(true);
+            toggle();
+        } else {
+            setError(
+                "Please upload files before setting price."
+            );
+        }
+    }
     return (
         <div className="d-flex flex-column pl-4 pr-3">
             {showPriceTagModal && (
@@ -185,6 +213,7 @@ export const CreateMessage: React.FunctionComponent<{
                     isShowing={isShowing}
                     modalRef={modalRef}
                     onSubmit={onSetPriceTagAmount}
+                    defaultAmount={priceTagAmount.toString()}
                 />
             )}
             {showTipModal && (
@@ -194,6 +223,11 @@ export const CreateMessage: React.FunctionComponent<{
                     onSubmit={onTipSubmit}
                 />
             )}
+            {priceTagAmount != "" && <div className="d-flex justify-content-center"><PrimaryButton borderRadius="10px 10px 0px 0px" isActive={true}
+                className="p-1 px-2"
+                onClick={onSetPriceTag}>
+                {"Price Tag: $" + priceTagAmount}
+            </PrimaryButton></div>}
             {files.length > 0 && <MessageMediaPreview files={files} />}
             {error && files.length <= 0 && (
                 <ParagraphText className="text-danger font-12px">
@@ -226,16 +260,7 @@ export const CreateMessage: React.FunctionComponent<{
                 {user.isCreator && (
                     <img
                         className="px-1 cursor-pointer"
-                        onClick={() => {
-                            if (files.length > 0) {
-                                setShowPriceTagModal(true);
-                                toggle();
-                            } else {
-                                setError(
-                                    "Please upload files before setting price."
-                                );
-                            }
-                        }}
+                        onClick={onSetPriceTag}
                         src={
                             !priceTagAmount
                                 ? "/images/dollar_tag@2x.png"

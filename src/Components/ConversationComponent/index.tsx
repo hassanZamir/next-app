@@ -114,7 +114,7 @@ export const ConversationComponent: React.FunctionComponent<{ user: USER_SESSION
         }
 
         const { userConversationSettings, creatorConversationSettings } = conversationThread;
-
+        console.log("conversation: ", conversationThread);
         return (<div className="d-flex flex-column h-100"
             style={{ flex: "1 1 auto" }}>
 

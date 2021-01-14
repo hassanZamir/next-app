@@ -14,37 +14,37 @@ import { MessageRow } from "./MessageRow";
 import { ParagraphText } from "@Components/ParagraphText";
 // #endregion Local Imports
 
-export const MessageList: React.FunctionComponent<{ loadingSearch: boolean, user: USER_SESSION, scrolledToBottom: boolean, onCreateMessageClick: ()=>void, searchActive: boolean }> 
+export const MessageList: React.FunctionComponent<{ loadingSearch: boolean, user: USER_SESSION, scrolledToBottom: boolean, onCreateMessageClick: () => void, searchActive: boolean }>
     = ({ loadingSearch, user, scrolledToBottom, onCreateMessageClick, searchActive }) => {
-    const messagesState = useSelector((state: IStore) => state.messages);
-    const { allMessages } = messagesState;
-    const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
-    
-    useEffect(() => {
-        (async () => {
-            const param = { userId: user.id, authtoken: user.token };
-            setLoading(true);
-            await dispatch(MessagesActions.GetAllMessages(param));
-            setLoading(false);
-        })();
-    }, []);
+        const messagesState = useSelector((state: IStore) => state.messages);
+        const { allMessages } = messagesState;
+        const [loading, setLoading] = useState(false);
+        const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (scrolledToBottom) 
-            getMessages();
-    }, [scrolledToBottom]);
+        useEffect(() => {
+            (async () => {
+                const param = { userId: user.id, authtoken: user.token };
+                setLoading(true);
+                await dispatch(MessagesActions.GetAllMessages(param));
+                setLoading(false);
+            })();
+        }, []);
 
-    const getMessages = async () => {
-        if (allMessages.emptyPaginationNo > allMessages.paginationNo) {
-            await MessagesActions.GetAllMessages({ userId: user.id, page: allMessages.paginationNo, authtoken: user.token });
+        useEffect(() => {
+            if (scrolledToBottom)
+                getMessages();
+        }, [scrolledToBottom]);
+
+        const getMessages = async () => {
+            if (allMessages.emptyPaginationNo > allMessages.paginationNo) {
+                await MessagesActions.GetAllMessages({ userId: user.id, page: allMessages.paginationNo, authtoken: user.token });
+            }
         }
-    }
 
-    const _messageList = searchActive ? allMessages.searchValues : allMessages.values;
-    return (<div className="d-flex flex-column" 
+        const _messageList = searchActive ? allMessages.searchValues : allMessages.values;
+        return (<div className="d-flex flex-column"
             style={{ flex: 1 }}>
-            
+
             <div className="d-flex align-items-center justify-content-center h-100 w-100">
                 <LoadingSpinner size="3x" showLoading={loading || loadingSearch}>
                     {_messageList.length > 0 && <div className="d-flex flex-column h-100 w-100">
@@ -52,15 +52,15 @@ export const MessageList: React.FunctionComponent<{ loadingSearch: boolean, user
                             return <MessageRow message={message} key={i} user={user} />
                         })}
                     </div>}
-                    {_messageList.length <=0 && <ParagraphText 
+                    {_messageList.length <= 0 && <ParagraphText
                         className="text-primary font-20px lato-bold">
-                            {!searchActive ? "No Messages in your inbox" : "No Content"}
+                        {!searchActive ? "No Messages in your inbox" : "No Content"}
                     </ParagraphText>}
                 </LoadingSpinner>
-                <div onClick={() => { onCreateMessageClick() }} 
-                    className="cursor-pointer position-absolute bg-primary d-flex align-items-center justify-content-center" 
-                    style={{ 
-                        right: "20px", 
+                <div onClick={() => { onCreateMessageClick() }}
+                    className="cursor-pointer position-absolute bg-primary-gradient d-flex align-items-center justify-content-center"
+                    style={{
+                        right: "20px",
                         bottom: "80px",
                         height: "52px",
                         width: "52px",
@@ -69,5 +69,5 @@ export const MessageList: React.FunctionComponent<{ loadingSearch: boolean, user
                     <FontAwesomeIcon icon={faPlus} size="1x" color="white" />
                 </div>
             </div>
-    </div>);
-}
+        </div>);
+    }

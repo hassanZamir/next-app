@@ -51,7 +51,7 @@ export const BroadcastComponent: React.FunctionComponent<{ user: USER_SESSION, r
                         }} ref={modalRef}>
                             <ParagraphText className="text-primary">{`Recipients List (${recipients.length.toString()})`}</ParagraphText>
                             {recipients.map((r) => {
-                                return <ParagraphText className="">{r.name}</ParagraphText>
+                                return <ParagraphText className="">{"@" + r.userName}</ParagraphText>
                             })}
                         </div>
                     </PositionedModal>}

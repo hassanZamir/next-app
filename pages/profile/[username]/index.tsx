@@ -35,7 +35,7 @@ const UserProfile: NextPage<IProfilePage.IProps> = () => {
                 session: session
             }));
         }
-    });
+    }, []);
 
     return <ToastProvider
         components={{ Toast: Toast } as any}

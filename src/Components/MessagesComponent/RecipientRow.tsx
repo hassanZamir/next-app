@@ -52,7 +52,7 @@ export const RecipientRow: React.FunctionComponent<{ recipient: MESSAGE_RECIPIEN
                     src={[mediaBaseUrl + "/" + recipient.profileImageUrl, '/images/profile_image_placeholder.jpg']} />
             </div>
             <div className="d-flex flex-column w-100">
-                <div className="d-flex px-3 w-100 align-items-center justify-content-between w-100 h-100">
+                <div className="d-flex pl-3 w-100 align-items-center justify-content-between w-100 h-100">
                     <div className="gibson-semibold font-16px text-primary">
                         {recipient.name}
                     </div>
