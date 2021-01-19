@@ -15,7 +15,7 @@ declare namespace IResetPasswordModal {
     }
 }
 
-export const ResetPasswordModal: React.RefForwardingComponent<HTMLDivElement, IResetPasswordModal.IProps> = ((props) => {
+export const ResetPasswordModal: React.ForwardRefRenderFunction<HTMLDivElement, IResetPasswordModal.IProps> = ((props) => {
     const { isShowing, modalRef } = props;
     const [loading, setLoading] = useState(false);
     const [userEmail, setUserEmail] = useState('');
@@ -41,60 +41,60 @@ export const ResetPasswordModal: React.RefForwardingComponent<HTMLDivElement, IR
 
     useEffect(() => {
         document.addEventListener("click", onModalClose);
-    
+
         return () => {
-          document.removeEventListener("click", onModalClose);
+            document.removeEventListener("click", onModalClose);
         };
     });
 
     return isShowing ? ReactDOM.createPortal(
-            <Modal border={theme.colors.primary} borderRadius="18px">
-                <div className="w-100 h-100 pb-5" ref={modalRef}>
-                    {(sendResetPasswordEmailStatus === '' || sendResetPasswordEmailStatus === 'error') && <div className="modal-content d-flex flex-column justify-content-center align-items-center">
-                        <ParagraphText className="text-primary font-25px text-center">Reset Password</ParagraphText>
-                        <ParagraphText className="text-grey100 font-12px text-center mt-3">
-                            Enter the email associated with your account to receive link to reset your password.
+        <Modal border={theme.colors.primary} borderRadius="18px">
+            <div className="w-100 h-100 pb-5" ref={modalRef}>
+                {(sendResetPasswordEmailStatus === '' || sendResetPasswordEmailStatus === 'error') && <div className="modal-content d-flex flex-column justify-content-center align-items-center">
+                    <ParagraphText className="text-primary font-25px text-center">Reset Password</ParagraphText>
+                    <ParagraphText className="text-grey100 font-12px text-center mt-3">
+                        Enter the email associated with your account to receive link to reset your password.
                         </ParagraphText>
-                        
-                        <div className="d-flex flex-column w-100">
-                            <FormComponent 
-                                onSubmit={handleSubmit} 
-                                defaultValues={{}} 
-                                submitActive={!loading}>
 
-                                <LabelInput 
-                                    type="email"
-                                    labelText="Email" 
-                                    name="email" 
-                                    wrapperClass="mt-3"
-                                    validationRules={{ 
-                                        required: "Email is required"
-                                    }}
-                                />
-                                <PrimaryButton 
-                                    type="submit"
-                                    name="password-reset"
-                                    borderRadius="6px" 
-                                    className="mt-2 w-100"
-                                    showLoader={loading}>
-                                    Send Email
+                    <div className="d-flex flex-column w-100">
+                        <FormComponent
+                            onSubmit={handleSubmit}
+                            defaultValues={{}}
+                            submitActive={userEmail != ""}>
+
+                            <LabelInput
+                                type="email"
+                                labelText="Email"
+                                name="email"
+                                wrapperClass="mt-3"
+                                validationRules={{
+                                    required: "Email is required"
+                                }}
+                            />
+                            <PrimaryButton
+                                type="submit"
+                                name="password-reset"
+                                borderRadius="6px"
+                                className="mt-2 w-100"
+                                showLoader={loading}>
+                                Send Email
                                 </PrimaryButton>
-                            </FormComponent>
-                            {sendResetPasswordEmailStatus === 'error' && <ParagraphText className="text-danger font-12px text-center">
-                                Error occured sending email. Please try again.
+                        </FormComponent>
+                        {sendResetPasswordEmailStatus === 'error' && <ParagraphText className="text-danger font-12px text-center">
+                            Error occured sending email. Please try again.
                             </ParagraphText>}
-                        </div>
-                    </div>}
-                    {sendResetPasswordEmailStatus === 'success' && <div className="modal-content d-flex flex-column justify-content-center align-items-center">
-                        <ParagraphText className="text-primary font-25px text-center">Check your email</ParagraphText>
-                        <ParagraphText className="text-grey100 font-12px text-center mt-3">
-                            {"We have sent you an email at " + userEmail + ". Click the link in the email to reset your password."}
+                    </div>
+                </div>}
+                {sendResetPasswordEmailStatus === 'success' && <div className="modal-content d-flex flex-column justify-content-center align-items-center">
+                    <ParagraphText className="text-primary font-25px text-center">Check your email</ParagraphText>
+                    <ParagraphText className="text-grey100 font-12px text-center mt-3">
+                        {"We have sent you an email at " + userEmail + ". Click the link in the email to reset your password."}
+                    </ParagraphText>
+                    <ParagraphText className="text-grey100 font-12px text-center mt-3">
+                        If you don't see the email, check your junk or spam folder
                         </ParagraphText>
-                        <ParagraphText className="text-grey100 font-12px text-center mt-3">
-                            If you don't see the email, check your junk or spam folder
-                        </ParagraphText>
-                    </div>}
-                </div>
-            </Modal>, document.body
+                </div>}
+            </div>
+        </Modal>, document.body
     ) : null;
 });

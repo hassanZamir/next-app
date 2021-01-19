@@ -187,16 +187,10 @@ export const LoginActions = {
                 : ActionConsts.Login.ChangePasswordError,
         });
     },
-    // ChangePasswordFromSettings: (
-    //     payload: ILoginPage.Actions.IPutPasswordPayload
-    // ) => async (dispatch: Dispatch) => {
-    //     const result = await LoginService.ChangePasswordFromSettings(payload);
-
-    //     dispatch({
-    //         payload: result,
-    //         type: result.status
-    //             ? ActionConsts.Login.ChangePasswordSuccess
-    //             : ActionConsts.Login.ChangePasswordError,
-    //     });
-    // },
+    ClearChangePasswordStatus: () => async (dispatch: Dispatch) => {
+        dispatch({
+            payload: "",
+            type: ActionConsts.Login.ClearChangePasswordStatus,
+        });
+    }
 };

@@ -1,4 +1,4 @@
-import React, { RefObject, useState } from 'react';
+import React, { RefObject, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import ReactDOM from 'react-dom';
 
@@ -22,6 +22,10 @@ export const ChangePasswordModal: React.ForwardRefRenderFunction<HTMLDivElement,
     const { changePasswordStatus } = loginState;
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(LoginActions.ClearChangePasswordStatus());
+    }, []);
 
     async function handleSubmit(data: any) {
         const params = {

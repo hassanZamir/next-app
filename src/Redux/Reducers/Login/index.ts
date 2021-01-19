@@ -23,6 +23,11 @@ export const LoginErrorReducer = (
         ILoginPage.Actions.IGetChangePasswordResponse &
         IProfilePage.Actions.IMapCreatorProfileResponse>) => {
     switch (action.type) {
+        case ActionConsts.Login.ClearChangePasswordStatus: {
+            return Object.assign({}, state, {
+                changePasswordStatus: ''
+            });
+        }
         case ActionConsts.Login.ChangePasswordSuccess: {
             return Object.assign({}, state, {
                 changePasswordStatus: 'success'
