@@ -100,7 +100,7 @@ export const SettingsActions = {
 
     },
     DeleteAccount: (
-        payload: ISettingsPage.Actions.IGetDeleteAccountPayload
+        payload: ISettingsPage.Actions.IPostDeleteAccountPayload
     ) => async (dispatch: Dispatch) => {
         const result = await LoginService.DeleteAccount(payload);
         dispatch({

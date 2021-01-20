@@ -1,7 +1,7 @@
 declare namespace DeleteAccountModel {
     export interface DeleteAccountPayload {
         userId: number;
-        // recaptchaToken?: string;
+        authtoken: string;
     }
     export interface DeleteAccountResponse {
         status: boolean;

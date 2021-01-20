@@ -1,5 +1,5 @@
 import { ISettingsPage, UserCreatorProfileModel, USER_CREATOR_PROFILE, USER_SESSION } from "@Interfaces";
-import { SettingsActions, CreatorProfileActions } from "@Actions";
+import { SettingsActions, CreatorProfileActions, LoginActions } from "@Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "@Redux/IStore";
 import {
@@ -82,13 +82,13 @@ const SettingsWrapper: React.FunctionComponent<{
             toggle();
         };
 
-        useEffect(() => {
-            if (currentPassword && newPassword && confirmPassword) {
-                setChangePassword(true);
-            } else {
-                setChangePassword(false);
-            }
-        }, [currentPassword, newPassword, confirmPassword]);
+        // useEffect(() => {
+        //     if (currentPassword && newPassword && confirmPassword) {
+        //         setChangePassword(true);
+        //     } else {
+        //         setChangePassword(false);
+        //     }
+        // }, [currentPassword, newPassword, confirmPassword]);
 
         async function handleChangeUsernameSubmit(data: any) {
             console.log(data);
@@ -96,18 +96,19 @@ const SettingsWrapper: React.FunctionComponent<{
 
         async function handleAccountSettingsSubmit(data: any) {
             console.log(data);
-            // if (
-            //     data.currentpassword &&
-            //     data.newpassword &&
-            //     data.confirmnewpassword
-            // ) {
-            //     const params = {
-            //         oldPassword: data.currentpassword,
-            //         newPassword: data.newpassword,
-            //         authToken: "",
-            //     };
-            // dispatch(LoginActions.ChangePasswordFromSettings(params));
-            // }
+            if (
+                data.currentpassword &&
+                data.newpassword &&
+                data.confirmnewpassword
+                && data.newpassword == data.confirmnewpassword
+            ) {
+                const params = {
+                    oldPassword: data.currentpassword,
+                    newPassword: data.newpassword,
+                    authToken: user.token,
+                };
+                // dispatch(LoginActions.ChangePasswordFromSettings(params));
+            }
         }
 
         const selectListType = (e: any) => {
@@ -196,6 +197,15 @@ const SettingsWrapper: React.FunctionComponent<{
             // console.log("Invoked => handleSubmit", e);
         }
 
+        async function validateUserName(inputValue: { [key: string]: string }) {
+            const key = Object.keys(inputValue)[0];
+            const params = {
+                [key]: inputValue[key],
+                account_created: false,
+            };
+            return LoginActions.checkUserNameAvailability(params);
+        }
+
         return (
             <div className="d-flex flex-column w-100">
                 <div className="d-flex justify-content-between border-top border-bottom topnav">
@@ -209,7 +219,7 @@ const SettingsWrapper: React.FunctionComponent<{
                         <DeleteCardModal
                             isShowing={isShowing}
                             modalRef={modalRef}
-                            userId={user.id}
+                            user={user}
                             toggle={toggle}
                         />
                     )}
@@ -347,8 +357,8 @@ const SettingsWrapper: React.FunctionComponent<{
                     <ParagraphText className="font-12px text-primary pl-2">
                         Account Settings
                     </ParagraphText>
-                    <div className="d-flex justify-content-center border-top">
-                        <div className="w-100 d-flex flex-column" style={{
+                    <div className="d-flex border-top">
+                        {false && <div className="w-100 d-flex flex-column" style={{
                             paddingTop: "30%",
                             paddingBottom: "30%"
                         }}>
@@ -356,15 +366,15 @@ const SettingsWrapper: React.FunctionComponent<{
                                 style={{ flex: 1 }}
                                 className="w-100 h-100 d-flex align-items-center justify-content-center"
                             >
-                                {/* <LoadingSpinner size="3x" /> */}
+                                <LoadingSpinner size="3x" />
                             </div>
                             <ParagraphText className="font-18px lato-bold text-primary text-center my-4">
-                                Coming Soon!
+                                Please wait ..
                             </ParagraphText>
-                        </div>
-                        {false && <div className="py-2" style={{ width: "300px" }}>
+                        </div>}
+                        {true && <div className="d-flex flex-column py-2 px-4 w-100" style={{}}>
                             <FormComponent
-                                onSubmit={handleAccountSettingsSubmit}
+                                onSubmit={handleChangeUsernameSubmit}
                                 defaultValues={userCreatorProfile}
                                 submitActive
                                 submitSuccess={false}
@@ -373,138 +383,115 @@ const SettingsWrapper: React.FunctionComponent<{
                                     type="text"
                                     labelText="Username"
                                     name="userName"
-                                // value={username}
-                                // onChange={(e: any) =>
-                                //     handleUsernameChange(e)
-                                // }
-                                // validationRules={{
-                                //     required: {
-                                //         value: true,
-                                //         message: "Username is required",
-                                //     },
-                                // }}
+                                    validationRules={{
+                                        required: "Username is required",
+                                        validate: async (value: string) => {
+                                            var regex = /^[a-zA-Z0-9_-]+$/;
+                                            if (!regex.test(value))
+                                                return "Username can contain alphanumeric characters, _ or -";
+
+                                            if (value == userCreatorProfile.userName) return true;
+
+                                            const helper = await validateUserName({
+                                                username: value,
+                                            });
+                                            const response = await helper();
+                                            if (
+                                                response &&
+                                                response.errors.filter(error => {
+                                                    return (
+                                                        error &&
+                                                        error.field === "username"
+                                                    );
+                                                }).length > 0
+                                            )
+                                                return "Username is already taken.";
+
+                                            return true;
+                                        },
+                                    }}
                                 />
-                                <div className="pl-4 change-username-btn">
-                                    <TransparentButton
+                                <div className="w-100 d-flex flex-row justify-content-center">
+                                    <PrimaryButton
                                         borderRadius="4px"
-                                        padding="5px 23px !important"
-                                        className="mt-2 lato-semibold font-8px border-primary bg-primary text-white"
-                                        isActive={changeUsername}
+                                        padding=""
+                                        className="mt-2 lato-semibold font-12px bg-primary-gradient text-white"
+                                        isActive={true}
                                         type="submit"
-                                    // onClick={e => {
-                                    //     toggleTipModal(e);
-                                    // }}
                                     >
                                         <span>Change Username</span>
-                                    </TransparentButton>
+                                    </PrimaryButton>
                                 </div>
                             </FormComponent>
-                            <FormComponent
-                                onSubmit={handleChangeUsernameSubmit}
-                                submitActive
-                                submitSuccess={false}
-                            >
-                                <LabelInput
-                                    type="password"
-                                    labelText="Password"
-                                    name="currentpassword"
-                                    wrapperClass="mb-3"
-                                // value={currentPassword}
-                                // onChange={(e: any) =>
-                                //     handleCurrectPasswordChange(e)
-                                // }
-                                // validationRules={{
-                                //     required: {
-                                //         value: true,
-                                //         message: "Password is required",
-                                //     },
-                                // }}
-                                />
-                                {/* <div className="w-100 mb-2 text-left">
-                                    <LinkText
-                                        style={{ textDecoration: "underline" }}
-                                        className="text-primary font-10px cursor-pointer"
-                                        onClick={forgetPasswordClick}
-                                    >
-                                        Forgot Password?
-                                    </LinkText>
-                                </div> */}
-
-                                <LabelInput
-                                    type="password"
-                                    labelText="New Password"
-                                    name="newpassword"
-                                    wrapperClass="mb-3"
-                                // value={newPassword}
-                                // onChange={(e: any) =>
-                                //     handleNewPasswordChange(e)
-                                // }
-                                // validationRules={{
-                                //     required: {
-                                //         value: true,
-                                //         message: "New Password is required",
-                                //     },
-                                // }}
-                                />
-
-                                <LabelInput
-                                    type="password"
-                                    labelText="Confirm New Password"
-                                    name="confirmnewpassword"
-                                // value={confirmPassword}
-                                // onChange={(e: any) =>
-                                //     handleConfirmPasswordChange(e)
-                                // }
-                                // validationRules={{
-                                //     required: {
-                                //         value: true,
-                                //         message:
-                                //             "Confirm New Password is required",
-                                //     },
-                                // }}
-                                />
-
-                                <div className="pl-4 change-username-btn">
-                                    <TransparentButton
-                                        borderRadius="4px"
-                                        padding="5px 23px !important"
-                                        className="mt-2 mb-2 lato-semibold font-8px border-primary bg-primary text-white"
-                                        type="submit"
-                                        isActive={changePassword}
-                                    >
-                                        <span>Update Password</span>
-                                    </TransparentButton>
-                                </div>
-
-                                {/* <div
-                                    className={
-                                        "d-flex flex-column align-items-start mt-3 w-100"
-                                    }
+                            <div className="mt-5">
+                                <FormComponent
+                                    onSubmit={handleAccountSettingsSubmit}
+                                    submitActive
+                                    submitSuccess={false}
                                 >
-                                    <label className="text-primary font-13px lato-regular">
-                                        Login Sessions
-                                    </label>
-                                    <Textarea
-                                        name="loginsessions"
-                                        rows={5}
-                                        columns={40}
-                                        maxLength={500}
-                                        className="border-primary rounded w-100 font-10px text-lightGrey bio-text-area"
-                                        // onChange={e => handleBioChange(e)}
-                                        // value={bio}
+                                    <LabelInput
+                                        type="password"
+                                        labelText="Current Password"
+                                        name="currentpassword"
+                                        wrapperClass="mb-3"
+                                        validationRules={{ required: { value: true, message: "Current Password is required" } }}
                                     />
-                                </div> */}
-                                {/* <div className="w-100 mb-2 text-left">
-                                    <LinkText
-                                        style={{ color: "#ff6666" }}
-                                        className="delete-account-btn font-10px cursor-pointer"
-                                        onClick={deleteCardClick}
-                                    >
-                                        Delete Account
-                                    </LinkText>
-                                </div> */}
-                            </FormComponent>
-                            <div className="delete-modal-btn">
+
+                                    <LabelInput
+                                        type="password"
+                                        labelText="New Password"
+                                        name="newpassword"
+                                        wrapperClass="mb-3"
+                                        validationRules={{ required: { value: true, message: "New Password is required" } }}
+                                    />
+
+                                    <LabelInput
+                                        type="password"
+                                        labelText="Confirm New Password"
+                                        name="confirmnewpassword"
+                                        validationRules={{ required: { value: true, message: "Confirm New Password is required" } }}
+                                    />
+
+                                    <div className="">
+                                        <PrimaryButton
+                                            borderRadius="4px"
+                                            padding=""
+                                            className="mt-2 mb-2 lato-semibold font-12px bg-primary-gradient text-white"
+                                            type="submit"
+                                            isActive={true}
+                                        >
+                                            <span>Change Password</span>
+                                        </PrimaryButton>
+                                    </div>
+
+                                    {/* <div className="d-flex flex-column align-items-start mt-3 w-100">
+                                        <label className="text-primary font-13px lato-regular">
+                                            Login Sessions
+                                        </label>
+                                        <Textarea
+                                            name="loginsessions"
+                                            rows={5}
+                                            columns={40}
+                                            maxLength={500}
+                                            className="border-primary rounded w-100 font-10px text-lightGrey bio-text-area"
+                                            // onChange={e => handleBioChange(e)}
+                                            // value={bio}
+                                        />
+                                    </div> */}
+                                    {/* <div className="w-100 mb-2 text-left">
+                                        <LinkText
+                                            style={{ color: "#ff6666" }}
+                                            className="delete-account-btn font-10px cursor-pointer"
+                                            onClick={deleteCardClick}
+                                        >
+                                            Delete Account
+                                        </LinkText>
+                                    </div> */}
+                                </FormComponent>
+
+                            </div>
+                            <div className="mt-5 d-flex justify-content-center">
+                                <span></span>
                                 <PrimaryButton
                                     onClick={deleteCardClick}
                                     type="submit"

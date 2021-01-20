@@ -32,9 +32,9 @@ declare namespace ISettingsPage {
         export interface IPostUploadSettingsProfileImagesResponse
             extends UserCreatorProfileModel.PostUserCreatorProfileResponse {
         }
-        export interface IGetDeleteAccountPayload
+        export interface IPostDeleteAccountPayload
             extends DeleteAccountModel.DeleteAccountPayload { }
-        export interface IGetDeleteAccountResponse
+        export interface IPostDeleteAccountResponse
             extends DeleteAccountModel.DeleteAccountResponse { }
     }
 }

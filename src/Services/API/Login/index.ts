@@ -218,9 +218,13 @@ export const LoginService = {
     ): Promise<DeleteAccountModel.DeleteAccountResponse> => {
         let response: DeleteAccountModel.DeleteAccountResponse;
         try {
-            response = await Http.Request<
+            response = await Http.UserAuthRequest<
                 DeleteAccountModel.DeleteAccountResponse
-            >("DELETE", "api/accounts", undefined, { ...payload });
+            >("POST",
+                `/accounts/${payload.userId}/remove`,
+                payload.authtoken,
+                undefined,
+                {});
         } catch (error) {
             response = {
                 status: false,
