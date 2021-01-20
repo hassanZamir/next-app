@@ -4,6 +4,7 @@ import {
     LoginModel,
     SendResetPasswordEmailModel,
     ChangePasswordModel,
+    ChangeUsernameModel,
 } from "@Interfaces";
 
 declare namespace ILoginPage {
@@ -44,6 +45,9 @@ declare namespace ILoginPage {
             extends ChangePasswordModel.PutPasswordPayload { }
         export interface IPutPasswordResponse
             extends ChangePasswordModel.PutPasswordResponse { }
+
+        export interface IPutUsernamePayload extends ChangeUsernameModel.ChangeUsernamePayload { }
+        export interface IPutUsernameResponse extends ChangeUsernameModel.ChangeUsernameResponse { }
     }
 }
 

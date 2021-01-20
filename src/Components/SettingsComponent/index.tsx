@@ -61,7 +61,7 @@ const SettingsWrapper: React.FunctionComponent<{
         const [currentPassword, setCurrentPassword] = useState("");
         const [newPassword, setNewPassword] = useState("");
         const [confirmPassword, setConfirmPassword] = useState("");
-        const [changeUsername, setChangeUsername] = useState(false);
+        const [changeUsername, setChangeUsername] = useState({});
         const [changePassword, setChangePassword] = useState(false);
         const [triggerValidation, setTriggerValidation] = useState(false);
         const [pushNotifiaction, setPushNotification] = useState(false);
@@ -91,7 +91,11 @@ const SettingsWrapper: React.FunctionComponent<{
         // }, [currentPassword, newPassword, confirmPassword]);
 
         async function handleChangeUsernameSubmit(data: any) {
-            console.log(data);
+            dispatch(LoginActions.ChangeUsername({
+                userId: user.id,
+                newUsername: data.userName,
+                authtoken: user.token
+            }));
         }
 
         async function handleAccountSettingsSubmit(data: any) {
@@ -102,12 +106,12 @@ const SettingsWrapper: React.FunctionComponent<{
                 data.confirmnewpassword
                 && data.newpassword == data.confirmnewpassword
             ) {
-                const params = {
+                dispatch(LoginActions.ChangePasswordFromSettings({
+                    userId: user.id,
                     oldPassword: data.currentpassword,
                     newPassword: data.newpassword,
-                    authToken: user.token,
-                };
-                // dispatch(LoginActions.ChangePasswordFromSettings(params));
+                    authtoken: user.token,
+                }));
             }
         }
 
@@ -390,7 +394,7 @@ const SettingsWrapper: React.FunctionComponent<{
                                             if (!regex.test(value))
                                                 return "Username can contain alphanumeric characters, _ or -";
 
-                                            if (value == userCreatorProfile.userName) return true;
+                                            if (value == userCreatorProfile.userName) return "Username is already taken.";
 
                                             const helper = await validateUserName({
                                                 username: value,

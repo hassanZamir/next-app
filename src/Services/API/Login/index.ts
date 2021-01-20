@@ -22,6 +22,7 @@ import {
     PUTRecurringFollowingModel,
     DeleteAccountModel,
     USER_SESSION,
+    ChangeUsernameModel,
 } from "@Interfaces";
 // #endregion Interface Imports
 
@@ -196,23 +197,48 @@ export const LoginService = {
         }
         return response;
     },
-    // ChangePasswordFromSettings: async (
-    //     payload: ChangePasswordModel.PutPasswordPayload
-    // ): Promise<ChangePasswordModel.PutPasswordResponse> => {
-    //     let response: ChangePasswordModel.PutPasswordResponse;
-    //     try {
-    //         response = await Http.Request<
-    //             ChangePasswordModel.PutPasswordResponse
-    //         >("PUT", "api/accounts/password", undefined, { ...payload });
-    //     } catch (error) {
-    //         response = {
-    //             status: false,
-    //             error: "Something went wrong",
-    //         };
-    //     }
-    //     return response;
-    // },
-
+    ChangePasswordUsingOldPassword: async (
+        payload: ChangePasswordModel.PutPasswordPayload
+    ): Promise<ChangePasswordModel.PutPasswordResponse> => {
+        let response: ChangePasswordModel.PutPasswordResponse;
+        try {
+            response = await Http.UserAuthRequest<
+                ChangePasswordModel.PutPasswordResponse
+            >("PUT", `/accounts/${payload.userId}/password`, payload.authtoken, undefined,
+                {
+                    oldPassword: payload.oldPassword,
+                    newPassword: payload.newPassword
+                });
+        } catch (error) {
+            response = {
+                status: false,
+                error: "Something went wrong",
+            };
+        }
+        return response;
+    },
+    ChangeUsername: async (
+        payload: ChangeUsernameModel.ChangeUsernamePayload
+    ): Promise<ChangeUsernameModel.ChangeUsernameResponse> => {
+        let response: ChangeUsernameModel.ChangeUsernameResponse;
+        try {
+            response = await Http.UserAuthRequest<
+                ChangeUsernameModel.ChangeUsernameResponse
+            >("PUT",
+                `/accounts/${payload.userId}/username`,
+                payload.authtoken,
+                undefined,
+                {
+                    newUserName: payload.newUsername
+                });
+        } catch (error) {
+            response = {
+                status: false,
+                error: "Something went wrong",
+            };
+        }
+        return response;
+    },
     DeleteAccount: async (
         payload: DeleteAccountModel.DeleteAccountPayload
     ): Promise<DeleteAccountModel.DeleteAccountResponse> => {

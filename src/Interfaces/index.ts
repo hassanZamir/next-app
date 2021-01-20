@@ -53,6 +53,7 @@ export * from "@Services/API/Login/ChangePasswordPayload";
 export * from "@Services/API/Login/ChangePasswordResponse";
 export * from "@Services/API/Login/ChangePassword";
 
+export * from "@Services/API/Login/ChangeUsername";
 export * from "@Services/API/Login/DeleteAccount";
 
 export * from "@Services/API/Login/AccountVerifyPayload";

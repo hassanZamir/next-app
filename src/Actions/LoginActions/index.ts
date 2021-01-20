@@ -192,5 +192,29 @@ export const LoginActions = {
             payload: "",
             type: ActionConsts.Login.ClearChangePasswordStatus,
         });
-    }
+    },
+    ChangeUsername: (
+        payload: ILoginPage.Actions.IPutUsernamePayload
+    ) => async (dispatch: Dispatch) => {
+        const result = await LoginService.ChangeUsername(payload);
+
+        dispatch({
+            payload: result,
+            type: result.status
+                ? ActionConsts.Login.ChangePasswordSuccess
+                : ActionConsts.Login.ChangePasswordError,
+        });
+    },
+    ChangePasswordFromSettings: (
+        payload: ILoginPage.Actions.IPutPasswordPayload
+    ) => async (dispatch: Dispatch) => {
+        const result = await LoginService.ChangePasswordUsingOldPassword(payload);
+
+        dispatch({
+            payload: result,
+            type: result.status
+                ? ActionConsts.Login.ChangePasswordFromSettingsSuccess
+                : ActionConsts.Login.ChangePasswordFromSettingsError,
+        });
+    },
 };

@@ -13,6 +13,8 @@ export const ActionConsts = {
         ChangePasswordSuccess: "ChangePasswordSuccess",
         ChangePasswordError: "ChangePasswordError",
         ClearChangePasswordStatus: "ClearChangePasswordStatus",
+        ChangePasswordFromSettingsSuccess: "ChangePasswordFromSettingsSuccess",
+        ChangePasswordFromSettingsError: "ChangePasswordFromSettingsError",
         DoLogout: "DoLogout",
         onCloseResetPasswordModal: "onCloseResetPasswordModal",
 

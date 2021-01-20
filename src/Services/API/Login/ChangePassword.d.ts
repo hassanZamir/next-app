@@ -3,13 +3,14 @@ import { ChangePasswordPayload, ChangePasswordResponse } from "@Interfaces";
 // #endregion Interface Imports
 
 declare namespace ChangePasswordModel {
-    export interface GetChangePasswordPayload extends ChangePasswordPayload {}
-    export interface GetChangePasswordResponse extends ChangePasswordResponse {}
+    export interface GetChangePasswordPayload extends ChangePasswordPayload { }
+    export interface GetChangePasswordResponse extends ChangePasswordResponse { }
 
     export interface PutPasswordPayload {
-        oldPassword?: string;
+        userId: number;
+        oldPassword: string;
         newPassword: string;
-        authToken?: string;
+        authtoken: string;
     }
     export interface PutPasswordResponse {
         status: boolean;
