@@ -58,11 +58,8 @@ const SettingsWrapper: React.FunctionComponent<{
         const { isShowing, toggle } = useModal(modalRef);
         const [resetPasswordModal, setResetPasswordModal] = useState(false);
         const [deleteCardModal, setDeleteCardModal] = useState(false);
-        const [currentPassword, setCurrentPassword] = useState("");
-        const [newPassword, setNewPassword] = useState("");
-        const [confirmPassword, setConfirmPassword] = useState("");
-        const [changeUsername, setChangeUsername] = useState({});
-        const [changePassword, setChangePassword] = useState(false);
+        const [changeUsernameStatus, setChangeUsernameStatus] = useState({});
+        const [changePasswordStatus, setChangePasswordStatus] = useState(false);
         const [triggerValidation, setTriggerValidation] = useState(false);
         const [pushNotifiaction, setPushNotification] = useState(false);
         const [emailNotification, setEmailNotification] = useState(false);
@@ -82,14 +79,6 @@ const SettingsWrapper: React.FunctionComponent<{
             toggle();
         };
 
-        // useEffect(() => {
-        //     if (currentPassword && newPassword && confirmPassword) {
-        //         setChangePassword(true);
-        //     } else {
-        //         setChangePassword(false);
-        //     }
-        // }, [currentPassword, newPassword, confirmPassword]);
-
         async function handleChangeUsernameSubmit(data: any) {
             dispatch(LoginActions.ChangeUsername({
                 userId: user.id,
@@ -99,7 +88,6 @@ const SettingsWrapper: React.FunctionComponent<{
         }
 
         async function handleAccountSettingsSubmit(data: any) {
-            console.log(data);
             if (
                 data.currentpassword &&
                 data.newpassword &&
@@ -690,9 +678,9 @@ const SettingsWrapper: React.FunctionComponent<{
                     securityAndPrivacySettings && <React.Fragment>
                         <ParagraphText className="font-12px text-primary pl-2">
                             Security and Privacy Settings
-                    </ParagraphText>
-                        <div className="row no-gutters justify-content-center border-top">
-                            <div className="w-100 d-flex flex-column" style={{
+                        </ParagraphText>
+                        <div className="row no-gutters border-top">
+                            {true && <div className="w-100 d-flex flex-column" style={{
                                 paddingTop: "30%",
                                 paddingBottom: "30%"
                             }}>
@@ -704,9 +692,9 @@ const SettingsWrapper: React.FunctionComponent<{
                                 </div>
                                 <ParagraphText className="font-18px lato-bold text-primary text-center my-4">
                                     Coming Soon!
-                            </ParagraphText>
-                            </div>
-                            {false && <div style={{ width: "320px" }}>
+                                </ParagraphText>
+                            </div>}
+                            {false && <div className="d-flex flex-column py-2 px-4 w-100">
                                 <FormComponent
                                     onSubmit={handleSubmit}
                                     defaultValues={{}}
@@ -715,110 +703,72 @@ const SettingsWrapper: React.FunctionComponent<{
                                     triggerValidation={triggerValidation}
                                 >
                                     <div className="w-100 mt-1 mr-4 text-left">
-                                        {" "}
                                         <h6 className="heading-styles text-grey100">
                                             Profile Privacy{" "}
                                         </h6>
                                     </div>
-                                    <div className="d-flex flex-row bd-highlight link-anchor">
-                                        <div className="p-2 bd-highlight switch-settings">
-                                            <span className="font-11px text-grey100">
-                                                Nomad (Completely Private)
-                                        </span>
-                                        </div>
-                                        <div className="p-2 ml-5 bd-highlight align-self-center">
-                                            <span className="ml-4 mr-4 pl-5">
-                                                <Switch
-                                                    onChange={e => toggleNomad(e)}
-                                                    checked={nomad}
-                                                    onColor="#f57c52"
-                                                    offColor="#707070"
-                                                    uncheckedIcon={false}
-                                                    checkedIcon={false}
-                                                    height={20}
-                                                    width={38}
-                                                    handleDiameter={14}
-                                                />
-                                            </span>
-                                        </div>
+                                    <div className="d-flex row w-100 py-2 justify-content-between">
+                                        <div className="text-left">Nomad (Completely Private)</div>
+                                        <div className="ml-2 text-right"><Switch
+                                            onChange={e => toggleNomad(e)}
+                                            checked={nomad}
+                                            onColor="#f57c52"
+                                            offColor="#707070"
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            height={20}
+                                            width={38}
+                                            handleDiameter={14}
+                                            name="nomad"
+                                        /></div>
                                     </div>
-                                    <div className="d-flex flex-row bd-highlight">
-                                        <div className="p-2 bd-highlight switch-settings">
-                                            <span className="font-11px text-grey100">
-                                                Enable Comments
-                                        </span>
-                                        </div>
-                                        <div className="p-2 ml-5 bd-highlight align-self-center">
-                                            <span className="ml-4 mr-4 pl-5">
-                                                <Switch
-                                                    onChange={e =>
-                                                        toggleEnableComments(e)
-                                                    }
-                                                    checked={enableComments}
-                                                    onColor="#f57c52"
-                                                    offColor="#707070"
-                                                    uncheckedIcon={false}
-                                                    checkedIcon={false}
-                                                    height={20}
-                                                    width={38}
-                                                    handleDiameter={14}
-                                                />
-                                            </span>
-                                        </div>
+                                    <div className="d-flex row w-100 py-2 justify-content-between">
+                                        <div className="text-left">Disable Comments</div>
+                                        <div className="ml-2 text-right"><Switch
+                                            onChange={e => toggleNomad(e)}
+                                            checked={enableComments}
+                                            onColor="#f57c52"
+                                            offColor="#707070"
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            height={20}
+                                            width={38}
+                                            handleDiameter={14}
+                                            name="comments"
+                                        /></div>
                                     </div>
-                                    <div className="d-flex flex-row bd-highlight ">
-                                        <div className="p-2 bd-highlight switch-settings">
-                                            <span className="font-11px text-grey100">
-                                                Show Number of `Following`
-                                        </span>
-                                        </div>
-                                        <div className="p-2 ml-5 bd-highlight align-self-center">
-                                            <span className="ml-4 mr-4 pl-5">
-                                                <Switch
-                                                    onChange={e =>
-                                                        toggleShowNumberFollowing(e)
-                                                    }
-                                                    checked={showNumberFollowing}
-                                                    onColor="#f57c52"
-                                                    offColor="#707070"
-                                                    uncheckedIcon={false}
-                                                    checkedIcon={false}
-                                                    height={20}
-                                                    width={38}
-                                                    handleDiameter={14}
-                                                />
-                                            </span>
-                                        </div>
+                                    <div className="d-flex row w-100 py-2 justify-content-between">
+                                        <div className="text-left">Show Followers</div>
+                                        <div className="ml-2 text-right"><Switch
+                                            onChange={e => toggleNomad(e)}
+                                            checked={showNumberFollowing}
+                                            onColor="#f57c52"
+                                            offColor="#707070"
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            height={20}
+                                            width={38}
+                                            handleDiameter={14}
+                                            name="comments"
+                                        /></div>
                                     </div>
-                                    <div className="d-flex flex-row bd-highlight">
-                                        <div className="p-2 bd-highlight switch-settings">
-                                            <span className="font-11px text-grey100">
-                                                Public Friend's List
-                                        </span>
-                                        </div>
-                                        <div className="p-2 ml-5 bd-highlight align-self-center">
-                                            <span className="ml-4 mr-4 pl-5">
-                                                <Switch
-                                                    onChange={e =>
-                                                        togglePublicFriendsList(e)
-                                                    }
-                                                    checked={publicFriendsList}
-                                                    onColor="#f57c52"
-                                                    offColor="#707070"
-                                                    uncheckedIcon={false}
-                                                    checkedIcon={false}
-                                                    height={20}
-                                                    width={38}
-                                                    handleDiameter={14}
-                                                />
-                                            </span>
-                                        </div>
+                                    <div className="d-flex row w-100 py-2 justify-content-between">
+                                        <div className="text-left">Show Followers</div>
+                                        <div className="ml-2 text-right"><Switch
+                                            onChange={e => toggleNomad(e)}
+                                            checked={showNumberFollowing}
+                                            onColor="#f57c52"
+                                            offColor="#707070"
+                                            uncheckedIcon={false}
+                                            checkedIcon={false}
+                                            height={20}
+                                            width={38}
+                                            handleDiameter={14}
+                                            name="comments"
+                                        /></div>
                                     </div>
-                                    {/* <div className="row no-gutters justify-content-center border-top"> */}
-                                    <div id="line">
-                                        <hr />
-                                    </div>
-                                    <div className="row no-gutters w-100 mt-1 mr-4 text-left">
+
+                                    <div className="row no-gutters w-100 mt-3 mr-4 text-left">
                                         {" "}
                                         <h6 className="heading-styles text-grey100">
                                             IP and Geo Blocking{" "}
@@ -837,11 +787,7 @@ const SettingsWrapper: React.FunctionComponent<{
                                             },
                                         ]}
                                     />
-                                    {/* </div> */}
-                                    <div id="line">
-                                        <hr />
-                                    </div>
-                                    <div className="row no-gutters w-100 mt-1 mr-4 text-left">
+                                    <div className="row no-gutters w-100 mt-3 mr-4 text-left">
                                         {" "}
                                         <h6 className="heading-styles text-grey100">
                                             Watermarks{" "}

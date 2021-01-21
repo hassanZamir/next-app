@@ -75,7 +75,7 @@ export const FeedsComponent: React.FunctionComponent<{
                         <StaticImage
                             className="cursor-pointer"
                             src="/images/veno_tv_logo_main@2x.png"
-                            height="100%"
+                            height="35px"
                             width="164px"
                         />
                     </a>
