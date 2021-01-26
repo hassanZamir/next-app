@@ -316,6 +316,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
             addToast("You cant Tip yourself!", { appearance: "error" })
             return;
         }
+        setReportFeed({});
         setClickedTipFeed(feeds[index]);
         toggle();
     };
@@ -377,6 +378,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
     };
 
     const onReportClick = (feed: FEED) => {
+        setClickedTipFeed({});
         setReportFeed(feed);
         toggle();
     };

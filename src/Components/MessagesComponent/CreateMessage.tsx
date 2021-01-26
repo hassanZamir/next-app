@@ -85,37 +85,54 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
         const _recipients = searchActive ? messageRecipients.searchValues : messageRecipients.values;
         return (<div className="d-flex flex-column"
             style={{ flex: 1 }}>
-            <div className="d-flex flex-row mx-4" style={{
-                alignSelf: "flex-end"
+            <div className="d-flex flex-row mx-4 justify-content-between" style={{
+                
             }}>
-                <div style={{
-                    alignContent: "right"
-                }}>{selectAll ? "Tap to unselect all" : "Tap to select all"}</div>
-                <div style={{
-                    marginLeft: "10px"
-                }}>
-                    <RadioInput
-                        onChange={() => {
-                        }}
-                        onClick={() => {
-                            if (selectAll) {
-                                setSelectAll(false);
-                                onRecipientRemoveAll();
-                            }
-                            else {
-                                setSelectAll(true);
-                                onRecipientAddAll();
-                            }
-                        }}
-                        inputHeight="28px"
-                        inputWidth="28px"
-                        showLabel={false}
-                        name=""
-                        type="radio"
-                        value="0"
-                        checked={selectAll}
-                        inputMargin="0px 5px 0px 0px"
-                    />
+                <div onClick={() => { recipientsForMessage.length > 0 && goToSendMessage(); }}
+                    className="cursor-pointer"
+                >
+                    <div className={"d-flex align-items-center justify-content-center " + (recipientsForMessage.length > 0 ? "bg-primary-gradient" : "bg-grey400")}
+                        style={{
+                            left: "20px",
+                            bottom: "80px",
+                            height: "52px",
+                            width: "52px",
+                            borderRadius: "12px"
+                        }}>
+                        <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" style={{ transform: "rotate(180deg)" }} />
+                    </div>
+                </div>
+
+                <div className="d-flex">
+                    <div style={{
+                        alignContent: "right"
+                    }}>{selectAll ? "Tap to unselect all" : "Tap to select all"}</div>
+                    <div style={{
+                        marginLeft: "10px"
+                    }}>
+                        <RadioInput
+                            onChange={() => {
+                            }}
+                            onClick={() => {
+                                if (selectAll) {
+                                    setSelectAll(false);
+                                    onRecipientRemoveAll();
+                                }
+                                else {
+                                    setSelectAll(true);
+                                    onRecipientAddAll();
+                                }
+                            }}
+                            inputHeight="28px"
+                            inputWidth="28px"
+                            showLabel={false}
+                            name=""
+                            type="radio"
+                            value="0"
+                            checked={selectAll}
+                            inputMargin="0px 5px 0px 0px"
+                        />
+                    </div>
                 </div>
             </div>
             <div className="d-flex align-items-center justify-content-center h-100 w-100">
@@ -134,12 +151,12 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
                         className="text-primary font-20px lato-bold">
                         {!searchActive ? "You don't have any contacts" : "No Content"}
                     </ParagraphText>}
-                    <div onClick={() => { recipientsForMessage.length > 0 && goToSendMessage(); }}
+                    {/* <div onClick={() => { recipientsForMessage.length > 0 && goToSendMessage(); }}
                         className="cursor-pointer"
                     >
                         <div className={"position-absolute d-flex align-items-center justify-content-center " + (recipientsForMessage.length > 0 ? "bg-primary-gradient" : "bg-grey400")}
                             style={{
-                                right: "20px",
+                                left: "20px",
                                 bottom: "80px",
                                 height: "52px",
                                 width: "52px",
@@ -147,7 +164,7 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
                             }}>
                             <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" style={{ transform: "rotate(180deg)" }} />
                         </div>
-                    </div>
+                    </div> */}
                 </LoadingSpinner>
             </div>
         </div>);

@@ -66,6 +66,7 @@ export const ReportFeedModal: React.ForwardRefRenderFunction<HTMLDivElement, IRe
                             labelText="This content is offensive or violates 'Veno TV' terms of service."
                             name="report-modal"
                             wrapperClass="mt-3"
+                            showLabel={true}
                             validationRules={{ required: { value: true, message: "Report Reason is required" } }}
                         />
                         <RadioInput
@@ -74,6 +75,7 @@ export const ReportFeedModal: React.ForwardRefRenderFunction<HTMLDivElement, IRe
                             labelText="This content contains stolen material (DMCA)."
                             name="report-modal"
                             wrapperClass="mt-3"
+                            showLabel={true}
                             validationRules={{ required: { value: true, message: "Report Reason is required" } }}
                         />
                         <RadioInput
@@ -82,6 +84,7 @@ export const ReportFeedModal: React.ForwardRefRenderFunction<HTMLDivElement, IRe
                             labelText="This content is spam."
                             name="report-modal"
                             wrapperClass="mt-3"
+                            showLabel={true}
                             validationRules={{ required: { value: true, message: "Report Reason is required" } }}
                         />
                         <RadioInput
@@ -90,6 +93,7 @@ export const ReportFeedModal: React.ForwardRefRenderFunction<HTMLDivElement, IRe
                             labelText="Report Abuse."
                             name="report-modal"
                             wrapperClass="mt-3"
+                            showLabel={true}
                             validationRules={{ required: { value: true, message: "Report Reason is required" } }}
                         />
                         <div className="d-flex align-items-center justify-content-end">
