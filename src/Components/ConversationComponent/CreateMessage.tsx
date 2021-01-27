@@ -245,7 +245,7 @@ export const CreateMessage: React.FunctionComponent<{
                     }}
                 >
                     <input
-                        accept="image/*,video/mp4,video/3gpp,video/quicktime"
+                        accept="image/*,video/*"
                         id="message-media-upload"
                         name="upload-media"
                         type="file"
