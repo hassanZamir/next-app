@@ -63,11 +63,9 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         if (userCreatorProfile.name && (!userCreatorProfile.profileImageUrl || !userCreatorProfile.coverImageUrl))
             router.push("/settings?action=upgrade");
 
-        if (userCreatorProfile.creatorProfileVerified) {
-            success.push("Account Status: Verification Completed");
-            setLoadEmbedId(false);
-            setLoadManualForm(false);
-            router.push("/");
+        if (!userCreatorProfile.creatorProfileVerified) {
+            errors.push("Account Status: Verification Required");
+            setLoadEmbedId(true);
         }
         else if (userCreatorProfile.manualVerify) {
             errors.push("Account Status: Manual Verification Required");
@@ -83,8 +81,11 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
             setLoading(false);
         }
         else {
-            errors.push("Account Status: Verification Required");
-            setLoadEmbedId(true);
+            success.push("Account Status: Verification Completed");
+            setLoadEmbedId(false);
+            setLoadManualForm(false);
+            setBankVerifyForm(false);
+            router.push("/");
         }
     }, [userCreatorProfile]);
 

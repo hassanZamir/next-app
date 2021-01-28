@@ -895,14 +895,14 @@ export const SettingsComponent: React.FunctionComponent<{
                 isLoading={loading}
             />
 
-            {!user.isCreator && <div className="mt-5 d-flex flex-column align-items-center">
+            {/* {!user.isCreator &&  <div className="mt-5 d-flex flex-column align-items-center">
                 <ParagraphText className="text-primary font-14px align-self-center">
                     Upgrade your account to post content and earn
                     </ParagraphText>
                 <Link href="/account-upgrade">
                     <PrimaryButton isActive={true}>Become a creator</PrimaryButton>
                 </Link>
-            </div>}
+            </div>} */}
         </div >
     );
 }
