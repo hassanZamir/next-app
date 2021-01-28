@@ -293,7 +293,7 @@ export const LoginService = {
         try {
             response = await Http.UserAuthRequest<
                 PostPersonalInformationModel.GetPostPersonalInformationResponse
-            >("POST", "/accounts/" + payload.userId + "/banking", payload.authtoken, undefined, {
+            >("POST", "/accounts/" + payload.userId + "/verification", payload.authtoken, undefined, {
                 restPayload
             });
         } catch (error) {
@@ -313,7 +313,7 @@ export const LoginService = {
         try {
             response = await Http.UserAuthRequest<
                 GETPersonalInformationModel.GetGETPersonalInformationResponse
-            >("GET", "/accounts/" + payload.userid + "/banking", payload.authtoken);
+            >("GET", "/accounts/" + payload.userid + "/verification", payload.authtoken);
         } catch (error) {
             response = {
                 status: false,

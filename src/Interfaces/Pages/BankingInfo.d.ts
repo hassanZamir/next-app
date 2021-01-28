@@ -19,6 +19,7 @@ declare namespace IBankingInfoPage {
         errors: string[];
         success: string[];
         externalVerificationAttempt: boolean;
+        bankVerificationState?: number;
     }
 
     namespace Actions {
@@ -34,6 +35,49 @@ declare namespace IBankingInfoPage {
 
         export interface IGetGETPersonalInformationPayload extends GETPersonalInformationModel.GetGETPersonalInformationPayload { }
         export interface IGetGETPersonalInformationResponse extends GETPersonalInformationModel.GetGETPersonalInformationResponse { }
+
+        export interface IGetBankAccountInfoPayload {
+            userid: number,
+            authtoken: string,
+        }
+        export interface IGetBankAccountInfoResponse {
+            status: boolean,
+            errors: {},
+            response: {
+                bankTitle: string,
+                bankType: string,
+                bankName: string,
+                bankAccount: number,
+                bankCode: string,
+                bankAddress: string,
+                bankCity: string,
+                bankState: string,
+                bankCountry: string,
+                bankPostalCode: string,
+                state: int,
+            }
+        }
+
+        export interface IPostBankAccountInfoPayload {
+            userId: number,
+            authtoken: string,
+
+            bankTitle: string,
+            bankType: string,
+            bankName: string,
+            bankAccount: number,
+            bankCode: string,
+            bankAddress: string,
+            bankCity: string,
+            bankState: string,
+            bankCountry: string,
+            bankPostalCode: string,
+        }
+        export interface IPostBankAccountInfoResponse {
+            status: boolean,
+            errors: {},
+            response: {}
+        }
     }
 }
 

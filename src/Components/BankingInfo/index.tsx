@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Router, { useRouter } from "next/router";
 import { useToasts } from "react-toast-notifications";
+import { BankVerification } from "./BankVerification";
 
 export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     user,
@@ -33,6 +34,7 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
     const [loading, setLoading] = useState(true);
     const [loadEmbedId, setLoadEmbedId] = useState(false);
     const [loadManualForm, setLoadManualForm] = useState(false);
+    const [bankVerifyForm, setBankVerifyForm] = useState(false);
 
     const manualVerificationUrl = "https://forms.clickup.com/f/359t3-473/2EV39OJPVWEVXEDSQU";
 
@@ -73,6 +75,13 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
             if (!externalVerificationAttempt)
                 setLoadEmbedId(false);
         }
+        else if (!userCreatorProfile.bankVerfified) {
+            errors.push("Account Status: Bank Account Verification Required");
+            setLoadManualForm(false);
+            setLoadEmbedId(false);
+            setBankVerifyForm(true);
+            setLoading(false);
+        }
         else {
             errors.push("Account Status: Verification Required");
             setLoadEmbedId(true);
@@ -86,31 +95,7 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
                 className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
         </div>
         <ParagraphText className="mb-2 gibson-semibold font-40px text-center text-primary">Account Upgrade</ParagraphText>
-        <div className="d-flex position-relative justify-content-center h-100 account-upgrade-loader">
-            {loading && <div className="position-absolute" style={{ top: "45%", left: "45%" }}>
-                <LoadingSpinner size="3x" />
-            </div>}
-            <div className="w-100 z-1">
-                {!userCreatorProfile.creatorProfileVerified && loadEmbedId && <iframe
-                    onLoad={() => { setLoading(false) }}
-                    allow={'camera;geolocation'}
-                    name={`${user.token}#${apiUrl}#${truliooFeKey}`}
-                    frameBorder="0px"
-                    width="98%"
-                    height="100%"
-                    src={truliooServiceUrl}>
-                </iframe>}
-                {!userCreatorProfile.creatorProfileVerified && loadManualForm && <iframe
-                    onLoad={() => { setLoading(false) }}
-                    allow={'camera;geolocation'}
-                    name={`${user.token}#${apiUrl}#${truliooFeKey}`}
-                    frameBorder="0px"
-                    width="98%"
-                    height="100%"
-                    src={manualVerificationUrl}>
-                </iframe>}
-            </div>
-        </div>
+
         {
             success.length > 0 && (
                 <div className="d-flex flex-column">
@@ -137,5 +122,33 @@ export const BankingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
                 </div>
             )
         }
+
+        <div className="mt-3 d-flex position-relative justify-content-center h-100 account-upgrade-loader">
+            {loading && <div className="position-absolute" style={{ top: "45%", left: "45%" }}>
+                <LoadingSpinner size="3x" />
+            </div>}
+            <div className="w-100 z-1">
+                {!userCreatorProfile.creatorProfileVerified && loadEmbedId && <iframe
+                    onLoad={() => { setLoading(false) }}
+                    allow={'camera;geolocation'}
+                    name={`${user.token}#${apiUrl}#${truliooFeKey}`}
+                    frameBorder="0px"
+                    width="98%"
+                    height="100%"
+                    src={truliooServiceUrl}>
+                </iframe>}
+                {!userCreatorProfile.creatorProfileVerified && loadManualForm && <iframe
+                    onLoad={() => { setLoading(false) }}
+                    allow={'camera;geolocation'}
+                    name={`${user.token}#${apiUrl}#${truliooFeKey}`}
+                    frameBorder="0px"
+                    width="98%"
+                    height="100%"
+                    src={manualVerificationUrl}>
+                </iframe>}
+                {bankVerifyForm && <BankVerification user={user} ></BankVerification>}
+            </div>
+        </div>
+
     </React.Fragment>
 };

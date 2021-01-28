@@ -100,6 +100,10 @@ export const ActionConsts = {
         PostBankingInfoError: "PostBankingInfoError",
         GetBankingInfoSuccess: "GetBankingInfoSuccess",
         GetBankingInfoError: "GetBankingInfoError",
+        PostBankAccountInfoSuccess: "PostBankAccountInfoSuccess",
+        PostBankAccountInfoError: "PostBankAccountInfoError",
+        GetBankAccountInfoSuccess: "GetBankAccountInfoSuccess",
+        GetBankAccountInfoError: "GetBankAccountInfoError",
     },
     Settings: {
         UpdateHttpStatus: "UpdateHttpStatus",

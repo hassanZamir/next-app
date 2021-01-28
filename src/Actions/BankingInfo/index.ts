@@ -4,14 +4,38 @@ import { Dispatch } from "redux";
 
 // #region Local Imports
 import { ActionConsts } from "@Definitions";
-import { CreatorProfileService, FeedsService, LoginService } from "@Services";
+import { BankAccountService, LoginService } from "@Services";
 // #endregion Local Imports
 
 // #region Interface Imports
-import { IBankingInfoPage, IProfilePage } from "@Interfaces";
+import { IBankingInfoPage } from "@Interfaces";
 // #endregion Interface Imports
 
 export const BankingInfoActions = {
+    GetBankAccountInfo: (payload: IBankingInfoPage.Actions.IGetBankAccountInfoPayload) => async (dispatch: Dispatch) => {
+        const result = await BankAccountService.GetBankAccountInfo(payload);
+        dispatch({
+            payload:
+                result.status && !result.errors
+                    ? "Success"
+                    : result.errors,
+            type: result.status
+                ? ActionConsts.BankingInfo.GetBankAccountInfoSuccess
+                : ActionConsts.BankingInfo.GetBankAccountInfoError,
+        });
+    },
+    PostBankAccountInfo: (payload: IBankingInfoPage.Actions.IPostBankAccountInfoPayload) => async (dispatch: Dispatch) => {
+        const result = await BankAccountService.PostBankAccountInfo(payload);
+        dispatch({
+            payload:
+                result.status && !result.errors
+                    ? "Success"
+                    : result.errors,
+            type: result.status
+                ? ActionConsts.BankingInfo.PostBankAccountInfoSuccess
+                : ActionConsts.BankingInfo.PostBankAccountInfoError,
+        });
+    },
     PostPersonalInformation: (
         payload: IBankingInfoPage.Actions.IGetPostPersonalInformationPayload
     ) => async (dispatch: Dispatch) => {
