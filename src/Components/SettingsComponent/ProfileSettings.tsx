@@ -309,7 +309,7 @@ export const ProfileSettings: React.FunctionComponent<{
                         rows={5}
                         columns={40}
                         maxLength={500}
-                        className="border-primary rounded w-100 font-13px text-lightGrey bio-text-area"
+                        className="border-primary rounded w-100 font-16px text-lightGrey bio-text-area"
                         onChange={handleInputChange}
                     />
                     <SelectInput
@@ -317,7 +317,7 @@ export const ProfileSettings: React.FunctionComponent<{
                         labelText="Location"
                         name={["location"]}
                         options={[Locations.countries]}
-                        wrapperClass="mt-3"
+                        wrapperClass="mt-3 font-17px"
                         validationRules={[
                             {
                                 required:

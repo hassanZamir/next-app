@@ -13,6 +13,7 @@ const Container = styled(RegInput)`
     border-radius: 6px;
     padding-left: 5px;
     outline: none;
+    font-size: 16px;
 `;
 
 const SelectContainer = styled(Select)`
@@ -159,7 +160,7 @@ export const MultiLabelInput: React.FunctionComponent<IMultiLabelInput.IProps> =
                 return (
                     <div className="text-danger font-10px">
                         {formErrors[field.label] &&
-                        formErrors[field.label][field.labelInput]
+                            formErrors[field.label][field.labelInput]
                             ? formErrors[field.label][field.labelInput].message
                             : ""}
                     </div>
