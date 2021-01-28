@@ -86,23 +86,8 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
         return (<div className="d-flex flex-column"
             style={{ flex: 1 }}>
             <div className="d-flex flex-row mx-4 justify-content-between" style={{
-                
+                alignSelf: "flex-end"
             }}>
-                <div onClick={() => { recipientsForMessage.length > 0 && goToSendMessage(); }}
-                    className="cursor-pointer"
-                >
-                    <div className={"d-flex align-items-center justify-content-center " + (recipientsForMessage.length > 0 ? "bg-primary-gradient" : "bg-grey400")}
-                        style={{
-                            left: "20px",
-                            bottom: "80px",
-                            height: "52px",
-                            width: "52px",
-                            borderRadius: "12px"
-                        }}>
-                        <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" style={{ transform: "rotate(180deg)" }} />
-                    </div>
-                </div>
-
                 <div className="d-flex">
                     <div style={{
                         alignContent: "right"
@@ -137,7 +122,9 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
             </div>
             <div className="d-flex align-items-center justify-content-center h-100 w-100">
                 <LoadingSpinner size="3x" showLoading={loading || loadingSearch}>
-                    {_recipients.length > 0 && <div className="d-flex flex-column h-100 w-100">
+                    {_recipients.length > 0 && <div className="d-flex flex-column h-100 w-100" style={{
+                        paddingBottom: "100px"
+                    }}>
                         {_recipients.map((recipient, i) => {
                             return <RecipientRow recipient={recipient}
                                 user={user}
@@ -151,12 +138,12 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
                         className="text-primary font-20px lato-bold">
                         {!searchActive ? "You don't have any contacts" : "No Content"}
                     </ParagraphText>}
-                    {/* <div onClick={() => { recipientsForMessage.length > 0 && goToSendMessage(); }}
+                    <div onClick={() => { recipientsForMessage.length > 0 && goToSendMessage(); }}
                         className="cursor-pointer"
                     >
                         <div className={"position-absolute d-flex align-items-center justify-content-center " + (recipientsForMessage.length > 0 ? "bg-primary-gradient" : "bg-grey400")}
                             style={{
-                                left: "20px",
+                                right: "20px",
                                 bottom: "80px",
                                 height: "52px",
                                 width: "52px",
@@ -164,7 +151,7 @@ export const CreateMessage: React.FunctionComponent<{ loadingSearch: boolean, us
                             }}>
                             <FontAwesomeIcon icon={faArrowLeft} size="1x" color="white" style={{ transform: "rotate(180deg)" }} />
                         </div>
-                    </div> */}
+                    </div>
                 </LoadingSpinner>
             </div>
         </div>);
