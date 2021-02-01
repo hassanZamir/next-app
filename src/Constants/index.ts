@@ -3,6 +3,7 @@ export enum CONTENT_TYPE {
     VIDEO = 2,
     Text = 3
 }
+export const VIDEO_TYPES = ['mp4', '3gpp', 'quicktime', 'mov', 'MOV', 'MP4', '3GPP', 'QUICKTIME'];
 
 
 export const ICCBillConstants = {

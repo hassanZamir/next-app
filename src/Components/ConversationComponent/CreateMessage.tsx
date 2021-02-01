@@ -20,6 +20,7 @@ import { LoadingSpinner } from "@Components";
 import { FeedsActions } from "@Actions";
 import { IFeed } from "@Interfaces";
 import { PrimaryButton } from "@Components/PrimaryButton";
+import { VIDEO_TYPES } from "@Constants";
 // #endregion Local Imports
 
 interface IUploadImage {
@@ -115,7 +116,7 @@ export const CreateMessage: React.FunctionComponent<{
             const formData = new FormData();
             const videoFormData = new FormData();
             files.forEach(file => {
-                const isVideo = file.raw.name.split('.')[1] === ('mp4');
+                const isVideo = VIDEO_TYPES.includes(file.raw.name.split('.').reverse()[0].toLowerCase());
                 if (isVideo)
                     videoFormData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
                 else

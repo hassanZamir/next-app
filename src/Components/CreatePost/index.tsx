@@ -8,6 +8,7 @@ import { PrimaryButton, TakePictureWithWebcam } from "@Components";
 import { Textarea, ToggleAnimate, AnimatePopup } from "@Components/Basic";
 import { FeedsActions } from "@Actions";
 import { useToasts } from "react-toast-notifications";
+import { VIDEO_TYPES } from "@Constants";
 
 interface IUploadImage {
     preview: "",
@@ -31,7 +32,6 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             const { value } = e.currentTarget;
             setTitle(value);
         }
-        const VIDEO_TYPES = ['mp4', '3gpp', 'quicktime', 'mov'];
         const convertBytesToString = (bytes: any, decimals: any = 2) => {
             if (bytes === 0) return '0 Bytes';
 
@@ -101,7 +101,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
 
             {files.length > 0 && <div className="px-2 py-1 d-flex align-items-center">
                 {files.map((url, i) => {
-                    const isVideo = VIDEO_TYPES.includes(url.raw.name.split('.').reverse()[0]);
+                    const isVideo = VIDEO_TYPES.includes(url.raw.name.split('.').reverse()[0].toLowerCase());
                     return (<React.Fragment key={i}>
                         {url.preview && !isVideo && <img src={url.preview} width="38" height="36" className={i > 0 ? "ml-1" : ""} />}
                         {url.preview && isVideo && <video className={i > 0 ? "ml-1" : ""} width="38" height="36" controls={false}>
