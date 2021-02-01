@@ -903,6 +903,6 @@ export const SettingsComponent: React.FunctionComponent<{
                     <PrimaryButton isActive={true}>Become a creator</PrimaryButton>
                 </Link>
             </div>} */}
-        </div >
+        </div>
     );
 }
