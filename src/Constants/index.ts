@@ -5,6 +5,8 @@ export enum CONTENT_TYPE {
 }
 export const VIDEO_TYPES = ['mp4', '3gpp', 'quicktime', 'mov', 'MOV', 'MP4', '3GPP', 'QUICKTIME'];
 
+export const CONTENT_MAX_SIZE = 524288000; // 500 MB
+
 
 export const ICCBillConstants = {
     "SinglePaymentType": 1,

@@ -8,7 +8,7 @@ import { PrimaryButton, TakePictureWithWebcam } from "@Components";
 import { Textarea, ToggleAnimate, AnimatePopup } from "@Components/Basic";
 import { FeedsActions } from "@Actions";
 import { useToasts } from "react-toast-notifications";
-import { VIDEO_TYPES } from "@Constants";
+import { CONTENT_MAX_SIZE, VIDEO_TYPES } from "@Constants";
 
 interface IUploadImage {
     preview: "",
@@ -48,8 +48,8 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             if (e.target.files.length) {
                 const uploadedFiles = [];
                 for (let i = 0; i < e.target.files.length; i++) {
-                    if (e.target.files[i].size > 10053651) {
-                        addToast(`Can't upload file greater than 10.00 MB. ${e.target.files[i].name}, Size=${convertBytesToString(e.target.files[i].size)}.`);
+                    if (e.target.files[i].size > CONTENT_MAX_SIZE) {
+                        addToast(`Can't upload file greater than ${convertBytesToString(CONTENT_MAX_SIZE)} MB. ${e.target.files[i].name}, Current Size=${convertBytesToString(e.target.files[i].size)}.`);
                         continue;
                     }
                     uploadedFiles.push({
@@ -65,7 +65,8 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             const formData = new FormData();
             const videoFormData = new FormData();
             files.forEach((file) => {
-                const isVideo = VIDEO_TYPES.includes(file.raw.name.split('.').reverse()[0]);
+                const isVideo = VIDEO_TYPES.includes(file.raw.name.split('.').reverse()[0].toLowerCase());
+                console.log(file.raw.name.split('.').reverse()[0].toLowerCase());
                 if (isVideo)
                     videoFormData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
                 else

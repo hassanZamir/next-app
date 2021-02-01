@@ -20,7 +20,8 @@ import { LoadingSpinner } from "@Components";
 import { FeedsActions } from "@Actions";
 import { IFeed } from "@Interfaces";
 import { PrimaryButton } from "@Components/PrimaryButton";
-import { VIDEO_TYPES } from "@Constants";
+import { CONTENT_MAX_SIZE, VIDEO_TYPES } from "@Constants";
+import { useToasts } from "react-toast-notifications";
 // #endregion Local Imports
 
 interface IUploadImage {
@@ -39,6 +40,7 @@ export const CreateMessage: React.FunctionComponent<{
     conversationId: number;
     onSuccess: () => void;
 }> = ({ conversationThread, user, conversationId, onSuccess }) => {
+    const { addToast } = useToasts();
     const { activeConversationError } = useSelector((store: IStore) => store.persistState)
     const [message, setMessage] = useState("");
     const [priceTagAmount, setPriceTagAmount] = useState("");
@@ -82,11 +84,25 @@ export const CreateMessage: React.FunctionComponent<{
         const { value } = e.currentTarget;
         setMessage(value);
     };
+    const convertBytesToString = (bytes: any, decimals: any = 2) => {
+        if (bytes === 0) return '0 Bytes';
 
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
     const handleFileChange = (e: any) => {
         if (e.target.files.length) {
             const uploadedFiles = [];
             for (let i = 0; i < e.target.files.length; i++) {
+                if (e.target.files[i].size > CONTENT_MAX_SIZE) {
+                    addToast(`Can't upload file greater than ${convertBytesToString(CONTENT_MAX_SIZE)} MB. ${e.target.files[i].name}, Current Size=${convertBytesToString(e.target.files[i].size)}.`);
+                    continue;
+                }
                 uploadedFiles.push({
                     preview: URL.createObjectURL(e.target.files[i]),
                     raw: e.target.files[i],
