@@ -66,7 +66,6 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             const videoFormData = new FormData();
             files.forEach((file) => {
                 const isVideo = VIDEO_TYPES.includes(file.raw.name.split('.').reverse()[0].toLowerCase());
-                console.log(file.raw.name.split('.').reverse()[0].toLowerCase());
                 if (isVideo)
                     videoFormData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
                 else
@@ -103,6 +102,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             {files.length > 0 && <div className="px-2 py-1 d-flex align-items-center">
                 {files.map((url, i) => {
                     const isVideo = VIDEO_TYPES.includes(url.raw.name.split('.').reverse()[0].toLowerCase());
+                    //console.log(url);
                     return (<React.Fragment key={i}>
                         {url.preview && !isVideo && <img src={url.preview} width="38" height="36" className={i > 0 ? "ml-1" : ""} />}
                         {url.preview && isVideo && <video className={i > 0 ? "ml-1" : ""} width="38" height="36" controls={false}>

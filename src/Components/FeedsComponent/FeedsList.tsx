@@ -457,7 +457,7 @@ export const FeedsList: React.FunctionComponent<IFeedsList.IProps> = ({
                         <Feed
                             feed={feed}
                             index={i}
-                            key={i}
+                            key={feed.id}
                             toggleTipModal={toggleTipModal}
                             likeContent={likeContent}
                             onReportClick={onReportClick}
