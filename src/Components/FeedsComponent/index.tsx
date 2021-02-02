@@ -67,7 +67,6 @@ export const FeedsComponent: React.FunctionComponent<{
         })();
     }, []);
 
-    console.log(newPosts);
     return (
         <div>
             <div className="my-2 row justify-content-center no-gutters">
