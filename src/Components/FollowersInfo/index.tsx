@@ -741,8 +741,8 @@ const FollowerCard: React.FunctionComponent<{
     );
 };
 
-export const FollowersInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
-    user,
+export const FollowersInfo: React.FunctionComponent<{ user: USER_SESSION, scrolledToBottom: boolean }> = ({
+    user, scrolledToBottom
 }) => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -755,6 +755,8 @@ export const FollowersInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         followerType,
     } = followersInfo;
 
+    const { paginationNo, emptyPaginationNo } = defaultFollowersInformation;
+    
     useEffect(() => {
         const params = {
             authtoken: user.token,
@@ -762,8 +764,22 @@ export const FollowersInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
             username: user.username,
             type: TYPE_ALL_FOLLOWERS,
         };
+        getFollowersInformation(params);
+    }, []);
+
+    useEffect(() => {
+        if (scrolledToBottom) {
+            if (emptyPaginationNo < paginationNo) {
+                const params = { userId: user.id, page: paginationNo, authtoken: user.token, type: followerType };
+                getFollowersInformation(params);
+            }
+        }
+    }, [scrolledToBottom]);
+
+    const getFollowersInformation = (params: any) => {
+        
         dispatch(FollowersInfoAction.GetFollowersInformation(params));
-    }, [dispatch, user.id, user.token, user.username]);
+    }
 
     return <React.Fragment>
         <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">

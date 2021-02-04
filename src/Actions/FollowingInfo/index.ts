@@ -16,11 +16,11 @@ export const FollowingInfoAction = {
         payload: IFollowingInfoPage.Actions.IGetGETFollowingInformationPayload
     ) => async (dispatch: Dispatch) => {
         const result = await LoginService.GetFollowingInformation(payload);
-        // console.log(result);
+        
         dispatch({
             payload: {
-                followingInformation:
-                    result.status && result.response ? result.response : [],
+                page: payload.page,
+                followingInformation: result.status && result.response ? result.response : [],
                 type: result.status ? result.type : 0,
             },
             type:

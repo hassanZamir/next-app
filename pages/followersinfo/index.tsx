@@ -1,5 +1,5 @@
 // #region Global Imports
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -28,10 +28,15 @@ const Authenticated: any = dynamic(
 const Home: NextPage = () => {
     const persistState = useSelector((state: IStore) => state.persistState);
     const { session } = persistState;
+    const [scrolledToBottom, setScrolledToBottom] = useState(false);
+    
+    const onScroll = (bottom: boolean) => {
+        bottom ? setScrolledToBottom(true) : setScrolledToBottom(false);
+    }
 
     return (
-        <Authenticated session={session} name="Account">
-            <FollowersInfo user={session} />
+        <Authenticated session={session} name="Account" onScroll={onScroll}>
+            <FollowersInfo user={session} scrolledToBottom={scrolledToBottom} />
         </Authenticated>
     );
 };
