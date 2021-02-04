@@ -16,6 +16,8 @@ declare namespace ISettingsPage {
     }
     export interface IStateProps {
         httpStatus: HTTP_REQUEST_STATUS;
+        changePasswordStatus: string;
+        changePasswordResponse: string;
     }
 
     namespace Actions {

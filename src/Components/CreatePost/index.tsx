@@ -8,6 +8,7 @@ import { PrimaryButton, TakePictureWithWebcam } from "@Components";
 import { Textarea, ToggleAnimate, AnimatePopup } from "@Components/Basic";
 import { FeedsActions } from "@Actions";
 import { useToasts } from "react-toast-notifications";
+import { CONTENT_MAX_SIZE, VIDEO_TYPES } from "@Constants";
 
 interface IUploadImage {
     preview: "",
@@ -31,7 +32,6 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             const { value } = e.currentTarget;
             setTitle(value);
         }
-        const VIDEO_TYPES = ['mp4', '3gpp', 'quicktime', 'mov'];
         const convertBytesToString = (bytes: any, decimals: any = 2) => {
             if (bytes === 0) return '0 Bytes';
 
@@ -48,8 +48,8 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             if (e.target.files.length) {
                 const uploadedFiles = [];
                 for (let i = 0; i < e.target.files.length; i++) {
-                    if (e.target.files[i].size > 10053651) {
-                        addToast(`Can't upload file greater than 10.00 MB. ${e.target.files[i].name}, Size=${convertBytesToString(e.target.files[i].size)}.`);
+                    if (e.target.files[i].size > CONTENT_MAX_SIZE) {
+                        addToast(`Can't upload file greater than ${convertBytesToString(CONTENT_MAX_SIZE)} MB. ${e.target.files[i].name}, Current Size=${convertBytesToString(e.target.files[i].size)}.`);
                         continue;
                     }
                     uploadedFiles.push({
@@ -65,7 +65,7 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
             const formData = new FormData();
             const videoFormData = new FormData();
             files.forEach((file) => {
-                const isVideo = VIDEO_TYPES.includes(file.raw.name.split('.').reverse()[0]);
+                const isVideo = VIDEO_TYPES.includes(file.raw.name.split('.').reverse()[0].toLowerCase());
                 if (isVideo)
                     videoFormData.append('mediaFiles', new Blob([file.raw as any]), file.raw.name);
                 else
@@ -101,7 +101,8 @@ export const CreatePost: React.FunctionComponent<{ user: USER_SESSION; }>
 
             {files.length > 0 && <div className="px-2 py-1 d-flex align-items-center">
                 {files.map((url, i) => {
-                    const isVideo = VIDEO_TYPES.includes(url.raw.name.split('.').reverse()[0]);
+                    const isVideo = VIDEO_TYPES.includes(url.raw.name.split('.').reverse()[0].toLowerCase());
+                    //console.log(url);
                     return (<React.Fragment key={i}>
                         {url.preview && !isVideo && <img src={url.preview} width="38" height="36" className={i > 0 ? "ml-1" : ""} />}
                         {url.preview && isVideo && <video className={i > 0 ? "ml-1" : ""} width="38" height="36" controls={false}>

@@ -208,13 +208,18 @@ export const LoginActions = {
     ChangePasswordFromSettings: (
         payload: ILoginPage.Actions.IPutPasswordPayload
     ) => async (dispatch: Dispatch) => {
+
         const result = await LoginService.ChangePasswordUsingOldPassword(payload);
 
         dispatch({
             payload: result,
             type: result.status
-                ? ActionConsts.Login.ChangePasswordFromSettingsSuccess
-                : ActionConsts.Login.ChangePasswordFromSettingsError,
+                ? ActionConsts.Settings.ChangePasswordFromSettingsSuccess
+                : ActionConsts.Settings.ChangePasswordFromSettingsError,
+        });
+        dispatch({
+            payload: "success",
+            type: ActionConsts.Settings.UpdateHttpStatus
         });
     },
 };

@@ -12,6 +12,7 @@ const Container = styled(Input) <{ border?: string, width?: string, fontFamily?:
     border-radius: 0px;
     outline: none;
     font-family: ${({ fontFamily }) => { return fontFamily ? fontFamily : 'inherit' }};
+    font-size: 16px;
 `;
 
 export const ThemedInput: React.FunctionComponent<IThemeInput.IProps> = (props) => {

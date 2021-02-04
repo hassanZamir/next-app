@@ -11,7 +11,9 @@ import {
 // #endregion Interface Imports
 
 const INITIAL_STATE: ISettingsPage.IStateProps = {
-    httpStatus: "idle"
+    httpStatus: "idle",
+    changePasswordStatus: "",
+    changePasswordResponse: "",
 };
 
 export const SettingsReducer = (
@@ -19,6 +21,7 @@ export const SettingsReducer = (
     action: IAction<
         ISettingsPage.Actions.IUpdateHttpStatus
         & IProfilePage.Actions.IMapCreatorProfileResponse
+        & any
     >
 ) => {
     switch (action.type) {
@@ -38,6 +41,24 @@ export const SettingsReducer = (
             return Object.assign({}, state, {
                 editProfileActionStatus: "success",
                 editProfileActionResponse: "Profile information successfully updated.",
+            });
+        }
+        case ActionConsts.Settings.ChangePasswordFromSettingsError: {
+            return Object.assign({}, state, {
+                changePasswordStatus: "error",
+                changePasswordResponse: "Something went wrong. Please try again later.",
+            });
+        }
+        case ActionConsts.Settings.ChangePasswordFromSettingsSuccess: {
+            return Object.assign({}, state, {
+                changePasswordStatus: "success",
+                changePasswordResponse: "Password updated successfully.",
+            });
+        }
+        case ActionConsts.Settings.ClearChangePasswordStatus: {
+            return Object.assign({}, state, {
+                changePasswordStatus: "",
+                changePasswordResponse: "",
             });
         }
         default:

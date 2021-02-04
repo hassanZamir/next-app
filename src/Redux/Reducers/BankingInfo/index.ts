@@ -18,13 +18,15 @@ const INITIAL_STATE: IBankingInfoPage.IStateProps = {
     showPersonalInformation: false,
     defaultPersonalInformation: {},
     externalVerificationAttempt: false,
+    bankVerificationState: undefined,
 };
 
 export const BankingInfoReducer = (
     state = INITIAL_STATE,
     action: IAction<
-        IProfilePage.Actions.IMapCreatorProfileResponse &
-        IBankingInfoPage.Actions.IMapGetPersonalInformation
+        IProfilePage.Actions.IMapCreatorProfileResponse
+        & IBankingInfoPage.Actions.IMapGetPersonalInformation
+        & IBankingInfoPage.Actions.IPostBankAccountInfoResponse
     >
 ) => {
     switch (action.type) {
@@ -44,20 +46,18 @@ export const BankingInfoReducer = (
                 errors: ["Error getting personal information"],
             });
         }
-        // case ActionConsts.BankingInfo.GetUserProfileSuccess: {
-        //     let { profile } = action.payload!;
-        //     return Object.assign({}, state, {
-        //         creatorProfile: profile,
-        //         showPersonalInformation:
-        //             profile.coverImageUrl && profile.profileImageUrl,
-        //     });
-        // }
-        // case ActionConsts.BankingInfo.GetUserProfileError: {
-        //     return Object.assign({}, state, {
-        //         creatorProfile: {},
-        //         errors: ["Error getting profile"],
-        //     });
-        // }
+        case ActionConsts.BankingInfo.PostBankAccountInfoSuccess: {
+            let result = action.payload!;
+            return Object.assign({}, state, {
+                bankVerificationState: 0,
+            });
+        }
+        case ActionConsts.BankingInfo.PostBankAccountInfoError: {
+            return Object.assign({}, state, {
+                bankVerificationState: 2,
+                errors: ["Error getting bank account info"],
+            });
+        }
         case ActionConsts.BankingInfo.UploadProfileImagesError: {
             return Object.assign({}, state, {
                 errors: ["Error uploading profile images"],

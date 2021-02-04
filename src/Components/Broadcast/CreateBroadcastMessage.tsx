@@ -269,7 +269,7 @@ export const CreateBroadcastMessage: React.FunctionComponent<{
                         false
                     }
                     columns={10}
-                    className="px-3 py-3 border-grey500 rounded w-100 font-14px text-primary mr-2 text-area-box-shadow resizeable-y"
+                    className="px-3 py-3 border-grey500 rounded w-100 font-16px text-primary mr-2 text-area-box-shadow resizeable-y"
                     onChange={handleMessageChange}
                     value={message}
                 />

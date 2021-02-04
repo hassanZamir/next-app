@@ -59,7 +59,6 @@ const SettingsWrapper: React.FunctionComponent<{
         const [resetPasswordModal, setResetPasswordModal] = useState(false);
         const [deleteCardModal, setDeleteCardModal] = useState(false);
         const [changeUsernameStatus, setChangeUsernameStatus] = useState({});
-        const [changePasswordStatus, setChangePasswordStatus] = useState(false);
         const [triggerValidation, setTriggerValidation] = useState(false);
         const [pushNotifiaction, setPushNotification] = useState(false);
         const [emailNotification, setEmailNotification] = useState(false);
@@ -69,7 +68,22 @@ const SettingsWrapper: React.FunctionComponent<{
         const [publicFriendsList, setPublicFriendsList] = useState(false);
         const [inputs, setInputs] = useState<any>({});
 
+        const { changePasswordStatus, changePasswordResponse } = useSelector((store: IStore) => store.settings);
         const dispatch = useDispatch();
+
+        useEffect(() => {
+            setLoading(_isLoading);
+        }, [_isLoading])
+
+        useEffect(() => {
+            if (changePasswordStatus == "success")
+                addToast("Password changed successfully.");
+            else if (changePasswordStatus == "error")
+                addToast("Password changed failed. Reason: " + changePasswordResponse);
+
+            dispatch(SettingsActions.ClearChangePasswordStatus());
+
+        }, [changePasswordStatus])
 
         const deleteCardClick = (e: React.MouseEvent<HTMLElement>) => {
             e.preventDefault();
@@ -94,6 +108,7 @@ const SettingsWrapper: React.FunctionComponent<{
                 data.confirmnewpassword
                 && data.newpassword == data.confirmnewpassword
             ) {
+                dispatch(SettingsActions.UpdateHttpStatus("awaiting"));
                 dispatch(LoginActions.ChangePasswordFromSettings({
                     userId: user.id,
                     oldPassword: data.currentpassword,
@@ -350,7 +365,7 @@ const SettingsWrapper: React.FunctionComponent<{
                         Account Settings
                     </ParagraphText>
                     <div className="d-flex border-top">
-                        {false && <div className="w-100 d-flex flex-column" style={{
+                        {loading && <div className="w-100 d-flex flex-column" style={{
                             paddingTop: "30%",
                             paddingBottom: "30%"
                         }}>
@@ -364,7 +379,7 @@ const SettingsWrapper: React.FunctionComponent<{
                                 Please wait ..
                             </ParagraphText>
                         </div>}
-                        {true && <div className="d-flex flex-column py-2 px-4 w-100" style={{}}>
+                        {!loading && <div className="d-flex flex-column py-2 px-4 w-100" style={{}}>
                             <FormComponent
                                 onSubmit={handleChangeUsernameSubmit}
                                 defaultValues={userCreatorProfile}
@@ -886,7 +901,7 @@ export const SettingsComponent: React.FunctionComponent<{
                     onClick={() => router.push("/")}
                     className="cursor-pointer" icon={faArrowLeft} color={theme.colors.primary} size="lg" />
             </div>
-            <ParagraphText className="mb-2 gibson-semibold font-40px text-center text-primary">Statements</ParagraphText>
+            <ParagraphText className="mb-2 gibson-semibold font-40px text-center text-primary">Settings</ParagraphText>
 
             <SettingsWrapper
                 userCreatorProfile={userCreatorProfile}
@@ -895,14 +910,14 @@ export const SettingsComponent: React.FunctionComponent<{
                 isLoading={loading}
             />
 
-            {!user.isCreator && <div className="mt-5 d-flex flex-column align-items-center">
+            {/* {!user.isCreator &&  <div className="mt-5 d-flex flex-column align-items-center">
                 <ParagraphText className="text-primary font-14px align-self-center">
                     Upgrade your account to post content and earn
                     </ParagraphText>
                 <Link href="/account-upgrade">
                     <PrimaryButton isActive={true}>Become a creator</PrimaryButton>
                 </Link>
-            </div>}
-        </div >
+            </div>} */}
+        </div>
     );
 }

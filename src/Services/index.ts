@@ -1,6 +1,7 @@
 // #region Local Imports
 export { Http } from "@Services/API/Http";
 // export { PlanetaryService } from "@Services/API/Planetary";
+export { BankAccountService } from "@Services/API/BankAccount";
 export { LoginService } from "@Services/API/Login";
 export { FeedsService } from "@Services/API/Feeds";
 export { StatementsServices } from "@Services/API/Statements";
