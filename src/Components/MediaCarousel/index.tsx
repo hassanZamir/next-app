@@ -15,7 +15,7 @@ declare namespace IMediaCarousel {
         startingIndex: number
     }
 }
-const mediaBaseUrl = "https://venodev.blob.core.windows.net/veno-media"; // TODO: convert to env
+const mediaBaseUrl = process.env.MEDIA_BASE_URL;
 
 export const MediaCarousel: React.ForwardRefRenderFunction<
     HTMLDivElement,
