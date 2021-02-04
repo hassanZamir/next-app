@@ -34,7 +34,8 @@ export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: FEED_MEDI
                             style={{
                                 flex: "0 0 33%",
                                 maxWidth: "33%",
-                                margin: j === 1 ? "2px 2px 0px 2px" : "2px 0px 0px 0px"
+                                margin: j === 1 ? "2px 2px 0px 2px" : "2px 0px 0px 0px",
+                                height: ""
                             }}>
                             <div className="w-100 h-100 d-flex align-items-center">
                                 {media.type === 2 && <VideoPlayer

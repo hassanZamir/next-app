@@ -1,8 +1,13 @@
 
-export const VideoPlayer: React.FunctionComponent<{ src: string, videoHeight?: string, onClick?: (e: any) => void }>
-    = ({ src, videoHeight, onClick }) => {
+export const VideoPlayer: React.FunctionComponent<{ src: string, classNames: string,videoHeight?: string, onClick?: (e: any) => void }>
+    = ({ src, videoHeight, onClick, classNames }) => {
 
-        return <video onClick={onClick} controls className="w-100" height={videoHeight ? videoHeight : "100%"}>
+        return <video 
+            onClick={onClick} 
+            controls 
+            className={"w-100 " + (classNames ? classNames : '')}
+            height={videoHeight ? videoHeight : "100%"}>
+
             <source src={src} />
         </video>
     }
