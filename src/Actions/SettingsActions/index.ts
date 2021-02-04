@@ -18,6 +18,12 @@ export const SettingsActions = {
             type: ActionConsts.Settings.UpdateHttpStatus,
         });
     },
+    ClearChangePasswordStatus: () => async (dispatch: Dispatch) => {
+        dispatch({
+            payload: "",
+            type: ActionConsts.Settings.ClearChangePasswordStatus,
+        });
+    },
     PostEditProfileSettings: (
         payload: ISettingsPage.Actions.IPostUploadSettingsProfileImagesPayload
     ) => async (dispatch: Dispatch) => {

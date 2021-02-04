@@ -13,8 +13,6 @@ export const ActionConsts = {
         ChangePasswordSuccess: "ChangePasswordSuccess",
         ChangePasswordError: "ChangePasswordError",
         ClearChangePasswordStatus: "ClearChangePasswordStatus",
-        ChangePasswordFromSettingsSuccess: "ChangePasswordFromSettingsSuccess",
-        ChangePasswordFromSettingsError: "ChangePasswordFromSettingsError",
         DoLogout: "DoLogout",
         onCloseResetPasswordModal: "onCloseResetPasswordModal",
 
@@ -118,6 +116,9 @@ export const ActionConsts = {
         GetBankingInfoError: "GetBankingInfoError",
         DeleteAccountSuccess: "DeleteAccountSuccess",
         DeleteAccountError: "DeleteAccountError",
+        ClearChangePasswordStatus: "ClearChangePasswordStatus",
+        ChangePasswordFromSettingsSuccess: "ChangePasswordFromSettingsSuccess",
+        ChangePasswordFromSettingsError: "ChangePasswordFromSettingsError",
     },
     FollowersInfo: {
         GetFollowersInfoSuccess: "GetFollowersInfoSuccess",
