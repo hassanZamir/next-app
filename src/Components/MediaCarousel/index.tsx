@@ -38,7 +38,7 @@ export const MediaCarousel: React.ForwardRefRenderFunction<
                     </div>
                 </div>
             );
-        if (a.type === 2) return <VideoPlayer src={a.original} />;
+        if (a.type === 2) return <VideoPlayer src={a.original} videoHeight="260px" />;
     };
 
     const mapMedia = (media: FEED_MEDIA[]) => {
