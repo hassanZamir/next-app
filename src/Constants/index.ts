@@ -3,6 +3,15 @@ export enum CONTENT_TYPE {
     VIDEO = 2,
     Text = 3
 }
+
+export enum FEED_MEDIA_TRANSFORMATION_TYPE {
+    CONTENT_LG = 1,
+    CONTENT_MD = 2,
+    CONTENT_SM = 3,
+    CONTENT_XS = 4,
+    VIDEO_THUMBNAIL = 5,
+}
+
 export const VIDEO_TYPES = ['mp4', '3gpp', 'quicktime', 'mov', 'MOV', 'MP4', '3GPP', 'QUICKTIME'];
 
 export const CONTENT_MAX_SIZE = 524288000; // 500 MB

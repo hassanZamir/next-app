@@ -44,16 +44,9 @@ export type FEED_MEDIA = {
 }
 
 export type FEED_MEDIA_TRANSFORMATION = {
-    transformationType: FEED_MEDIA_TRANSFORMATION_TYPE; // transformation type 
+    transformationType: number; // transformation type 
     url: string; // transformed url
     token: string; // transformed url sas media storage token
-}
-
-export enum FEED_MEDIA_TRANSFORMATION_TYPE {
-    CONTENT_LG = 1,
-    CONTENT_MD = 2,
-    CONTENT_SM = 3,
-    CONTENT_XS = 4,
 }
 
 export interface CreatorFeedsResponse {

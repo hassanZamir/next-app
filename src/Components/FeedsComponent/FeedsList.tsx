@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 
-import { IFeedsList, IFeed, IFeedOptions, FEED, mediaUrl } from "@Interfaces";
+import { IFeedsList, IFeed, IFeedOptions, FEED, FEED_MEDIA } from "@Interfaces";
 import { BackgroundImage, BackgroundImageSmart } from "@Components/Basic";
 import { ParagraphText, VideoPlayer, MediaCarousel } from "@Components";
 import { TipSubmitModal } from "../Modals/TipSubmitModal";
@@ -23,6 +23,7 @@ import { CurrentTimeDifference } from "@Services/Time";
 import { useModal } from "../Hooks";
 import { FeedsActions } from "@Actions";
 import { ActionConsts } from "@Definitions";
+import { FEED_MEDIA_TRANSFORMATION_TYPE } from "@Constants";
 
 const mediaBaseUrl = process.env.MEDIA_BASE_URL + "/";
 
@@ -99,8 +100,8 @@ const FeedOptions: React.FunctionComponent<IFeedOptions.IProps> = ({
     );
 };
 
-const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
-    mediaUrl,
+const MediaContainer: React.FunctionComponent<{ feedMedia: FEED_MEDIA[] }> = ({
+    feedMedia,
 }) => {
     const [selected, setSelected] = useState(0);
     const mediaRefs: any = [];
@@ -133,7 +134,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                 style={{ left: "45%", right: "45%" }}
             >
                 <div className="navigation-dot-background">
-                    {mediaUrl.map((validMQ, index) => (
+                    {feedMedia.map((validMQ, index) => (
 
                         <div
                             key={index}
@@ -158,7 +159,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
 
     return (
         <div className="d-flex flex-column position-relative">
-            {mediaUrl && mediaUrl.length > 1 && (
+            {feedMedia && feedMedia.length > 1 && (
                 <div
                     className="position-absolute rounded text-white bg-darkGrey font-8px d-flex align-items-center justify-content-center"
                     style={{
@@ -168,7 +169,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                         top: "10px",
                     }}
                 >
-                    {selected + 1 + "/" + mediaUrl.length}
+                    {selected + 1 + "/" + feedMedia.length}
                 </div>
             )}
             <div
@@ -196,8 +197,14 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                     }
                 }}
             >
-                {mediaUrl &&
-                    mediaUrl.map((media, i) => {
+                {feedMedia &&
+                    feedMedia.map((media: FEED_MEDIA, i) => {
+                        let poster = undefined;
+                        const thumbnail = media.transformations?.filter(x => {
+                            return x.transformationType == FEED_MEDIA_TRANSFORMATION_TYPE.VIDEO_THUMBNAIL;
+                        });
+                        if (thumbnail?.length)
+                            poster = mediaBaseUrl + thumbnail[0].url + thumbnail[0].token;
                         return (
                             <div
                                 key={i}
@@ -217,6 +224,7 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                                             media.url +
                                             media.token
                                         }
+                                        poster={poster}
                                     />
                                 )}
                                 {media.type === 1 && (
@@ -237,10 +245,10 @@ const MediaContainer: React.FunctionComponent<{ mediaUrl: mediaUrl[] }> = ({
                         );
                     })}
             </div>
-            {mediaUrl && mediaUrl.length > 1 && renderNavigation()}
+            {feedMedia && feedMedia.length > 1 && renderNavigation()}
             {showMediaCarousel >= 0 && (
                 <MediaCarousel
-                    media={mediaUrl}
+                    media={feedMedia}
                     isShowing={isShowing}
                     modalRef={modalRef}
                     toggle={toggle}
@@ -264,7 +272,7 @@ const Feed: React.FunctionComponent<IFeed.IProps> = ({
             className="w-100 h-100 my-2 move-enter move-enter-active"
             style={{ boxShadow: "0 -1px 6px rgba(0,0,0,.1)" }}
         >
-            <MediaContainer mediaUrl={feed.media_url} />
+            {feed.medialist && <MediaContainer feedMedia={feed.medialist} />}
             <div className="d-flex flex-column w-100 px-3">
                 <ParagraphText className="text-black lato-semibold font-12px">
                     {feed.title}
