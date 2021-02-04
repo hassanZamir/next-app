@@ -15,7 +15,11 @@ const INITIAL_STATE: IFollowersInfoPage.IStateProps = {
     errors: [],
     success: [],
     creatorProfile: <CREATOR_PROFILE>{},
-    defaultFollowersInformation: {},
+    defaultFollowersInformation: {
+        emptyPaginationNo: 9999,
+        values: [],
+        paginationNo: 0
+    },
     followerType: 0,
     showPersonalInformation: false
 };
@@ -28,10 +32,38 @@ export const FollowersInfoReducer = (
         case ActionConsts.FollowersInfo.GetFollowersInfoSuccess: {
             let FollowersInformation = action.payload.followersInformation;
             let type = action.payload.type;
-            return Object.assign({}, state, {
-                defaultFollowersInformation: FollowersInformation,
-                followerType: type,
-            });
+            let page = action.payload.page;
+
+            if (!page) {
+                return Object.assign({}, state, {
+                    defaultFollowersInformation: {
+                        values: [...FollowersInformation],
+                        paginationNo: state.defaultFollowersInformation.paginationNo + 1,
+                        emptyPaginationNo: FollowersInformation.length ? state.defaultFollowersInformation.paginationNo : state.defaultFollowersInformation.emptyPaginationNo
+                    },
+                    followingType: type
+                });
+            }
+
+            if (FollowersInformation.length) {
+                return Object.assign({}, state, {
+                    defaultFollowersInformation: {
+                        values: [...FollowersInformation, ...state.defaultFollowersInformation.values],
+                        paginationNo: page + 1,
+                        emptyPaginationNo: state.defaultFollowersInformation.paginationNo
+                    },
+                    followingType: type
+                });
+            } else {
+                return Object.assign({}, state, {
+                    defaultFollowersInformation: {
+                        emptyPaginationNo: state.defaultFollowersInformation.paginationNo,
+                        values: state.defaultFollowersInformation.values,
+                        paginationNo: page
+                    },
+                    followingType: type
+                });
+            }
         }
         case ActionConsts.FollowersInfo.GetFollowersInfoError: {
             return Object.assign({}, state, {

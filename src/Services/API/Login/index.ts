@@ -347,7 +347,7 @@ export const LoginService = {
                 GETFollowersInformationModel.GetGETFollowersInformationResponse
             >(
                 "GET",
-                `/users/${payload.username}/followers?type=` + payload.type,
+                `/users/${payload.username}/followers?type=` + payload.type + `${payload.page ? '&page='+payload.page: ''}`,
                 payload.authtoken
             );
         } catch (error) {
@@ -387,7 +387,7 @@ export const LoginService = {
                 GETFollowingInformationModel.GetGETFollowingInformationResponse
             >(
                 "GET",
-                `/users/${payload.username}/followings?type=${payload.type}${filter}`,
+                `/users/${payload.username}/followings?type=${payload.type}${filter}${payload.page ? '&page='+payload.page: ''}`,
                 payload.authtoken
             );
         } catch (error) {

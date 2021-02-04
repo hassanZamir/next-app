@@ -38,6 +38,7 @@ export const MediaGridGallary: React.FunctionComponent<{ mediaGallary: FEED_MEDI
                             }}>
                             <div className="w-100 h-100 d-flex align-items-center">
                                 {media.type === 2 && <VideoPlayer
+                                    videoHeight="260px"
                                     onClick={(e) => { e.preventDefault(); setShowMediaCarousel(i * 3 + j); toggle(); }}
                                     src={mediaBaseUrl + media.url + media.token} />}
 

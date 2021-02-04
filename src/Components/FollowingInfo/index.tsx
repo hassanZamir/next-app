@@ -543,8 +543,8 @@ const FollowingCard: React.FunctionComponent<{
     );
 };
 
-export const FollowingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
-    user,
+export const FollowingInfo: React.FunctionComponent<{ user: USER_SESSION, scrolledToBottom: boolean }> = ({
+    user, scrolledToBottom
 }) => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -554,6 +554,7 @@ export const FollowingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
         followingType,
     } = followingInfo;
 
+    const { paginationNo, emptyPaginationNo } = defaultFollowingInformation;
     useEffect(() => {
         const params = {
             authtoken: user.token,
@@ -561,9 +562,22 @@ export const FollowingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
             username: user.username,
             type: followingType,
         };
-        dispatch(FollowingInfoAction.GetFollowingInformation(params));
+        getFollowingInformation(params);
     }, []);
+    
+    useEffect(() => {
+        if (scrolledToBottom) {
+            if (emptyPaginationNo < paginationNo) {
+                const params = { userId: user.id, page: paginationNo, authtoken: user.token, type: followingType };
+                getFollowingInformation(params);
+            }
+        }
+    }, [scrolledToBottom]);
 
+    const getFollowingInformation = (params: any) => {
+        
+        dispatch(FollowingInfoAction.GetFollowingInformation(params));
+    }
 
     return <React.Fragment>
         <div className="mt-4 mb-2 d-flex justify-content-between no-gutters px-2">
@@ -579,10 +593,10 @@ export const FollowingInfo: React.FunctionComponent<{ user: USER_SESSION }> = ({
             Following
             </ParagraphText>
         <div className="d-flex flex-column align-items-center flex-fill">
-            {defaultFollowingInformation.length >= 0 && (
+            {defaultFollowingInformation.values.length >= 0 && (
                 <FollowingCard
                     user={user}
-                    followingList={defaultFollowingInformation}
+                    followingList={defaultFollowingInformation.values}
                     followingType={followingType}
                 />
             )}

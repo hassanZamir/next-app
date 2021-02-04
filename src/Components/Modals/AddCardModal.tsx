@@ -271,7 +271,7 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                             />
                         </div>
                         <span className="mb-5 text-danger font-12px">{addCardError}</span>
-                        <div className="d-flex">
+                        {/* <div className="d-flex"> */}
                             <PrimaryButton
                                 type="submit"
                                 name="add-card"
@@ -280,7 +280,7 @@ export const AddCardModal: React.ForwardRefRenderFunction<HTMLDivElement, IAddCa
                                 showLoader={loading}>
                                 Add Card
                         </PrimaryButton>
-                        </div>
+                        {/* </div> */}
                     </FormComponent>
                 </div>
             </div>

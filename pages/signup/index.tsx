@@ -33,6 +33,11 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
     const [termsOfService, setTermsOfService] = useState(false);
     const [recaptchaToken, setToken] = useState("");
     const [triggerValidation, setTriggerValidation] = useState(false);
+    const year = (new Date()).getFullYear() - 18;
+    const years = Array.from(new Array(80), (val, index) => {
+        var y = year - index;
+        return y.toString();
+    });
 
     const signUpState = useSelector((state: IStore) => state.signUp);
     const { errors, successMessage } = signUpState;
@@ -119,7 +124,7 @@ const SignUp: NextPage<ISignUpPage.IProps, ISignUpPage.InitialProps> = () => {
                             options={[
                                 DobConst.date,
                                 DobConst.months,
-                                DobConst.year,
+                                years,
                             ]}
                             wrapperClass="mt-3"
                             validationRules={[{

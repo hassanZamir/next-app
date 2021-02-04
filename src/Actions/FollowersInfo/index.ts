@@ -19,6 +19,7 @@ export const FollowersInfoAction = {
         // result.response = result.response == null ? [] : result.response;
         dispatch({
             payload: {
+                page: payload.page,
                 followersInformation:
                     result.status && result.response ? result.response : [],
                 type: result.status ? result.type : 0,
