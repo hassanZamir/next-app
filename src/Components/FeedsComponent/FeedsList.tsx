@@ -199,12 +199,15 @@ const MediaContainer: React.FunctionComponent<{ feedMedia: FEED_MEDIA[] }> = ({
             >
                 {feedMedia &&
                     feedMedia.map((media: FEED_MEDIA, i) => {
-                        let poster = undefined;
+                        let poster = '';
+                        let posterToken = '';
                         const thumbnail = media.transformations?.filter(x => {
                             return x.transformationType == FEED_MEDIA_TRANSFORMATION_TYPE.VIDEO_THUMBNAIL;
                         });
-                        if (thumbnail?.length)
-                            poster = mediaBaseUrl + thumbnail[0].url + thumbnail[0].token;
+                        if (thumbnail?.length) {
+                            poster = mediaBaseUrl + thumbnail[0].url;
+                            posterToken = thumbnail[0].token;
+                        }
                         return (
                             <div
                                 key={i}
@@ -212,19 +215,30 @@ const MediaContainer: React.FunctionComponent<{ feedMedia: FEED_MEDIA[] }> = ({
                                 ref={setMediaRef}
                             >
                                 {media.type === 2 && (
-                                    <VideoPlayer
+                                    // <VideoPlayer
+                                    //     classNames=""
+                                    //     onClick={e => {
+                                    //         e.preventDefault();
+                                    //         setShowMediaCarousel(i);
+                                    //         toggle();
+                                    //     }}
+                                    //     videoHeight="260px"
+                                    //     src={
+                                    //         mediaBaseUrl +
+                                    //         media.url +
+                                    //         media.token
+                                    //     }
+                                    //     poster={poster}
+                                    // />
+                                    <BackgroundImageSmart
                                         onClick={e => {
                                             e.preventDefault();
                                             setShowMediaCarousel(i);
                                             toggle();
                                         }}
-                                        videoHeight="260px"
-                                        src={
-                                            mediaBaseUrl +
-                                            media.url +
-                                            media.token
-                                        }
-                                        poster={poster}
+                                        paddingBottom="73.335%"
+                                        src={poster}
+                                        token={posterToken}
                                     />
                                 )}
                                 {media.type === 1 && (
