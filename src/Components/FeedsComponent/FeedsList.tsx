@@ -10,6 +10,7 @@ import {
     faComments,
     faDollarSign,
     faEllipsisV,
+    faPlay
 } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 
@@ -230,16 +231,20 @@ const MediaContainer: React.FunctionComponent<{ feedMedia: FEED_MEDIA[] }> = ({
                                     //     }
                                     //     poster={poster}
                                     // />
-                                    <BackgroundImageSmart
-                                        onClick={e => {
-                                            e.preventDefault();
-                                            setShowMediaCarousel(i);
-                                            toggle();
-                                        }}
-                                        paddingBottom="73.335%"
-                                        src={poster}
-                                        token={posterToken}
-                                    />
+                                    <React.Fragment>
+                                        <div className="position-absolute cursor-pointer" onClick={e => {
+                                                e.preventDefault();
+                                                setShowMediaCarousel(i);
+                                                toggle();
+                                            }}>
+                                            <FontAwesomeIcon icon={faPlay} color="#F57B54" size="3x"  />
+                                        </div>
+                                        <BackgroundImageSmart
+                                            paddingBottom="73.335%"
+                                            src={poster}
+                                            token={posterToken}
+                                        />
+                                    </React.Fragment>
                                 )}
                                 {media.type === 1 && (
                                     <BackgroundImageSmart

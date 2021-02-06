@@ -7,7 +7,8 @@ export const VideoPlayer: React.FunctionComponent<{ src: string, classNames: str
             onClick={onClick} 
             controls 
             className={"w-100 " + (classNames ? classNames : '')}
-            height={videoHeight ? videoHeight : "100%"}>
+            height={videoHeight ? videoHeight : "100%"}
+            controlsList="nodownload">
 
             <source src={src} />
         </video>

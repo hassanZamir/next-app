@@ -52,9 +52,15 @@ export const MediaCarousel: React.ForwardRefRenderFunction<
         });
     }
 
-    return isShowing ? ReactDOM.createPortal(<Modal width="100%" background="transparent" padding="0px">
+    return isShowing ? ReactDOM.createPortal(<Modal width="100%" borderRadius="0px" background="rgb(0,0,0,0.7)" padding="0px">
         <div ref={modalRef}>
-            <div className="modal-header">
+            <div className="modal-header" 
+                style={{ 
+                    padding: "0px 15px",
+                    position: "absolute",
+                    top: "-30px",
+                    right: "0px"
+                }}>
                 <button type="button" className="modal-close-button" data-dismiss="modal" aria-label="Close" onClick={toggle}>
                     <span aria-hidden="true">&times;</span>
                 </button>
